@@ -3,7 +3,7 @@ OWASP GoatDroid is a fully functional and self-contained training environment fo
 As the Android SDK introduces new features, the GoatDroid contributors will strive to implement up-to-date lessons that can educate developers and security testers on new security issues. The project currently provides coverage for most of the OWASP Top 10 Mobile Risks and also includes a bunch of other problems as well.
 GoatDroid is composed of the following components:
 
-	•	GUI application used to present information, interact with the SDK and control the web services
+	•	GUI application used to present information, interact with the SDK and 		control the web services
 	•	Android applications containing horrifically vulnerable code
 	•	Embedded Jetty web server
 	•	Embedded Derby database
