@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.owasp.goatdroid.herdfinancial"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="8" />
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:icon="@drawable/icon"
+        android:label="@string/app_name" >
+        <uses-library android:name="android.test.runner" />
+
+        <activity
+            android:name=".activities.Main"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.Authorize"
+            android:label="@string/authorize" >
+        </activity>
+        <activity
+            android:name=".activities.Home"
+            android:label="@string/home" >
+        </activity>
+        <activity
+            android:name=".activities.Login"
+            android:label="@string/login" >
+        </activity>
+        <activity
+            android:name=".activities.Register"
+            android:label="@string/register" >
+        </activity>
+        <activity
+            android:name=".activities.SelectStatement"
+            android:label="@string/select_statement" >
+        </activity>
+        <activity
+            android:name=".activities.Transfer"
+            android:label="@string/transfer" >
+        </activity>
+        <activity
+            android:name=".activities.ViewStatement"
+            android:label="@string/view_statement" >
+        </activity>
+        <activity
+            android:name=".activities.ForgotPassword"
+            android:label="@string/forgot_password" >
+        </activity>
+        <activity
+            android:name=".activities.SetSecretQuestion"
+            android:label="@string/set_secret_question" >
+        </activity>
+        <activity
+            android:name=".activities.Preferences"
+            android:label="@string/preferences" >
+        </activity>
+        <activity
+            android:name=".activities.About"
+            android:label="@string/about" >
+        </activity>
+        <activity
+            android:name=".activities.DestinationInfo"
+            android:label="@string/destination_info" >
+        </activity>
+        <activity
+            android:name=".activities.GetBalance"
+            android:label="@string/get_balance" >
+        </activity>
+        <activity
+            android:name=".activities.VerifyPasswordResetCode"
+            android:label="@string/verify_password_reset_code" >
+        </activity>
+        <activity
+            android:name=".activities.ResetPassword"
+            android:label="@string/reset_password" >
+        </activity>
+
+        <provider
+            android:name=".providers.StatementProvider"
+            android:authorities="org.owasp.goatdroid.herdfinancial.statementprovider" >
+        </provider>
+
+        <service android:name=".services.StatementUpdateService" >
+        </service>
+    </application>
+
+</manifest>

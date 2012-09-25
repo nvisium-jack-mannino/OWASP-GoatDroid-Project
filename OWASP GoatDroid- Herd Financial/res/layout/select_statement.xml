@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+    <TextView 
+    	android:layout_width="wrap_content" 
+    	android:layout_height="wrap_content" 
+    	android:layout_gravity="center" 
+    	android:id="@+id/textView1" 
+    	android:text="@string/start_date"
+    	>
+    </TextView>
+    <DatePicker 
+    	android:id="@+id/startDatePicker" 
+    	android:layout_width="wrap_content" 
+    	android:layout_height="wrap_content"
+    	>
+    </DatePicker>
+    <TextView 
+    	android:layout_width="wrap_content" 
+    	android:layout_height="wrap_content" 
+    	android:id="@+id/textView2" 
+    	android:layout_marginTop="10dip" 
+    	android:text="@string/end_date"
+    	android:layout_gravity="center">
+    </TextView>
+    <DatePicker 
+    	android:id="@+id/endDatePicker" 
+    	android:layout_width="wrap_content" 
+    	android:layout_height="wrap_content"
+    	>
+    </DatePicker>
+    <Button 
+    	android:layout_width="wrap_content" 
+    	android:layout_height="wrap_content" 
+    	android:id="@+id/button1" 
+    	android:layout_gravity="center" 
+    	android:text="@string/get_statement"
+    	android:onClick="getStatement"
+    	>
+    </Button>
+</LinearLayout>
