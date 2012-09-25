@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/userNameTextView"
+        style="@style/TextFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dip"
+        android:text="" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/nameTextView"
+        style="@style/TextFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:text="" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/textView3"
+        style="@style/TextFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:text="@string/last_checkin" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/lastCheckinInfo"
+        style="@style/TextFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="" >
+    </TextView>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="200dip"
+        android:layout_height="25dip"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dip"
+        android:background="@drawable/standard_button"
+        android:onClick="requestAsFriend"
+        android:text="@string/request_as_friend"
+        android:textColor="#FFFFFF" >
+    </Button>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="200dip"
+        android:layout_height="25dip"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dip"
+        android:background="@drawable/standard_button"
+        android:onClick="viewUserCheckinHistory"
+        android:text="@string/view_history"
+        android:textColor="#FFFFFF" >
+    </Button>
+
+</LinearLayout>

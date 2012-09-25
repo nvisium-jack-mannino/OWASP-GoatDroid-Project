@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+            <item
+                android:id="@+id/preferences"
+                android:icon="@drawable/settings"
+                android:title="Preferences"/>
+            <item
+                android:id="@+id/viewMyProfile"
+                android:icon="@drawable/view_profile"
+                android:title="View My Profile"/>
+            <item
+                android:id="@+id/about"
+                android:icon="@drawable/about"
+                android:title="About"/>
+            <item
+                android:id="@+id/logOut"
+                android:icon="@drawable/sign_out"
+                android:title="Log Out"/>
+
+</menu>

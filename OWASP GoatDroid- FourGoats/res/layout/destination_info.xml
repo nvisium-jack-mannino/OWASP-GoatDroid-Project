@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        style="@style/TextFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dip"
+        android:text="@string/host" >
+    </TextView>
+
+    <EditText
+        android:id="@+id/hostEditText"
+        style="@style/TextFont"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView2"
+        style="@style/TextFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/port" >
+    </TextView>
+
+    <EditText
+        android:id="@+id/portEditText"
+        style="@style/TextFont"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="" >
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView1"
+        style="@style/TextFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dip"
+        android:text="@string/proxy_host" >
+    </TextView>
+
+    <EditText
+        android:id="@+id/proxyHostEditText"
+        style="@style/TextFont"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView2"
+        style="@style/TextFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/proxy_port" >
+    </TextView>
+
+    <EditText
+        android:id="@+id/proxyPortEditText"
+        style="@style/TextFont"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="" >
+    </EditText>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="200dip"
+        android:layout_height="25dip"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dip"
+        android:background="@drawable/standard_button"
+        android:onClick="saveDestinationInfo"
+        android:text="@string/save"
+        android:textColor="#FFFFFF" >
+    </Button>
+
+</LinearLayout>

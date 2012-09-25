@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.owasp.goatdroid.fourgoats"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="9"
+        android:targetSdkVersion="15" />
+
+    <application
+        android:debuggable="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Sherlock" >
+        <activity
+            android:name=".activities.Main"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.Login"
+            android:label="@string/login" >
+        </activity>
+        <activity
+            android:name=".activities.Register"
+            android:label="@string/register" >
+        </activity>
+        <activity
+            android:name=".activities.Home"
+            android:label="@string/home" >
+        </activity>
+        <activity
+            android:name=".fragments.DoCheckin"
+            android:label="@string/checkin" >
+        </activity>
+        <activity
+            android:name=".activities.Checkins"
+            android:label="@string/checkins" >
+        </activity>
+        <activity
+            android:name=".activities.Friends"
+            android:label="@string/friends" >
+        </activity>
+        <activity
+            android:name=".fragments.HistoryFragment"
+            android:label="@string/history" >
+        </activity>
+        <activity
+            android:name=".activities.History"
+            android:label="@string/history" >
+        </activity>
+        <activity
+            android:name=".activities.Rewards"
+            android:label="@string/rewards" >
+        </activity>
+        <activity
+            android:name=".activities.AddVenue"
+            android:label="@string/add_venue" >
+        </activity>
+        <activity
+            android:name=".activities.ViewCheckin"
+            android:exported="true"
+            android:label="@string/view_checkin" >
+        </activity>
+        <activity
+            android:name=".fragments.MyFriends"
+            android:label="@string/my_friends" >
+        </activity>
+        <activity
+            android:name=".fragments.SearchForFriends"
+            android:label="@string/search_for_friends" >
+        </activity>
+        <activity
+            android:name=".activities.ViewProfile"
+            android:exported="true"
+            android:label="@string/profile" >
+        </activity>
+        <activity
+            android:name=".fragments.PendingFriendRequests"
+            android:label="@string/pending_friend_requests" >
+        </activity>
+        <activity
+            android:name=".activities.ViewFriendRequest"
+            android:label="@string/friend_request" >
+        </activity>
+        <activity
+            android:name=".fragments.MyRewards"
+            android:label="@string/my_rewards" >
+        </activity>
+        <activity
+            android:name=".fragments.AvailableRewards"
+            android:label="@string/available_rewards" >
+        </activity>
+        <activity
+            android:name=".activities.Preferences"
+            android:label="@string/preferences" >
+        </activity>
+        <activity
+            android:name=".activities.About"
+            android:label="@string/about" >
+        </activity>
+        <activity
+            android:name=".activities.SendSMS"
+            android:label="@string/send_sms" >
+        </activity>
+        <activity
+            android:name=".activities.DoComment"
+            android:label="@string/comment" >
+        </activity>
+        <activity
+            android:name=".activities.UserHistory"
+            android:label="@string/history" >
+        </activity>
+        <activity
+            android:name=".activities.DestinationInfo"
+            android:label="@string/destination_info" >
+        </activity>
+        <activity
+            android:name=".activities.AdminHome"
+            android:label="@string/admin_home" >
+        </activity>
+        <activity
+            android:name=".activities.AdminOptions"
+            android:label="@string/admin_options" >
+        </activity>
+        <activity
+            android:name=".fragments.ResetUserPasswords"
+            android:label="@string/reset_user_passwords" >
+        </activity>
+        <activity
+            android:name=".fragments.DeleteUsers"
+            android:label="@string/delete_users" >
+        </activity>
+        <activity
+            android:name=".activities.DoAdminPasswordReset"
+            android:label="@string/reset_user_password" >
+        </activity>
+        <activity
+            android:name=".activities.DoAdminDeleteUser"
+            android:label="@string/delete_users" >
+        </activity>
+        <activity
+            android:name=".activities.SocialAPIAuthentication"
+            android:exported="true"
+            android:label="@string/authenticate" >
+        </activity>
+        <activity
+            android:name=".activities.GenericWebViewActivity"
+            android:label="@string/app_name" >
+        </activity>
+
+        <service android:name=".services.LocationService" >
+            <intent-filter>
+                <action android:name="org.owasp.goatdroid.fourgoats.services.LocationService" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".broadcastreceivers.SendSMSNowReceiver"
+            android:label="Send SMS" >
+            <intent-filter>
+                <action android:name="org.owasp.goatdroid.fourgoats.SOCIAL_SMS" />
+            </intent-filter>
+		    >
+        </receiver>
+    </application>
+
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+</manifest>

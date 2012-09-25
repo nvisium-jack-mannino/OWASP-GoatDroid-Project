@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/noCheckinsTextView"
+        style="@style/TextFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dip"
+        android:text="@string/no_checkins"
+        android:visibility="gone" >
+    </TextView>
+
+    <android.webkit.WebView
+        android:id="@+id/historyWebView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+    </android.webkit.WebView>
+
+</LinearLayout>

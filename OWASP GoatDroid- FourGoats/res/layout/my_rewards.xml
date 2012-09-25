@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/noRewardsTextView"
+        style="@style/TextFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dip"
+        android:text="@string/no_rewards"
+        android:visibility="gone" >
+
+    </TextView>
+
+    <ListView
+        android:id="@+id/myRewardsListView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#747170"
+        android:divider="#5F5A59"
+        android:dividerHeight="8px" >
+    </ListView>
+
+</LinearLayout>
