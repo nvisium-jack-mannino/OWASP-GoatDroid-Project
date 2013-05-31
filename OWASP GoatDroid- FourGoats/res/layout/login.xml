@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView2"
+        style="@style/TextFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dip"
+        android:text="@string/username" >
+    </TextView>
+
+    <EditText
+        android:id="@+id/userName"
+        style="@style/TextFont"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="" >
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView3"
+        style="@style/TextFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dip"
+        android:text="@string/password" >
+    </TextView>
+
+    <EditText
+        android:id="@+id/password"
+        style="@style/TextFont"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+       
+        android:gravity="center"
+        android:password="true"
+        android:text="" >
+    </EditText>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:layout_marginTop="30dip"
+        android:background="@drawable/alt_background"
+        android:orientation="vertical" >
+
+        <CheckBox
+            android:id="@+id/rememberMeCheckBox"
+            android:layout_width="200dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/remember_me" >
+        </CheckBox>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="200dip"
+        android:layout_height="25dip"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dip"
+        android:background="@drawable/standard_button"
+        android:onClick="checkCredentials"
+        android:text="@string/login"
+        android:textColor="#FFFFFF" >
+    </Button>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="200dip"
+        android:layout_height="25dip"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dip"
+        android:background="@drawable/standard_button"
+        android:onClick="launchRegistration"
+        android:text="@string/register"
+        android:textColor="#FFFFFF" >
+    </Button>
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dip"
+        android:src="@drawable/owasp_logo" >
+    </ImageView>
+
+</LinearLayout>

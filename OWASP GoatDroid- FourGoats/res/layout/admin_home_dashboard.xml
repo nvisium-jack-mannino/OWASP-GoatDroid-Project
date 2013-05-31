@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dip"
+        android:orientation="horizontal" >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dip"
+            android:background="#FFFFFF"
+            android:drawableTop="@drawable/home_checkin"
+            android:onClick="launchCheckins"
+            android:text="@string/checkins" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dip"
+            android:background="#FFFFFF"
+            android:drawableTop="@drawable/home_friends"
+            android:onClick="launchFriends"
+            android:text="@string/friends" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dip"
+        android:orientation="horizontal" >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dip"
+            android:background="#FFFFFF"
+            android:drawableTop="@drawable/home_rewards"
+            android:onClick="launchRewards"
+            android:text="@string/rewards" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dip"
+            android:drawableTop="@drawable/home_manage_users"
+            android:singleLine="false"
+            android:onClick="launchManageUsers"
+            android:text="@string/manage_users" />
+    </LinearLayout>
+
+</LinearLayout>

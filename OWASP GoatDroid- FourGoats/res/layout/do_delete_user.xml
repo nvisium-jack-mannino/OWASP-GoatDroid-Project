@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        style="@style/TextFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dip"
+        android:layout_marginTop="50dip"
+        android:text="Are you sure you want to delete" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/userNameTextView"
+        style="@style/TextFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dip"
+        android:text="" >
+    </TextView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip" >
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="50dip"
+            android:layout_height="25dip"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40dip"
+            android:layout_marginTop="10dip"
+            android:background="@drawable/standard_button"
+            android:onClick="doDeleteUser"
+            android:text="@string/yes"
+            android:textColor="#FFFFFF" >
+        </Button>
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="50dip"
+            android:layout_height="25dip"
+            android:layout_gravity="center"
+            android:layout_marginLeft="50dip"
+            android:layout_marginTop="10dip"
+            android:background="@drawable/standard_button"
+            android:onClick="launchAdminHome"
+            android:text="@string/no"
+            android:textColor="#FFFFFF" >
+        </Button>
+    </LinearLayout>
+
+</LinearLayout>
