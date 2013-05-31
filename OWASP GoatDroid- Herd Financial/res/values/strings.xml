@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Herd Financial</string>
+    <string name="authorize">Authorize</string>
+    <string name="home">Home</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="select_statement">Select Statement</string>
+    <string name="transfer">Transfer</string>
+    <string name="view_statement">View Statement</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="user_name">User Name</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="account_number">Account Number</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="do_you_want_to_authorize">Do you want to permanently authorize this device?</string>
+    <string name="authorize_device">Authorize Device</string>
+    <string name="secret_questions">Secret Questions</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="set_secret_question">Set Secret Question</string>
+    <string name="select_secret_question">Select a Secret Question</string>
+    <string name="secret_question_answer">Secret Question Answer</string>
+    <string name="submit">Submit</string>
+    <string name="preferences">Preferences</string>
+    <string name="about">About</string>
+    <string name="developer_name">Developed By: Jack Mannino</string>
+    <string name="version">Version 0.9</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="get_statement">Get Statement</string>
+    <string name="secret_question_1">Where were you born?</string>
+    <string name="secret_question_2">What is your favorite color?</string>
+    <string name="secret_question_3">What is your favorite food?</string>
+    <string name="from_account">From Account</string>
+    <string name="to_account">To Account</string>
+    <string name="amount">Amount</string>
+    <string name="host">Host</string>
+    <string name="port">HTTPS Port (Default:9888)</string>
+    <string name="save">Save</string>
+    <string name="get_balance">Get Balance</string>
+    <string name="destination_info">Destination Info</string>
+    <string name="get_new_password">Get New Password</string>
+    <string name="already_have_reset_code">Already Have A Code</string>
+    <string name="verify_password_reset_code">Verify Password Reset Code</string>
+    <string name="password_reset_code">Password Reset Code</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="authorize_fourgoats">Authorize FourGoats</string>
+    <string name="proxy_host">Proxy Host</string>
+    <string name="proxy_port">Proxy Port</string>
+    <string name="export">Export</string>
+    <string name="empty_statement">You have no transaction history</string>
+
+    <string-array name="home_items">
+        <item>Check Balance</item>
+        <item>Transfer Funds</item>
+        <item>View Account Statements</item>
+    </string-array>
+    <string-array name="secret_questions">
+        <item>Where were you born?</item>
+        <item>What is your favorite color?</item>
+        <item>What is your favorite food?</item>
+    </string-array>
+
+</resources>

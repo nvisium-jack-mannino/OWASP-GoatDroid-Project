@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+    <Button 
+    	android:layout_width="wrap_content" 
+    	android:layout_height="wrap_content" 
+    	android:id="@+id/button1" 
+    	android:layout_marginTop="30dip" 
+    	android:text="@string/authorize_device"
+    	android:onClick="launchAuthorizeDeviceActivity"
+    	>
+    </Button>
+    <Button 
+    	android:layout_width="wrap_content" 
+    	android:layout_height="wrap_content" 
+    	android:id="@+id/button2" 
+    	android:layout_marginTop="10dip" 
+    	android:text="@string/secret_questions"
+    	android:onClick="launchSecretQuestionActivity"
+    	>
+    </Button>
+    <Button 
+    	android:layout_width="wrap_content" 
+    	android:layout_height="wrap_content" 
+    	android:id="@+id/button2" 
+    	android:layout_marginTop="10dip" 
+    	android:text="@string/authorize_fourgoats"
+    	android:onClick="launchAuthorizeFourGoats"
+    	>
+    </Button>
+</LinearLayout>
