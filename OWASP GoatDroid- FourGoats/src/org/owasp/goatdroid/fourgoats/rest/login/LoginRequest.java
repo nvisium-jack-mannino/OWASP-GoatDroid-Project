@@ -48,7 +48,7 @@ public class LoginRequest {
 
 		RestClient client = new RestClient("https://" + destinationInfo
 				+ "/fourgoats/api/v1/login/authenticate");
-		client.AddParam("userName", userName);
+		client.AddParam("username", userName);
 		client.AddParam("password", password);
 		client.Execute(RequestMethod.POST, context);
 
@@ -60,7 +60,7 @@ public class LoginRequest {
 
 		RestClient client = new RestClient("https://" + destinationInfo
 				+ "/fourgoats/api/v1/login/validate_api");
-		client.AddParam("userName", userName);
+		client.AddParam("username", userName);
 		client.AddParam("password", password);
 		client.Execute(RequestMethod.POST, context);
 

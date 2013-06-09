@@ -34,7 +34,7 @@ public class LoginResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public LoginBean validateCredentials(
-			@FormParam("userName") String userName,
+			@FormParam("username") String userName,
 			@FormParam("password") String password)
 			throws WebApplicationException {
 		try {
@@ -50,7 +50,7 @@ public class LoginResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public LoginBean validateCredentialsAPI(
-			@FormParam("userName") String userName,
+			@FormParam("username") String userName,
 			@FormParam("password") String password)
 			throws WebApplicationException {
 		try {
