@@ -55,6 +55,8 @@
     <plugin name="Echo" value="org.apache.cordova.Echo" />
     <plugin name="Globalization" value="org.apache.cordova.Globalization"/>
     <plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser"/>
+    <plugin name="WebIntent" value="org.owasp.goatdroid.fourgoats.phonegap.plugins.WebIntent"/>
+    <plugin name="SharedPrefs" value="org.owasp.goatdroid.fourgoats.phonegap.plugins.SharedPrefs"/>
 </plugins>
 </cordova>
 
