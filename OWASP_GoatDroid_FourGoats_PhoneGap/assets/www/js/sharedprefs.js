@@ -1,26 +1,28 @@
-var SharedPrefs = function() {
+var SharedPrefs = {
+
+	getDestinationInfo : function() {
+		var destination = "";
+		cordova.exec(function(result) {
+			destination = result
+		}, null, 'SharedPrefs', 'getDestinationInfo', []);
+		return destination;
+	}
 };
 
-SharedPrefs.prototype.getDestinationInfo = function() {
-
+function isDestinationSet() {
+	var destinationInfo = $.parseJSON(SharedPrefs.getDestinationInfo());
+	$.each(destinationInfo, function(index, value) {
+		console.log(value);
+		if (value === "") {
+			// Pop up dialog here
+			console.log("kazaam");
+			openServerInfoDialog();
+			return false;
+		}
+	});
 }
 
-SharedPrefs.prototype.setDestinationInfo = function(host, port) {
-
-}
-
-SharedPrefs.prototype.getProxyInfo = function() {
-
-}
-
-SharedPrefs.prototype.setProxyInfo = function(host, port) {
-
-}
-
-SharedPrefs.prototype.getCredentials = function() {
-
-}
-
-SharedPrefs.prototype.setCredentials = function(username, password) {
-
+function updateDestinationInfo() {
+	var serverIp = $('#serverIp').value;
+	alert(serverIp);
 }

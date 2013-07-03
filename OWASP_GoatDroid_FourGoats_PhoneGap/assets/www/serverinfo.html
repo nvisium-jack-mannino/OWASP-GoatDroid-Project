@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<title>OWASP GoatDroid</title>
+<link rel="stylesheet" href="themes/fourgoats-theme.css" />
+<link rel="stylesheet" href="css/jquery.mobile.structure-1.3.1.css" />
+<script type="text/javascript" src="js/jquery-1.10.1.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.3.1.js"></script>
+<script type="text/javascript" src="js/fourgoats.js"></script>
+<script type="text/javascript" src="cordova-2.6.0.js"></script>
+<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="js/sharedprefs.js"></script>
+</head>
+<body>
+	<div data-role="page" data-theme="a">
+		<div data-role="header" data-position="inline">
+			<h1>Server Info</h1>
+		</div>
+	</div>
+	<div data-role="dialog">
+		<form id="destForm">
+			<label for="serverIp">Server IP:</label> <input type="text"
+				name="serverIp" id="serverIp" /> <label for="serverPort">Server
+				Port:</label> <input type="text" name="serverPort" id="serverPort" /> <a
+				href="#" data-role="button" data-inline="true"
+				onclick="updateDestinationInfo()">Update</a>
+		</form>
+	</div>
+</body>
+</html>
