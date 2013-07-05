@@ -4,8 +4,9 @@ function updateFormAction(formId) {
 }
 
 function openServerInfoDialog() {
-	$.mobile.changePage("serverinfo.html", {
-		transition : "pop",
-		role : "dialog"
+
+	$.mobile.changePage('serverinfo.html', {
+		transition : 'pop',
+		role : 'dialog'
 	});
 }

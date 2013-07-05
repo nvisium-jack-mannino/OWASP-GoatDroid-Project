@@ -6,6 +6,14 @@ var SharedPrefs = {
 			destination = result
 		}, null, 'SharedPrefs', 'getDestinationInfo', []);
 		return destination;
+	},
+
+	setDestinationInfo : function() {
+		var serverIp = $('#serverIp').val();
+		var serverPort = $('#serverPort').val();
+		cordova.exec(null, null, 'SharedPrefs', 'setDestinationInfo', [
+				serverIp, serverPort ]);
+		history.back();
 	}
 };
 
@@ -15,14 +23,8 @@ function isDestinationSet() {
 		console.log(value);
 		if (value === "") {
 			// Pop up dialog here
-			console.log("kazaam");
 			openServerInfoDialog();
 			return false;
 		}
 	});
-}
-
-function updateDestinationInfo() {
-	var serverIp = $('#serverIp').value;
-	alert(serverIp);
 }

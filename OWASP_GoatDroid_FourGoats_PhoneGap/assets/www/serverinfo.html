@@ -8,25 +8,36 @@
 <link rel="stylesheet" href="css/jquery.mobile.structure-1.3.1.css" />
 <script type="text/javascript" src="js/jquery-1.10.1.js"></script>
 <script type="text/javascript" src="js/jquery.mobile-1.3.1.js"></script>
+<script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript" src="js/fourgoats.js"></script>
 <script type="text/javascript" src="cordova-2.6.0.js"></script>
 <script type="text/javascript" src="main.js"></script>
 <script type="text/javascript" src="js/sharedprefs.js"></script>
 </head>
 <body>
-	<div data-role="page" data-theme="a">
-		<div data-role="header" data-position="inline">
-			<h1>Server Info</h1>
+
+	<div data-role="page">
+
+		<div data-role="header" data-theme="a">
+			<h1>Configuration</h1>
+
 		</div>
-	</div>
-	<div data-role="dialog">
-		<form id="destForm">
-			<label for="serverIp">Server IP:</label> <input type="text"
-				name="serverIp" id="serverIp" /> <label for="serverPort">Server
-				Port:</label> <input type="text" name="serverPort" id="serverPort" /> <a
-				href="#" data-role="button" data-inline="true"
-				onclick="updateDestinationInfo()">Update</a>
-		</form>
-	</div>
+
+		<div data-role="content" data-theme="c">
+			<h1>Update Server Info</h1>
+			<p>Set the IP address and port where the web service is
+				listening. Default port is 9888. Note: IP address cannot point to
+				127.0.0.1, as this will reference the device itself.</p>
+			<form id="serverInfoForm">
+				<label for="serverIp">Server IP</label> <input type="text"
+					name="serverIp" id="serverIp" /> <label for="serverPort">Server
+					Port</label> <input type="text" name="serverPort" id="serverPort"
+					value="9888" /> <a href="#" data-role="button" data-inline="true"
+					onclick="SharedPrefs.setDestinationInfo()">Update</a>
+			</form>
+		</div>
 </body>
 </html>
+
+
+

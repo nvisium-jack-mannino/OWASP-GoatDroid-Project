@@ -31,8 +31,9 @@ public class SharedPrefs extends CordovaPlugin {
 		} else if (action.equals("getProxyInfo")) {
 
 			return true;
-		} else if (action.equals("writeDestinationInfo")) {
+		} else if (action.equals("setDestinationInfo")) {
 
+			callbackContext.sendPluginResult(setDestinationInfo(args));
 			return true;
 		} else if (action.equals("writeProxyInfo")) {
 
@@ -54,15 +55,21 @@ public class SharedPrefs extends CordovaPlugin {
 				new JSONObject(destinationInfo).toString());
 	}
 
-	void setDestinationInfo(String host, String port) {
+	PluginResult setDestinationInfo(JSONArray args) {
 
 		SharedPreferences destinationInfo = this.cordova.getActivity()
 				.getSharedPreferences("destination_info",
 						Context.MODE_WORLD_READABLE);
 		SharedPreferences.Editor editor = destinationInfo.edit();
-		editor.putString("host", host);
-		editor.putString("port", port);
-		editor.commit();
+		try {
+			editor.putString("host", args.getString(0));
+			editor.putString("port", args.getString(1));
+			editor.commit();
+			return new PluginResult(Status.OK);
+		} catch (JSONException e) {
+			System.out.println(e.getMessage());
+			return new PluginResult(Status.ERROR);
+		}
 	}
 
 	PluginResult getProxyInfo() {
