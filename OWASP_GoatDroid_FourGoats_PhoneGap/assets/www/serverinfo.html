@@ -13,10 +13,13 @@
 <script type="text/javascript" src="cordova-2.6.0.js"></script>
 <script type="text/javascript" src="main.js"></script>
 <script type="text/javascript" src="js/sharedprefs.js"></script>
+<script>
+	$("#page").bind('pageinit', validateServerInfo);
+</script>
 </head>
 <body>
 
-	<div data-role="page">
+	<div id="page" data-role="page">
 
 		<div data-role="header" data-theme="a">
 			<h1>Configuration</h1>

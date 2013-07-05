@@ -27,4 +27,24 @@ function isDestinationSet() {
 			return false;
 		}
 	});
+
+	function validateServerInfo(event) {
+		$.validator.addMethod("portValidator", function(value, elem, args) {
+			return val >= 0 && val <= 65535
+		})
+		$('form').validate({
+			rules : {
+				serverIp : {
+					required : true
+				},
+				serverPort : {
+					required : true,
+					min : 1,
+					max : 5,
+					digits : true,
+					portValidator : serverPort.val()
+				}
+			}
+		});
+	}
 }
