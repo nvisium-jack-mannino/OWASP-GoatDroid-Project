@@ -6,7 +6,11 @@ function openServerInfoDialog() {
 	});
 }
 
-function submitLogin() {
+var submitLogin = function()
+{
 	var params = $('#loginForm').serialize();
-	$.post($("#loginForm").attr('action'), params);
+	var destinationInfo = $.parseJSON(SharedPrefs.getDestinationInfo());
+	$.post("http://" + destinationInfo["serverIp"] + ":"
+			+ destinationInfo["serverPort"]
+			+ "/fourgoats/api/v1/login/authenticate", params);
 }
