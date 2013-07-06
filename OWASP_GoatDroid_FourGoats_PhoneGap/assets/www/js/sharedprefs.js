@@ -41,7 +41,6 @@ function isDestinationSet() {
 									+ $(this).attr('action'))
 				}
 			});
-	console.log($('form').first().attr('action'));
 }
 
 function validateServerInfo() {
