@@ -26,6 +26,22 @@ function isDestinationSet() {
 			return false;
 		}
 	});
+	/*
+	 * If the server and IP weren't blank, we automatically bind these values to
+	 * the actions of every form if the form contains an action.
+	 * 
+	 */
+	$('form').each(
+			function(index, element) {
+				if ($(this).attr('action')) {
+					$(this).attr(
+							"action",
+							destinationInfo["serverIp"] + ":"
+									+ destinationInfo["serverPort"]
+									+ $(this).attr('action'))
+				}
+			});
+	console.log($('form').first().attr('action'));
 }
 
 function validateServerInfo() {
