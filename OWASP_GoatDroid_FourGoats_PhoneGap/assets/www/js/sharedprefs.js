@@ -36,11 +36,12 @@ function isDestinationSet() {
 				if ($(this).attr('action')) {
 					$(this).attr(
 							"action",
-							destinationInfo["serverIp"] + ":"
+							"http://" + destinationInfo["serverIp"] + ":"
 									+ destinationInfo["serverPort"]
 									+ $(this).attr('action'))
 				}
 			});
+	console.log($('form').first().attr('action'));
 }
 
 function validateServerInfo() {

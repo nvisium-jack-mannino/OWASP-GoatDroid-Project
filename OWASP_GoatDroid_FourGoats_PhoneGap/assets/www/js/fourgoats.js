@@ -5,3 +5,8 @@ function openServerInfoDialog() {
 		role : 'dialog'
 	});
 }
+
+function submitLogin() {
+	var params = $('#loginForm').serialize();
+	$.post($("#loginForm").attr('action'), params);
+}
