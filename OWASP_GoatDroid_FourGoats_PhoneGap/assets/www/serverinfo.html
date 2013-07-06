@@ -13,18 +13,21 @@
 <script type="text/javascript" src="cordova-2.6.0.js"></script>
 <script type="text/javascript" src="main.js"></script>
 <script type="text/javascript" src="js/sharedprefs.js"></script>
-<script>
-	$("#page").bind('pageinit', validateServerInfo);
-</script>
+<script type="text/javascript" src="js/additional-methods.js"></script>
 </head>
 <body>
-
-	<div id="page" data-role="page">
-
+	<div data-role="page" id="serverInfoPage">
+		<script>
+			$(document).ready(function() {
+				document.addEventListener("deviceready", function() {
+					validateServerInfo();
+				}, false);
+			});
+		</script>
 		<div data-role="header" data-theme="a">
 			<h1>Configuration</h1>
-
 		</div>
+		
 
 		<div data-role="content" data-theme="c">
 			<h1>Update Server Info</h1>
@@ -35,8 +38,8 @@
 				<label for="serverIp">Server IP</label> <input type="text"
 					name="serverIp" id="serverIp" /> <label for="serverPort">Server
 					Port</label> <input type="text" name="serverPort" id="serverPort"
-					value="9888" /> <a href="#" data-role="button" data-inline="true"
-					onclick="SharedPrefs.setDestinationInfo()">Update</a>
+					value="9888" /> <a href="#" id="submitButton" data-role="button"
+					data-inline="true">Update</a>
 			</form>
 		</div>
 </body>

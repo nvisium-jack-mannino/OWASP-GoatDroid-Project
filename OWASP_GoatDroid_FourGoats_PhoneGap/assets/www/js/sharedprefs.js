@@ -27,24 +27,38 @@ function isDestinationSet() {
 			return false;
 		}
 	});
+}
 
-	function validateServerInfo(event) {
-		$.validator.addMethod("portValidator", function(value, elem, args) {
-			return val >= 0 && val <= 65535
-		})
-		$('form').validate({
-			rules : {
-				serverIp : {
-					required : true
-				},
-				serverPort : {
-					required : true,
-					min : 1,
-					max : 5,
-					digits : true,
-					portValidator : serverPort.val()
-				}
-			}
-		});
-	}
+function validateServerInfo() {
+
+	console.log("ran validator");
+	$('#serverInfoForm').validate({
+		highlight : function(element, errorClass) {
+			$(element).addClass(errorClass)
+		},
+		unhighlight : function(element, errorClass) {
+			$(element).removeClass(errorClass)
+		},
+		rules : {
+			serverIp : {
+				required : true,
+				ipv4 : true
+			},
+			serverPort : {
+				required : true,
+				digits : true,
+				range : [ 1, 65535 ]
+			},
+		},
+		errorClass : "validationError",
+		errorElement : "div",
+		errorPlacement : function(error, element) {
+			$(element).before(error);
+		},
+	});
+	$('#submitButton').click(function() {
+		if ($('#serverInfoForm').valid()) {
+			SharedPrefs.setDestinationInfo();
+		}
+	});
 }
