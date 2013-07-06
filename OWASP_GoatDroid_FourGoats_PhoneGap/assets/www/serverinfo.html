@@ -21,13 +21,14 @@
 			$(document).ready(function() {
 				document.addEventListener("deviceready", function() {
 					validateServerInfo();
+					populateDestinationInfo();
 				}, false);
 			});
 		</script>
 		<div data-role="header" data-theme="a">
 			<h1>Configuration</h1>
 		</div>
-		
+
 
 		<div data-role="content" data-theme="c">
 			<h1>Update Server Info</h1>
@@ -37,9 +38,8 @@
 			<form id="serverInfoForm">
 				<label for="serverIp">Server IP</label> <input type="text"
 					name="serverIp" id="serverIp" /> <label for="serverPort">Server
-					Port</label> <input type="text" name="serverPort" id="serverPort"
-					value="9888" /> <a href="#" id="submitButton" data-role="button"
-					data-inline="true">Update</a>
+					Port</label> <input type="text" name="serverPort" id="serverPort" />
+				<a href="#" id="submitButton" data-role="button" data-inline="true">Update</a>
 			</form>
 		</div>
 </body>

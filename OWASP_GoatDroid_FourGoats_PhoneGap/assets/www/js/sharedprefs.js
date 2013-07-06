@@ -20,7 +20,6 @@ var SharedPrefs = {
 function isDestinationSet() {
 	var destinationInfo = $.parseJSON(SharedPrefs.getDestinationInfo());
 	$.each(destinationInfo, function(index, value) {
-		console.log(value);
 		if (value === "") {
 			// Pop up dialog here
 			openServerInfoDialog();
@@ -30,8 +29,6 @@ function isDestinationSet() {
 }
 
 function validateServerInfo() {
-
-	console.log("ran validator");
 	$('#serverInfoForm').validate({
 		highlight : function(element, errorClass) {
 			$(element).addClass(errorClass)
@@ -61,4 +58,16 @@ function validateServerInfo() {
 			SharedPrefs.setDestinationInfo();
 		}
 	});
+}
+
+function populateDestinationInfo() {
+	var destinationInfo = $.parseJSON(SharedPrefs.getDestinationInfo());
+	if (!(destinationInfo["serverIp"] === ""))
+		$('#serverIp').val(destinationInfo["serverIp"]);
+
+	if (destinationInfo["serverPort"] === "")
+		$('#serverPort').val(9888)
+	else
+		$('#serverPort').val(destinationInfo["serverPort"])
+
 }

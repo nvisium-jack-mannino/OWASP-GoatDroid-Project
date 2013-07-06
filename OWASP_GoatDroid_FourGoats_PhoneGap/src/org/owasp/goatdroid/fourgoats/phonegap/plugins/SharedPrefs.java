@@ -20,23 +20,14 @@ public class SharedPrefs extends CordovaPlugin {
 			CallbackContext callbackContext) throws JSONException {
 
 		if (action.equals("getCredentials")) {
-
 			return true;
 		} else if (action.equals("saveCredentials")) {
-
 			return true;
 		} else if (action.equals("getDestinationInfo")) {
 			callbackContext.sendPluginResult(getDestinationInfo());
 			return true;
-		} else if (action.equals("getProxyInfo")) {
-
-			return true;
 		} else if (action.equals("setDestinationInfo")) {
-
 			callbackContext.sendPluginResult(setDestinationInfo(args));
-			return true;
-		} else if (action.equals("writeProxyInfo")) {
-
 			return true;
 		}
 		return false;
@@ -48,9 +39,9 @@ public class SharedPrefs extends CordovaPlugin {
 				.getSharedPreferences("destination_info",
 						Context.MODE_WORLD_READABLE);
 
-		Map destinationInfo = new HashMap<String, String>();
-		destinationInfo.put("host", prefs.getString("host", ""));
-		destinationInfo.put("port", prefs.getString("port", ""));
+		Map<String, String> destinationInfo = new HashMap<String, String>();
+		destinationInfo.put("serverIp", prefs.getString("host", ""));
+		destinationInfo.put("serverPort", prefs.getString("port", ""));
 		return new PluginResult(Status.OK,
 				new JSONObject(destinationInfo).toString());
 	}
@@ -70,28 +61,5 @@ public class SharedPrefs extends CordovaPlugin {
 			System.out.println(e.getMessage());
 			return new PluginResult(Status.ERROR);
 		}
-	}
-
-	PluginResult getProxyInfo() {
-
-		Map<String, String> map = new HashMap<String, String>();
-		SharedPreferences prefs = this.cordova
-				.getActivity()
-				.getSharedPreferences("proxy_info", Context.MODE_WORLD_READABLE);
-		map.put("proxyHost", prefs.getString("proxyHost", ""));
-		map.put("proxyPort", prefs.getString("proxyPort", ""));
-		return new PluginResult(Status.OK, new JSONObject(map));
-
-	}
-
-	void setProxyInfo(String host, String port) {
-
-		SharedPreferences destinationInfo = this.cordova
-				.getActivity()
-				.getSharedPreferences("proxy_info", Context.MODE_WORLD_READABLE);
-		SharedPreferences.Editor editor = destinationInfo.edit();
-		editor.putString("proxyHost", host);
-		editor.putString("proxyPort", port);
-		editor.commit();
 	}
 }
