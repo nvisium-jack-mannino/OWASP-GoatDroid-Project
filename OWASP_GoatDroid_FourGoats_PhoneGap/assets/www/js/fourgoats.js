@@ -9,8 +9,21 @@ function openServerInfoDialog() {
 var submitLogin = function() {
 	var params = $('#loginForm').serialize();
 	var destinationInfo = $.parseJSON(SharedPrefs.getDestinationInfo());
-	$.post(getDestinationInfoString() + "/fourgoats/api/v1/login/authenticate",
-			params);
+	$.ajax({
+		url : getDestinationInfoString()
+				+ "/fourgoats/api/v1/login/authenticate",
+		type : 'POST',
+		dataType : 'json',
+		data : params,
+		success : function(json) {
+
+			var response = $.parseJSON(json);
+			// do stuff here
+		},
+		error : function(xhr, textStatus, errorThrown) {
+			// do stuff here
+		}
+	});
 }
 
 function validateLoginForm() {
