@@ -71,3 +71,10 @@ function populateDestinationInfo() {
 		$('#serverPort').val(destinationInfo["serverPort"])
 
 }
+
+function getDestinationInfoString() {
+	var destinationInfo = $.parseJSON(SharedPrefs.getDestinationInfo());
+	console.log(destinationInfo);
+	return "http://" + destinationInfo["serverIp"] + ":"
+			+ destinationInfo["serverPort"];
+}

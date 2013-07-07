@@ -19,7 +19,7 @@
 		document.addEventListener("deviceready", function() {
 			isDestinationSet();
 		}, false);
-		$('#loginForm').click(submitLogin);
+		validateLoginForm();
 	});
 </script>
 </head>
@@ -33,7 +33,8 @@
 				<label for="username">Username</label> <input type="text"
 					name="username" id="username" value="" /> <label for="password">Password</label>
 				<input type="password" name="password" id="password" value="" /> <a
-					type="submit" data-role="button" data-inline="true">Login</a>
+					type="submit" id="submitButton" data-role="button"
+					data-inline="true">Login</a>
 			</form>
 			<div data-role="fieldcontain">
 				<fieldset data-role="controlgroup">
