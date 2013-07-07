@@ -53,10 +53,13 @@ function validateServerInfo() {
 			$(element).before(error);
 		},
 	});
-	$('#submitButton').click(function() {
+
+	$('#serv-info-submit-button').click(function() {
 		if ($('#serverInfoForm').valid()) {
+			console.log("good");
 			SharedPrefs.setDestinationInfo();
-		}
+		} else
+			console.log("bad");
 	});
 }
 
@@ -75,6 +78,6 @@ function populateDestinationInfo() {
 function getDestinationInfoString() {
 	var destinationInfo = $.parseJSON(SharedPrefs.getDestinationInfo());
 	console.log(destinationInfo);
-	return "http://" + destinationInfo["serverIp"] + ":"
+	return "https://" + destinationInfo["serverIp"] + ":"
 			+ destinationInfo["serverPort"];
 }

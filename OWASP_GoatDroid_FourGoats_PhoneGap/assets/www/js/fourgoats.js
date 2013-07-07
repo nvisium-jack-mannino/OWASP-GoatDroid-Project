@@ -39,7 +39,7 @@ function validateLoginForm() {
 			$(element).before(error);
 		},
 	});
-	$('#submitButton').click(function() {
+	$('#login-submit-button').click(function() {
 		if ($('#loginForm').valid()) {
 			submitLogin();
 		}
