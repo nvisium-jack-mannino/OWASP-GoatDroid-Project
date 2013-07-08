@@ -98,7 +98,7 @@ function validateLoginForm() {
 
 function openDatabase() {
 	return window.openDatabase("fourgoats", "1.0", "FourGoats Database",
-			2000000);
+			1000000);
 }
 
 function createDatabases() {
