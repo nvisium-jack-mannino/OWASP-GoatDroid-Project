@@ -125,12 +125,29 @@ function createDatabasesError(tx, err) {
 /*
  * Pass parsed JSON into this
  * 
+ * 
  */
 function insertUserInfo(json) {
 
-	var sql = 'insert into info (sessionToken, username) values (?,?)';
+	var sql = 'insert into info (sessionToken, username,isPublic, autoCheckin, isAdmin) values (?,?,?,?,?)';
 	var values = [ json["sessionToken"], json["userName"] ];
-
+	var isPublic;
+	var autoCheckin;
+	var isAdmin;
+	$.each(json.preferences, function(index, val) {
+		$.each(val, function(index, val2) {
+			if (val2["key"] == "isPublic")
+				isPublic = val2["value"];
+			else if (val2["key"] == "autoCheckin")
+				autoCheckin = val2["value"];
+			else if (val2["key"] == "isAdmin")
+				isAdmin = val2["value"];
+		});
+	});
+	values.push(isPublic);
+	values.push(autoCheckin);
+	values.push(isAdmin);
+	console.log(values);
 	window.db.transaction(function(db) {
 		db.executeSql(sql, values);
 	}, null, null);
