@@ -18,8 +18,9 @@
 	$(document).ready(function() {
 		document.addEventListener("deviceready", function() {
 			isDestinationSet();
+			validateLoginForm();
+			createDatabases();
 		}, false);
-		validateLoginForm();
 	});
 </script>
 </head>

@@ -95,3 +95,27 @@ function validateLoginForm() {
 		}
 	})
 }
+
+function createDatabases() {
+	var db = window.openDatabase("fourgoats", "1.0", "FourGoats Database",
+			2000000);
+	db.transaction(createTables, createDatabasesError, createDatabasesSuccess);
+}
+
+function createTables(db) {
+	console.log("in create tables");
+	db
+			.executeSql('CREATE TABLE IF NOT EXISTS info (id integer primary key autoincrement, sessionToken, userName, isPublic,'
+					+ 'autoCheckin, isAdmin)');
+	db
+			.executeSql('CREATE TABLE IF NOT EXISTS checkins (id integer primary key autoincrement, checkinID, venueName, '
+					+ 'dateTime, latitude, longitude)')
+}
+
+function createDatabasesSuccess() {
+	console.write("db success");
+}
+
+function createDatabasesError() {
+	console.write("db error");
+}
