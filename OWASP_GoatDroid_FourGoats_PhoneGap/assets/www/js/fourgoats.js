@@ -31,6 +31,7 @@ function getLoginSuccess(response) {
 		 * 
 		 */
 		insertUserInfo(json);
+		console.log("winz");
 		/*
 		 * Next, based on your settings we initialize the location tracking
 		 * service
@@ -49,6 +50,7 @@ function getLoginSuccess(response) {
 		 * didn't work, basically
 		 * 
 		 */
+		console.log("failz");
 	}
 }
 
@@ -89,21 +91,18 @@ function validateLoginForm() {
 			$(element).before(error);
 		},
 	});
-	$('#login-submit-button').click(function() {
+	$('#login-submit-button').click(function(e) {
 		if ($('#loginForm').valid()) {
 			submitLogin();
 		}
 	})
 }
 
-function openDatabase() {
-	return window.openDatabase("fourgoats", "1.0", "FourGoats Database",
-			1000000);
-}
-
 function createDatabases() {
-	var db = openDatabase();
-	db.transaction(createTables, null, null);
+	window.db = window.openDatabase("fourgoats", "1.0", "FourGoats Database",
+			2000000);
+	window.db.transaction(createTables, createDatabasesError,
+			createDatabasesSuccess);
 }
 
 function createTables(db) {
@@ -115,15 +114,24 @@ function createTables(db) {
 					+ 'dateTime, latitude, longitude)')
 }
 
+function createDatabasesSuccess(tx, err) {
+	// console.write("db success");
+}
+
+function createDatabasesError(tx, err) {
+	// console.write("db error");
+}
+
 /*
  * Pass parsed JSON into this
  * 
  */
 function insertUserInfo(json) {
-	var db = openDatabase();
+
 	var sql = 'insert into info (sessionToken, username) values (?,?)';
 	var values = [ json["sessionToken"], json["userName"] ];
-	db.transaction(function(json) {
+
+	window.db.transaction(function(db) {
 		db.executeSql(sql, values);
-	});
+	}, null, null);
 }
