@@ -13,17 +13,54 @@ var submitLogin = function() {
 		url : getDestinationInfoString()
 				+ "/fourgoats/api/v1/login/authenticate",
 		type : 'POST',
-		dataType : 'json',
+		dataType : 'html',
 		data : params,
-		success : function(json) {
-
-			var response = $.parseJSON(json);
-			// do stuff here
-		},
+		success : getLoginSuccess,
 		error : function(xhr, textStatus, errorThrown) {
 			// do stuff here
 		}
 	});
+}
+
+function getLoginSuccess(response) {
+	var json = $.parseJSON(response);
+	if (isSuccess(json)) {
+		/*
+		 * First, we have to store your session token, admin status, and
+		 * settings
+		 * 
+		 */
+
+		/*
+		 * Next, based on your settings we initialize the location tracking
+		 * service
+		 * 
+		 */
+
+		/*
+		 * Then, we redirect you to the home page and render the correct view
+		 * based on your admin status
+		 * 
+		 */
+
+	} else {
+		/*
+		 * We display the appropriate error message (your creds either worked or
+		 * didn't work, basically
+		 * 
+		 */
+	}
+}
+
+/*
+ * You pass a JSON array into this. It tells you if success was true or not.
+ * 
+ */
+function isSuccess(json) {
+	if (json["success"] == "true")
+		return true;
+	else
+		return false;
 }
 
 function validateLoginForm() {
