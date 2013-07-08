@@ -56,10 +56,8 @@ function validateServerInfo() {
 
 	$('#serv-info-submit-button').click(function() {
 		if ($('#serverInfoForm').valid()) {
-			console.log("good");
 			SharedPrefs.setDestinationInfo();
-		} else
-			console.log("bad");
+		}
 	});
 }
 

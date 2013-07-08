@@ -30,7 +30,7 @@ function getLoginSuccess(response) {
 		 * settings
 		 * 
 		 */
-
+		insertUserInfo(json);
 		/*
 		 * Next, based on your settings we initialize the location tracking
 		 * service
@@ -96,14 +96,17 @@ function validateLoginForm() {
 	})
 }
 
-function createDatabases() {
-	var db = window.openDatabase("fourgoats", "1.0", "FourGoats Database",
+function openDatabase() {
+	return window.openDatabase("fourgoats", "1.0", "FourGoats Database",
 			2000000);
-	db.transaction(createTables, createDatabasesError, createDatabasesSuccess);
+}
+
+function createDatabases() {
+	var db = openDatabase();
+	db.transaction(createTables, null, null);
 }
 
 function createTables(db) {
-	console.log("in create tables");
 	db
 			.executeSql('CREATE TABLE IF NOT EXISTS info (id integer primary key autoincrement, sessionToken, userName, isPublic,'
 					+ 'autoCheckin, isAdmin)');
@@ -112,10 +115,15 @@ function createTables(db) {
 					+ 'dateTime, latitude, longitude)')
 }
 
-function createDatabasesSuccess() {
-	console.write("db success");
-}
-
-function createDatabasesError() {
-	console.write("db error");
+/*
+ * Pass parsed JSON into this
+ * 
+ */
+function insertUserInfo(json) {
+	var db = openDatabase();
+	var sql = 'insert into info (sessionToken, username) values (?,?)';
+	var values = [ json["sessionToken"], json["userName"] ];
+	db.transaction(function(json) {
+		db.executeSql(sql, values);
+	});
 }
