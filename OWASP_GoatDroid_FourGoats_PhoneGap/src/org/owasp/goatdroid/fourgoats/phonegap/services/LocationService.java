@@ -16,9 +16,8 @@
  */
 package org.owasp.goatdroid.fourgoats.phonegap.services;
 
-import org.owasp.goatdroid.fourgoats.db.CheckinDBHelper;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
-import org.owasp.goatdroid.fourgoats.misc.Utils;
+import org.owasp.goatdroid.fourgoats.phonegap.db.CheckinDBHelper;
+import org.owasp.goatdroid.fourgoats.phonegap.utils.Utils;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -47,14 +46,9 @@ public class LocationService extends Service {
 	public void onCreate() {
 
 		super.onCreate();
-		UserInfoDBHelper uidh = new UserInfoDBHelper(getApplicationContext());
-		String autoCheckin = uidh.getPreferences().get("autoCheckin");
 
-		if (autoCheckin.equals("true")) {
-			getLocation();
-			getLocationLoop();
-		} else
-			stopSelf();
+		getLocation();
+		getLocationLoop();
 	}
 
 	public void getLocationLoop() {

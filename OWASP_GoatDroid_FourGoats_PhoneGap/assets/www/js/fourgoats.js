@@ -109,11 +109,14 @@ function createDatabases() {
 
 function createTables(db) {
 	db
-			.executeSql('CREATE TABLE IF NOT EXISTS info (id integer primary key autoincrement, sessionToken, userName, isPublic,'
+			.executeSql('CREATE TABLE IF NOT EXISTS info (id INTEGER PRIMARY KEY AUTOINCREMENT, sessionToken, userName, isPublic,'
 					+ 'autoCheckin, isAdmin)');
 	db
-			.executeSql('CREATE TABLE IF NOT EXISTS checkins (id integer primary key autoincrement, checkinID, venueName, '
-					+ 'dateTime, latitude, longitude)')
+			.executeSql('CREATE TABLE IF NOT EXISTS checkins (id INTEGER PRIMARY KEY AUTOINCREMENT, checkinID, venueName, '
+					+ 'dateTime, latitude, longitude)');
+	db
+			.executeSql('CREATE TABLE IF NOT EXISTS autocheckin (id INTEGER PRIMARY KEY AUTOINCREMENT, dateTime, latitude, longitude)');
+
 }
 
 function createDatabasesSuccess(tx, err) {
