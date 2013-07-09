@@ -40,6 +40,7 @@ function getLoginSuccess(response) {
 			/*
 			 * start service
 			 */
+			IntentGenerator.startService("one", "two");
 		}
 		/*
 		 * Then, we redirect you to the home page and render the correct view
@@ -165,16 +166,17 @@ function insertUserInfo(json) {
 }
 
 function isAutoCheckinEnabled() {
+	var isEnabled;
 	window.db.transaction(function(db) {
-		console.log("inside of select");
 		db.executeSql("SELECT autoCheckin FROM info", [],
 				function(tx, results) {
-					if (results.rows.item(0).autoCheckin)
-						return true;
+					if (results.rows.item(0).autoCheckin == "true")
+						isEnabled = true;
 					else
-						return false;
+						isEnabled = false;
 				}, function() {
-					return false;
+					isEnabled = false;
 				})
 	});
+	return isEnabled;
 }

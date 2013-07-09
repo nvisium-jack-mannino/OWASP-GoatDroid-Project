@@ -1,7 +1,8 @@
-var IntentBuilder = {
+var IntentGenerator = {
 
-	startService : function() {
-		cordova.exec(null, null, 'IntentGenerator', 'startService', []);
+	startService : function(things, stuff) {
+		cordova.exec(null, null, 'IntentGenerator', 'startService', [ things,
+				stuff ]);
 	},
 
 	startActivity : function() {
