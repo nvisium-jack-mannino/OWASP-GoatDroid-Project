@@ -31,13 +31,16 @@ function getLoginSuccess(response) {
 		 * 
 		 */
 		insertUserInfo(json);
-		console.log("winz");
 		/*
 		 * Next, based on your settings we initialize the location tracking
 		 * service
 		 * 
 		 */
-
+		if (isAutoCheckinEnabled()) {
+			/*
+			 * start service
+			 */
+		}
 		/*
 		 * Then, we redirect you to the home page and render the correct view
 		 * based on your admin status
@@ -50,7 +53,6 @@ function getLoginSuccess(response) {
 		 * didn't work, basically
 		 * 
 		 */
-		console.log("failz");
 	}
 }
 
@@ -101,8 +103,8 @@ function validateLoginForm() {
 function createDatabases() {
 	window.db = window.openDatabase("fourgoats", "1.0", "FourGoats Database",
 			2000000);
-	window.db.transaction(createTables, createDatabasesError,
-			createDatabasesSuccess);
+	window.db.transaction(createTables, createDatabasesSuccess,
+			createDatabasesError);
 }
 
 function createTables(db) {
@@ -129,7 +131,14 @@ function createDatabasesError(tx, err) {
  */
 function insertUserInfo(json) {
 
-	var sql = 'insert into info (sessionToken, username,isPublic, autoCheckin, isAdmin) values (?,?,?,?,?)';
+	/*
+	 * First, we purge old settings from the DB
+	 * 
+	 */
+	window.db.transaction(function(db) {
+		db.executeSql('DELETE FROM info');
+	})
+	var sql = 'INSERT INTO info (sessionToken, username,isPublic, autoCheckin, isAdmin) VALUES (?,?,?,?,?)';
 	var values = [ json["sessionToken"], json["userName"] ];
 	var isPublic;
 	var autoCheckin;
@@ -147,8 +156,22 @@ function insertUserInfo(json) {
 	values.push(isPublic);
 	values.push(autoCheckin);
 	values.push(isAdmin);
-	console.log(values);
 	window.db.transaction(function(db) {
 		db.executeSql(sql, values);
 	}, null, null);
+}
+
+function isAutoCheckinEnabled() {
+	window.db.transaction(function(db) {
+		console.log("inside of select");
+		db.executeSql("SELECT autoCheckin FROM info", [],
+				function(tx, results) {
+					if (results.rows.item(0).autoCheckin)
+						return true;
+					else
+						return false;
+				}, function() {
+					return false;
+				})
+	});
 }
