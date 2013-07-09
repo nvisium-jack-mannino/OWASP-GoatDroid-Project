@@ -41,9 +41,9 @@ public class IntentGenerator extends CordovaPlugin {
 		if (!args.get(3).equals(null))
 			intent.setType(args.getString(3));
 
-		if (!args.get(4).equals(null))
-			intent.setComponent((ComponentName) args.get(4));
-
+		if (!args.get(4).equals(null)) {
+			intent.setComponent(new ComponentName(args.getString(4)));
+		}
 		if (!args.get(5).equals(null))
 			intent.putExtras((Bundle) args.get(5));
 
