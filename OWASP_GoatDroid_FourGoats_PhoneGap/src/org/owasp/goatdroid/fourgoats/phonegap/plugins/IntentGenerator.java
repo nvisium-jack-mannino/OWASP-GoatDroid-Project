@@ -1,6 +1,5 @@
 package org.owasp.goatdroid.fourgoats.phonegap.plugins;
 
-import java.util.HashMap;
 import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
 import org.json.JSONArray;
@@ -16,6 +15,7 @@ public class IntentGenerator extends CordovaPlugin {
 			CallbackContext callbackContext) throws JSONException {
 
 		if (action.equals("startService")) {
+			this.cordova.getActivity().startService(buildIntent(args));
 			return true;
 		} else if (action.equals("startActivity")) {
 			return true;
@@ -25,47 +25,30 @@ public class IntentGenerator extends CordovaPlugin {
 		return false;
 	}
 
-	public Intent buildIntent(HashMap<String, Object> intentMap) {
+	public Intent buildIntent(JSONArray args) throws JSONException {
 
 		Intent intent = new Intent();
 
-		if (intentMap.get("action") != null) {
+		if (!args.get(0).equals(null))
+			intent.setAction(args.getString(0));
 
-			intent.setAction((String) intentMap.get("action"));
-		}
+		if (!args.get(1).equals(null))
+			intent.setData((Uri) args.get(1));
 
-		if (intentMap.get("data") != null) {
+		if (!args.get(2).equals(null))
+			intent.addCategory((String) args.getString(2));
 
-			intent.setData((Uri) intentMap.get("data"));
-		}
+		if (!args.get(3).equals(null))
+			intent.setType(args.getString(3));
 
-		if (intentMap.get("category") != null) {
+		if (!args.get(4).equals(null))
+			intent.setComponent((ComponentName) args.get(4));
 
-			intent.addCategory((String) intentMap.get("category"));
-		}
+		if (!args.get(5).equals(null))
+			intent.putExtras((Bundle) args.get(5));
 
-		if (intentMap.get("type") != null) {
-
-			intent.setType((String) intentMap.get("type"));
-
-		}
-
-		if (intentMap.get("component") != null) {
-
-			intent.setComponent((ComponentName) intentMap.get("component"));
-
-		}
-
-		if (intentMap.get("extras") != null) {
-
-			intent.putExtras((Bundle) intentMap.get("extras"));
-
-		}
-
-		if (intentMap.get("flags") != null) {
-
-			intent.setFlags((Integer) intentMap.get("flags"));
-		}
+		if (!args.get(6).equals(null))
+			intent.setFlags(args.getInt(6));
 
 		return intent;
 	}

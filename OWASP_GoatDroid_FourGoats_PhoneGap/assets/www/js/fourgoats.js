@@ -40,7 +40,14 @@ function getLoginSuccess(response) {
 			/*
 			 * start service
 			 */
-			IntentGenerator.startService("one", "two");
+			IntentGenerator
+					.startService(
+							null,
+							null,
+							null,
+							null,
+							"org.owasp.goatdroid.fourgoats.phonegap.services.LocationService",
+							null, null);
 		}
 		/*
 		 * Then, we redirect you to the home page and render the correct view
