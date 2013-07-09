@@ -62,6 +62,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".services.LocationService" >
+            <intent-filter>
+                <action android:name="org.owasp.goatdroid.fourgoats.services.LocationService" />
+            </intent-filter>
+        </service>
     </application>
 
     <uses-sdk
