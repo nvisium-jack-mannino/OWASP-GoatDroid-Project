@@ -42,7 +42,7 @@ function getLoginSuccess(response) {
 			 */
 			var componentName = {
 				"package" : "org.owasp.goatdroid.fourgoats.phonegap",
-				"className" : "org.owasp.goatdroid.fourgoats.phonegap.services.LocatioNService"
+				"className" : "org.owasp.goatdroid.fourgoats.phonegap.services.LocationService"
 			};
 			IntentGenerator.startService(null, null, null, null, componentName,
 					null, null);
