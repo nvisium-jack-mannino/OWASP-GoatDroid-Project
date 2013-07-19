@@ -1,7 +1,7 @@
 var DEFAULT_APP = "fourgoats-native";
 
 function initializeContext() {
-	if (getCookie() == 'undefined') {
+	if (getCookie() != 'null') {
 		loadSidebar(DEFAULT_APP);
 		loadLesson(DEFAULT_APP);
 	} else {
