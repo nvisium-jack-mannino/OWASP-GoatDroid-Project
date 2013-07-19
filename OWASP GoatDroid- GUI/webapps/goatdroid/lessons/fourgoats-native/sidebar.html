@@ -1,0 +1,69 @@
+<div id="mainnav" class="hidden-phone hidden-tablet">
+	<ul style="display: block;">
+		<li id="fourgoats-native-home"><a href="#">
+				<div class="icon">
+					<span class="fs1" aria-hidden="true" data-icon="&#xe001;"></span>
+				</div> FourGoats (Native) Home
+		</a></li>
+		<li id="insecure-data-storage"><a href="#">
+				<div class="icon">
+					<span class="fs1" aria-hidden="true" data-icon="&#xe094;"></span>
+				</div> Insecure Data Storage </li>
+		<li id="transport-layer"><a href="#">
+				<div class="icon">
+					<span class="fs1" aria-hidden="true" data-icon="&#xe094;"></span>
+				</div> Insufficient Transport Layer Protection </li>
+		<li id="xss"><a href="#">
+				<div class="icon">
+					<span class="fs1" aria-hidden="true" data-icon="&#xe094;"></span>
+				</div> Cross Site Scripting (XSS) </li>
+		<li id="exposed-provider"><a href="#">
+				<div class="icon">
+					<span class="fs1" aria-hidden="true" data-icon="&#xe094;"></span>
+				</div> Exposed Content Provider </li>
+	</ul>
+</div>
+
+<script type="text/javascript">
+	//Main menu navigation
+
+	$('.submenu > a').click(function(e) {
+		e.preventDefault();
+		var submenu = $(this).siblings('ul');
+		var li = $(this).parents('li');
+		var submenus = $('#mainnav li.submenu ul');
+		var submenus_parents = $('#mainnav li.submenu');
+		if (li.hasClass('open')) {
+			if (($(window).width() > 768) || ($(window).width() < 479)) {
+				submenu.slideUp();
+			} else {
+				submenu.fadeOut(250);
+			}
+			li.removeClass('open');
+		} else {
+			if (($(window).width() > 768) || ($(window).width() < 479)) {
+				submenus.slideUp();
+				submenu.slideDown();
+			} else {
+				submenus.fadeOut(250);
+				submenu.fadeIn(250);
+			}
+			submenus_parents.removeClass('open');
+			li.addClass('open');
+		}
+	});
+
+	var ul = $('#mainnav > ul');
+
+	$('#mainnav > a').click(function(e) {
+		e.preventDefault();
+		var mainnav = $('#mainnav');
+		if (mainnav.hasClass('open')) {
+			mainnav.removeClass('open');
+			ul.slideUp(250);
+		} else {
+			mainnav.addClass('open');
+			ul.slideDown(250);
+		}
+	});
+</script>

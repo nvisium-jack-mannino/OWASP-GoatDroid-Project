@@ -15,15 +15,22 @@
  */
 package org.owasp.goatdroid.gui;
 
-import org.owasp.goatdroid.gui.view.frame.HomeFrame;
+import org.apache.catalina.core.AprLifecycleListener;
+import org.apache.catalina.core.StandardServer;
+import org.apache.catalina.startup.Tomcat;
 
 public class Main {
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		HomeFrame home = new HomeFrame();
-		home.setVisible(true);
+	public static void main(String[] args) throws Exception {
+		Tomcat tomcat = new Tomcat();
+		int webPort = 10000;
+		tomcat.setBaseDir(".");
+		tomcat.setPort(webPort);
+		tomcat.addWebapp("/", "goatdroid/");
+		tomcat.start();
+		tomcat.getServer().await();
 	}
 }

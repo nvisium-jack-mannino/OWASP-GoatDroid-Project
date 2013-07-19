@@ -15,18 +15,18 @@
  */
 package org.owasp.goatdroid.gui.webservice;
 
-import org.eclipse.jetty.server.Connector;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.nio.SelectChannelConnector;
-import org.eclipse.jetty.server.ssl.SslSocketConnector;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
+//import org.eclipse.jetty.server.Connector;
+//import org.eclipse.jetty.server.Server;
+//import org.eclipse.jetty.server.nio.SelectChannelConnector;
+//import org.eclipse.jetty.server.ssl.SslSocketConnector;
+//import org.eclipse.jetty.servlet.ServletContextHandler;
+//import org.eclipse.jetty.servlet.ServletHolder;
 import org.owasp.goatdroid.gui.Utils;
 import org.owasp.goatdroid.gui.config.Config;
 import com.sun.jersey.spi.container.servlet.ServletContainer;
 
 public class WebServiceLauncher {
-
+/*
 	private static String serviceName;
 	static Server server;
 	static String keyStorePath;
@@ -103,4 +103,5 @@ public class WebServiceLauncher {
 	public static void setServiceName(String serviceName) {
 		WebServiceLauncher.serviceName = serviceName;
 	}
+	*/
 }

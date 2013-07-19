@@ -20,7 +20,7 @@ import org.owasp.goatdroid.gui.ResourceTreeBuilder;
 import org.owasp.goatdroid.gui.Utils;
 
 public class WebService {
-
+/*
 	private static WebServiceLauncher service;
 	private static String serviceName;
 	boolean isServiceRunning;
@@ -97,4 +97,5 @@ public class WebService {
 	public static void setService(WebServiceLauncher service) {
 		WebService.service = service;
 	}
+	*/
 }

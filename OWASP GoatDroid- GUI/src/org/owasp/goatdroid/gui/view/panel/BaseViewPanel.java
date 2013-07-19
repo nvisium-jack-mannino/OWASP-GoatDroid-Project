@@ -161,12 +161,12 @@ public class BaseViewPanel extends JPanel {
 						homeAppsStartWebServiceButton.setVisible(true);
 
 						try {
-							if (!WebService.isServiceRunning())
-								setDisplayWebServiceStopped();
-							else
-								setDisplayWebServiceStarted();
+							//if (!WebService.isServiceRunning())
+							//	setDisplayWebServiceStopped();
+							//else
+							//	setDisplayWebServiceStarted();
 						} catch (NullPointerException e1) {
-							service = new WebService(appsTree);
+							//service = new WebService(appsTree);
 						}
 
 					} catch (IOException e2) {
@@ -254,8 +254,8 @@ public class BaseViewPanel extends JPanel {
 											 * else, we simply stop the service.
 											 */
 											try {
-												if (service.isServiceRunning())
-													service.stopService();
+												//if (service.isServiceRunning())
+													//service.stopService();
 											} catch (NullPointerException e1) {
 												/*
 												 * We just catch it here. If the
@@ -268,14 +268,14 @@ public class BaseViewPanel extends JPanel {
 											 * pass in the currently selected
 											 * application
 											 */
-											service = new WebService(appsTree);
-											service.startService(true);
+											//service = new WebService(appsTree);
+											//service.startService(true);
 											setDisplayWebServiceStarted();
 										} else {
 											showMessageDialog(Constants.NO_WEB_PORTS_CONFIGURED);
 										}
 									} else {
-										service.stopService();
+										//service.stopService();
 										setDisplayWebServiceStopped();
 									}
 								} else {
