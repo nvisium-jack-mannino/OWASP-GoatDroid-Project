@@ -195,7 +195,7 @@ a {
   -o-transition: All 0.5s ease;
   transition: All 0.5s ease; }
   a:hover {
-    color: #b5799e;
+    color: #000000;
     text-decoration: none; }
 
 .img-rounded {
@@ -2714,7 +2714,6 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
   margin-bottom: 3px; }
 .nav-pills.nav-stacked > li:last-child > a {
   margin-bottom: 1px; }
-
 .nav .dropdown-toggle .caret {
   border-top-color: #579da9;
   border-bottom-color: #579da9;
@@ -3075,7 +3074,7 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
     .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {
       color: #525252;
       text-decoration: none;
-      background-color: #e9e9e9;
+      background-color: #33CC33;
       -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, 0.0125) inset;
       -moz-box-shadow: 0 3px 8px rgba(0, 0, 0, 0.0125) inset;
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.0125) inset; }
