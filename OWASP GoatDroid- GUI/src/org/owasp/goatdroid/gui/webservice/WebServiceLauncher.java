@@ -21,12 +21,18 @@ package org.owasp.goatdroid.gui.webservice;
 //import org.eclipse.jetty.server.ssl.SslSocketConnector;
 //import org.eclipse.jetty.servlet.ServletContextHandler;
 //import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.nio.SelectChannelConnector;
+import org.eclipse.jetty.server.ssl.SslSocketConnector;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 import org.owasp.goatdroid.gui.Utils;
 import org.owasp.goatdroid.gui.config.Config;
 import com.sun.jersey.spi.container.servlet.ServletContainer;
 
 public class WebServiceLauncher {
-/*
+
 	private static String serviceName;
 	static Server server;
 	static String keyStorePath;
@@ -47,19 +53,20 @@ public class WebServiceLauncher {
 				"com.sun.jersey.api.core.PackagesResourceConfig");
 		sh.setInitParameter("com.sun.jersey.config.property.packages",
 				"org.owasp.goatdroid.webservice");
-		server = new Server(Integer.parseInt(Config.getWebServiceHTTPSPort()));
+		server = new Server(10000);
 		ServletContextHandler context = new ServletContextHandler(server, "/",
 				ServletContextHandler.SESSIONS);
 		context.setAliases(true);
 		context.addServlet(sh, "/*");
 		if (isHTTPS) {
 			SslSocketConnector sslConnector = new SslSocketConnector();
-			sslConnector.setPort(Integer.parseInt(Config
-					.getWebServiceHTTPSPort()));
+			// sslConnector.setPort(Integer.parseInt(Config
+			// .getWebServiceHTTPSPort()));
+			sslConnector.setPort(10000);
 			sslConnector.setPassword("goatdroid");
 			sslConnector.setKeyPassword("goatdroid");
 			sslConnector.setTrustPassword("goatdroid");
-			sslConnector.setKeystore(keyStorePath);
+			sslConnector.setKeystore("keystore/keystore");
 			SelectChannelConnector selectChannelConnector = new SelectChannelConnector();
 			// selectChannelConnector.setPort(Integer.parseInt(config
 			// .getWebServicePort()));
@@ -85,7 +92,7 @@ public class WebServiceLauncher {
 
 	private void setKeyStore() {
 
-		keyStorePath = Utils.getCurrentPath() + "keystore";
+		keyStorePath = "keystore/";
 	}
 
 	public static String getSlash() {
@@ -103,5 +110,5 @@ public class WebServiceLauncher {
 	public static void setServiceName(String serviceName) {
 		WebServiceLauncher.serviceName = serviceName;
 	}
-	*/
+
 }

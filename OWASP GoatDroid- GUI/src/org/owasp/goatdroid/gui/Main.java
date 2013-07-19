@@ -15,9 +15,7 @@
  */
 package org.owasp.goatdroid.gui;
 
-import javax.naming.Context;
-
-import org.apache.catalina.startup.Tomcat;
+import org.owasp.goatdroid.gui.webservice.WebServiceLauncher;
 
 public class Main {
 
@@ -25,14 +23,7 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		Tomcat tomcat = new Tomcat();
-		int webPort = 10000;
-		tomcat.setBaseDir("webapps/goatdroid");
-	
-		tomcat.setPort(webPort);
-		
-		tomcat.addWebapp("/", "/");
-		tomcat.start();
-		tomcat.getServer().await();
+
+		WebServiceLauncher.startService(true);
 	}
 }
