@@ -5,7 +5,7 @@
 <jsp:include page="application.html" />
 <script>
 	$(document).ready(function() {
-		initializeContext();
+		initializeContext($.url().param('foo'));
 	});
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
