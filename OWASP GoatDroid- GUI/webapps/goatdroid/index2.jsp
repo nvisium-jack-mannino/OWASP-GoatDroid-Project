@@ -9,7 +9,7 @@
 	});
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Eat my assd</title>
+<title>OWASP GoatDroid</title>
 </head>
 <body>
 	<jsp:include page="common/header.html" />
@@ -18,7 +18,7 @@
 
 	<div class="container-fluid">
 		<div class="dashboard-wrapper">
-			<div id="main-container"></div>
+			<div id="main-container">If you see this it works!</div>
 		</div>
 	</div>
 	<jsp:include page="common/footer.html" />

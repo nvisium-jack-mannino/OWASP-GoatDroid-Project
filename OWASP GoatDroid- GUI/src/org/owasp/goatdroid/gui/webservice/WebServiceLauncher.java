@@ -27,6 +27,7 @@ import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.server.ssl.SslSocketConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.webapp.WebAppContext;
 import org.owasp.goatdroid.gui.Utils;
 import org.owasp.goatdroid.gui.config.Config;
 import com.sun.jersey.spi.container.servlet.ServletContainer;
@@ -46,7 +47,9 @@ public class WebServiceLauncher {
 	}
 
 	static public void startService(boolean isHTTPS) throws Exception {
-
+		/*
+		 * This loads the web service
+		 */
 		ServletHolder sh = new ServletHolder(ServletContainer.class);
 		sh.setInitParameter(
 				"com.sun.jersey.config.property.resourceConfigClass",
@@ -58,6 +61,7 @@ public class WebServiceLauncher {
 				ServletContextHandler.SESSIONS);
 		context.setAliases(true);
 		context.addServlet(sh, "/*");
+
 		if (isHTTPS) {
 			SslSocketConnector sslConnector = new SslSocketConnector();
 			// sslConnector.setPort(Integer.parseInt(Config
@@ -76,6 +80,17 @@ public class WebServiceLauncher {
 		} else {
 			server.start();
 		}
+		/*
+		 * This loads the front-end website
+		 */
+		Server webServer = new Server(12000);
+		WebAppContext webContext = new WebAppContext();
+		webContext.setDescriptor("webapps/goatdroid/WEB-INF/web.xml");
+		webContext.setResourceBase("webapps/goatdroid/");
+		webContext.setContextPath("/");
+		webContext.setParentLoaderPriority(true);
+		webServer.setHandler(webContext);
+		webServer.start();
 	}
 
 	static public void stopService() throws Exception {
