@@ -1,14 +1,12 @@
 var DEFAULT_APP = "fourgoats-native";
 
 function initializeContext(app) {
-	if (getCookie() != 'null') {
-		console.log("in first " + app);
-		loadSidebar(DEFAULT_APP);
-		loadLesson(DEFAULT_APP);
+	if (getCookie() != null) {
+		loadNewContent(getCookie());
+	} else if (app != null) {
+		loadNewContent(app);
 	} else {
-		console.log("in last " + app);
-		loadSidebar(getCookie());
-		loadLesson(getCookie());
+		loadNewContent(DEFAULT_APP);
 	}
 }
 
@@ -20,7 +18,7 @@ function loadNewContent(app) {
 	 * initialized
 	 * 
 	 */
-	if (window.location.pathname != "index.jsp") {
+	if ($.url("file") != "index.jsp") {
 		window.location.href = "index.jsp?app=" + app;
 	} else {
 		loadLesson(app);
