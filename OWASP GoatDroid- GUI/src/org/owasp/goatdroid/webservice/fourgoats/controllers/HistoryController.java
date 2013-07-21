@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.resource;
+package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -25,7 +25,7 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryBean;
 import org.owasp.goatdroid.webservice.fourgoats.impl.History;
 
 @Path("/fourgoats/api/v1/history")
-public class HistoryResource {
+public class HistoryController {
 
 	@Path("list")
 	@GET

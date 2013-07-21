@@ -13,28 +13,28 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.resource;
+package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
-import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import org.owasp.goatdroid.webservice.fourgoats.bean.RegisterBean;
-import org.owasp.goatdroid.webservice.fourgoats.impl.Register;
+import javax.ws.rs.FormParam;
+import org.owasp.goatdroid.webservice.herdfinancial.bean.RegisterBean;
+import org.owasp.goatdroid.webservice.herdfinancial.impl.Register;
 
-@Path("/fourgoats/api/v1/register")
-public class RegisterResource {
-
+@Path("/herdfinancial/api/v1/register")
+public class RegisterController {
 	@POST
 	@Produces("application/json")
 	public RegisterBean doRegistration(
+			@FormParam("accountNumber") String accountNumber,
 			@FormParam("firstName") String firstName,
 			@FormParam("lastName") String lastName,
 			@FormParam("userName") String userName,
 			@FormParam("password") String password) {
 		try {
-			return Register.registerUser(firstName, lastName, userName,
-					password);
+			return Register.registerUser(accountNumber, firstName, lastName,
+					userName, password);
 		} catch (NullPointerException e) {
 			RegisterBean bean = new RegisterBean();
 			bean.setSuccess(false);

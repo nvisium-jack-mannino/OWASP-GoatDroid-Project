@@ -13,33 +13,29 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.herdfinancial.resource;
+package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
-import javax.ws.rs.CookieParam;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.CookieParam;
+import javax.ws.rs.FormParam;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
-import org.owasp.goatdroid.webservice.herdfinancial.bean.SecretQuestionBean;
-import org.owasp.goatdroid.webservice.herdfinancial.impl.SecretQuestion;
+import org.owasp.goatdroid.webservice.herdfinancial.bean.TransferBean;
+import org.owasp.goatdroid.webservice.herdfinancial.impl.Transfer;
 
-@Path("/herdfinancial/api/v1/secret_questions")
-public class SecretQuestionResource {
-
-	@Path("set")
+@Path("/herdfinancial/api/v1/transfer")
+public class TransferController {
 	@POST
 	@Produces("application/json")
-	public SecretQuestionBean setSecretQuestions(
-			@CookieParam(Constants.SESSION_TOKEN) int sessionToken,
-			@FormParam("answer1") String answer1,
-			@FormParam("answer2") String answer2,
-			@FormParam("answer3") String answer3) {
+	public TransferBean doTransfer(@FormParam("from") String from,
+			@FormParam("to") String to, @FormParam("amount") double amount,
+			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {
+
 		try {
-			return SecretQuestion.setSecretQuestions(sessionToken, answer1,
-					answer2, answer3);
+			return Transfer.transferFunds(sessionToken, from, to, amount);
 		} catch (NullPointerException e) {
-			SecretQuestionBean bean = new SecretQuestionBean();
+			TransferBean bean = new TransferBean();
 			bean.setSuccess(false);
 			return bean;
 		}

@@ -45,13 +45,13 @@
 									<div class="control-group">
 										<label class="control-label"> Android SDK Path </label>
 										<div class="controls">
-											<input type="text" placeholder="Path to Android SDK">
+											<input type="file" placeholder="Path to Android SDK">
 										</div>
 									</div>
 									<div class="control-group">
 										<label class="control-label"> Virtual Devices Path </label>
 										<div class="controls">
-											<input type="text"
+											<input type="file"
 												placeholder="This is the path where Android SDK stores vms" />
 										</div>
 									</div>

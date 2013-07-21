@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.herdfinancial.resource;
+package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -23,7 +23,7 @@ import org.owasp.goatdroid.webservice.herdfinancial.bean.ForgotPasswordBean;
 import org.owasp.goatdroid.webservice.herdfinancial.impl.ForgotPassword;
 
 @Path("/herdfinancial/api/v1/forgot_password")
-public class ForgotPasswordResource {
+public class ForgotPasswordController {
 
 	@Path("request_code")
 	@POST

@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.herdfinancial.resource;
+package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.FormParam;
@@ -27,7 +27,7 @@ import org.owasp.goatdroid.webservice.herdfinancial.bean.LoginBean;
 import org.owasp.goatdroid.webservice.herdfinancial.impl.Login;
 
 @Path("/herdfinancial/api/v1/login")
-public class LoginResource {
+public class LoginController {
 	@Path("authenticate")
 	@POST
 	@Produces("application/json")

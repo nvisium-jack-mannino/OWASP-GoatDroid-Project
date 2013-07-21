@@ -13,29 +13,30 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.herdfinancial.resource;
+package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
-import javax.ws.rs.GET;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.CookieParam;
-import javax.ws.rs.PathParam;
-import org.owasp.goatdroid.webservice.herdfinancial.Constants;
-import org.owasp.goatdroid.webservice.herdfinancial.bean.BalanceBean;
-import org.owasp.goatdroid.webservice.herdfinancial.impl.Balance;
+import org.owasp.goatdroid.webservice.fourgoats.bean.RegisterBean;
+import org.owasp.goatdroid.webservice.fourgoats.impl.Register;
 
-@Path("/herdfinancial/api/v1/balances")
-public class BalanceResource {
-	@GET
-	@Path("{accountNumber}")
+@Path("/fourgoats/api/v1/register")
+public class RegisterController {
+
+	@POST
 	@Produces("application/json")
-	public BalanceBean getBalances(
-			@PathParam("accountNumber") String accountNumber,
-			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {
+	public RegisterBean doRegistration(
+			@FormParam("firstName") String firstName,
+			@FormParam("lastName") String lastName,
+			@FormParam("userName") String userName,
+			@FormParam("password") String password) {
 		try {
-			return Balance.getBalances(accountNumber, sessionToken);
+			return Register.registerUser(firstName, lastName, userName,
+					password);
 		} catch (NullPointerException e) {
-			BalanceBean bean = new BalanceBean();
+			RegisterBean bean = new RegisterBean();
 			bean.setSuccess(false);
 			return bean;
 		}

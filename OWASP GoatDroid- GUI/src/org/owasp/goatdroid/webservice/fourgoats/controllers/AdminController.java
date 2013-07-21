@@ -13,49 +13,62 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.resource;
+package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.CookieParam;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.bean.EditPreferencesBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.GetPreferencesBean;
-import org.owasp.goatdroid.webservice.fourgoats.impl.EditPreferences;
+import org.owasp.goatdroid.webservice.fourgoats.bean.AdminBean;
+import org.owasp.goatdroid.webservice.fourgoats.bean.GetUsersAdminBean;
+import org.owasp.goatdroid.webservice.fourgoats.impl.Admin;
 
-@Path("/fourgoats/api/v1/preferences")
-public class EditPreferencesResource {
+@Path("/fourgoats/api/v1/admin")
+public class AdminController {
 
-	@Path("modify_preferences")
+	@Path("delete_user")
 	@POST
 	@Produces("application/json")
-	public EditPreferencesBean modifyPreferences(
+	public AdminBean addComment(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
-			@FormParam("autoCheckin") boolean autoCheckin,
-			@FormParam("isPublic") boolean isPublic) {
-
+			@FormParam("userName") String userName) {
 		try {
-			return EditPreferences.modifyPreferences(sessionToken, autoCheckin,
-					isPublic);
+			return Admin.deleteUser(sessionToken, userName);
 		} catch (NullPointerException e) {
-			EditPreferencesBean bean = new EditPreferencesBean();
+			AdminBean bean = new AdminBean();
 			bean.setSuccess(false);
 			return bean;
 		}
 	}
 
-	@Path("get_preferences")
+	@Path("reset_password")
+	@POST
+	@Produces("application/json")
+	public AdminBean addComment(
+			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
+			@FormParam("userName") String userName,
+			@FormParam("newPassword") String newPassword) {
+		try {
+			return Admin.resetPassword(sessionToken, userName, newPassword);
+		} catch (NullPointerException e) {
+			AdminBean bean = new AdminBean();
+			bean.setSuccess(false);
+			return bean;
+		}
+	}
+
+	@Path("get_users")
 	@GET
 	@Produces("application/json")
-	public GetPreferencesBean getPreferences(
+	public GetUsersAdminBean addComment(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
 		try {
-			return EditPreferences.getPreferences(sessionToken);
+			return Admin.getUsers(sessionToken);
 		} catch (NullPointerException e) {
-			GetPreferencesBean bean = new GetPreferencesBean();
+			GetUsersAdminBean bean = new GetUsersAdminBean();
 			bean.setSuccess(false);
 			return bean;
 		}

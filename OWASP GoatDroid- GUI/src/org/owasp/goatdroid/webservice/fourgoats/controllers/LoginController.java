@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.resource;
+package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.FormParam;
@@ -28,7 +28,7 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
 import org.owasp.goatdroid.webservice.fourgoats.impl.Login;
 
 @Path("/fourgoats/api/v1/login")
-public class LoginResource {
+public class LoginController {
 
 	@Path("authenticate")
 	@POST

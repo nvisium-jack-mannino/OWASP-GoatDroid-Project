@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.resource;
+package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.POST;
@@ -26,7 +26,7 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.RewardBean;
 import org.owasp.goatdroid.webservice.fourgoats.impl.Reward;
 
 @Path("/fourgoats/api/v1/rewards")
-public class RewardResource {
+public class RewardController {
 
 	@Path("all_rewards")
 	@GET

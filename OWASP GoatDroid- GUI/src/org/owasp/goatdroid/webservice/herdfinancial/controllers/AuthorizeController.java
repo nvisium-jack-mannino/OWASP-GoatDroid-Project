@@ -13,30 +13,28 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.herdfinancial.resource;
+package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
+import javax.ws.rs.CookieParam;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.FormParam;
-import org.owasp.goatdroid.webservice.herdfinancial.bean.RegisterBean;
-import org.owasp.goatdroid.webservice.herdfinancial.impl.Register;
+import org.owasp.goatdroid.webservice.herdfinancial.Constants;
+import org.owasp.goatdroid.webservice.herdfinancial.bean.AuthorizeBean;
+import org.owasp.goatdroid.webservice.herdfinancial.impl.Authorize;
 
-@Path("/herdfinancial/api/v1/register")
-public class RegisterResource {
+@Path("/herdfinancial/api/v1/authorize")
+public class AuthorizeController {
 	@POST
 	@Produces("application/json")
-	public RegisterBean doRegistration(
-			@FormParam("accountNumber") String accountNumber,
-			@FormParam("firstName") String firstName,
-			@FormParam("lastName") String lastName,
-			@FormParam("userName") String userName,
-			@FormParam("password") String password) {
+	public AuthorizeBean authorizeDevice(
+			@FormParam("deviceID") String deviceID,
+			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {
 		try {
-			return Register.registerUser(accountNumber, firstName, lastName,
-					userName, password);
+			return Authorize.authorizeDevice(deviceID, sessionToken);
 		} catch (NullPointerException e) {
-			RegisterBean bean = new RegisterBean();
+			AuthorizeBean bean = new AuthorizeBean();
 			bean.setSuccess(false);
 			return bean;
 		}

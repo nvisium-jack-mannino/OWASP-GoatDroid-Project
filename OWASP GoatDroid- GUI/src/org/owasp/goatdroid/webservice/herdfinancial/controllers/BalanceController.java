@@ -13,28 +13,29 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.herdfinancial.resource;
+package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
-import javax.ws.rs.CookieParam;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.POST;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.CookieParam;
+import javax.ws.rs.PathParam;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
-import org.owasp.goatdroid.webservice.herdfinancial.bean.AuthorizeBean;
-import org.owasp.goatdroid.webservice.herdfinancial.impl.Authorize;
+import org.owasp.goatdroid.webservice.herdfinancial.bean.BalanceBean;
+import org.owasp.goatdroid.webservice.herdfinancial.impl.Balance;
 
-@Path("/herdfinancial/api/v1/authorize")
-public class AuthorizeResource {
-	@POST
+@Path("/herdfinancial/api/v1/balances")
+public class BalanceController {
+	@GET
+	@Path("{accountNumber}")
 	@Produces("application/json")
-	public AuthorizeBean authorizeDevice(
-			@FormParam("deviceID") String deviceID,
+	public BalanceBean getBalances(
+			@PathParam("accountNumber") String accountNumber,
 			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {
 		try {
-			return Authorize.authorizeDevice(deviceID, sessionToken);
+			return Balance.getBalances(accountNumber, sessionToken);
 		} catch (NullPointerException e) {
-			AuthorizeBean bean = new AuthorizeBean();
+			BalanceBean bean = new BalanceBean();
 			bean.setSuccess(false);
 			return bean;
 		}

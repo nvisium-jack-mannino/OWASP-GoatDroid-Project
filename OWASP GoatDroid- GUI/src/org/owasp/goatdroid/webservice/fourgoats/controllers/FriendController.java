@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.resource;
+package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.FormParam;
@@ -31,7 +31,7 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.PublicUsersBean;
 import org.owasp.goatdroid.webservice.fourgoats.impl.Friend;
 
 @Path("/fourgoats/api/v1/friends")
-public class FriendResource {
+public class FriendController {
 
 	@Path("list_friends")
 	@GET

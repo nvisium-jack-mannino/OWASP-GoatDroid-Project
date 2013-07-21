@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.herdfinancial.resource;
+package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.PathParam;
@@ -25,7 +25,7 @@ import org.owasp.goatdroid.webservice.herdfinancial.bean.StatementBean;
 import org.owasp.goatdroid.webservice.herdfinancial.impl.Statement;
 
 @Path("/herdfinancial/api/v1/statements")
-public class StatementResource {
+public class StatementController {
 
 	@GET
 	@Produces("application/json")

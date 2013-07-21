@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.resource;
+package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -28,7 +28,7 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.CommentBean;
 import org.owasp.goatdroid.webservice.fourgoats.impl.Comment;
 
 @Path("/fourgoats/api/v1/comments")
-public class CommentResource {
+public class CommentController {
 
 	@Path("add")
 	@POST
