@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.StatementBean;
-import org.owasp.goatdroid.webservice.herdfinancial.dao.StatementDAO;
+import org.owasp.goatdroid.webservice.herdfinancial.dao.StatementDaoImpl;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,7 +31,7 @@ public class StatementServiceImpl implements StatementService {
 
 		ArrayList<String> errors = new ArrayList<String>();
 		StatementBean bean = new StatementBean();
-		StatementDAO dao = new StatementDAO();
+		StatementDaoImpl dao = new StatementDaoImpl();
 
 		if (!LoginServiceImpl.isSessionValid(sessionToken))
 			errors.add(Constants.SESSION_EXPIRED);
@@ -68,7 +68,7 @@ public class StatementServiceImpl implements StatementService {
 
 		ArrayList<String> errors = new ArrayList<String>();
 		StatementBean bean = new StatementBean();
-		StatementDAO dao = new StatementDAO();
+		StatementDaoImpl dao = new StatementDaoImpl();
 
 		if (!LoginServiceImpl.isSessionValid(sessionToken))
 			errors.add(Constants.SESSION_EXPIRED);

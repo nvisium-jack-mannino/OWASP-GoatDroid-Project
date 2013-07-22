@@ -20,11 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-public class VenueDAO extends BaseDAO {
-
-	public VenueDAO() {
-		super();
-	}
+public class VenueDaoImpl extends BaseDaoImpl implements VenueDao {
 
 	public boolean doesVenueExist(String venueName, String latitude,
 			String longitude) throws SQLException {

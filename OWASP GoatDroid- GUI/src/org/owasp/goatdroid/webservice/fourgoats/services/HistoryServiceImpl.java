@@ -21,7 +21,7 @@ import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryCheckinBean;
-import org.owasp.goatdroid.webservice.fourgoats.dao.HistoryDAO;
+import org.owasp.goatdroid.webservice.fourgoats.dao.HistoryDaoImpl;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,7 +31,7 @@ public class HistoryServiceImpl implements HistoryService {
 
 		HistoryBean bean = new HistoryBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		HistoryDAO dao = new HistoryDAO();
+		HistoryDaoImpl dao = new HistoryDaoImpl();
 
 		try {
 			dao.openConnection();
@@ -61,7 +61,7 @@ public class HistoryServiceImpl implements HistoryService {
 
 		HistoryCheckinBean bean = new HistoryCheckinBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		HistoryDAO dao = new HistoryDAO();
+		HistoryDaoImpl dao = new HistoryDaoImpl();
 
 		try {
 			dao.openConnection();
@@ -107,7 +107,7 @@ public class HistoryServiceImpl implements HistoryService {
 
 		HistoryBean bean = new HistoryBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		HistoryDAO dao = new HistoryDAO();
+		HistoryDaoImpl dao = new HistoryDaoImpl();
 
 		try {
 			dao.openConnection();

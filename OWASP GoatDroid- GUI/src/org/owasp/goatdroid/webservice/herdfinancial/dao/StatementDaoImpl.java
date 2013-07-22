@@ -23,11 +23,7 @@ import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.herdfinancial.Utils;
 import org.owasp.goatdroid.webservice.herdfinancial.model.StatementModel;
 
-public class StatementDAO extends BaseDAO {
-
-	public StatementDAO() {
-		super();
-	}
+public class StatementDaoImpl extends BaseDaoImpl implements StatementDao {
 
 	public ArrayList<StatementModel> getStatement(String accountNumber,
 			Date startDate, Date endDate) throws SQLException {

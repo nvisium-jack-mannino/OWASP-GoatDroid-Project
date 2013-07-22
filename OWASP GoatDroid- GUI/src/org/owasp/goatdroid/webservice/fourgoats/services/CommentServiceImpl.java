@@ -23,7 +23,7 @@ import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.CommentListBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.CommentBean;
-import org.owasp.goatdroid.webservice.fourgoats.dao.CommentDAO;
+import org.owasp.goatdroid.webservice.fourgoats.dao.CommentDaoImpl;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,7 +34,7 @@ public class CommentServiceImpl implements CommentService {
 
 		CommentBean bean = new CommentBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		CommentDAO dao = new CommentDAO();
+		CommentDaoImpl dao = new CommentDaoImpl();
 
 		try {
 			dao.openConnection();
@@ -79,7 +79,7 @@ public class CommentServiceImpl implements CommentService {
 
 		CommentBean bean = new CommentBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		CommentDAO dao = new CommentDAO();
+		CommentDaoImpl dao = new CommentDaoImpl();
 
 		try {
 			dao.openConnection();
@@ -116,7 +116,7 @@ public class CommentServiceImpl implements CommentService {
 
 		CommentListBean bean = new CommentListBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		CommentDAO dao = new CommentDAO();
+		CommentDaoImpl dao = new CommentDaoImpl();
 
 		try {
 			dao.openConnection();

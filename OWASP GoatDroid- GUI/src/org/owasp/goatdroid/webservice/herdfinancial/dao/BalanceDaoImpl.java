@@ -20,9 +20,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-public class BalanceDAO extends BaseDAO {
+public class BalanceDaoImpl extends BaseDaoImpl implements BalanceDao {
 
-	public BalanceDAO() {
+	public BalanceDaoImpl() {
 		super();
 	}
 

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.TransferBean;
-import org.owasp.goatdroid.webservice.herdfinancial.dao.TransferDAO;
+import org.owasp.goatdroid.webservice.herdfinancial.dao.TransferDaoImpl;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,7 +31,7 @@ public class TransferServiceImpl implements TransferService {
 
 		TransferBean bean = new TransferBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		TransferDAO dao = new TransferDAO();
+		TransferDaoImpl dao = new TransferDaoImpl();
 
 		if (!LoginServiceImpl.isSessionValid(sessionToken))
 			errors.add(Constants.SESSION_EXPIRED);

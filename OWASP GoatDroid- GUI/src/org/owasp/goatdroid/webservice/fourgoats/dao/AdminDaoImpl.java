@@ -22,11 +22,7 @@ import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.model.UserModel;
 
-public class AdminDAO extends BaseDAO {
-
-	public AdminDAO() {
-		super();
-	}
+public class AdminDaoImpl extends BaseDaoImpl implements AdminDao {
 
 	public boolean isAdmin(String sessionToken) throws Exception {
 

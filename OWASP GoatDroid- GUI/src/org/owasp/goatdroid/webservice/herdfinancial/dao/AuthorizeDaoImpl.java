@@ -19,11 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AuthorizeDAO extends BaseDAO {
-
-	public AuthorizeDAO() {
-		super();
-	}
+public class AuthorizeDaoImpl extends BaseDaoImpl implements AuthorizeDao {
 
 	public void authorizeDevice(String deviceID, int sessionToken)
 			throws SQLException {

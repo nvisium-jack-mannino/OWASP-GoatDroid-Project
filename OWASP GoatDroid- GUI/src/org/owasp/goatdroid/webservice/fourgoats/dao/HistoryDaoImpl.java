@@ -23,11 +23,7 @@ import java.util.HashMap;
 
 import org.owasp.goatdroid.webservice.fourgoats.model.HistoryModel;
 
-public class HistoryDAO extends BaseDAO {
-
-	public HistoryDAO() {
-		super();
-	}
+public class HistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 
 	public ArrayList<HistoryModel> getCheckinHistory(String userID)
 			throws SQLException {

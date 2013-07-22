@@ -20,7 +20,7 @@ import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.AdminBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.GetUsersAdminBean;
-import org.owasp.goatdroid.webservice.fourgoats.dao.AdminDAO;
+import org.owasp.goatdroid.webservice.fourgoats.dao.AdminDaoImpl;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,7 +30,7 @@ public class AdminServiceImpl implements AdminService {
 
 		AdminBean bean = new AdminBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		AdminDAO dao = new AdminDAO();
+		AdminDaoImpl dao = new AdminDaoImpl();
 
 		try {
 			dao.openConnection();
@@ -68,7 +68,7 @@ public class AdminServiceImpl implements AdminService {
 
 		AdminBean bean = new AdminBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		AdminDAO dao = new AdminDAO();
+		AdminDaoImpl dao = new AdminDaoImpl();
 
 		try {
 			dao.openConnection();
@@ -107,7 +107,7 @@ public class AdminServiceImpl implements AdminService {
 
 		GetUsersAdminBean bean = new GetUsersAdminBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		AdminDAO dao = new AdminDAO();
+		AdminDaoImpl dao = new AdminDaoImpl();
 
 		try {
 			dao.openConnection();

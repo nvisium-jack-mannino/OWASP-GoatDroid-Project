@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.AuthorizeBean;
-import org.owasp.goatdroid.webservice.herdfinancial.dao.AuthorizeDAO;
+import org.owasp.goatdroid.webservice.herdfinancial.dao.AuthorizeDaoImpl;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,7 +30,7 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 
 		AuthorizeBean bean = new AuthorizeBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		AuthorizeDAO dao = new AuthorizeDAO();
+		AuthorizeDaoImpl dao = new AuthorizeDaoImpl();
 
 		if (!LoginServiceImpl.isSessionValid(sessionToken))
 			errors.add(Constants.SESSION_EXPIRED);

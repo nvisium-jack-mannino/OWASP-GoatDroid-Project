@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.LoginBean;
-import org.owasp.goatdroid.webservice.herdfinancial.dao.LoginDAO;
+import org.owasp.goatdroid.webservice.herdfinancial.dao.LoginDaoImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.Utils;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,7 @@ public class LoginServiceImpl implements LoginService {
 		if (!Validators.validateSessionTokenFormat(sessionToken))
 			return false;
 
-		LoginDAO dao = new LoginDAO();
+		LoginDaoImpl dao = new LoginDaoImpl();
 		boolean success = false;
 
 		try {
@@ -59,7 +59,7 @@ public class LoginServiceImpl implements LoginService {
 		if (!Validators.validateDeviceID(deviceID))
 			errors.add(Constants.INVALID_DEVICE_ID);
 
-		LoginDAO dao = new LoginDAO();
+		LoginDaoImpl dao = new LoginDaoImpl();
 
 		try {
 			if (errors.size() == 0) {
@@ -98,7 +98,7 @@ public class LoginServiceImpl implements LoginService {
 
 		if (!Validators.validateDeviceID(deviceID))
 			errors.add(Constants.INVALID_DEVICE_ID);
-		LoginDAO dao = new LoginDAO();
+		LoginDaoImpl dao = new LoginDaoImpl();
 
 		try {
 			if (errors.size() == 0) {
@@ -128,7 +128,7 @@ public class LoginServiceImpl implements LoginService {
 		LoginBean bean = new LoginBean();
 		ArrayList<String> errors = Validators.validateCredentials(userName,
 				password);
-		LoginDAO dao = new LoginDAO();
+		LoginDaoImpl dao = new LoginDaoImpl();
 
 		try {
 			if (errors.size() == 0) {
@@ -160,7 +160,7 @@ public class LoginServiceImpl implements LoginService {
 
 		LoginBean bean = new LoginBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		LoginDAO dao = new LoginDAO();
+		LoginDaoImpl dao = new LoginDaoImpl();
 		try {
 			if (isSessionValid(sessionToken)) {
 				dao.openConnection();

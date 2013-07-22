@@ -20,7 +20,7 @@ import java.util.HashMap;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.BalanceBean;
-import org.owasp.goatdroid.webservice.herdfinancial.dao.BalanceDAO;
+import org.owasp.goatdroid.webservice.herdfinancial.dao.BalanceDaoImpl;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,7 +30,7 @@ public class BalanceServiceImpl implements BalanceService {
 
 		BalanceBean bean = new BalanceBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		BalanceDAO dao = new BalanceDAO();
+		BalanceDaoImpl dao = new BalanceDaoImpl();
 
 		if (!LoginServiceImpl.isSessionValid(sessionToken))
 			errors.add(Constants.SESSION_EXPIRED);

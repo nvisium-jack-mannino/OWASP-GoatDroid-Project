@@ -21,11 +21,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.fourgoats.model.RewardModel;
 
-public class RewardDAO extends BaseDAO {
-
-	public RewardDAO() {
-		super();
-	}
+public class RewardDaoImpl extends BaseDaoImpl implements RewardDao {
 
 	public ArrayList<RewardModel> getAllRewards() throws SQLException {
 

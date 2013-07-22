@@ -18,12 +18,8 @@ package org.owasp.goatdroid.webservice.herdfinancial.dao;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class SecretQuestionDAO extends BaseDAO {
-
-	public SecretQuestionDAO() {
-		super();
-	}
-
+public class SecretQuestionDaoImpl extends BaseDaoImpl implements SecretQuestionDao {
+	
 	public void updateAnswers(int sessionToken, String answer1, String answer2,
 			String answer3) throws SQLException {
 

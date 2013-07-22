@@ -19,11 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class RegisterDAO extends BaseDAO {
-
-	public RegisterDAO() {
-		super();
-	}
+public class RegisterDaoImpl extends BaseDaoImpl implements RegisterDao {
 
 	public void registerUser(String accountNumber, String firstName,
 			String lastName, String userName, String password)

@@ -21,7 +21,7 @@ import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.CheckinBean;
-import org.owasp.goatdroid.webservice.fourgoats.dao.CheckinDAO;
+import org.owasp.goatdroid.webservice.fourgoats.dao.CheckinDaoImpl;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,7 +32,7 @@ public class CheckinServiceImpl implements CheckinService {
 
 		CheckinBean bean = new CheckinBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		CheckinDAO dao = new CheckinDAO();
+		CheckinDaoImpl dao = new CheckinDaoImpl();
 
 		try {
 			dao.openConnection();

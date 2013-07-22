@@ -21,11 +21,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.owasp.goatdroid.webservice.herdfinancial.Utils;
 
-public class TransferDAO extends BaseDAO {
-
-	public TransferDAO() {
-		super();
-	}
+public class TransferDaoImpl extends BaseDaoImpl implements TransferDao {
 
 	public double getBalance(String accountNumber) throws SQLException {
 

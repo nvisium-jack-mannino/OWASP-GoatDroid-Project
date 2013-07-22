@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.RegisterBean;
-import org.owasp.goatdroid.webservice.herdfinancial.dao.RegisterDAO;
+import org.owasp.goatdroid.webservice.herdfinancial.dao.RegisterDaoImpl;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,7 +31,7 @@ public class RegisterServiceImpl implements RegisterService {
 		RegisterBean bean = new RegisterBean();
 		ArrayList<String> errors = Validators.validateRegistrationFields(
 				accountNumber, firstName, lastName, userName, password);
-		RegisterDAO dao = new RegisterDAO();
+		RegisterDaoImpl dao = new RegisterDaoImpl();
 
 		try {
 			if (errors.size() == 0) {

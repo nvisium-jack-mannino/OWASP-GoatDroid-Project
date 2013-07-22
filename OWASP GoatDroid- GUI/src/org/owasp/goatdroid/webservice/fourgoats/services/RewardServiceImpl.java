@@ -21,7 +21,7 @@ import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.RewardBean;
-import org.owasp.goatdroid.webservice.fourgoats.dao.RewardDAO;
+import org.owasp.goatdroid.webservice.fourgoats.dao.RewardDaoImpl;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,7 +31,7 @@ public class RewardServiceImpl implements RewardService {
 
 		RewardBean bean = new RewardBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		RewardDAO dao = new RewardDAO();
+		RewardDaoImpl dao = new RewardDaoImpl();
 
 		try {
 			dao.openConnection();
@@ -59,7 +59,7 @@ public class RewardServiceImpl implements RewardService {
 
 		RewardBean bean = new RewardBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		RewardDAO dao = new RewardDAO();
+		RewardDaoImpl dao = new RewardDaoImpl();
 
 		try {
 			dao.openConnection();
@@ -93,7 +93,7 @@ public class RewardServiceImpl implements RewardService {
 
 		RewardBean bean = new RewardBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		RewardDAO dao = new RewardDAO();
+		RewardDaoImpl dao = new RewardDaoImpl();
 
 		try {
 			dao.openConnection();

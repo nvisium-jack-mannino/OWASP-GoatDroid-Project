@@ -20,7 +20,7 @@ import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.EditPreferencesBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.GetPreferencesBean;
-import org.owasp.goatdroid.webservice.fourgoats.dao.EditPreferencesDAO;
+import org.owasp.goatdroid.webservice.fourgoats.dao.EditPreferencesDaoImpl;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,7 +31,7 @@ public class EditPreferencesServiceImpl implements EditPreferencesService {
 
 		EditPreferencesBean bean = new EditPreferencesBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		EditPreferencesDAO dao = new EditPreferencesDAO();
+		EditPreferencesDaoImpl dao = new EditPreferencesDaoImpl();
 
 		try {
 			dao.openConnection();
@@ -61,7 +61,7 @@ public class EditPreferencesServiceImpl implements EditPreferencesService {
 
 		GetPreferencesBean bean = new GetPreferencesBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		EditPreferencesDAO dao = new EditPreferencesDAO();
+		EditPreferencesDaoImpl dao = new EditPreferencesDaoImpl();
 
 		try {
 			dao.openConnection();

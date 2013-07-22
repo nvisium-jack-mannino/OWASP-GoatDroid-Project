@@ -20,11 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-public class CommentDAO extends BaseDAO {
-
-	public CommentDAO() {
-		super();
-	}
+public class CommentDaoImpl extends BaseDaoImpl implements CommentDao {
 
 	public void insertComment(String dateTime, String commentID, String userID,
 			String comment, String checkinID) throws SQLException {

@@ -18,7 +18,7 @@ package org.owasp.goatdroid.webservice.fourgoats.services;
 import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
-import org.owasp.goatdroid.webservice.fourgoats.dao.RegisterDAO;
+import org.owasp.goatdroid.webservice.fourgoats.dao.RegisterDaoImpl;
 import org.owasp.goatdroid.webservice.fourgoats.bean.RegisterBean;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,7 @@ public class RegisterServiceImpl implements RegisterService {
 		RegisterBean bean = new RegisterBean();
 		ArrayList<String> errors = Validators.validateRegistrationFields(
 				firstName, lastName, userName, password);
-		RegisterDAO dao = new RegisterDAO();
+		RegisterDaoImpl dao = new RegisterDaoImpl();
 
 		try {
 			if (errors.size() == 0) {

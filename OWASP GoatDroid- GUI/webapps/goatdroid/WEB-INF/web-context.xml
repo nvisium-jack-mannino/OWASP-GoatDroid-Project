@@ -39,7 +39,11 @@
 		xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-		<bean id="daoImpl" class="com.nvisium.moneypro.dao.DaoImpl">
+		<bean id="fourGoatsDaoImpl" class="org.owasp.goatdroid.webservice.fourgoats.dao.DaoImpl">
+			<property name="dataSource" ref="dataSource" />
+		</bean>
+		<bean id="herdFinancialDaoImpl"
+			class="org.owasp.goatdroid.webservice.herdfinancial.dao.DaoImpl">
 			<property name="dataSource" ref="dataSource" />
 		</bean>
 	</beans>

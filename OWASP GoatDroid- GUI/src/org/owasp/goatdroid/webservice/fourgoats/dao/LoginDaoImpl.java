@@ -22,11 +22,7 @@ import java.util.HashMap;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 
-public class LoginDAO extends BaseDAO {
-
-	public LoginDAO() {
-		super();
-	}
+public class LoginDaoImpl extends BaseDaoImpl implements LoginDao {
 
 	public boolean validateCredentials(String userName, String password)
 			throws SQLException {

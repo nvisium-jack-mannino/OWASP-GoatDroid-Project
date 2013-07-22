@@ -22,29 +22,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
-public class BaseDAO {
+public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 
-	protected Connection conn;
-
-	public void closeConnection() throws Exception {
-		conn.close();
-	}
-
-	public void openConnection() throws Exception {
-		try {
-			Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
-			conn = (Connection) DriverManager
-					.getConnection(Constants.DB_CONNECTION_STRING);
-		} catch (InstantiationException e) {
-			throw new Exception();
-		} catch (IllegalAccessException e) {
-			throw new Exception();
-		} catch (ClassNotFoundException e) {
-			throw new Exception();
-		} catch (SQLException e) {
-			throw new Exception();
-		}
+	public BaseDaoImpl() {
+		super();
 	}
 
 	public boolean checkSessionMatchesUserID(String sessionToken, String userID)

@@ -19,11 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ForgotPasswordDAO extends BaseDAO {
-
-	public ForgotPasswordDAO() {
-		super();
-	}
+public class ForgotPasswordDaoImpl extends BaseDaoImpl implements ForgotPasswordDao {
 
 	public boolean confirmSecretQuestionAnswer(String userName,
 			String secretQuestionIndex, String secretQuestionAnswer)

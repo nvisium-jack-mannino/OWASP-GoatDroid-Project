@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.SecretQuestionBean;
-import org.owasp.goatdroid.webservice.herdfinancial.dao.SecretQuestionDAO;
+import org.owasp.goatdroid.webservice.herdfinancial.dao.SecretQuestionDaoImpl;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,7 +30,7 @@ public class SecretQuestionServiceImpl implements SecretQuestionService {
 
 		SecretQuestionBean bean = new SecretQuestionBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		SecretQuestionDAO dao = new SecretQuestionDAO();
+		SecretQuestionDaoImpl dao = new SecretQuestionDaoImpl();
 
 		if (!LoginServiceImpl.isSessionValid(sessionToken))
 			errors.add(Constants.SESSION_EXPIRED);

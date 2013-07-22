@@ -23,7 +23,7 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.FriendProfileBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.FriendBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.PendingFriendRequestsBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.PublicUsersBean;
-import org.owasp.goatdroid.webservice.fourgoats.dao.FriendDAO;
+import org.owasp.goatdroid.webservice.fourgoats.dao.FriendDaoImpl;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,7 +33,7 @@ public class FriendServiceImpl implements FriendService {
 
 		FriendListBean bean = new FriendListBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		FriendDAO dao = new FriendDAO();
+		FriendDaoImpl dao = new FriendDaoImpl();
 
 		try {
 			dao.openConnection();
@@ -65,7 +65,7 @@ public class FriendServiceImpl implements FriendService {
 
 		FriendBean bean = new FriendBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		FriendDAO dao = new FriendDAO();
+		FriendDaoImpl dao = new FriendDaoImpl();
 
 		try {
 			dao.openConnection();
@@ -111,7 +111,7 @@ public class FriendServiceImpl implements FriendService {
 
 		FriendBean bean = new FriendBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		FriendDAO dao = new FriendDAO();
+		FriendDaoImpl dao = new FriendDaoImpl();
 
 		try {
 			dao.openConnection();
@@ -162,7 +162,7 @@ public class FriendServiceImpl implements FriendService {
 
 		FriendBean bean = new FriendBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		FriendDAO dao = new FriendDAO();
+		FriendDaoImpl dao = new FriendDaoImpl();
 
 		try {
 			dao.openConnection();
@@ -204,7 +204,7 @@ public class FriendServiceImpl implements FriendService {
 
 		FriendProfileBean bean = new FriendProfileBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		FriendDAO dao = new FriendDAO();
+		FriendDaoImpl dao = new FriendDaoImpl();
 
 		try {
 			dao.openConnection();
@@ -242,7 +242,7 @@ public class FriendServiceImpl implements FriendService {
 
 		PendingFriendRequestsBean bean = new PendingFriendRequestsBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		FriendDAO dao = new FriendDAO();
+		FriendDaoImpl dao = new FriendDaoImpl();
 
 		try {
 			dao.openConnection();
@@ -273,7 +273,7 @@ public class FriendServiceImpl implements FriendService {
 
 		PublicUsersBean bean = new PublicUsersBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		FriendDAO dao = new FriendDAO();
+		FriendDaoImpl dao = new FriendDaoImpl();
 
 		try {
 			dao.openConnection();

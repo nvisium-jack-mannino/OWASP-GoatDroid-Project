@@ -20,11 +20,7 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 
-public class CheckinDAO extends BaseDAO {
-
-	public CheckinDAO() {
-		super();
-	}
+public class CheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 
 	public void insertCheckin(String dateTime, String latitude,
 			String longitude, String userID, String venueID, String checkinID)

@@ -22,7 +22,7 @@ import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.VenueListBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.VenueBean;
-import org.owasp.goatdroid.webservice.fourgoats.dao.VenueDAO;
+import org.owasp.goatdroid.webservice.fourgoats.dao.VenueDaoImpl;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,7 +33,7 @@ public class VenueServiceImpl implements VenueService {
 
 		VenueBean bean = new VenueBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		VenueDAO dao = new VenueDAO();
+		VenueDaoImpl dao = new VenueDaoImpl();
 
 		try {
 			errors = Validators.validateAddVenueValues(venueName, venueWebsite,
@@ -66,7 +66,7 @@ public class VenueServiceImpl implements VenueService {
 
 		VenueListBean bean = new VenueListBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		VenueDAO dao = new VenueDAO();
+		VenueDaoImpl dao = new VenueDaoImpl();
 
 		try {
 			dao.openConnection();

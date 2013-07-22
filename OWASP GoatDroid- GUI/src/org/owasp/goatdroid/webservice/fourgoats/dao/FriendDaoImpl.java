@@ -25,11 +25,7 @@ import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.model.UserModel;
 import org.owasp.goatdroid.webservice.fourgoats.model.FriendRequestModel;
 
-public class FriendDAO extends BaseDAO {
-
-	public FriendDAO() {
-		super();
-	}
+public class FriendDaoImpl extends BaseDaoImpl implements FriendDao {
 
 	public ArrayList<UserModel> getFriends(String userID, String userName)
 			throws SQLException {

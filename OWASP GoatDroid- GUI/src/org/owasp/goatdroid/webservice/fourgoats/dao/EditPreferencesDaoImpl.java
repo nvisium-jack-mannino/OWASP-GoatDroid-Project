@@ -20,11 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-public class EditPreferencesDAO extends BaseDAO {
-
-	public EditPreferencesDAO() {
-		super();
-	}
+public class EditPreferencesDaoImpl extends BaseDaoImpl implements EditPreferencesDao {
 
 	public void updatePreferences(boolean autoCheckin, boolean isPublic,
 			String userID) throws SQLException {

@@ -19,11 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LoginDAO extends BaseDAO {
-
-	public LoginDAO() {
-		super();
-	}
+public class LoginDaoImpl extends BaseDaoImpl implements LoginDao {
 
 	public boolean isDevicePermanentlyAuthorized(String deviceID)
 			throws SQLException {

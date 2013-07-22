@@ -21,7 +21,7 @@ import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
-import org.owasp.goatdroid.webservice.fourgoats.dao.LoginDAO;
+import org.owasp.goatdroid.webservice.fourgoats.dao.LoginDaoImpl;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,7 +31,7 @@ public class LoginServiceImpl implements LoginService {
 
 		LoginBean bean = new LoginBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		LoginDAO dao = new LoginDAO();
+		LoginDaoImpl dao = new LoginDaoImpl();
 
 		try {
 			if (!Validators.validateCredentials(userName, password))
@@ -71,7 +71,7 @@ public class LoginServiceImpl implements LoginService {
 
 		LoginBean bean = new LoginBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		LoginDAO dao = new LoginDAO();
+		LoginDaoImpl dao = new LoginDaoImpl();
 
 		try {
 			if (!Validators.validateCredentials(userName, password))
@@ -112,7 +112,7 @@ public class LoginServiceImpl implements LoginService {
 	public LoginBean checkSession(String sessionToken) {
 
 		LoginBean bean = new LoginBean();
-		LoginDAO dao = new LoginDAO();
+		LoginDaoImpl dao = new LoginDaoImpl();
 		try {
 			dao.openConnection();
 			if (dao.isSessionValid(sessionToken))
@@ -129,7 +129,7 @@ public class LoginServiceImpl implements LoginService {
 
 		LoginBean bean = new LoginBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		LoginDAO dao = new LoginDAO();
+		LoginDaoImpl dao = new LoginDaoImpl();
 
 		try {
 			dao.openConnection();

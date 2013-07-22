@@ -21,7 +21,7 @@ import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Utils;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.ForgotPasswordBean;
-import org.owasp.goatdroid.webservice.herdfinancial.dao.ForgotPasswordDAO;
+import org.owasp.goatdroid.webservice.herdfinancial.dao.ForgotPasswordDaoImpl;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,7 +32,7 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 
 		ForgotPasswordBean bean = new ForgotPasswordBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		ForgotPasswordDAO dao = new ForgotPasswordDAO();
+		ForgotPasswordDaoImpl dao = new ForgotPasswordDaoImpl();
 
 		if (!Validators.validateUserNameFormat(userName))
 			errors.add(Constants.USERNAME_FORMAT_INVALID);
@@ -80,7 +80,7 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 
 		ForgotPasswordBean bean = new ForgotPasswordBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		ForgotPasswordDAO dao = new ForgotPasswordDAO();
+		ForgotPasswordDaoImpl dao = new ForgotPasswordDaoImpl();
 
 		if (!Validators.validateUserNameFormat(userName))
 			errors.add(Constants.USERNAME_FORMAT_INVALID);
@@ -114,7 +114,7 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 
 		ForgotPasswordBean bean = new ForgotPasswordBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		ForgotPasswordDAO dao = new ForgotPasswordDAO();
+		ForgotPasswordDaoImpl dao = new ForgotPasswordDaoImpl();
 
 		if (!Validators.validateUserNameFormat(userName))
 			errors.add(Constants.USERNAME_FORMAT_INVALID);
