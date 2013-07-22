@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.impl;
+package org.owasp.goatdroid.webservice.fourgoats.services;
 
 import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
@@ -24,10 +24,12 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.FriendBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.PendingFriendRequestsBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.PublicUsersBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FriendDAO;
+import org.springframework.stereotype.Service;
 
-public class Friend {
+@Service
+public class FriendServiceImpl implements FriendService {
 
-	static public FriendListBean getFriends(String sessionToken) {
+	public FriendListBean getFriends(String sessionToken) {
 
 		FriendListBean bean = new FriendListBean();
 		ArrayList<String> errors = new ArrayList<String>();
@@ -58,7 +60,7 @@ public class Friend {
 		return bean;
 	}
 
-	static public FriendBean requestFriend(String sessionToken,
+	public FriendBean requestFriend(String sessionToken,
 			String friendUserName) {
 
 		FriendBean bean = new FriendBean();
@@ -104,7 +106,7 @@ public class Friend {
 		return bean;
 	}
 
-	static public FriendBean acceptOrDenyFriendRequest(String action,
+	public FriendBean acceptOrDenyFriendRequest(String action,
 			String sessionToken, String userName) {
 
 		FriendBean bean = new FriendBean();
@@ -155,7 +157,7 @@ public class Friend {
 		return bean;
 	}
 
-	static public FriendBean removeFriend(String sessionToken,
+	public FriendBean removeFriend(String sessionToken,
 			String friendUserName) {
 
 		FriendBean bean = new FriendBean();
@@ -197,7 +199,7 @@ public class Friend {
 		return bean;
 	}
 
-	static public FriendProfileBean getProfile(String sessionToken,
+	public FriendProfileBean getProfile(String sessionToken,
 			String friendUserName) {
 
 		FriendProfileBean bean = new FriendProfileBean();
@@ -235,7 +237,7 @@ public class Friend {
 		return bean;
 	}
 
-	static public PendingFriendRequestsBean getPendingFriendRequests(
+	public PendingFriendRequestsBean getPendingFriendRequests(
 			String sessionToken) {
 
 		PendingFriendRequestsBean bean = new PendingFriendRequestsBean();
@@ -267,7 +269,7 @@ public class Friend {
 		return bean;
 	}
 
-	static public PublicUsersBean getPublicUsers(String sessionToken) {
+	public PublicUsersBean getPublicUsers(String sessionToken) {
 
 		PublicUsersBean bean = new PublicUsersBean();
 		ArrayList<String> errors = new ArrayList<String>();

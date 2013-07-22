@@ -15,17 +15,16 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
-import javax.ws.rs.CookieParam;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.PathParam;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.LoginBean;
-import org.owasp.goatdroid.webservice.herdfinancial.impl.Login;
+import org.owasp.goatdroid.webservice.herdfinancial.services.LoginServiceImpl;
 
+@Controller
 @Path("/herdfinancial/api/v1/login")
 public class LoginController {
 	@Path("authenticate")
@@ -34,7 +33,7 @@ public class LoginController {
 	public LoginBean submitCredentials(@FormParam("userName") String userName,
 			@FormParam("password") String password) {
 		try {
-			return Login.validateCredentials(userName, password);
+			return LoginServiceImpl.validateCredentials(userName, password);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);
@@ -48,7 +47,7 @@ public class LoginController {
 	public LoginBean checkDeviceRegistration(
 			@PathParam("deviceID") String deviceID) {
 		try {
-			return Login.isDevicePermanentlyAuthorized(deviceID);
+			return LoginServiceImpl.isDevicePermanentlyAuthorized(deviceID);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);
@@ -63,7 +62,7 @@ public class LoginController {
 			@CookieParam(Constants.SESSION_TOKEN) int sessionToken,
 			@PathParam("deviceID") String deviceID) {
 		try {
-			return Login.isSessionValidOrDeviceAuthorized(sessionToken,
+			return LoginServiceImpl.isSessionValidOrDeviceAuthorized(sessionToken,
 					deviceID);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
@@ -78,7 +77,7 @@ public class LoginController {
 	public LoginBean signOut(
 			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {
 		try {
-			return Login.signOut(sessionToken);
+			return LoginServiceImpl.signOut(sessionToken);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);

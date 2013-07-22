@@ -8,9 +8,22 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	</welcome-file-list>
 
 	<servlet>
-		<servlet-name>example</servlet-name>
+		<servlet-name>fourgoats</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	<servlet-mapping>
+		<servlet-name>fourgoats</servlet-name>
+		<url-pattern>/fourgoats/api/v1/*</url-pattern>
+	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>herdfinancial</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>herdfinancial</servlet-name>
+		<url-pattern>/herdfinancial/api/v1/*</url-pattern>
+	</servlet-mapping>
 </web-app>

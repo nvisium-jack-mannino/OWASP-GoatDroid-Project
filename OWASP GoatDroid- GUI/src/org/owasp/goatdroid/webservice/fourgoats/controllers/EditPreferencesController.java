@@ -15,17 +15,17 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.CookieParam;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.EditPreferencesBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.GetPreferencesBean;
-import org.owasp.goatdroid.webservice.fourgoats.impl.EditPreferences;
+import org.owasp.goatdroid.webservice.fourgoats.services.EditPreferencesServiceImpl;
 
+@Controller
 @Path("/fourgoats/api/v1/preferences")
 public class EditPreferencesController {
 
@@ -38,7 +38,7 @@ public class EditPreferencesController {
 			@FormParam("isPublic") boolean isPublic) {
 
 		try {
-			return EditPreferences.modifyPreferences(sessionToken, autoCheckin,
+			return EditPreferencesServiceImpl.modifyPreferences(sessionToken, autoCheckin,
 					isPublic);
 		} catch (NullPointerException e) {
 			EditPreferencesBean bean = new EditPreferencesBean();
@@ -53,7 +53,7 @@ public class EditPreferencesController {
 	public GetPreferencesBean getPreferences(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
 		try {
-			return EditPreferences.getPreferences(sessionToken);
+			return EditPreferencesServiceImpl.getPreferences(sessionToken);
 		} catch (NullPointerException e) {
 			GetPreferencesBean bean = new GetPreferencesBean();
 			bean.setSuccess(false);

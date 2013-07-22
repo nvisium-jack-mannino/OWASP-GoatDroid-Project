@@ -15,15 +15,16 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
-import javax.ws.rs.FormParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.CookieParam;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.CheckinBean;
-import org.owasp.goatdroid.webservice.fourgoats.impl.Checkin;
+import org.owasp.goatdroid.webservice.fourgoats.services.CheckinServiceImpl;
 
+@Controller
 @Path("/fourgoats/api/v1/checkin")
 public class CheckinController {
 
@@ -34,7 +35,7 @@ public class CheckinController {
 			@FormParam("latitude") String latitude,
 			@FormParam("longitude") String longitude) {
 		try {
-			return Checkin.doCheckin(sessionToken, latitude, longitude);
+			return CheckinServiceImpl.doCheckin(sessionToken, latitude, longitude);
 		} catch (NullPointerException e) {
 			CheckinBean bean = new CheckinBean();
 			bean.setSuccess(false);

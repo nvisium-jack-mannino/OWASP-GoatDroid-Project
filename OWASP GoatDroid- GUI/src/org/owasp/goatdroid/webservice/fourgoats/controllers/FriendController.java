@@ -15,21 +15,20 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
-import javax.ws.rs.CookieParam;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.FriendListBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.FriendProfileBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.FriendBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.PendingFriendRequestsBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.PublicUsersBean;
-import org.owasp.goatdroid.webservice.fourgoats.impl.Friend;
+import org.owasp.goatdroid.webservice.fourgoats.services.FriendServiceImpl;
 
+@Controller
 @Path("/fourgoats/api/v1/friends")
 public class FriendController {
 
@@ -39,7 +38,7 @@ public class FriendController {
 	public FriendListBean getFriends(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
 
-		return Friend.getFriends(sessionToken);
+		return FriendServiceImpl.getFriends(sessionToken);
 	}
 
 	@Path("request_friend")
@@ -49,7 +48,7 @@ public class FriendController {
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
 			@FormParam("userName") String userName) {
 
-		return Friend.requestFriend(sessionToken, userName);
+		return FriendServiceImpl.requestFriend(sessionToken, userName);
 
 	}
 
@@ -60,7 +59,7 @@ public class FriendController {
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
 			@FormParam("userName") String userName) {
 
-		return Friend.acceptOrDenyFriendRequest("accept", sessionToken,
+		return FriendServiceImpl.acceptOrDenyFriendRequest("accept", sessionToken,
 				userName);
 
 	}
@@ -72,7 +71,7 @@ public class FriendController {
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
 			@FormParam("userName") String userName) {
 
-		return Friend.acceptOrDenyFriendRequest("deny", sessionToken, userName);
+		return FriendServiceImpl.acceptOrDenyFriendRequest("deny", sessionToken, userName);
 
 	}
 
@@ -83,7 +82,7 @@ public class FriendController {
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
 			@FormParam("userName") String userName) {
 
-		return Friend.removeFriend(sessionToken, userName);
+		return FriendServiceImpl.removeFriend(sessionToken, userName);
 	}
 
 	@Path("get_pending_requests")
@@ -92,7 +91,7 @@ public class FriendController {
 	public PendingFriendRequestsBean getPendingFriendRequests(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
 
-		return Friend.getPendingFriendRequests(sessionToken);
+		return FriendServiceImpl.getPendingFriendRequests(sessionToken);
 	}
 
 	@Path("search_users")
@@ -101,7 +100,7 @@ public class FriendController {
 	public PublicUsersBean getPublicUsers(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
 
-		return Friend.getPublicUsers(sessionToken);
+		return FriendServiceImpl.getPublicUsers(sessionToken);
 	}
 
 	@Path("view_profile/{userName}")
@@ -111,7 +110,7 @@ public class FriendController {
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
 			@PathParam("userName") String userName) {
 
-		return Friend.getProfile(sessionToken, userName);
+		return FriendServiceImpl.getProfile(sessionToken, userName);
 	}
 
 }

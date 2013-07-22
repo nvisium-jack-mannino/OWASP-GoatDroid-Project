@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.impl;
+package org.owasp.goatdroid.webservice.fourgoats.services;
 
 import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
@@ -22,10 +22,12 @@ import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.CheckinBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.CheckinDAO;
+import org.springframework.stereotype.Service;
 
-public class Checkin {
+@Service
+public class CheckinServiceImpl implements CheckinService {
 
-	static public CheckinBean doCheckin(String sessionToken, String latitude,
+	public CheckinBean doCheckin(String sessionToken, String latitude,
 			String longitude) {
 
 		CheckinBean bean = new CheckinBean();

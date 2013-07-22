@@ -13,79 +13,42 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.impl;
+package org.owasp.goatdroid.webservice.fourgoats.services;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
-import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryCheckinBean;
-import org.owasp.goatdroid.webservice.fourgoats.dao.HistoryDAO;
+import org.owasp.goatdroid.webservice.fourgoats.bean.AdminBean;
+import org.owasp.goatdroid.webservice.fourgoats.bean.GetUsersAdminBean;
+import org.owasp.goatdroid.webservice.fourgoats.dao.AdminDAO;
+import org.springframework.stereotype.Service;
 
-public class History {
+@Service
+public class AdminServiceImpl implements AdminService {
 
-	static public HistoryBean getHistory(String sessionToken) {
+	public AdminBean deleteUser(String sessionToken, String userName) {
 
-		HistoryBean bean = new HistoryBean();
+		AdminBean bean = new AdminBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		HistoryDAO dao = new HistoryDAO();
+		AdminDAO dao = new AdminDAO();
 
 		try {
 			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
+			else if (!Validators.validateUserNameFormat(userName))
+				errors.add(Constants.USERNAME_FORMAT_INVALID);
 
 			if (errors.size() == 0) {
-				bean.setHistory(dao.getCheckinHistory(dao
-						.getUserID(sessionToken)));
-				bean.setSuccess(true);
-			}
-		} catch (Exception e) {
-			errors.add(Constants.UNEXPECTED_ERROR);
-		} finally {
-			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
-		}
-		return bean;
-	}
-
-	static public HistoryCheckinBean getCheckin(String sessionToken,
-			String checkinID) {
-
-		HistoryCheckinBean bean = new HistoryCheckinBean();
-		ArrayList<String> errors = new ArrayList<String>();
-		HistoryDAO dao = new HistoryDAO();
-
-		try {
-			dao.openConnection();
-			if (!dao.isSessionValid(sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-			else if (!Validators.validateIDFormat(checkinID))
-				errors.add(Constants.UNEXPECTED_ERROR);
-
-			if (errors.size() == 0) {
-				String userID = dao.getUserID(sessionToken);
-				String checkinOwner = dao.getCheckinOwner(checkinID);
-
-				if (userID.equals(checkinOwner)
-						|| dao.isProfilePublic(checkinOwner)
-						|| dao.isFriend(userID, checkinOwner)) {
-
-					bean.setVenueName(dao.getVenueName(checkinID));
-					HashMap<String, String> checkinInfo = dao
-							.getCheckinInfo(checkinID);
-					bean.setDateTime(checkinInfo.get("dateTime"));
-					bean.setVenueWebsite(dao.getVenueWebsite(checkinID));
-					bean.setLatitude(checkinInfo.get("latitude"));
-					bean.setLongitude(checkinInfo.get("longitude"));
-					bean.setComments(dao.selectComments(checkinID));
+				/*
+				 * If the user has the admin role then we proceed
+				 */
+				if (dao.isAdmin(sessionToken)) {
+					dao.deleteUser(userName);
 					bean.setSuccess(true);
+				} else {
+					errors.add(Constants.NOT_AUTHORIZED);
 				}
 			}
 		} catch (Exception e) {
@@ -100,12 +63,12 @@ public class History {
 		return bean;
 	}
 
-	static public HistoryBean getUserHistory(String sessionToken,
-			String userName) {
+	public AdminBean resetPassword(String sessionToken, String userName,
+			String newPassword) {
 
-		HistoryBean bean = new HistoryBean();
+		AdminBean bean = new AdminBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		HistoryDAO dao = new HistoryDAO();
+		AdminDAO dao = new AdminDAO();
 
 		try {
 			dao.openConnection();
@@ -114,10 +77,54 @@ public class History {
 				errors.add(Constants.INVALID_SESSION);
 			else if (!Validators.validateUserNameFormat(userName))
 				errors.add(Constants.USERNAME_FORMAT_INVALID);
+			else if (!Validators.validatePasswordLength(newPassword))
+				errors.add(Constants.PASSWORD_FORMAT_INVALID);
 
 			if (errors.size() == 0) {
-				bean.setHistory(dao.getCheckinHistoryByUserName(userName));
-				bean.setSuccess(true);
+				/*
+				 * If the user has the admin role then we proceed
+				 */
+				if (dao.isAdmin(sessionToken)) {
+					dao.updatePassword(userName, newPassword);
+					bean.setSuccess(true);
+				} else {
+					errors.add(Constants.NOT_AUTHORIZED);
+				}
+			}
+		} catch (Exception e) {
+			errors.add(Constants.UNEXPECTED_ERROR);
+		} finally {
+			bean.setErrors(errors);
+			try {
+				dao.closeConnection();
+			} catch (Exception e) {
+			}
+		}
+		return bean;
+	}
+
+	public GetUsersAdminBean getUsers(String sessionToken) {
+
+		GetUsersAdminBean bean = new GetUsersAdminBean();
+		ArrayList<String> errors = new ArrayList<String>();
+		AdminDAO dao = new AdminDAO();
+
+		try {
+			dao.openConnection();
+			if (!dao.isSessionValid(sessionToken)
+					|| !Validators.validateSessionTokenFormat(sessionToken))
+				errors.add(Constants.INVALID_SESSION);
+
+			if (errors.size() == 0) {
+				/*
+				 * If the user has the admin role then we proceed
+				 */
+				if (dao.isAdmin(sessionToken)) {
+					bean.setUsers(dao.getUsers());
+					bean.setSuccess(true);
+				} else {
+					errors.add(Constants.NOT_AUTHORIZED);
+				}
 			}
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);

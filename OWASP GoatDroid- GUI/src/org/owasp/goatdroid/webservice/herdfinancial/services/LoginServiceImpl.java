@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.herdfinancial.impl;
+package org.owasp.goatdroid.webservice.herdfinancial.services;
 
 import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
@@ -21,10 +21,12 @@ import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.LoginBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.LoginDAO;
 import org.owasp.goatdroid.webservice.herdfinancial.Utils;
+import org.springframework.stereotype.Service;
 
-public class Login {
+@Service
+public class LoginServiceImpl implements LoginService {
 
-	static public boolean isSessionValid(int sessionToken) {
+	public boolean isSessionValid(int sessionToken) {
 
 		if (!Validators.validateSessionTokenFormat(sessionToken))
 			return false;
@@ -49,7 +51,7 @@ public class Login {
 		return success;
 	}
 
-	static public LoginBean isSessionValidOrDeviceAuthorized(int sessionToken,
+	public LoginBean isSessionValidOrDeviceAuthorized(int sessionToken,
 			String deviceID) {
 
 		LoginBean bean = new LoginBean();
@@ -89,7 +91,7 @@ public class Login {
 		return bean;
 	}
 
-	static public LoginBean isDevicePermanentlyAuthorized(String deviceID) {
+	public LoginBean isDevicePermanentlyAuthorized(String deviceID) {
 
 		LoginBean bean = new LoginBean();
 		ArrayList<String> errors = new ArrayList<String>();
@@ -121,7 +123,7 @@ public class Login {
 		return bean;
 	}
 
-	static public LoginBean validateCredentials(String userName, String password) {
+	public LoginBean validateCredentials(String userName, String password) {
 
 		LoginBean bean = new LoginBean();
 		ArrayList<String> errors = Validators.validateCredentials(userName,
@@ -154,7 +156,7 @@ public class Login {
 		return bean;
 	}
 
-	static public LoginBean signOut(int sessionToken) {
+	public LoginBean signOut(int sessionToken) {
 
 		LoginBean bean = new LoginBean();
 		ArrayList<String> errors = new ArrayList<String>();

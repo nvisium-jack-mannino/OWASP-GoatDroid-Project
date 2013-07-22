@@ -15,20 +15,29 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
-import javax.ws.rs.CookieParam;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.AdminBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.GetUsersAdminBean;
-import org.owasp.goatdroid.webservice.fourgoats.impl.Admin;
+import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
 
+@Controller
 @Path("/fourgoats/api/v1/admin")
 public class AdminController {
 
+	AdminServiceImpl adminService;
+
+	@Autowired
+	public AdminController(AdminServiceImpl adminService) {
+		this.adminService = adminService;
+	}
+
+	
 	@Path("delete_user")
 	@POST
 	@Produces("application/json")
@@ -36,7 +45,7 @@ public class AdminController {
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
 			@FormParam("userName") String userName) {
 		try {
-			return Admin.deleteUser(sessionToken, userName);
+			return AdminServiceImpl.deleteUser(sessionToken, userName);
 		} catch (NullPointerException e) {
 			AdminBean bean = new AdminBean();
 			bean.setSuccess(false);
@@ -52,7 +61,8 @@ public class AdminController {
 			@FormParam("userName") String userName,
 			@FormParam("newPassword") String newPassword) {
 		try {
-			return Admin.resetPassword(sessionToken, userName, newPassword);
+			return AdminServiceImpl.resetPassword(sessionToken, userName,
+					newPassword);
 		} catch (NullPointerException e) {
 			AdminBean bean = new AdminBean();
 			bean.setSuccess(false);
@@ -66,7 +76,7 @@ public class AdminController {
 	public GetUsersAdminBean addComment(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
 		try {
-			return Admin.getUsers(sessionToken);
+			return AdminServiceImpl.getUsers(sessionToken);
 		} catch (NullPointerException e) {
 			GetUsersAdminBean bean = new GetUsersAdminBean();
 			bean.setSuccess(false);

@@ -15,15 +15,16 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
-import javax.ws.rs.CookieParam;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.StatementBean;
-import org.owasp.goatdroid.webservice.herdfinancial.impl.Statement;
+import org.owasp.goatdroid.webservice.herdfinancial.services.StatementServiceImpl;
 
+@Controller
 @Path("/herdfinancial/api/v1/statements")
 public class StatementController {
 
@@ -36,7 +37,7 @@ public class StatementController {
 			@PathParam("endDate") String endDate,
 			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {
 		try {
-			return Statement.getStatement(accountNumber, startDate, endDate,
+			return StatementServiceImpl.getStatement(accountNumber, startDate, endDate,
 					sessionToken);
 		} catch (NullPointerException e) {
 			StatementBean bean = new StatementBean();
@@ -52,7 +53,7 @@ public class StatementController {
 			@PathParam("accountNumber") String accountNumber,
 			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {
 		try {
-			return Statement.getStatementSinceLastPoll(accountNumber,
+			return StatementServiceImpl.getStatementSinceLastPoll(accountNumber,
 					sessionToken);
 		} catch (NullPointerException e) {
 			StatementBean bean = new StatementBean();

@@ -15,15 +15,16 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
-import javax.ws.rs.CookieParam;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.SecretQuestionBean;
-import org.owasp.goatdroid.webservice.herdfinancial.impl.SecretQuestion;
+import org.owasp.goatdroid.webservice.herdfinancial.services.SecretQuestionServiceImpl;
 
+@Controller
 @Path("/herdfinancial/api/v1/secret_questions")
 public class SecretQuestionController {
 
@@ -36,7 +37,7 @@ public class SecretQuestionController {
 			@FormParam("answer2") String answer2,
 			@FormParam("answer3") String answer3) {
 		try {
-			return SecretQuestion.setSecretQuestions(sessionToken, answer1,
+			return SecretQuestionServiceImpl.setSecretQuestions(sessionToken, answer1,
 					answer2, answer3);
 		} catch (NullPointerException e) {
 			SecretQuestionBean bean = new SecretQuestionBean();

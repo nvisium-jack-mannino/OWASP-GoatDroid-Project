@@ -15,15 +15,16 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
-import javax.ws.rs.CookieParam;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.AuthorizeBean;
-import org.owasp.goatdroid.webservice.herdfinancial.impl.Authorize;
+import org.owasp.goatdroid.webservice.herdfinancial.services.AuthorizeServiceImpl;
 
+@Controller
 @Path("/herdfinancial/api/v1/authorize")
 public class AuthorizeController {
 	@POST
@@ -32,7 +33,7 @@ public class AuthorizeController {
 			@FormParam("deviceID") String deviceID,
 			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {
 		try {
-			return Authorize.authorizeDevice(deviceID, sessionToken);
+			return AuthorizeServiceImpl.authorizeDevice(deviceID, sessionToken);
 		} catch (NullPointerException e) {
 			AuthorizeBean bean = new AuthorizeBean();
 			bean.setSuccess(false);

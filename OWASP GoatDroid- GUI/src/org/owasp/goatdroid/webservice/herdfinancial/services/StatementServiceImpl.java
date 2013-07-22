@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.herdfinancial.impl;
+package org.owasp.goatdroid.webservice.herdfinancial.services;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -21,17 +21,19 @@ import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.StatementBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.StatementDAO;
+import org.springframework.stereotype.Service;
 
-public class Statement {
+@Service
+public class StatementServiceImpl implements StatementService {
 
-	static public StatementBean getStatement(String accountNumber,
-			String startDate, String endDate, int sessionToken) {
+	public StatementBean getStatement(String accountNumber, String startDate,
+			String endDate, int sessionToken) {
 
 		ArrayList<String> errors = new ArrayList<String>();
 		StatementBean bean = new StatementBean();
 		StatementDAO dao = new StatementDAO();
 
-		if (!Login.isSessionValid(sessionToken))
+		if (!LoginServiceImpl.isSessionValid(sessionToken))
 			errors.add(Constants.SESSION_EXPIRED);
 
 		else if (!Validators.validateDateTimeFormat(startDate)
@@ -61,14 +63,14 @@ public class Statement {
 		return bean;
 	}
 
-	static public StatementBean getStatementSinceLastPoll(String accountNumber,
+	public StatementBean getStatementSinceLastPoll(String accountNumber,
 			int sessionToken) {
 
 		ArrayList<String> errors = new ArrayList<String>();
 		StatementBean bean = new StatementBean();
 		StatementDAO dao = new StatementDAO();
 
-		if (!Login.isSessionValid(sessionToken))
+		if (!LoginServiceImpl.isSessionValid(sessionToken))
 			errors.add(Constants.SESSION_EXPIRED);
 
 		else if (!Validators.validateAccountNumber(accountNumber))
@@ -95,7 +97,7 @@ public class Statement {
 		return bean;
 	}
 
-	static public Date convertStringToDate(String dateString) {
+	Date convertStringToDate(String dateString) {
 
 		return Date.valueOf(dateString);
 	}

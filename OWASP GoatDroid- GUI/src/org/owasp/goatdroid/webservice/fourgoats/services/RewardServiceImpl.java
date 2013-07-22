@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.impl;
+package org.owasp.goatdroid.webservice.fourgoats.services;
 
 import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
@@ -22,10 +22,12 @@ import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.RewardBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.RewardDAO;
+import org.springframework.stereotype.Service;
 
-public class Reward {
+@Service
+public class RewardServiceImpl implements RewardService {
 
-	static public RewardBean getAllRewards(String sessionToken) {
+	public RewardBean getAllRewards(String sessionToken) {
 
 		RewardBean bean = new RewardBean();
 		ArrayList<String> errors = new ArrayList<String>();
@@ -53,7 +55,7 @@ public class Reward {
 		return bean;
 	}
 
-	static public RewardBean getMyEarnedRewards(String sessionToken) {
+	public RewardBean getMyEarnedRewards(String sessionToken) {
 
 		RewardBean bean = new RewardBean();
 		ArrayList<String> errors = new ArrayList<String>();
@@ -85,7 +87,7 @@ public class Reward {
 	/*
 	 * This feature is only available to administrative users
 	 */
-	static public RewardBean addNewReward(String sessionToken,
+	public RewardBean addNewReward(String sessionToken,
 			String rewardName, String rewardDescription, String venueID,
 			int checkinsRequired) {
 

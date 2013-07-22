@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.herdfinancial.impl;
+package org.owasp.goatdroid.webservice.herdfinancial.services;
 
 import java.util.ArrayList;
 import org.owasp.goatdroid.gui.emulator.Emulator;
@@ -22,10 +22,12 @@ import org.owasp.goatdroid.webservice.herdfinancial.Utils;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.ForgotPasswordBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.ForgotPasswordDAO;
+import org.springframework.stereotype.Service;
 
-public class ForgotPassword {
+@Service
+public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 
-	static public ForgotPasswordBean requestCode(String userName,
+	public ForgotPasswordBean requestCode(String userName,
 			int secretQuestionIndex, String secretQuestionAnswer) {
 
 		ForgotPasswordBean bean = new ForgotPasswordBean();
@@ -74,8 +76,7 @@ public class ForgotPassword {
 		return bean;
 	}
 
-	static public ForgotPasswordBean verifyCode(String userName,
-			int passwordResetCode) {
+	public ForgotPasswordBean verifyCode(String userName, int passwordResetCode) {
 
 		ForgotPasswordBean bean = new ForgotPasswordBean();
 		ArrayList<String> errors = new ArrayList<String>();
@@ -108,7 +109,7 @@ public class ForgotPassword {
 		return bean;
 	}
 
-	static public ForgotPasswordBean updatePassword(String userName,
+	public ForgotPasswordBean updatePassword(String userName,
 			int passwordResetCode, String password) {
 
 		ForgotPasswordBean bean = new ForgotPasswordBean();

@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.impl;
+package org.owasp.goatdroid.webservice.fourgoats.services;
 
 import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
@@ -22,10 +22,12 @@ import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.LoginDAO;
+import org.springframework.stereotype.Service;
 
-public class Login {
+@Service
+public class LoginServiceImpl implements LoginService {
 
-	static public LoginBean validateCredentials(String userName, String password) {
+	public LoginBean validateCredentials(String userName, String password) {
 
 		LoginBean bean = new LoginBean();
 		ArrayList<String> errors = new ArrayList<String>();
@@ -65,8 +67,7 @@ public class Login {
 		return bean;
 	}
 
-	static public LoginBean validateCredentialsAPI(String userName,
-			String password) {
+	public LoginBean validateCredentialsAPI(String userName, String password) {
 
 		LoginBean bean = new LoginBean();
 		ArrayList<String> errors = new ArrayList<String>();
@@ -108,7 +109,7 @@ public class Login {
 		return bean;
 	}
 
-	static public LoginBean checkSession(String sessionToken) {
+	public LoginBean checkSession(String sessionToken) {
 
 		LoginBean bean = new LoginBean();
 		LoginDAO dao = new LoginDAO();
@@ -124,7 +125,7 @@ public class Login {
 		return bean;
 	}
 
-	static public LoginBean signOut(String sessionToken) {
+	public LoginBean signOut(String sessionToken) {
 
 		LoginBean bean = new LoginBean();
 		ArrayList<String> errors = new ArrayList<String>();

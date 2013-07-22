@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.impl;
+package org.owasp.goatdroid.webservice.fourgoats.services;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,10 +24,12 @@ import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.CommentListBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.CommentBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.CommentDAO;
+import org.springframework.stereotype.Service;
 
-public class Comment {
+@Service
+public class CommentServiceImpl implements CommentService {
 
-	static public CommentBean addComment(String sessionToken, String comment,
+	public CommentBean addComment(String sessionToken, String comment,
 			String checkinID) {
 
 		CommentBean bean = new CommentBean();
@@ -73,8 +75,7 @@ public class Comment {
 		return bean;
 	}
 
-	static public CommentBean removeComment(String sessionToken,
-			String commentID) {
+	public CommentBean removeComment(String sessionToken, String commentID) {
 
 		CommentBean bean = new CommentBean();
 		ArrayList<String> errors = new ArrayList<String>();
@@ -111,8 +112,7 @@ public class Comment {
 		return bean;
 	}
 
-	static public CommentListBean getComments(String sessionToken,
-			String checkinID) {
+	public CommentListBean getComments(String sessionToken, String checkinID) {
 
 		CommentListBean bean = new CommentListBean();
 		ArrayList<String> errors = new ArrayList<String>();

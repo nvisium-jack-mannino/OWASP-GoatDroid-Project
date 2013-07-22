@@ -13,36 +13,38 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.herdfinancial.impl;
+package org.owasp.goatdroid.webservice.fourgoats.services;
 
 import java.util.ArrayList;
-import org.owasp.goatdroid.webservice.herdfinancial.Constants;
-import org.owasp.goatdroid.webservice.herdfinancial.Validators;
-import org.owasp.goatdroid.webservice.herdfinancial.bean.RegisterBean;
-import org.owasp.goatdroid.webservice.herdfinancial.dao.RegisterDAO;
+import org.owasp.goatdroid.webservice.fourgoats.Constants;
+import org.owasp.goatdroid.webservice.fourgoats.Validators;
+import org.owasp.goatdroid.webservice.fourgoats.dao.RegisterDAO;
+import org.owasp.goatdroid.webservice.fourgoats.bean.RegisterBean;
+import org.springframework.stereotype.Service;
 
-public class Register {
+@Service
+public class RegisterServiceImpl implements RegisterService {
 
-	static public RegisterBean registerUser(String accountNumber,
-			String firstName, String lastName, String userName, String password) {
+	public RegisterBean registerUser(String firstName, String lastName,
+			String userName, String password) {
 
 		RegisterBean bean = new RegisterBean();
 		ArrayList<String> errors = Validators.validateRegistrationFields(
-				accountNumber, firstName, lastName, userName, password);
+				firstName, lastName, userName, password);
 		RegisterDAO dao = new RegisterDAO();
 
 		try {
 			if (errors.size() == 0) {
 				dao.openConnection();
-				if (!dao.doesUserNameExist(userName)) {
-					if (!dao.doesAccountNumberExist(accountNumber)) {
-						dao.registerUser(accountNumber, firstName, lastName,
-								userName, password);
-						bean.setSuccess(true);
-					} else
-						errors.add(Constants.ACCOUNT_NUMBER_ALREADY_REGISTERED);
-				} else
-					errors.add(Constants.USERNAME_ALREADY_REGISTERED);
+				// if the user exists, we set an error and don't insert
+				if (dao.doesUserExist(userName)) {
+					errors.add(Constants.USERNAME_ALREADY_EXISTS);
+				}
+				// if the user doesn't exist, we insert
+				else {
+					dao.insertNewUser(firstName, lastName, userName, password);
+					bean.setSuccess(true);
+				}
 			}
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);

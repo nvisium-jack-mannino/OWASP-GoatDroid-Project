@@ -13,24 +13,26 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.herdfinancial.impl;
+package org.owasp.goatdroid.webservice.herdfinancial.services;
 
 import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.SecretQuestionBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.SecretQuestionDAO;
+import org.springframework.stereotype.Service;
 
-public class SecretQuestion {
+@Service
+public class SecretQuestionServiceImpl implements SecretQuestionService {
 
-	static public SecretQuestionBean setSecretQuestions(int sessionToken,
+	public SecretQuestionBean setSecretQuestions(int sessionToken,
 			String answer1, String answer2, String answer3) {
 
 		SecretQuestionBean bean = new SecretQuestionBean();
 		ArrayList<String> errors = new ArrayList<String>();
 		SecretQuestionDAO dao = new SecretQuestionDAO();
 
-		if (!Login.isSessionValid(sessionToken))
+		if (!LoginServiceImpl.isSessionValid(sessionToken))
 			errors.add(Constants.SESSION_EXPIRED);
 
 		else if (!Validators.validateSecretQuestionAnswers(answer1, answer2,

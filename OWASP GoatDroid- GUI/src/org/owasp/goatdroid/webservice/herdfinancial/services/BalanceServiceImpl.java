@@ -13,35 +13,39 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.herdfinancial.impl;
+package org.owasp.goatdroid.webservice.herdfinancial.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
-import org.owasp.goatdroid.webservice.herdfinancial.bean.AuthorizeBean;
-import org.owasp.goatdroid.webservice.herdfinancial.dao.AuthorizeDAO;
+import org.owasp.goatdroid.webservice.herdfinancial.bean.BalanceBean;
+import org.owasp.goatdroid.webservice.herdfinancial.dao.BalanceDAO;
+import org.springframework.stereotype.Service;
 
-public class Authorize {
+@Service
+public class BalanceServiceImpl implements BalanceService {
 
-	static public AuthorizeBean authorizeDevice(String deviceID,
-			int sessionToken) {
+	public BalanceBean getBalances(String accountNumber, int sessionToken) {
 
-		AuthorizeBean bean = new AuthorizeBean();
+		BalanceBean bean = new BalanceBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		AuthorizeDAO dao = new AuthorizeDAO();
+		BalanceDAO dao = new BalanceDAO();
 
-		if (!Login.isSessionValid(sessionToken))
+		if (!LoginServiceImpl.isSessionValid(sessionToken))
 			errors.add(Constants.SESSION_EXPIRED);
-		else if (!Validators.validateDeviceID(deviceID))
-			errors.add(Constants.INVALID_DEVICE_ID);
+		else if (!Validators.validateAccountNumber(accountNumber))
+			errors.add(Constants.INVALID_ACCOUNT_NUMBER);
 
 		try {
-			dao.openConnection();
-			if (!dao.isDeviceAuthorized(deviceID)) {
-				dao.authorizeDevice(deviceID, sessionToken);
+			if (errors.size() == 0) {
+				dao.openConnection();
+				HashMap<String, Double> balances = dao
+						.getBalances(accountNumber);
+				bean.setCheckingBalance(balances.get("checking"));
+				bean.setSavingsBalance(balances.get("savings"));
 				bean.setSuccess(true);
-			} else
-				errors.add(Constants.DEVICE_ALREADY_AUTHORIZED);
+			}
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {

@@ -15,13 +15,15 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.FormParam;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.RegisterBean;
-import org.owasp.goatdroid.webservice.herdfinancial.impl.Register;
+import org.owasp.goatdroid.webservice.herdfinancial.services.RegisterServiceImpl;
 
+@Controller
 @Path("/herdfinancial/api/v1/register")
 public class RegisterController {
 	@POST
@@ -33,7 +35,7 @@ public class RegisterController {
 			@FormParam("userName") String userName,
 			@FormParam("password") String password) {
 		try {
-			return Register.registerUser(accountNumber, firstName, lastName,
+			return RegisterServiceImpl.registerUser(accountNumber, firstName, lastName,
 					userName, password);
 		} catch (NullPointerException e) {
 			RegisterBean bean = new RegisterBean();

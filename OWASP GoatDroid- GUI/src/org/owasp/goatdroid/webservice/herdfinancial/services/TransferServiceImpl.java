@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.herdfinancial.impl;
+package org.owasp.goatdroid.webservice.herdfinancial.services;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -21,17 +21,19 @@ import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.TransferBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.TransferDAO;
+import org.springframework.stereotype.Service;
 
-public class Transfer {
+@Service
+public class TransferServiceImpl implements TransferService {
 
-	static public TransferBean transferFunds(int sessionToken, String from,
+	public TransferBean transferFunds(int sessionToken, String from,
 			String to, double amount) {
 
 		TransferBean bean = new TransferBean();
 		ArrayList<String> errors = new ArrayList<String>();
 		TransferDAO dao = new TransferDAO();
 
-		if (!Login.isSessionValid(sessionToken))
+		if (!LoginServiceImpl.isSessionValid(sessionToken))
 			errors.add(Constants.SESSION_EXPIRED);
 		else if (from.equals(to))
 			errors.add(Constants.LULZ);

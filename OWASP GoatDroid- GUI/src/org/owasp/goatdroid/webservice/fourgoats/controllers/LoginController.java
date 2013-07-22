@@ -15,30 +15,30 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
-import javax.ws.rs.CookieParam;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
-import org.owasp.goatdroid.webservice.fourgoats.impl.Login;
+import org.owasp.goatdroid.webservice.fourgoats.services.LoginServiceImpl;
 
+@Controller
 @Path("/fourgoats/api/v1/login")
 public class LoginController {
 
 	@Path("authenticate")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
+	@ResponseBody
 	public LoginBean validateCredentials(
 			@FormParam("username") String userName,
 			@FormParam("password") String password)
 			throws WebApplicationException {
 		try {
-			return Login.validateCredentials(userName, password);
+			return LoginServiceImpl.validateCredentials(userName, password);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);
@@ -49,12 +49,13 @@ public class LoginController {
 	@Path("validate_api")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
+	@ResponseBody
 	public LoginBean validateCredentialsAPI(
 			@FormParam("username") String userName,
 			@FormParam("password") String password)
 			throws WebApplicationException {
 		try {
-			return Login.validateCredentialsAPI(userName, password);
+			return LoginServiceImpl.validateCredentialsAPI(userName, password);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);
@@ -65,10 +66,11 @@ public class LoginController {
 	@Path("check_session")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	@ResponseBody
 	public LoginBean checkSession(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
 		try {
-			return Login.checkSession(sessionToken);
+			return LoginServiceImpl.checkSession(sessionToken);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);
@@ -79,10 +81,11 @@ public class LoginController {
 	@Path("sign_out")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
+	@ResponseBody
 	public LoginBean signOut(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
 		try {
-			return Login.signOut(sessionToken);
+			return LoginServiceImpl.signOut(sessionToken);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);

@@ -15,13 +15,15 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
-import javax.ws.rs.FormParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.owasp.goatdroid.webservice.fourgoats.bean.RegisterBean;
-import org.owasp.goatdroid.webservice.fourgoats.impl.Register;
+import org.owasp.goatdroid.webservice.fourgoats.services.RegisterServiceImpl;
 
+@Controller
 @Path("/fourgoats/api/v1/register")
 public class RegisterController {
 
@@ -33,7 +35,7 @@ public class RegisterController {
 			@FormParam("userName") String userName,
 			@FormParam("password") String password) {
 		try {
-			return Register.registerUser(firstName, lastName, userName,
+			return RegisterServiceImpl.registerUser(firstName, lastName, userName,
 					password);
 		} catch (NullPointerException e) {
 			RegisterBean bean = new RegisterBean();

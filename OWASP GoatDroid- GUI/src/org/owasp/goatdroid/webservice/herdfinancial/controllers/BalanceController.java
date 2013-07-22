@@ -15,15 +15,16 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.CookieParam;
-import javax.ws.rs.PathParam;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.BalanceBean;
-import org.owasp.goatdroid.webservice.herdfinancial.impl.Balance;
+import org.owasp.goatdroid.webservice.herdfinancial.services.BalanceServiceImpl;
 
+@Controller
 @Path("/herdfinancial/api/v1/balances")
 public class BalanceController {
 	@GET
@@ -33,7 +34,7 @@ public class BalanceController {
 			@PathParam("accountNumber") String accountNumber,
 			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {
 		try {
-			return Balance.getBalances(accountNumber, sessionToken);
+			return BalanceServiceImpl.getBalances(accountNumber, sessionToken);
 		} catch (NullPointerException e) {
 			BalanceBean bean = new BalanceBean();
 			bean.setSuccess(false);

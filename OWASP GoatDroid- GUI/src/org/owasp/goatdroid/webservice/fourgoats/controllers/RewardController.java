@@ -15,16 +15,16 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
-import javax.ws.rs.CookieParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.RewardBean;
-import org.owasp.goatdroid.webservice.fourgoats.impl.Reward;
+import org.owasp.goatdroid.webservice.fourgoats.services.RewardServiceImpl;
 
+@Controller
 @Path("/fourgoats/api/v1/rewards")
 public class RewardController {
 
@@ -34,7 +34,7 @@ public class RewardController {
 	public RewardBean getRewards(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
 		try {
-			return Reward.getAllRewards(sessionToken);
+			return RewardServiceImpl.getAllRewards(sessionToken);
 		} catch (NullPointerException e) {
 			RewardBean bean = new RewardBean();
 			bean.setSuccess(false);
@@ -48,7 +48,7 @@ public class RewardController {
 	public RewardBean getMyEarnedRewards(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
 		try {
-			return Reward.getMyEarnedRewards(sessionToken);
+			return RewardServiceImpl.getMyEarnedRewards(sessionToken);
 		} catch (NullPointerException e) {
 			RewardBean bean = new RewardBean();
 			bean.setSuccess(false);
@@ -67,7 +67,7 @@ public class RewardController {
 			@FormParam("checkinsRequired") int checkinsRequired) {
 
 		try {
-			return Reward.addNewReward(sessionToken, rewardName,
+			return RewardServiceImpl.addNewReward(sessionToken, rewardName,
 					rewardDescription, venueID, checkinsRequired);
 		} catch (NullPointerException e) {
 			RewardBean bean = new RewardBean();
