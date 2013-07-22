@@ -20,15 +20,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.AuthorizeBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.AuthorizeServiceImpl;
 
 @Controller
-@Path("/herdfinancial/api/v1/authorize")
+@RequestMapping("herdfinancial/api/v1/authorize")
 public class AuthorizeController {
-	@POST
-	@Produces("application/json")
+
+	@RequestMapping(method = RequestMethod.POST)
 	public AuthorizeBean authorizeDevice(
 			@FormParam("deviceID") String deviceID,
 			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {

@@ -20,18 +20,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.VenueListBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.VenueBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.VenueServiceImpl;
 
 @Controller
-@Path("/fourgoats/api/v1/venues")
+@RequestMapping("fourgoats/api/v1/venues")
 public class VenueController {
 
-	@Path("add")
-	@POST
-	@Produces("application/json")
+	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public VenueBean addVenue(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
 			@FormParam("venueName") String venueName,
@@ -39,8 +38,8 @@ public class VenueController {
 			@FormParam("latitude") String latitude,
 			@FormParam("longitude") String longitude) {
 		try {
-			return VenueServiceImpl.addVenue(sessionToken, venueName, venueWebsite,
-					latitude, longitude);
+			return VenueServiceImpl.addVenue(sessionToken, venueName,
+					venueWebsite, latitude, longitude);
 		} catch (NullPointerException e) {
 			VenueBean bean = new VenueBean();
 			bean.setSuccess(false);
@@ -48,9 +47,7 @@ public class VenueController {
 		}
 	}
 
-	@Path("list")
-	@GET
-	@Produces("application/json")
+	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public VenueListBean getAllVenues(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
 		try {

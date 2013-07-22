@@ -20,21 +20,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.TransferBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.TransferServiceImpl;
 
 @Controller
-@Path("/herdfinancial/api/v1/transfer")
+@RequestMapping("herdfinancial/api/v1/transfer")
 public class TransferController {
-	@POST
-	@Produces("application/json")
+
+	@RequestMapping(method = RequestMethod.POST)
 	public TransferBean doTransfer(@FormParam("from") String from,
 			@FormParam("to") String to, @FormParam("amount") double amount,
 			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {
 
 		try {
-			return TransferServiceImpl.transferFunds(sessionToken, from, to, amount);
+			return TransferServiceImpl.transferFunds(sessionToken, from, to,
+					amount);
 		} catch (NullPointerException e) {
 			TransferBean bean = new TransferBean();
 			bean.setSuccess(false);

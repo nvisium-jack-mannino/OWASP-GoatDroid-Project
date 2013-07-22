@@ -21,13 +21,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.AdminBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.GetUsersAdminBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
 
 @Controller
-@Path("/fourgoats/api/v1/admin")
+@RequestMapping("fourgoats/api/v1/admin")
 public class AdminController {
 
 	AdminServiceImpl adminService;
@@ -37,10 +38,7 @@ public class AdminController {
 		this.adminService = adminService;
 	}
 
-	
-	@Path("delete_user")
-	@POST
-	@Produces("application/json")
+	@RequestMapping(value = "delete_user", method = RequestMethod.POST)
 	public AdminBean addComment(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
 			@FormParam("userName") String userName) {
@@ -53,9 +51,7 @@ public class AdminController {
 		}
 	}
 
-	@Path("reset_password")
-	@POST
-	@Produces("application/json")
+	@RequestMapping(value = "reset_password", method = RequestMethod.POST)
 	public AdminBean addComment(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
 			@FormParam("userName") String userName,
@@ -70,9 +66,7 @@ public class AdminController {
 		}
 	}
 
-	@Path("get_users")
-	@GET
-	@Produces("application/json")
+	@RequestMapping(value = "get_users", method = RequestMethod.GET)
 	public GetUsersAdminBean addComment(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
 		try {

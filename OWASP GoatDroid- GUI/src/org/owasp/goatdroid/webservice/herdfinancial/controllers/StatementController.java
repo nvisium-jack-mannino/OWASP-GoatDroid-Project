@@ -20,25 +20,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.StatementBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.StatementServiceImpl;
 
 @Controller
-@Path("/herdfinancial/api/v1/statements")
+@RequestMapping("herdfinancial/api/v1/statements")
 public class StatementController {
 
-	@GET
-	@Produces("application/json")
-	@Path("get_statement/{accountNumber}/{startDate}/{endDate}")
+	@RequestMapping(value = "get_statement/{accountNumber}/{startDate}/{endDate}", method = RequestMethod.GET)
 	public StatementBean getStatement(
 			@PathParam("accountNumber") String accountNumber,
 			@PathParam("startDate") String startDate,
 			@PathParam("endDate") String endDate,
 			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {
 		try {
-			return StatementServiceImpl.getStatement(accountNumber, startDate, endDate,
-					sessionToken);
+			return StatementServiceImpl.getStatement(accountNumber, startDate,
+					endDate, sessionToken);
 		} catch (NullPointerException e) {
 			StatementBean bean = new StatementBean();
 			bean.setSuccess(false);
@@ -46,15 +45,13 @@ public class StatementController {
 		}
 	}
 
-	@GET
-	@Produces("application/json")
-	@Path("poll_statement_updates/{accountNumber}")
+	@RequestMapping(value = "poll_statement_updates/{accountNumber}", method = RequestMethod.GET)
 	public StatementBean getStatementSinceLastPoll(
 			@PathParam("accountNumber") String accountNumber,
 			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {
 		try {
-			return StatementServiceImpl.getStatementSinceLastPoll(accountNumber,
-					sessionToken);
+			return StatementServiceImpl.getStatementSinceLastPoll(
+					accountNumber, sessionToken);
 		} catch (NullPointerException e) {
 			StatementBean bean = new StatementBean();
 			bean.setSuccess(false);

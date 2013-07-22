@@ -20,18 +20,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.LoginServiceImpl;
 
 @Controller
-@Path("/fourgoats/api/v1/login")
+@RequestMapping("fourgoats/api/v1/login")
 public class LoginController {
 
-	@Path("authenticate")
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
+	@RequestMapping(value = "authenticate", method = RequestMethod.POST)
 	@ResponseBody
 	public LoginBean validateCredentials(
 			@FormParam("username") String userName,
@@ -46,9 +45,7 @@ public class LoginController {
 		}
 	}
 
-	@Path("validate_api")
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
+	@RequestMapping(value= "validate_api", method = RequestMethod.POST)
 	@ResponseBody
 	public LoginBean validateCredentialsAPI(
 			@FormParam("username") String userName,
@@ -63,9 +60,7 @@ public class LoginController {
 		}
 	}
 
-	@Path("check_session")
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
+	@RequestMapping(value="check_session", method = RequestMethod.GET)
 	@ResponseBody
 	public LoginBean checkSession(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
@@ -78,9 +73,7 @@ public class LoginController {
 		}
 	}
 
-	@Path("sign_out")
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
+	@RequestMapping(value="sign_out", method = RequestMethod.POST)
 	@ResponseBody
 	public LoginBean signOut(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {

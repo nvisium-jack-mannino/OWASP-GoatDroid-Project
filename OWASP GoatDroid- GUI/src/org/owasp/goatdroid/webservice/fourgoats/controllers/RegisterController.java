@@ -20,15 +20,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.fourgoats.bean.RegisterBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.RegisterServiceImpl;
 
 @Controller
-@Path("/fourgoats/api/v1/register")
+@Path("fourgoats/api/v1/register")
 public class RegisterController {
 
-	@POST
-	@Produces("application/json")
+	@RequestMapping(method = RequestMethod.POST)
 	public RegisterBean doRegistration(
 			@FormParam("firstName") String firstName,
 			@FormParam("lastName") String lastName,

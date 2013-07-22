@@ -16,28 +16,37 @@
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.CommentListBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.CommentBean;
+import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
 import org.owasp.goatdroid.webservice.fourgoats.services.CommentServiceImpl;
 
 @Controller
-@Path("/fourgoats/api/v1/comments")
+@RequestMapping("fourgoats/api/v1/comments")
 public class CommentController {
 
-	@Path("add")
-	@POST
-	@Produces("application/json")
+	CommentServiceImpl commentService;
+
+	@Autowired
+	public CommentController(CommentServiceImpl commentService) {
+		this.commentService = commentService;
+	}
+
+	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public CommentBean addComment(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
 			@FormParam("comment") String comment,
 			@FormParam("checkinID") String checkinID) {
 		try {
-			return CommentServiceImpl.addComment(sessionToken, comment, checkinID);
+			return CommentServiceImpl.addComment(sessionToken, comment,
+					checkinID);
 		} catch (NullPointerException e) {
 			CommentBean bean = new CommentBean();
 			bean.setSuccess(false);
@@ -45,9 +54,7 @@ public class CommentController {
 		}
 	}
 
-	@Path("remove")
-	@POST
-	@Produces("application/json")
+	@RequestMapping(value = "remove", method = RequestMethod.POST)
 	public CommentBean removeComment(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
 			@FormParam("commentID") String commentID) {
@@ -60,9 +67,7 @@ public class CommentController {
 		}
 	}
 
-	@Path("get/{checkinID}")
-	@GET
-	@Produces("application/json")
+	@RequestMapping(value = "get/{checkinID}", method = RequestMethod.GET)
 	public CommentListBean getComments(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
 			@PathParam("checkinID") String checkinID) {

@@ -20,17 +20,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.SecretQuestionBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.SecretQuestionServiceImpl;
 
 @Controller
-@Path("/herdfinancial/api/v1/secret_questions")
+@RequestMapping("herdfinancial/api/v1/secret_questions")
 public class SecretQuestionController {
 
-	@Path("set")
-	@POST
-	@Produces("application/json")
+	@RequestMapping(value="set", method = RequestMethod.POST)
 	public SecretQuestionBean setSecretQuestions(
 			@CookieParam(Constants.SESSION_TOKEN) int sessionToken,
 			@FormParam("answer1") String answer1,

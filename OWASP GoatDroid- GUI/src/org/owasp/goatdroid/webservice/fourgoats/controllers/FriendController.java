@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.FriendListBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.FriendProfileBean;
@@ -29,21 +30,17 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.PublicUsersBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.FriendServiceImpl;
 
 @Controller
-@Path("/fourgoats/api/v1/friends")
+@RequestMapping("fourgoats/api/v1/friends")
 public class FriendController {
 
-	@Path("list_friends")
-	@GET
-	@Produces("application/json")
+	@RequestMapping(value = "list_friends", method = RequestMethod.GET)
 	public FriendListBean getFriends(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
 
 		return FriendServiceImpl.getFriends(sessionToken);
 	}
 
-	@Path("request_friend")
-	@POST
-	@Produces("application/json")
+	@RequestMapping(value = "request_friend", method = RequestMethod.POST)
 	public FriendBean requestFriend(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
 			@FormParam("userName") String userName) {
@@ -52,32 +49,27 @@ public class FriendController {
 
 	}
 
-	@Path("accept_friend_request")
-	@POST
-	@Produces("application/json")
+	@RequestMapping(value = "accept_friend_request", method = RequestMethod.POST)
 	public FriendBean acceptFriendRequest(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
 			@FormParam("userName") String userName) {
 
-		return FriendServiceImpl.acceptOrDenyFriendRequest("accept", sessionToken,
-				userName);
+		return FriendServiceImpl.acceptOrDenyFriendRequest("accept",
+				sessionToken, userName);
 
 	}
 
-	@Path("deny_friend_request")
-	@POST
-	@Produces("application/json")
+	@RequestMapping(value = "deny_friend_request", method = RequestMethod.POST)
 	public FriendBean denyFriendRequest(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
 			@FormParam("userName") String userName) {
 
-		return FriendServiceImpl.acceptOrDenyFriendRequest("deny", sessionToken, userName);
+		return FriendServiceImpl.acceptOrDenyFriendRequest("deny",
+				sessionToken, userName);
 
 	}
 
-	@Path("remove_friend")
-	@POST
-	@Produces("application/json")
+	@RequestMapping(value = "remove_friend", method = RequestMethod.POST)
 	public FriendBean removeFriend(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
 			@FormParam("userName") String userName) {
@@ -85,27 +77,21 @@ public class FriendController {
 		return FriendServiceImpl.removeFriend(sessionToken, userName);
 	}
 
-	@Path("get_pending_requests")
-	@GET
-	@Produces("application/json")
+	@RequestMapping(value = "get_pending_requests", method = RequestMethod.GET)
 	public PendingFriendRequestsBean getPendingFriendRequests(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
 
 		return FriendServiceImpl.getPendingFriendRequests(sessionToken);
 	}
 
-	@Path("search_users")
-	@GET
-	@Produces("application/json")
+	@RequestMapping(value = "search_users", method = RequestMethod.GET)
 	public PublicUsersBean getPublicUsers(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
 
 		return FriendServiceImpl.getPublicUsers(sessionToken);
 	}
 
-	@Path("view_profile/{userName}")
-	@GET
-	@Produces("application/json")
+	@RequestMapping(value = "view_profile/{userName}", method = RequestMethod.GET)
 	public FriendProfileBean getProfile(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
 			@PathParam("userName") String userName) {

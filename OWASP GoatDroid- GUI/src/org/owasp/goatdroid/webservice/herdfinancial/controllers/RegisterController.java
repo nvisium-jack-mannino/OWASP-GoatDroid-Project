@@ -20,14 +20,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.RegisterBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.RegisterServiceImpl;
 
 @Controller
-@Path("/herdfinancial/api/v1/register")
+@RequestMapping("herdfinancial/api/v1/register")
 public class RegisterController {
-	@POST
-	@Produces("application/json")
+
+	@RequestMapping(method = RequestMethod.POST)
 	public RegisterBean doRegistration(
 			@FormParam("accountNumber") String accountNumber,
 			@FormParam("firstName") String firstName,
@@ -35,8 +36,8 @@ public class RegisterController {
 			@FormParam("userName") String userName,
 			@FormParam("password") String password) {
 		try {
-			return RegisterServiceImpl.registerUser(accountNumber, firstName, lastName,
-					userName, password);
+			return RegisterServiceImpl.registerUser(accountNumber, firstName,
+					lastName, userName, password);
 		} catch (NullPointerException e) {
 			RegisterBean bean = new RegisterBean();
 			bean.setSuccess(false);

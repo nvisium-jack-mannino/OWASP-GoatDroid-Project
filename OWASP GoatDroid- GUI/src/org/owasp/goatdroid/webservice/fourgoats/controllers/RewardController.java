@@ -20,17 +20,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.RewardBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.RewardServiceImpl;
 
 @Controller
-@Path("/fourgoats/api/v1/rewards")
+@RequestMapping("fourgoats/api/v1/rewards")
 public class RewardController {
 
-	@Path("all_rewards")
-	@GET
-	@Produces("application/json")
+	@RequestMapping(value = "all_rewards", method = RequestMethod.GET)
 	public RewardBean getRewards(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
 		try {
@@ -42,9 +41,7 @@ public class RewardController {
 		}
 	}
 
-	@Path("my_rewards")
-	@GET
-	@Produces("application/json")
+	@RequestMapping(value = "my_rewards", method = RequestMethod.GET)
 	public RewardBean getMyEarnedRewards(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
 		try {
@@ -56,9 +53,7 @@ public class RewardController {
 		}
 	}
 
-	@Path("add")
-	@POST
-	@Produces("application/json")
+	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public RewardBean addNewReward(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
 			@FormParam("rewardName") String rewardName,

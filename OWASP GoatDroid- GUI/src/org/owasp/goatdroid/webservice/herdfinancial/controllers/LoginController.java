@@ -20,16 +20,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.LoginBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.LoginServiceImpl;
 
 @Controller
-@Path("/herdfinancial/api/v1/login")
+@RequestMapping("herdfinancial/api/v1/login")
 public class LoginController {
-	@Path("authenticate")
-	@POST
-	@Produces("application/json")
+	
+	@RequestMapping(value="authenticate", method = RequestMethod.POST)
 	public LoginBean submitCredentials(@FormParam("userName") String userName,
 			@FormParam("password") String password) {
 		try {
@@ -41,9 +41,7 @@ public class LoginController {
 		}
 	}
 
-	@Path("device/{deviceID}")
-	@GET
-	@Produces("application/json")
+	@RequestMapping(value="device/{deviceID}", method = RequestMethod.GET)
 	public LoginBean checkDeviceRegistration(
 			@PathParam("deviceID") String deviceID) {
 		try {
@@ -55,9 +53,7 @@ public class LoginController {
 		}
 	}
 
-	@Path("device_or_session/{deviceID}")
-	@GET
-	@Produces("application/json")
+	@RequestMapping(value="device_or_session/{deviceID}", method = RequestMethod.GET)
 	public LoginBean checkDeviceRegistration(
 			@CookieParam(Constants.SESSION_TOKEN) int sessionToken,
 			@PathParam("deviceID") String deviceID) {
@@ -71,9 +67,7 @@ public class LoginController {
 		}
 	}
 
-	@Path("sign_out")
-	@GET
-	@Produces("application/json")
+	@RequestMapping(value= "sign_out", method = RequestMethod.GET)
 	public LoginBean signOut(
 			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {
 		try {

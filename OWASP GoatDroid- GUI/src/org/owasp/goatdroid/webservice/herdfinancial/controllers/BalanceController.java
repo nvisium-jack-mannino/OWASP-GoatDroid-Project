@@ -20,16 +20,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.BalanceBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.BalanceServiceImpl;
 
 @Controller
-@Path("/herdfinancial/api/v1/balances")
+@RequestMapping("herdfinancial/api/v1/balances")
 public class BalanceController {
-	@GET
-	@Path("{accountNumber}")
-	@Produces("application/json")
+
+	@RequestMapping(value = "{accountNumber}", method = RequestMethod.GET)
 	public BalanceBean getBalances(
 			@PathParam("accountNumber") String accountNumber,
 			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {

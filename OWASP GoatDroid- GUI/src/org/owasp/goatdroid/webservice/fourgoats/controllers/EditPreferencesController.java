@@ -20,26 +20,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.EditPreferencesBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.GetPreferencesBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.EditPreferencesServiceImpl;
 
 @Controller
-@Path("/fourgoats/api/v1/preferences")
+@RequestMapping("fourgoats/api/v1/preferences")
 public class EditPreferencesController {
 
-	@Path("modify_preferences")
-	@POST
-	@Produces("application/json")
+	@RequestMapping(value = "modify_preferences", method = RequestMethod.POST)
 	public EditPreferencesBean modifyPreferences(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
 			@FormParam("autoCheckin") boolean autoCheckin,
 			@FormParam("isPublic") boolean isPublic) {
 
 		try {
-			return EditPreferencesServiceImpl.modifyPreferences(sessionToken, autoCheckin,
-					isPublic);
+			return EditPreferencesServiceImpl.modifyPreferences(sessionToken,
+					autoCheckin, isPublic);
 		} catch (NullPointerException e) {
 			EditPreferencesBean bean = new EditPreferencesBean();
 			bean.setSuccess(false);
@@ -47,9 +46,7 @@ public class EditPreferencesController {
 		}
 	}
 
-	@Path("get_preferences")
-	@GET
-	@Produces("application/json")
+	@RequestMapping(value = "get_preferences", method = RequestMethod.GET)
 	public GetPreferencesBean getPreferences(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
 		try {

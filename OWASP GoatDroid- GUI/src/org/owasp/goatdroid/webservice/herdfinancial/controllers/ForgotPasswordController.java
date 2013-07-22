@@ -20,23 +20,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.ForgotPasswordBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.ForgotPasswordServiceImpl;
 
 @Controller
-@Path("/herdfinancial/api/v1/forgot_password")
+@RequestMapping("herdfinancial/api/v1/forgot_password")
 public class ForgotPasswordController {
 
-	@Path("request_code")
-	@POST
-	@Produces("application/json")
+	@RequestMapping(value = "request_code", method = RequestMethod.POST)
 	public ForgotPasswordBean requestCode(
 			@FormParam("userName") String userName,
 			@FormParam("secretQuestionIndex") int secretQuestionIndex,
 			@FormParam("secretQuestionAnswer") String secretQuestionAnswer) {
 		try {
-			return ForgotPasswordServiceImpl.requestCode(userName, secretQuestionIndex,
-					secretQuestionAnswer);
+			return ForgotPasswordServiceImpl.requestCode(userName,
+					secretQuestionIndex, secretQuestionAnswer);
 		} catch (NullPointerException e) {
 			ForgotPasswordBean bean = new ForgotPasswordBean();
 			bean.setSuccess(false);
@@ -44,14 +43,13 @@ public class ForgotPasswordController {
 		}
 	}
 
-	@Path("verify_code")
-	@POST
-	@Produces("application/json")
+	@RequestMapping(value = "verify_code", method = RequestMethod.POST)
 	public ForgotPasswordBean verifyCode(
 			@FormParam("userName") String userName,
 			@FormParam("passwordResetCode") int passwordResetCode) {
 		try {
-			return ForgotPasswordServiceImpl.verifyCode(userName, passwordResetCode);
+			return ForgotPasswordServiceImpl.verifyCode(userName,
+					passwordResetCode);
 		} catch (NullPointerException e) {
 			ForgotPasswordBean bean = new ForgotPasswordBean();
 			bean.setSuccess(false);
@@ -59,16 +57,14 @@ public class ForgotPasswordController {
 		}
 	}
 
-	@Path("update_password")
-	@POST
-	@Produces("application/json")
+	@RequestMapping(value = "update_password", method = RequestMethod.POST)
 	public ForgotPasswordBean getBalances(
 			@FormParam("userName") String userName,
 			@FormParam("passwordResetCode") int passwordResetCode,
 			@FormParam("password") String password) {
 		try {
-			return ForgotPasswordServiceImpl.updatePassword(userName, passwordResetCode,
-					password);
+			return ForgotPasswordServiceImpl.updatePassword(userName,
+					passwordResetCode, password);
 		} catch (NullPointerException e) {
 			ForgotPasswordBean bean = new ForgotPasswordBean();
 			bean.setSuccess(false);
