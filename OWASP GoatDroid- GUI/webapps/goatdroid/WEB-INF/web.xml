@@ -7,11 +7,24 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+        /WEB-INF/application-context.xml
+    </param-value>
+	</context-param>
+
+	<!-- Handles all requests into the application -->
 	<servlet>
-		<servlet-name>fourgoats</servlet-name>
+		<servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/web-context.xml</param-value>
+		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+
 	<servlet-mapping>
 		<servlet-name>fourgoats</servlet-name>
 		<url-pattern>/fourgoats/api/v1/*</url-pattern>
