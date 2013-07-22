@@ -15,21 +15,16 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.dao;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.owasp.goatdroid.webservice.herdfinancial.Utils;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class TransferDaoImpl extends BaseDaoImpl implements TransferDao {
 
 	public double getBalance(String accountNumber) throws SQLException {
 
 		String sql = "select checkingBalance from users where accountNumber = ?";
-		PreparedStatement selectBalance = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectBalance.setString(1, accountNumber);
-		ResultSet rs = selectBalance.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, accountNumber);
 		double balance = 0;
 		while (rs.next()) {
 			balance = rs.getDouble("checkingBalance");
@@ -41,33 +36,22 @@ public class TransferDaoImpl extends BaseDaoImpl implements TransferDao {
 			double amount, String name, double balance) throws SQLException {
 		String sql = "insert into transactions (accountNumber, date, amount, name, balance, timeStamp)"
 				+ " values (?,?,?,?,?,?)";
-		PreparedStatement insertStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		insertStatement.setString(1, accountNumber);
-		insertStatement.setDate(2, date);
-		insertStatement.setDouble(3, amount);
-		insertStatement.setString(4, name);
-		insertStatement.setDouble(5, balance + amount);
-		insertStatement.setLong(6, Utils.getTimeMilliseconds());
-		insertStatement.executeUpdate();
+		getJdbcTemplate().update(
+				sql,
+				new Object[] { accountNumber, date, amount, name,
+						balance + amount, Utils.getTimeMilliseconds() });
 	}
 
 	public void updateAccountBalance(String accountNumber, double amount,
 			double balance) throws SQLException {
 		String sql = "update users SET checkingBalance = ? where accountNumber = ?";
-		PreparedStatement updateAccount = (PreparedStatement) conn
-				.prepareCall(sql);
-		updateAccount.setDouble(1, balance + amount);
-		updateAccount.setString(2, accountNumber);
-		updateAccount.executeUpdate();
+		getJdbcTemplate().update(sql,
+				new Object[] { balance + amount, accountNumber });
 	}
 
 	public String getName(String accountNumber) throws SQLException {
 		String sql = "select firstName, lastName from users where accountNumber = ?";
-		PreparedStatement selectName = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectName.setString(1, accountNumber);
-		ResultSet rs = selectName.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, accountNumber);
 		String name = "";
 		while (rs.next()) {
 			name += rs.getString("firstName") + " ";
@@ -79,10 +63,7 @@ public class TransferDaoImpl extends BaseDaoImpl implements TransferDao {
 	public boolean doesAccountExist(String accountNumber) throws SQLException {
 
 		String sql = "select * from users where accountNumber = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, accountNumber);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, accountNumber);
 		if (rs.next())
 			return true;
 		else

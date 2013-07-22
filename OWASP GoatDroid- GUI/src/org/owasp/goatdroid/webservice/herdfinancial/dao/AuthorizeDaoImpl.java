@@ -15,28 +15,21 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class AuthorizeDaoImpl extends BaseDaoImpl implements AuthorizeDao {
 
 	public void authorizeDevice(String deviceID, int sessionToken)
 			throws SQLException {
 		String sql = "update users set deviceID = ?, isDeviceAuthorized = true where sessionToken = ?";
-		PreparedStatement updateAuthorization = (PreparedStatement) conn
-				.prepareCall(sql);
-		updateAuthorization.setString(1, deviceID);
-		updateAuthorization.setInt(2, sessionToken);
-		updateAuthorization.executeUpdate();
+		getJdbcTemplate().update(sql, new Object[] { deviceID, sessionToken });
 	}
 
 	public boolean isDeviceAuthorized(String deviceID) throws SQLException {
 		String sql = "select isDeviceAuthorized from users where deviceID = ?";
-		PreparedStatement selectDeviceAuth = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectDeviceAuth.setString(1, deviceID);
-		ResultSet rs = selectDeviceAuth.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, deviceID);
 		if (rs.next()) {
 			if (rs.getBoolean("isDeviceAuthorized"))
 

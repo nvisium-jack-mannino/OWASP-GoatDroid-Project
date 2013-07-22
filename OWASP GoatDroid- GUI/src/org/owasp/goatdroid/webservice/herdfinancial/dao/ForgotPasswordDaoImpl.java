@@ -15,11 +15,12 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ForgotPasswordDaoImpl extends BaseDaoImpl implements ForgotPasswordDao {
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+
+public class ForgotPasswordDaoImpl extends BaseDaoImpl implements
+		ForgotPasswordDao {
 
 	public boolean confirmSecretQuestionAnswer(String userName,
 			String secretQuestionIndex, String secretQuestionAnswer)
@@ -34,10 +35,8 @@ public class ForgotPasswordDaoImpl extends BaseDaoImpl implements ForgotPassword
 		else
 			sql = "SELECT answer3 FROM users WHERE userName = ?";
 
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userName);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userName);
+
 		rs.next();
 		if ((rs.getString("answer" + secretQuestionIndex)
 				.equals(secretQuestionAnswer)))
@@ -50,22 +49,15 @@ public class ForgotPasswordDaoImpl extends BaseDaoImpl implements ForgotPassword
 			throws SQLException {
 
 		String sql = "UPDATE users SET passwordResetCode = ? WHERE userName = ?";
-		PreparedStatement updateStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		updateStatement.setString(1, code);
-		updateStatement.setString(2, userName);
-		updateStatement.executeUpdate();
+		getJdbcTemplate().update(sql, new Object[] { userName, code });
 	}
 
 	public boolean confirmPasswordResetCode(String userName,
 			int passwordResetCode) throws SQLException {
 
 		String sql = "SELECT passwordResetCode FROM users WHERE userName = ? and passwordResetCode = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userName);
-		selectStatement.setInt(2, passwordResetCode);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
+				new Object[] { userName, passwordResetCode });
 		if (rs.next())
 			return true;
 		else
@@ -76,19 +68,12 @@ public class ForgotPasswordDaoImpl extends BaseDaoImpl implements ForgotPassword
 			throws SQLException {
 
 		String sql = "UPDATE users SET password = ? where userName = ?";
-		PreparedStatement updateStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		updateStatement.setString(1, password);
-		updateStatement.setString(2, userName);
-		updateStatement.executeUpdate();
+		getJdbcTemplate().update(sql, new Object[] { password, userName });
 	}
 
 	public void clearPasswordResetCode(String userName) throws SQLException {
 
 		String sql = "UPDATE users SET passwordResetCode = '' WHERE userName = ?";
-		PreparedStatement updateStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		updateStatement.setString(1, userName);
-		updateStatement.executeUpdate();
+		getJdbcTemplate().update(sql, userName);
 	}
 }

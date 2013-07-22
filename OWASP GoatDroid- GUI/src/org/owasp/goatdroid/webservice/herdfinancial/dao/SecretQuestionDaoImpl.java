@@ -15,21 +15,16 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.dao;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class SecretQuestionDaoImpl extends BaseDaoImpl implements SecretQuestionDao {
-	
+public class SecretQuestionDaoImpl extends BaseDaoImpl implements
+		SecretQuestionDao {
+
 	public void updateAnswers(int sessionToken, String answer1, String answer2,
 			String answer3) throws SQLException {
 
 		String sql = "update users SET answer1 = ?, answer2 = ?, answer3 = ? where sessionToken = ?";
-		PreparedStatement updateStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		updateStatement.setString(1, answer1);
-		updateStatement.setString(2, answer2);
-		updateStatement.setString(3, answer3);
-		updateStatement.setInt(4, sessionToken);
-		updateStatement.executeUpdate();
+		getJdbcTemplate().update(sql,
+				new Object[] { answer1, answer2, answer3, sessionToken });
 	}
 }

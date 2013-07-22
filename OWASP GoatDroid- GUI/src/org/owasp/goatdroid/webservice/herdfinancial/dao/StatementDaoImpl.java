@@ -15,13 +15,11 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.dao;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.herdfinancial.Utils;
 import org.owasp.goatdroid.webservice.herdfinancial.model.StatementModel;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class StatementDaoImpl extends BaseDaoImpl implements StatementDao {
 
@@ -32,13 +30,8 @@ public class StatementDaoImpl extends BaseDaoImpl implements StatementDao {
 		String sql = "select date, amount, name, balance from "
 				+ "transactions where accountNumber = ? and date >= ? "
 				+ "and date <= ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, accountNumber);
-		selectStatement.setDate(2, startDate);
-		selectStatement.setDate(3, endDate);
-		ResultSet rs = selectStatement.executeQuery();
-
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
+				new Object[] { accountNumber, startDate, endDate });
 		while (rs.next()) {
 			StatementModel transaction = new StatementModel();
 			transaction.setDate(rs.getDate("date").toString());
@@ -55,12 +48,8 @@ public class StatementDaoImpl extends BaseDaoImpl implements StatementDao {
 			String accountNumber, long timeStamp) throws SQLException {
 		ArrayList<StatementModel> transactions = new ArrayList<StatementModel>();
 		String sql = "select date, amount, name, balance from transactions where accountNumber = ? and timeStamp >  ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, accountNumber);
-		selectStatement.setLong(2, timeStamp);
-		ResultSet rs = selectStatement.executeQuery();
-
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
+				new Object[] { accountNumber, timeStamp });
 		while (rs.next()) {
 			StatementModel transaction = new StatementModel();
 			transaction.setDate(rs.getDate("date").toString());
@@ -75,10 +64,7 @@ public class StatementDaoImpl extends BaseDaoImpl implements StatementDao {
 
 	public long getLastPollTime(String accountNumber) throws SQLException {
 		String sql = "select lastPollTime from users where accountNumber = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, accountNumber);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, accountNumber);
 		if (rs.next())
 			return rs.getLong("lastPollTime");
 		else
@@ -87,10 +73,7 @@ public class StatementDaoImpl extends BaseDaoImpl implements StatementDao {
 
 	public void updateLastPollTime(String accountNumber) throws SQLException {
 		String sql = "update users SET lastPollTime = ? where accountNumber = ?";
-		PreparedStatement updateStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		updateStatement.setLong(1, Utils.getTimeMilliseconds());
-		updateStatement.setString(2, accountNumber);
-		updateStatement.executeUpdate();
+		getJdbcTemplate().update(sql,
+				new Object[] { Utils.getTimeMilliseconds(), accountNumber });
 	}
 }

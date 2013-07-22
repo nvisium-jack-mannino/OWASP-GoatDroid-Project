@@ -15,9 +15,9 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class LoginDaoImpl extends BaseDaoImpl implements LoginDao {
 
@@ -25,10 +25,7 @@ public class LoginDaoImpl extends BaseDaoImpl implements LoginDao {
 			throws SQLException {
 
 		String sql = "select isDeviceAuthorized from users where deviceID= ?";
-		PreparedStatement selectDeviceAuth = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectDeviceAuth.setString(1, deviceID);
-		ResultSet rs = selectDeviceAuth.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, deviceID);
 		if (rs.next()) {
 			boolean isAuth = rs.getBoolean("isDeviceAuthorized");
 			return isAuth;
@@ -40,21 +37,14 @@ public class LoginDaoImpl extends BaseDaoImpl implements LoginDao {
 			long sessionStartTime) throws SQLException {
 
 		String sql = "update users set sessionToken = ?, sessionStartTime = ? where username = ?";
-		PreparedStatement updateSessionToken = (PreparedStatement) conn
-				.prepareCall(sql);
-		updateSessionToken.setInt(1, sessionToken);
-		updateSessionToken.setDouble(2, sessionStartTime);
-		updateSessionToken.setString(3, userName);
-		updateSessionToken.executeUpdate();
+		getJdbcTemplate().update(sql,
+				new Object[] { sessionToken, sessionStartTime, userName });
 	}
 
 	public long getSessionStartTime(int sessionToken) throws SQLException {
 
 		String sql = "select sessionStartTime from users where sessionToken = ?";
-		PreparedStatement selectSessionStart = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectSessionStart.setInt(1, sessionToken);
-		ResultSet rs = selectSessionStart.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
 		if (rs.next()) {
 			long sessionStartTime = rs.getLong("sessionStartTime");
 			return sessionStartTime;
@@ -67,11 +57,8 @@ public class LoginDaoImpl extends BaseDaoImpl implements LoginDao {
 			throws SQLException {
 
 		String sql = "select accountNumber from users where username = ? and password = ?";
-		PreparedStatement selectUser = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectUser.setString(1, userName);
-		selectUser.setString(2, password);
-		ResultSet rs = selectUser.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
+				new Object[] { userName, password });
 		if (rs.next()) {
 			return true;
 		} else {
@@ -83,21 +70,14 @@ public class LoginDaoImpl extends BaseDaoImpl implements LoginDao {
 			int sessionToken, long sessionStartTime) throws SQLException {
 
 		String sql = "update users SET sessionToken = ?, sessionStartTime = ? where deviceID = ?";
-		PreparedStatement updateDeviceSession = (PreparedStatement) conn
-				.prepareCall(sql);
-		updateDeviceSession.setInt(1, sessionToken);
-		updateDeviceSession.setLong(2, sessionStartTime);
-		updateDeviceSession.setString(3, deviceID);
-		updateDeviceSession.executeUpdate();
+		getJdbcTemplate().update(sql,
+				new Object[] { sessionToken, sessionStartTime, deviceID });
 	}
 
 	public String getUserName(int sessionToken) throws SQLException {
 
 		String sql = "select userName from users where sessionToken = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setInt(1, sessionToken);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
 		rs.next();
 		return rs.getString("userName");
 	}
@@ -105,10 +85,7 @@ public class LoginDaoImpl extends BaseDaoImpl implements LoginDao {
 	public String getAccountNumber(int sessionToken) throws SQLException {
 
 		String sql = "select accountNumber from users where sessionToken = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setInt(1, sessionToken);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
 		rs.next();
 		return rs.getString("accountNumber");
 	}
@@ -116,9 +93,6 @@ public class LoginDaoImpl extends BaseDaoImpl implements LoginDao {
 	public void terminateSession(int sessionToken) throws SQLException {
 
 		String sql = "update users SET sessionToken = 0, sessionStartTime = 0 where sessionToken = ?";
-		PreparedStatement updateStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		updateStatement.setInt(1, sessionToken);
-		updateStatement.executeUpdate();
+		getJdbcTemplate().update(sql, sessionToken);
 	}
 }

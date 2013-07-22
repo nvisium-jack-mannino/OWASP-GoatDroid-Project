@@ -15,10 +15,9 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class BalanceDaoImpl extends BaseDaoImpl implements BalanceDao {
 
@@ -30,10 +29,7 @@ public class BalanceDaoImpl extends BaseDaoImpl implements BalanceDao {
 			throws SQLException {
 		HashMap<String, Double> result = new HashMap<String, Double>();
 		String sql = "select checkingBalance, savingsBalance from users where accountNumber = ?";
-		PreparedStatement selectBalances = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectBalances.setString(1, accountNumber);
-		ResultSet rs = selectBalances.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, accountNumber);
 		if (rs.next()) {
 			result.put("checking", rs.getDouble("checkingBalance"));
 			result.put("savings", rs.getDouble("savingsBalance"));

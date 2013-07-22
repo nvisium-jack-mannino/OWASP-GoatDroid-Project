@@ -15,9 +15,9 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class RegisterDaoImpl extends BaseDaoImpl implements RegisterDao {
 
@@ -27,28 +27,15 @@ public class RegisterDaoImpl extends BaseDaoImpl implements RegisterDao {
 		String sql = "insert into users (accountNumber,"
 				+ "firstName, lastName, deviceID, isDeviceAuthorized, checkingBalance, savingsBalance,"
 				+ "username, password, sessionToken, sessionStartTime) values (?,?,?,?,?,?,?,?,?,?,?)";
-		PreparedStatement insertUser = (PreparedStatement) conn
-				.prepareCall(sql);
-		insertUser.setString(1, accountNumber);
-		insertUser.setString(2, firstName);
-		insertUser.setString(3, lastName);
-		insertUser.setString(4, ""); // deviceID
-		insertUser.setBoolean(5, false); // device auth
-		insertUser.setInt(6, 0); // checking balance
-		insertUser.setInt(7, 0); // savings balance
-		insertUser.setString(8, userName);
-		insertUser.setString(9, password);
-		insertUser.setInt(10, 0); // sessionToken
-		insertUser.setInt(11, 0); // sessionStartTime
-		insertUser.executeUpdate();
+		getJdbcTemplate().update(
+				sql,
+				new Object[] { accountNumber, firstName, lastName, "", false,
+						0, 0, userName, password, 0, 0 });
 	}
 
 	public boolean doesUserNameExist(String userName) throws SQLException {
 		String sql = "select userName from users where userName = ?";
-		PreparedStatement selectUserName = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectUserName.setString(1, userName);
-		ResultSet rs = selectUserName.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userName);
 		if (rs.next())
 			return true;
 		else
@@ -58,10 +45,7 @@ public class RegisterDaoImpl extends BaseDaoImpl implements RegisterDao {
 	public boolean doesAccountNumberExist(String accountNumber)
 			throws SQLException {
 		String sql = "select accountNumber from users where accountNumber = ?";
-		PreparedStatement selectAccountNumber = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectAccountNumber.setString(1, accountNumber);
-		ResultSet rs = selectAccountNumber.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, accountNumber);
 		if (rs.next())
 			return true;
 		else
