@@ -15,6 +15,7 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.dao;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.herdfinancial.Utils;

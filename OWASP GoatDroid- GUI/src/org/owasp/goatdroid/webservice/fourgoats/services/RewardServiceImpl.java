@@ -21,20 +21,27 @@ import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.RewardBean;
+import org.owasp.goatdroid.webservice.fourgoats.dao.AdminDaoImpl;
 import org.owasp.goatdroid.webservice.fourgoats.dao.RewardDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RewardServiceImpl implements RewardService {
 
+	RewardDaoImpl dao;
+
+	@Autowired
+	public RewardServiceImpl() {
+		dao = new RewardDaoImpl();
+	}
+
 	public RewardBean getAllRewards(String sessionToken) {
 
 		RewardBean bean = new RewardBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		RewardDaoImpl dao = new RewardDaoImpl();
 
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -47,10 +54,6 @@ public class RewardServiceImpl implements RewardService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
@@ -59,10 +62,8 @@ public class RewardServiceImpl implements RewardService {
 
 		RewardBean bean = new RewardBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		RewardDaoImpl dao = new RewardDaoImpl();
 
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -76,10 +77,6 @@ public class RewardServiceImpl implements RewardService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
@@ -87,16 +84,13 @@ public class RewardServiceImpl implements RewardService {
 	/*
 	 * This feature is only available to administrative users
 	 */
-	public RewardBean addNewReward(String sessionToken,
-			String rewardName, String rewardDescription, String venueID,
-			int checkinsRequired) {
+	public RewardBean addNewReward(String sessionToken, String rewardName,
+			String rewardDescription, String venueID, int checkinsRequired) {
 
 		RewardBean bean = new RewardBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		RewardDaoImpl dao = new RewardDaoImpl();
 
 		try {
-			dao.openConnection();
 			if (!Validators.validateItemNameLength(rewardName)
 					|| !Validators
 							.validateDescriptionOrCommentLength(rewardDescription)
@@ -127,10 +121,6 @@ public class RewardServiceImpl implements RewardService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}

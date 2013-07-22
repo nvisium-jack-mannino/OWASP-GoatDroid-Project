@@ -22,25 +22,32 @@ import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.VenueListBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.VenueBean;
+import org.owasp.goatdroid.webservice.fourgoats.dao.AdminDaoImpl;
 import org.owasp.goatdroid.webservice.fourgoats.dao.VenueDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class VenueServiceImpl implements VenueService {
+
+	VenueDaoImpl dao;
+
+	@Autowired
+	public VenueServiceImpl() {
+		dao = new VenueDaoImpl();
+	}
 
 	public VenueBean addVenue(String sessionToken, String venueName,
 			String venueWebsite, String latitude, String longitude) {
 
 		VenueBean bean = new VenueBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		VenueDaoImpl dao = new VenueDaoImpl();
 
 		try {
 			errors = Validators.validateAddVenueValues(venueName, venueWebsite,
 					latitude, longitude);
 
 			if (errors.size() == 0) {
-				dao.openConnection();
 				if (!dao.doesVenueExist(venueName, latitude, longitude)) {
 					String venueID = LoginUtils.generateSaltedSHA256Hash(
 							venueName, Salts.VENUE_ID_GENERATOR_SALT);
@@ -54,10 +61,6 @@ public class VenueServiceImpl implements VenueService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
@@ -66,10 +69,8 @@ public class VenueServiceImpl implements VenueService {
 
 		VenueListBean bean = new VenueListBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		VenueDaoImpl dao = new VenueDaoImpl();
 
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -82,10 +83,6 @@ public class VenueServiceImpl implements VenueService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}

@@ -21,25 +21,32 @@ import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.BalanceBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.BalanceDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BalanceServiceImpl implements BalanceService {
 
+	BalanceDaoImpl dao;
+
+	@Autowired
+	public BalanceServiceImpl() {
+		dao = new BalanceDaoImpl();
+	}
+
 	public BalanceBean getBalances(String accountNumber, int sessionToken) {
 
 		BalanceBean bean = new BalanceBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		BalanceDaoImpl dao = new BalanceDaoImpl();
+		LoginServiceImpl loginService = new LoginServiceImpl();
 
-		if (!LoginServiceImpl.isSessionValid(sessionToken))
+		if (!loginService.isSessionValid(sessionToken))
 			errors.add(Constants.SESSION_EXPIRED);
 		else if (!Validators.validateAccountNumber(accountNumber))
 			errors.add(Constants.INVALID_ACCOUNT_NUMBER);
 
 		try {
 			if (errors.size() == 0) {
-				dao.openConnection();
 				HashMap<String, Double> balances = dao
 						.getBalances(accountNumber);
 				bean.setCheckingBalance(balances.get("checking"));
@@ -50,10 +57,6 @@ public class BalanceServiceImpl implements BalanceService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}

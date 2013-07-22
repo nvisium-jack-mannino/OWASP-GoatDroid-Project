@@ -20,10 +20,18 @@ import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.dao.RegisterDaoImpl;
 import org.owasp.goatdroid.webservice.fourgoats.bean.RegisterBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RegisterServiceImpl implements RegisterService {
+
+	RegisterDaoImpl dao;
+
+	@Autowired
+	public RegisterServiceImpl() {
+		dao = new RegisterDaoImpl();
+	}
 
 	public RegisterBean registerUser(String firstName, String lastName,
 			String userName, String password) {
@@ -31,11 +39,9 @@ public class RegisterServiceImpl implements RegisterService {
 		RegisterBean bean = new RegisterBean();
 		ArrayList<String> errors = Validators.validateRegistrationFields(
 				firstName, lastName, userName, password);
-		RegisterDaoImpl dao = new RegisterDaoImpl();
 
 		try {
 			if (errors.size() == 0) {
-				dao.openConnection();
 				// if the user exists, we set an error and don't insert
 				if (dao.doesUserExist(userName)) {
 					errors.add(Constants.USERNAME_ALREADY_EXISTS);
@@ -50,10 +56,6 @@ public class RegisterServiceImpl implements RegisterService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}

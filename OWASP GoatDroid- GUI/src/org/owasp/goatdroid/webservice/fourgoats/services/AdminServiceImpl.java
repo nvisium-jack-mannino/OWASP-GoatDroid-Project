@@ -21,19 +21,25 @@ import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.AdminBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.GetUsersAdminBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.AdminDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AdminServiceImpl implements AdminService {
 
+	AdminDaoImpl dao;
+
+	@Autowired
+	public AdminServiceImpl() {
+		dao = new AdminDaoImpl();
+	}
+
 	public AdminBean deleteUser(String sessionToken, String userName) {
 
 		AdminBean bean = new AdminBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		AdminDaoImpl dao = new AdminDaoImpl();
 
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -55,10 +61,6 @@ public class AdminServiceImpl implements AdminService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
@@ -68,10 +70,8 @@ public class AdminServiceImpl implements AdminService {
 
 		AdminBean bean = new AdminBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		AdminDaoImpl dao = new AdminDaoImpl();
 
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -95,10 +95,6 @@ public class AdminServiceImpl implements AdminService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
@@ -107,10 +103,7 @@ public class AdminServiceImpl implements AdminService {
 
 		GetUsersAdminBean bean = new GetUsersAdminBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		AdminDaoImpl dao = new AdminDaoImpl();
-
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -130,10 +123,6 @@ public class AdminServiceImpl implements AdminService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}

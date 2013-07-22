@@ -15,18 +15,14 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryBean;
-import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
 import org.owasp.goatdroid.webservice.fourgoats.services.HistoryServiceImpl;
 
 @Controller
@@ -44,7 +40,7 @@ public class HistoryController {
 	public HistoryBean getHistory(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
-			return HistoryServiceImpl.getHistory(sessionToken);
+			return historyService.getHistory(sessionToken);
 		} catch (NullPointerException e) {
 			HistoryBean bean = new HistoryBean();
 			bean.setSuccess(false);
@@ -57,7 +53,7 @@ public class HistoryController {
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@PathVariable(value = "userName") String userName) {
 		try {
-			return HistoryServiceImpl.getUserHistory(sessionToken, userName);
+			return historyService.getUserHistory(sessionToken, userName);
 		} catch (NullPointerException e) {
 			HistoryBean bean = new HistoryBean();
 			bean.setSuccess(false);

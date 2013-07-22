@@ -24,20 +24,26 @@ import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.CommentListBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.CommentBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.CommentDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CommentServiceImpl implements CommentService {
+
+	CommentDaoImpl dao;
+
+	@Autowired
+	public CommentServiceImpl() {
+		dao = new CommentDaoImpl();
+	}
 
 	public CommentBean addComment(String sessionToken, String comment,
 			String checkinID) {
 
 		CommentBean bean = new CommentBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		CommentDaoImpl dao = new CommentDaoImpl();
 
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -67,10 +73,6 @@ public class CommentServiceImpl implements CommentService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
@@ -79,10 +81,8 @@ public class CommentServiceImpl implements CommentService {
 
 		CommentBean bean = new CommentBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		CommentDaoImpl dao = new CommentDaoImpl();
 
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -104,10 +104,6 @@ public class CommentServiceImpl implements CommentService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
@@ -116,10 +112,8 @@ public class CommentServiceImpl implements CommentService {
 
 		CommentListBean bean = new CommentListBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		CommentDaoImpl dao = new CommentDaoImpl();
 
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -148,10 +142,6 @@ public class CommentServiceImpl implements CommentService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}

@@ -18,15 +18,12 @@ package org.owasp.goatdroid.webservice.fourgoats.controllers;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
-import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
 import org.owasp.goatdroid.webservice.fourgoats.services.LoginServiceImpl;
 
 @Controller
@@ -46,7 +43,7 @@ public class LoginController {
 			@RequestParam(value = "username", required = true) String userName,
 			@RequestParam(value = "password", required = true) String password) {
 		try {
-			return LoginServiceImpl.validateCredentials(userName, password);
+			return loginService.validateCredentials(userName, password);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);
@@ -60,7 +57,7 @@ public class LoginController {
 			@RequestParam(value = "username", required = true) String userName,
 			@RequestParam(value = "password", required = true) String password) {
 		try {
-			return LoginServiceImpl.validateCredentialsAPI(userName, password);
+			return loginService.validateCredentialsAPI(userName, password);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);
@@ -73,7 +70,7 @@ public class LoginController {
 	public LoginBean checkSession(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
-			return LoginServiceImpl.checkSession(sessionToken);
+			return loginService.checkSession(sessionToken);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);
@@ -86,7 +83,7 @@ public class LoginController {
 	public LoginBean signOut(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
-			return LoginServiceImpl.signOut(sessionToken);
+			return loginService.signOut(sessionToken);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);

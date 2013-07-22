@@ -16,26 +16,34 @@
 package org.owasp.goatdroid.webservice.herdfinancial.services;
 
 import java.util.ArrayList;
+
+import org.owasp.goatdroid.webservice.fourgoats.dao.AdminDaoImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.LoginBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.LoginDaoImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.Utils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LoginServiceImpl implements LoginService {
+
+	LoginDaoImpl dao;
+
+	@Autowired
+	public LoginServiceImpl() {
+		dao = new LoginDaoImpl();
+	}
 
 	public boolean isSessionValid(int sessionToken) {
 
 		if (!Validators.validateSessionTokenFormat(sessionToken))
 			return false;
 
-		LoginDaoImpl dao = new LoginDaoImpl();
 		boolean success = false;
 
 		try {
-			dao.openConnection();
 			long sessionStart = dao.getSessionStartTime(sessionToken);
 			if (Utils.getTimeMilliseconds() - sessionStart < Constants.MILLISECONDS_MONTH) {
 				success = true;
@@ -44,7 +52,6 @@ public class LoginServiceImpl implements LoginService {
 
 		} finally {
 			try {
-				dao.closeConnection();
 			} catch (Exception e) {
 			}
 		}
@@ -59,11 +66,8 @@ public class LoginServiceImpl implements LoginService {
 		if (!Validators.validateDeviceID(deviceID))
 			errors.add(Constants.INVALID_DEVICE_ID);
 
-		LoginDaoImpl dao = new LoginDaoImpl();
-
 		try {
 			if (errors.size() == 0) {
-				dao.openConnection();
 				if (isSessionValid(sessionToken)) {
 					bean.setSuccess(true);
 				} else {
@@ -83,10 +87,6 @@ public class LoginServiceImpl implements LoginService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
@@ -98,11 +98,9 @@ public class LoginServiceImpl implements LoginService {
 
 		if (!Validators.validateDeviceID(deviceID))
 			errors.add(Constants.INVALID_DEVICE_ID);
-		LoginDaoImpl dao = new LoginDaoImpl();
 
 		try {
 			if (errors.size() == 0) {
-				dao.openConnection();
 				if (dao.isDevicePermanentlyAuthorized(deviceID)) {
 					int sessionToken = Utils.generateSessionToken();
 					dao.updateAuthorizedDeviceSession(deviceID, sessionToken,
@@ -115,10 +113,6 @@ public class LoginServiceImpl implements LoginService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
@@ -128,11 +122,9 @@ public class LoginServiceImpl implements LoginService {
 		LoginBean bean = new LoginBean();
 		ArrayList<String> errors = Validators.validateCredentials(userName,
 				password);
-		LoginDaoImpl dao = new LoginDaoImpl();
 
 		try {
 			if (errors.size() == 0) {
-				dao.openConnection();
 				if (dao.validateCredentials(userName, password)) {
 					int sessionToken = Utils.generateSessionToken();
 					dao.updateSession(userName, sessionToken,
@@ -148,10 +140,6 @@ public class LoginServiceImpl implements LoginService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
@@ -160,10 +148,9 @@ public class LoginServiceImpl implements LoginService {
 
 		LoginBean bean = new LoginBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		LoginDaoImpl dao = new LoginDaoImpl();
+
 		try {
 			if (isSessionValid(sessionToken)) {
-				dao.openConnection();
 				dao.terminateSession(sessionToken);
 				bean.setSuccess(true);
 			}
@@ -171,10 +158,6 @@ public class LoginServiceImpl implements LoginService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}

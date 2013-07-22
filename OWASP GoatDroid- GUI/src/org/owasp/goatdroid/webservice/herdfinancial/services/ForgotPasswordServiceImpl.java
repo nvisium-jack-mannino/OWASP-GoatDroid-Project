@@ -22,17 +22,24 @@ import org.owasp.goatdroid.webservice.herdfinancial.Utils;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.ForgotPasswordBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.ForgotPasswordDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ForgotPasswordServiceImpl implements ForgotPasswordService {
+
+	ForgotPasswordDaoImpl dao;
+
+	@Autowired
+	public ForgotPasswordServiceImpl() {
+		dao = new ForgotPasswordDaoImpl();
+	}
 
 	public ForgotPasswordBean requestCode(String userName,
 			int secretQuestionIndex, String secretQuestionAnswer) {
 
 		ForgotPasswordBean bean = new ForgotPasswordBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		ForgotPasswordDaoImpl dao = new ForgotPasswordDaoImpl();
 
 		if (!Validators.validateUserNameFormat(userName))
 			errors.add(Constants.USERNAME_FORMAT_INVALID);
@@ -47,7 +54,6 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 
 		try {
 			if (errors.size() == 0) {
-				dao.openConnection();
 				if (dao.confirmSecretQuestionAnswer(userName,
 						Integer.toString(secretQuestionIndex),
 						secretQuestionAnswer)) {
@@ -68,10 +74,6 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
@@ -80,7 +82,6 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 
 		ForgotPasswordBean bean = new ForgotPasswordBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		ForgotPasswordDaoImpl dao = new ForgotPasswordDaoImpl();
 
 		if (!Validators.validateUserNameFormat(userName))
 			errors.add(Constants.USERNAME_FORMAT_INVALID);
@@ -91,7 +92,6 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 
 		try {
 			if (errors.size() == 0) {
-				dao.openConnection();
 				if (dao.confirmPasswordResetCode(userName, passwordResetCode))
 					bean.setSuccess(true);
 				else
@@ -101,10 +101,6 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
@@ -114,7 +110,6 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 
 		ForgotPasswordBean bean = new ForgotPasswordBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		ForgotPasswordDaoImpl dao = new ForgotPasswordDaoImpl();
 
 		if (!Validators.validateUserNameFormat(userName))
 			errors.add(Constants.USERNAME_FORMAT_INVALID);
@@ -128,7 +123,6 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 
 		try {
 			if (errors.size() == 0) {
-				dao.openConnection();
 				if (dao.confirmPasswordResetCode(userName, passwordResetCode)) {
 					/*
 					 * If all inputs pass our validation and the code is valid
@@ -149,10 +143,6 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}

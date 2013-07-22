@@ -18,14 +18,11 @@ package org.owasp.goatdroid.webservice.fourgoats.controllers;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.RewardBean;
-import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
 import org.owasp.goatdroid.webservice.fourgoats.services.RewardServiceImpl;
 
 @Controller
@@ -43,7 +40,7 @@ public class RewardController {
 	public RewardBean getRewards(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
-			return RewardServiceImpl.getAllRewards(sessionToken);
+			return rewardService.getAllRewards(sessionToken);
 		} catch (NullPointerException e) {
 			RewardBean bean = new RewardBean();
 			bean.setSuccess(false);
@@ -55,7 +52,7 @@ public class RewardController {
 	public RewardBean getMyEarnedRewards(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
-			return RewardServiceImpl.getMyEarnedRewards(sessionToken);
+			return rewardService.getMyEarnedRewards(sessionToken);
 		} catch (NullPointerException e) {
 			RewardBean bean = new RewardBean();
 			bean.setSuccess(false);
@@ -72,7 +69,7 @@ public class RewardController {
 			@RequestParam(value = "checkinsRequired", required = true) int checkinsRequired) {
 
 		try {
-			return RewardServiceImpl.addNewReward(sessionToken, rewardName,
+			return rewardService.addNewReward(sessionToken, rewardName,
 					rewardDescription, venueID, checkinsRequired);
 		} catch (NullPointerException e) {
 			RewardBean bean = new RewardBean();

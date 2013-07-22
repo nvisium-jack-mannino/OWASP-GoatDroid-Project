@@ -47,7 +47,7 @@ public class CommentController {
 			@RequestParam(value = "comment", required = true) String comment,
 			@RequestParam(value = "checkinID", required = true) String checkinID) {
 		try {
-			return CommentServiceImpl.addComment(sessionToken, comment,
+			return commentService.addComment(sessionToken, comment,
 					checkinID);
 		} catch (NullPointerException e) {
 			CommentBean bean = new CommentBean();
@@ -61,7 +61,7 @@ public class CommentController {
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@RequestParam(value = "commentID", required = true) String commentID) {
 		try {
-			return CommentServiceImpl.removeComment(sessionToken, commentID);
+			return commentService.removeComment(sessionToken, commentID);
 		} catch (NullPointerException e) {
 			CommentBean bean = new CommentBean();
 			bean.setSuccess(false);
@@ -74,7 +74,7 @@ public class CommentController {
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@PathVariable(value = "checkinID") String checkinID) {
 		try {
-			return CommentServiceImpl.getComments(sessionToken, checkinID);
+			return commentService.getComments(sessionToken, checkinID);
 		} catch (NullPointerException e) {
 			CommentListBean bean = new CommentListBean();
 			bean.setSuccess(false);

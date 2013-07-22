@@ -20,20 +20,28 @@ import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.TransferBean;
+import org.owasp.goatdroid.webservice.herdfinancial.dao.StatementDaoImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.TransferDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TransferServiceImpl implements TransferService {
 
-	public TransferBean transferFunds(int sessionToken, String from,
-			String to, double amount) {
+	TransferDaoImpl dao;
+
+	@Autowired
+	public TransferServiceImpl() {
+		dao = new TransferDaoImpl();
+	}
+
+	public TransferBean transferFunds(int sessionToken, String from, String to,
+			double amount) {
 
 		TransferBean bean = new TransferBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		TransferDaoImpl dao = new TransferDaoImpl();
-
-		if (!LoginServiceImpl.isSessionValid(sessionToken))
+		LoginServiceImpl loginService = new LoginServiceImpl();
+		if (!loginService.isSessionValid(sessionToken))
 			errors.add(Constants.SESSION_EXPIRED);
 		else if (from.equals(to))
 			errors.add(Constants.LULZ);
@@ -45,7 +53,6 @@ public class TransferServiceImpl implements TransferService {
 
 		try {
 			if (errors.size() == 0) {
-				dao.openConnection();
 				/*
 				 * Check to ensure current funds are sufficient
 				 */
@@ -79,10 +86,6 @@ public class TransferServiceImpl implements TransferService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}

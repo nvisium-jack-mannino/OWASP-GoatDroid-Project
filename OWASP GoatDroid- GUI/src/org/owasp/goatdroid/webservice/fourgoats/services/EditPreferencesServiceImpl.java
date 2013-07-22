@@ -21,20 +21,26 @@ import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.EditPreferencesBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.GetPreferencesBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.EditPreferencesDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EditPreferencesServiceImpl implements EditPreferencesService {
+
+	EditPreferencesDaoImpl dao;
+
+	@Autowired
+	public EditPreferencesServiceImpl() {
+		dao = new EditPreferencesDaoImpl();
+	}
 
 	public EditPreferencesBean modifyPreferences(String sessionToken,
 			boolean autoCheckin, boolean isPublic) {
 
 		EditPreferencesBean bean = new EditPreferencesBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		EditPreferencesDaoImpl dao = new EditPreferencesDaoImpl();
 
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -49,10 +55,6 @@ public class EditPreferencesServiceImpl implements EditPreferencesService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
@@ -61,10 +63,8 @@ public class EditPreferencesServiceImpl implements EditPreferencesService {
 
 		GetPreferencesBean bean = new GetPreferencesBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		EditPreferencesDaoImpl dao = new EditPreferencesDaoImpl();
 
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -72,7 +72,6 @@ public class EditPreferencesServiceImpl implements EditPreferencesService {
 			if (errors.size() == 0) {
 				String userID = dao.getUserID(sessionToken);
 				bean.setPreferences(dao.getPreferences(userID));
-				dao.closeConnection();
 				bean.setSuccess(true);
 				return bean;
 			}
@@ -80,10 +79,6 @@ public class EditPreferencesServiceImpl implements EditPreferencesService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}

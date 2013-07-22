@@ -18,14 +18,11 @@ package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.TransferBean;
-import org.owasp.goatdroid.webservice.herdfinancial.services.RegisterServiceImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.services.TransferServiceImpl;
 
 @Controller
@@ -47,7 +44,7 @@ public class TransferController {
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {
 
 		try {
-			return TransferServiceImpl.transferFunds(sessionToken, from, to,
+			return transferService.transferFunds(sessionToken, from, to,
 					amount);
 		} catch (NullPointerException e) {
 			TransferBean bean = new TransferBean();

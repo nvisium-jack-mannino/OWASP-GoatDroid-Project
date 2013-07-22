@@ -22,19 +22,25 @@ import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryCheckinBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.HistoryDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class HistoryServiceImpl implements HistoryService {
 
+	HistoryDaoImpl dao;
+
+	@Autowired
+	public HistoryServiceImpl() {
+		dao = new HistoryDaoImpl();
+	}
+
 	public HistoryBean getHistory(String sessionToken) {
 
 		HistoryBean bean = new HistoryBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		HistoryDaoImpl dao = new HistoryDaoImpl();
 
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -48,23 +54,16 @@ public class HistoryServiceImpl implements HistoryService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
 
-	public HistoryCheckinBean getCheckin(String sessionToken,
-			String checkinID) {
+	public HistoryCheckinBean getCheckin(String sessionToken, String checkinID) {
 
 		HistoryCheckinBean bean = new HistoryCheckinBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		HistoryDaoImpl dao = new HistoryDaoImpl();
 
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -94,23 +93,16 @@ public class HistoryServiceImpl implements HistoryService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
 
-	public HistoryBean getUserHistory(String sessionToken,
-			String userName) {
+	public HistoryBean getUserHistory(String sessionToken, String userName) {
 
 		HistoryBean bean = new HistoryBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		HistoryDaoImpl dao = new HistoryDaoImpl();
 
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -125,10 +117,6 @@ public class HistoryServiceImpl implements HistoryService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}

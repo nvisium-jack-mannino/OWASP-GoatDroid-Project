@@ -22,20 +22,26 @@ import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.CheckinBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.CheckinDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CheckinServiceImpl implements CheckinService {
+
+	CheckinDaoImpl dao;
+
+	@Autowired
+	public CheckinServiceImpl() {
+		dao = new CheckinDaoImpl();
+	}
 
 	public CheckinBean doCheckin(String sessionToken, String latitude,
 			String longitude) {
 
 		CheckinBean bean = new CheckinBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		CheckinDaoImpl dao = new CheckinDaoImpl();
 
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -86,10 +92,6 @@ public class CheckinServiceImpl implements CheckinService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}

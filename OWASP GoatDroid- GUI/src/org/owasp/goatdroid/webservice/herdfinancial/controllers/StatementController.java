@@ -15,18 +15,14 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.StatementBean;
-import org.owasp.goatdroid.webservice.herdfinancial.services.RegisterServiceImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.services.StatementServiceImpl;
 
 @Controller
@@ -47,7 +43,7 @@ public class StatementController {
 			@PathVariable("endDate") String endDate,
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {
 		try {
-			return StatementServiceImpl.getStatement(accountNumber, startDate,
+			return statementService.getStatement(accountNumber, startDate,
 					endDate, sessionToken);
 		} catch (NullPointerException e) {
 			StatementBean bean = new StatementBean();
@@ -61,8 +57,8 @@ public class StatementController {
 			@PathVariable("accountNumber") String accountNumber,
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {
 		try {
-			return StatementServiceImpl.getStatementSinceLastPoll(
-					accountNumber, sessionToken);
+			return statementService.getStatementSinceLastPoll(accountNumber,
+					sessionToken);
 		} catch (NullPointerException e) {
 			StatementBean bean = new StatementBean();
 			bean.setSuccess(false);

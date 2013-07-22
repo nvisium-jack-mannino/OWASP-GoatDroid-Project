@@ -18,11 +18,8 @@ package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.RegisterBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.RegisterServiceImpl;
 
@@ -45,7 +42,7 @@ public class RegisterController {
 			@RequestParam(value = "userName", required = true) String userName,
 			@RequestParam(value = "password", required = true) String password) {
 		try {
-			return RegisterServiceImpl.registerUser(accountNumber, firstName,
+			return registerService.registerUser(accountNumber, firstName,
 					lastName, userName, password);
 		} catch (NullPointerException e) {
 			RegisterBean bean = new RegisterBean();

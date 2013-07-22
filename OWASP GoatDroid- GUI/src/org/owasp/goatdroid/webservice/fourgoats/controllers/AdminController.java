@@ -44,7 +44,7 @@ public class AdminController {
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@RequestParam(value = "userName", required = true) String userName) {
 		try {
-			return AdminServiceImpl.deleteUser(sessionToken, userName);
+			return adminService.deleteUser(sessionToken, userName);
 		} catch (NullPointerException e) {
 			AdminBean bean = new AdminBean();
 			bean.setSuccess(false);
@@ -58,7 +58,7 @@ public class AdminController {
 			@RequestParam(value = "userName", required = true) String userName,
 			@RequestParam(value = "newPassword", required = true) String newPassword) {
 		try {
-			return AdminServiceImpl.resetPassword(sessionToken, userName,
+			return adminService.resetPassword(sessionToken, userName,
 					newPassword);
 		} catch (NullPointerException e) {
 			AdminBean bean = new AdminBean();
@@ -71,7 +71,7 @@ public class AdminController {
 	public GetUsersAdminBean addComment(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
-			return AdminServiceImpl.getUsers(sessionToken);
+			return adminService.getUsers(sessionToken);
 		} catch (NullPointerException e) {
 			GetUsersAdminBean bean = new GetUsersAdminBean();
 			bean.setSuccess(false);

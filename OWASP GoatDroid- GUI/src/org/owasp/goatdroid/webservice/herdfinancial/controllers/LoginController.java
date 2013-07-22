@@ -18,13 +18,10 @@ package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.LoginBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.LoginServiceImpl;
@@ -45,7 +42,7 @@ public class LoginController {
 			@RequestParam(value = "userName", required = true) String userName,
 			@RequestParam(value = "password", required = true) String password) {
 		try {
-			return LoginServiceImpl.validateCredentials(userName, password);
+			return loginService.validateCredentials(userName, password);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);
@@ -57,7 +54,7 @@ public class LoginController {
 	public LoginBean checkDeviceRegistration(
 			@PathVariable("deviceID") String deviceID) {
 		try {
-			return LoginServiceImpl.isDevicePermanentlyAuthorized(deviceID);
+			return loginService.isDevicePermanentlyAuthorized(deviceID);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);
@@ -70,8 +67,8 @@ public class LoginController {
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken,
 			@PathVariable("deviceID") String deviceID) {
 		try {
-			return LoginServiceImpl.isSessionValidOrDeviceAuthorized(
-					sessionToken, deviceID);
+			return loginService.isSessionValidOrDeviceAuthorized(sessionToken,
+					deviceID);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);
@@ -83,7 +80,7 @@ public class LoginController {
 	public LoginBean signOut(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {
 		try {
-			return LoginServiceImpl.signOut(sessionToken);
+			return loginService.signOut(sessionToken);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);

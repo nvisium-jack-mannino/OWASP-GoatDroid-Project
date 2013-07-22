@@ -22,23 +22,29 @@ import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.LoginDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LoginServiceImpl implements LoginService {
 
+	LoginDaoImpl dao;
+
+	@Autowired
+	public LoginServiceImpl() {
+		dao = new LoginDaoImpl();
+	}
+
 	public LoginBean validateCredentials(String userName, String password) {
 
 		LoginBean bean = new LoginBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		LoginDaoImpl dao = new LoginDaoImpl();
 
 		try {
 			if (!Validators.validateCredentials(userName, password))
 				errors.add(Constants.LOGIN_CREDENTIALS_INVALID);
 
 			if (errors.size() == 0) {
-				dao.openConnection();
 				if (dao.validateCredentials(userName, password)) {
 
 					String userNameAndTime = userName
@@ -59,10 +65,6 @@ public class LoginServiceImpl implements LoginService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
@@ -71,14 +73,12 @@ public class LoginServiceImpl implements LoginService {
 
 		LoginBean bean = new LoginBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		LoginDaoImpl dao = new LoginDaoImpl();
 
 		try {
 			if (!Validators.validateCredentials(userName, password))
 				errors.add(Constants.LOGIN_CREDENTIALS_INVALID);
 
 			if (errors.size() == 0) {
-				dao.openConnection();
 				if (dao.validateCredentials(userName, password)) {
 					if (dao.getSessionToken(userName).isEmpty()) {
 						String userNameAndTime = userName
@@ -101,10 +101,6 @@ public class LoginServiceImpl implements LoginService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
@@ -112,9 +108,8 @@ public class LoginServiceImpl implements LoginService {
 	public LoginBean checkSession(String sessionToken) {
 
 		LoginBean bean = new LoginBean();
-		LoginDaoImpl dao = new LoginDaoImpl();
+
 		try {
-			dao.openConnection();
 			if (dao.isSessionValid(sessionToken))
 				bean.setSuccess(true);
 			else
@@ -129,10 +124,8 @@ public class LoginServiceImpl implements LoginService {
 
 		LoginBean bean = new LoginBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		LoginDaoImpl dao = new LoginDaoImpl();
 
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -145,10 +138,6 @@ public class LoginServiceImpl implements LoginService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}

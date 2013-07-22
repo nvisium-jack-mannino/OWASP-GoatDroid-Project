@@ -24,19 +24,25 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.FriendBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.PendingFriendRequestsBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.PublicUsersBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FriendDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class FriendServiceImpl implements FriendService {
 
+	FriendDaoImpl dao;
+
+	@Autowired
+	public FriendServiceImpl() {
+		dao = new FriendDaoImpl();
+	}
+
 	public FriendListBean getFriends(String sessionToken) {
 
 		FriendListBean bean = new FriendListBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		FriendDaoImpl dao = new FriendDaoImpl();
 
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -52,23 +58,16 @@ public class FriendServiceImpl implements FriendService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
 
-	public FriendBean requestFriend(String sessionToken,
-			String friendUserName) {
+	public FriendBean requestFriend(String sessionToken, String friendUserName) {
 
 		FriendBean bean = new FriendBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		FriendDaoImpl dao = new FriendDaoImpl();
 
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -98,10 +97,6 @@ public class FriendServiceImpl implements FriendService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
@@ -111,10 +106,8 @@ public class FriendServiceImpl implements FriendService {
 
 		FriendBean bean = new FriendBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		FriendDaoImpl dao = new FriendDaoImpl();
 
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -149,23 +142,16 @@ public class FriendServiceImpl implements FriendService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
 
-	public FriendBean removeFriend(String sessionToken,
-			String friendUserName) {
+	public FriendBean removeFriend(String sessionToken, String friendUserName) {
 
 		FriendBean bean = new FriendBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		FriendDaoImpl dao = new FriendDaoImpl();
 
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -191,10 +177,6 @@ public class FriendServiceImpl implements FriendService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
@@ -204,10 +186,7 @@ public class FriendServiceImpl implements FriendService {
 
 		FriendProfileBean bean = new FriendProfileBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		FriendDaoImpl dao = new FriendDaoImpl();
-
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -229,10 +208,6 @@ public class FriendServiceImpl implements FriendService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
@@ -242,16 +217,12 @@ public class FriendServiceImpl implements FriendService {
 
 		PendingFriendRequestsBean bean = new PendingFriendRequestsBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		FriendDaoImpl dao = new FriendDaoImpl();
-
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
 
 			if (errors.size() == 0) {
-				dao.openConnection();
 				String userID = dao.getUserID(sessionToken);
 				bean.setPendingFriendRequests(dao
 						.getPendingFriendRequests(userID));
@@ -261,10 +232,6 @@ public class FriendServiceImpl implements FriendService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
@@ -273,10 +240,7 @@ public class FriendServiceImpl implements FriendService {
 
 		PublicUsersBean bean = new PublicUsersBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		FriendDaoImpl dao = new FriendDaoImpl();
-
 		try {
-			dao.openConnection();
 			if (!dao.isSessionValid(sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
@@ -290,10 +254,6 @@ public class FriendServiceImpl implements FriendService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}

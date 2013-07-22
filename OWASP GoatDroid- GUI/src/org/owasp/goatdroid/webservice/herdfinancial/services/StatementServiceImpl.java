@@ -21,19 +21,26 @@ import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.StatementBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.StatementDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class StatementServiceImpl implements StatementService {
+
+	StatementDaoImpl dao;
+
+	@Autowired
+	public StatementServiceImpl() {
+		dao = new StatementDaoImpl();
+	}
 
 	public StatementBean getStatement(String accountNumber, String startDate,
 			String endDate, int sessionToken) {
 
 		ArrayList<String> errors = new ArrayList<String>();
 		StatementBean bean = new StatementBean();
-		StatementDaoImpl dao = new StatementDaoImpl();
-
-		if (!LoginServiceImpl.isSessionValid(sessionToken))
+		LoginServiceImpl loginService = new LoginServiceImpl();
+		if (!loginService.isSessionValid(sessionToken))
 			errors.add(Constants.SESSION_EXPIRED);
 
 		else if (!Validators.validateDateTimeFormat(startDate)
@@ -45,7 +52,6 @@ public class StatementServiceImpl implements StatementService {
 
 		try {
 			if (errors.size() == 0) {
-				dao.openConnection();
 				bean.setStatementData(dao.getStatement(accountNumber,
 						convertStringToDate(startDate),
 						convertStringToDate(endDate)));
@@ -56,7 +62,6 @@ public class StatementServiceImpl implements StatementService {
 		} finally {
 			bean.setErrors(errors);
 			try {
-				dao.closeConnection();
 			} catch (Exception e) {
 			}
 		}
@@ -68,9 +73,8 @@ public class StatementServiceImpl implements StatementService {
 
 		ArrayList<String> errors = new ArrayList<String>();
 		StatementBean bean = new StatementBean();
-		StatementDaoImpl dao = new StatementDaoImpl();
-
-		if (!LoginServiceImpl.isSessionValid(sessionToken))
+		LoginServiceImpl loginService = new LoginServiceImpl();
+		if (!loginService.isSessionValid(sessionToken))
 			errors.add(Constants.SESSION_EXPIRED);
 
 		else if (!Validators.validateAccountNumber(accountNumber))
@@ -78,7 +82,6 @@ public class StatementServiceImpl implements StatementService {
 
 		try {
 			if (errors.size() == 0) {
-				dao.openConnection();
 				long timeStamp = dao.getLastPollTime(accountNumber);
 				bean.setStatementData(dao.getTransactionsSinceLastPoll(
 						accountNumber, timeStamp));
@@ -89,10 +92,6 @@ public class StatementServiceImpl implements StatementService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}

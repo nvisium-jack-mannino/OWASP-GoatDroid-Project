@@ -20,22 +20,28 @@ import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.RegisterBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.RegisterDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RegisterServiceImpl implements RegisterService {
 
-	public RegisterBean registerUser(String accountNumber,
-			String firstName, String lastName, String userName, String password) {
+	RegisterDaoImpl dao;
+
+	@Autowired
+	public RegisterServiceImpl() {
+		dao = new RegisterDaoImpl();
+	}
+
+	public RegisterBean registerUser(String accountNumber, String firstName,
+			String lastName, String userName, String password) {
 
 		RegisterBean bean = new RegisterBean();
 		ArrayList<String> errors = Validators.validateRegistrationFields(
 				accountNumber, firstName, lastName, userName, password);
-		RegisterDaoImpl dao = new RegisterDaoImpl();
 
 		try {
 			if (errors.size() == 0) {
-				dao.openConnection();
 				if (!dao.doesUserNameExist(userName)) {
 					if (!dao.doesAccountNumberExist(accountNumber)) {
 						dao.registerUser(accountNumber, firstName, lastName,
@@ -50,10 +56,6 @@ public class RegisterServiceImpl implements RegisterService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}

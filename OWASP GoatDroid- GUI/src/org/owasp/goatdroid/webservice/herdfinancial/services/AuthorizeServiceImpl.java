@@ -20,25 +20,30 @@ import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.AuthorizeBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.AuthorizeDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthorizeServiceImpl implements AuthorizeService {
 
-	public AuthorizeBean authorizeDevice(String deviceID,
-			int sessionToken) {
+	AuthorizeDaoImpl dao;
+
+	@Autowired
+	public AuthorizeServiceImpl() {
+		dao = new AuthorizeDaoImpl();
+	}
+
+	public AuthorizeBean authorizeDevice(String deviceID, int sessionToken) {
 
 		AuthorizeBean bean = new AuthorizeBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		AuthorizeDaoImpl dao = new AuthorizeDaoImpl();
-
-		if (!LoginServiceImpl.isSessionValid(sessionToken))
+		LoginServiceImpl loginService = new LoginServiceImpl();
+		if (!loginService.isSessionValid(sessionToken))
 			errors.add(Constants.SESSION_EXPIRED);
 		else if (!Validators.validateDeviceID(deviceID))
 			errors.add(Constants.INVALID_DEVICE_ID);
 
 		try {
-			dao.openConnection();
 			if (!dao.isDeviceAuthorized(deviceID)) {
 				dao.authorizeDevice(deviceID, sessionToken);
 				bean.setSuccess(true);
@@ -48,10 +53,6 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}

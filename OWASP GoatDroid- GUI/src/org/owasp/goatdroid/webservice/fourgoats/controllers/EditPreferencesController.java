@@ -18,15 +18,12 @@ package org.owasp.goatdroid.webservice.fourgoats.controllers;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.EditPreferencesBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.GetPreferencesBean;
-import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
 import org.owasp.goatdroid.webservice.fourgoats.services.EditPreferencesServiceImpl;
 
 @Controller
@@ -48,7 +45,7 @@ public class EditPreferencesController {
 			@RequestParam(value = "isPublic", required = true) boolean isPublic) {
 
 		try {
-			return EditPreferencesServiceImpl.modifyPreferences(sessionToken,
+			return editPreferencesService.modifyPreferences(sessionToken,
 					autoCheckin, isPublic);
 		} catch (NullPointerException e) {
 			EditPreferencesBean bean = new EditPreferencesBean();
@@ -61,7 +58,7 @@ public class EditPreferencesController {
 	public GetPreferencesBean getPreferences(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
-			return EditPreferencesServiceImpl.getPreferences(sessionToken);
+			return editPreferencesService.getPreferences(sessionToken);
 		} catch (NullPointerException e) {
 			GetPreferencesBean bean = new GetPreferencesBean();
 			bean.setSuccess(false);

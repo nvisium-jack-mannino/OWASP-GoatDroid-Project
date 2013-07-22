@@ -18,11 +18,8 @@ package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.ForgotPasswordBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.ForgotPasswordServiceImpl;
 
@@ -44,7 +41,7 @@ public class ForgotPasswordController {
 			@RequestParam(value = "secretQuestionIndex", required = true) int secretQuestionIndex,
 			@RequestParam(value = "secretQuestionAnswer", required = true) String secretQuestionAnswer) {
 		try {
-			return ForgotPasswordServiceImpl.requestCode(userName,
+			return forgotPasswordService.requestCode(userName,
 					secretQuestionIndex, secretQuestionAnswer);
 		} catch (NullPointerException e) {
 			ForgotPasswordBean bean = new ForgotPasswordBean();
@@ -58,7 +55,7 @@ public class ForgotPasswordController {
 			@RequestParam(value = "userName", required = true) String userName,
 			@RequestParam(value = "passwordResetCode", required = true) int passwordResetCode) {
 		try {
-			return ForgotPasswordServiceImpl.verifyCode(userName,
+			return forgotPasswordService.verifyCode(userName,
 					passwordResetCode);
 		} catch (NullPointerException e) {
 			ForgotPasswordBean bean = new ForgotPasswordBean();
@@ -73,7 +70,7 @@ public class ForgotPasswordController {
 			@RequestParam(value = "passwordResetCode") int passwordResetCode,
 			@RequestParam(value = "password") String password) {
 		try {
-			return ForgotPasswordServiceImpl.updatePassword(userName,
+			return forgotPasswordService.updatePassword(userName,
 					passwordResetCode, password);
 		} catch (NullPointerException e) {
 			ForgotPasswordBean bean = new ForgotPasswordBean();

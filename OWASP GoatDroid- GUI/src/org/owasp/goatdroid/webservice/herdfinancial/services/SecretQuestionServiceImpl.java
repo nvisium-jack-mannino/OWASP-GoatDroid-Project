@@ -20,19 +20,26 @@ import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.SecretQuestionBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.SecretQuestionDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SecretQuestionServiceImpl implements SecretQuestionService {
+
+	SecretQuestionDaoImpl dao;
+
+	@Autowired
+	public SecretQuestionServiceImpl() {
+		dao = new SecretQuestionDaoImpl();
+	}
 
 	public SecretQuestionBean setSecretQuestions(int sessionToken,
 			String answer1, String answer2, String answer3) {
 
 		SecretQuestionBean bean = new SecretQuestionBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		SecretQuestionDaoImpl dao = new SecretQuestionDaoImpl();
-
-		if (!LoginServiceImpl.isSessionValid(sessionToken))
+		LoginServiceImpl loginService = new LoginServiceImpl();
+		if (!loginService.isSessionValid(sessionToken))
 			errors.add(Constants.SESSION_EXPIRED);
 
 		else if (!Validators.validateSecretQuestionAnswers(answer1, answer2,
@@ -41,7 +48,6 @@ public class SecretQuestionServiceImpl implements SecretQuestionService {
 
 		try {
 			if (errors.size() == 0) {
-				dao.openConnection();
 				dao.updateAnswers(sessionToken, answer1, answer2, answer3);
 				bean.setSuccess(true);
 			}
@@ -49,10 +55,6 @@ public class SecretQuestionServiceImpl implements SecretQuestionService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
-			try {
-				dao.closeConnection();
-			} catch (Exception e) {
-			}
 		}
 		return bean;
 	}
