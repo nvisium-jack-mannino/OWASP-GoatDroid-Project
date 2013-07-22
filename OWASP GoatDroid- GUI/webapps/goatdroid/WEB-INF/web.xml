@@ -14,9 +14,14 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
     </param-value>
 	</context-param>
 
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
 	<!-- Handles all requests into the application -->
 	<servlet>
-		<servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
+		<servlet-name>appServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
@@ -26,17 +31,8 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>fourgoats</servlet-name>
-		<url-pattern>/fourgoats/api/v1/*</url-pattern>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 
-	<servlet>
-		<servlet-name>herdfinancial</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>herdfinancial</servlet-name>
-		<url-pattern>/herdfinancial/api/v1/*</url-pattern>
-	</servlet-mapping>
 </web-app>

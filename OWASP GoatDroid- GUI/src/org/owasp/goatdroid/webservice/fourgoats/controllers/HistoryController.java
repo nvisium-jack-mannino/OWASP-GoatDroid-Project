@@ -16,6 +16,7 @@
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,12 +24,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryBean;
+import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
 import org.owasp.goatdroid.webservice.fourgoats.services.HistoryServiceImpl;
 
 @Controller
 @RequestMapping("fourgoats/api/v1/history")
 public class HistoryController {
+	
+	HistoryServiceImpl historyService;
 
+	@Autowired
+	public HistoryController(HistoryServiceImpl historyService) {
+		this.historyService = historyService;
+	}
+	
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public HistoryBean getHistory(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {

@@ -16,6 +16,7 @@
 package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,12 +24,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.TransferBean;
+import org.owasp.goatdroid.webservice.herdfinancial.services.RegisterServiceImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.services.TransferServiceImpl;
 
 @Controller
 @RequestMapping("herdfinancial/api/v1/transfer")
 public class TransferController {
 
+	TransferServiceImpl transferService;
+
+	@Autowired
+	public TransferController(TransferServiceImpl transferService) {
+		this.transferService = transferService;
+	}
+	
 	@RequestMapping(method = RequestMethod.POST)
 	public TransferBean doTransfer(@FormParam("from") String from,
 			@FormParam("to") String to, @FormParam("amount") double amount,

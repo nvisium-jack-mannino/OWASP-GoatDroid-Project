@@ -16,6 +16,7 @@
 package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,12 +24,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.StatementBean;
+import org.owasp.goatdroid.webservice.herdfinancial.services.RegisterServiceImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.services.StatementServiceImpl;
 
 @Controller
 @RequestMapping("herdfinancial/api/v1/statements")
 public class StatementController {
 
+	StatementServiceImpl statementService;
+
+	@Autowired
+	public StatementController(StatementServiceImpl statementService) {
+		this.statementService = statementService;
+	}
+	
 	@RequestMapping(value = "get_statement/{accountNumber}/{startDate}/{endDate}", method = RequestMethod.GET)
 	public StatementBean getStatement(
 			@PathParam("accountNumber") String accountNumber,

@@ -16,6 +16,7 @@
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,12 +25,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
+import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
 import org.owasp.goatdroid.webservice.fourgoats.services.LoginServiceImpl;
 
 @Controller
 @RequestMapping("fourgoats/api/v1/login")
 public class LoginController {
 
+	LoginServiceImpl loginService;
+
+	@Autowired
+	public LoginController(LoginServiceImpl loginService) {
+		this.loginService = loginService;
+	}
+	
 	@RequestMapping(value = "authenticate", method = RequestMethod.POST)
 	@ResponseBody
 	public LoginBean validateCredentials(

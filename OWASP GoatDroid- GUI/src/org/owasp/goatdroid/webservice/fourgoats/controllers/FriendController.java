@@ -16,6 +16,7 @@
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,12 +28,20 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.FriendProfileBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.FriendBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.PendingFriendRequestsBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.PublicUsersBean;
+import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
 import org.owasp.goatdroid.webservice.fourgoats.services.FriendServiceImpl;
 
 @Controller
 @RequestMapping("fourgoats/api/v1/friends")
 public class FriendController {
 
+	FriendServiceImpl friendService;
+
+	@Autowired
+	public FriendController(FriendServiceImpl friendService) {
+		this.friendService = friendService;
+	}
+	
 	@RequestMapping(value = "list_friends", method = RequestMethod.GET)
 	public FriendListBean getFriends(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {

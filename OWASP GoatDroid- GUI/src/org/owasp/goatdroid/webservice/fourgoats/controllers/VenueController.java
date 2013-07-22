@@ -16,6 +16,7 @@
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,12 +25,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.VenueListBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.VenueBean;
+import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
 import org.owasp.goatdroid.webservice.fourgoats.services.VenueServiceImpl;
 
 @Controller
 @RequestMapping("fourgoats/api/v1/venues")
 public class VenueController {
 
+	VenueServiceImpl venueService;
+
+	@Autowired
+	public VenueController(VenueServiceImpl venueService) {
+		this.venueService = venueService;
+	}
+	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public VenueBean addVenue(
 			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,

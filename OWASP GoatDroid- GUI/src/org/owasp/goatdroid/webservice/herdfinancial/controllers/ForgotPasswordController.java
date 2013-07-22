@@ -16,11 +16,13 @@
 package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.ForgotPasswordBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.ForgotPasswordServiceImpl;
 
@@ -28,6 +30,13 @@ import org.owasp.goatdroid.webservice.herdfinancial.services.ForgotPasswordServi
 @RequestMapping("herdfinancial/api/v1/forgot_password")
 public class ForgotPasswordController {
 
+	ForgotPasswordServiceImpl forgotPasswordService;
+
+	@Autowired
+	public ForgotPasswordController(ForgotPasswordServiceImpl forgotPasswordService) {
+		this.forgotPasswordService = forgotPasswordService;
+	}
+	
 	@RequestMapping(value = "request_code", method = RequestMethod.POST)
 	public ForgotPasswordBean requestCode(
 			@FormParam("userName") String userName,
