@@ -15,10 +15,10 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class VenueDaoImpl extends BaseDaoImpl implements VenueDao {
 
@@ -27,12 +27,8 @@ public class VenueDaoImpl extends BaseDaoImpl implements VenueDao {
 
 		String sql = "select venueID from venues where venueName = ? or (latitude = ? "
 				+ "and longitude = ?)";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, venueName);
-		selectStatement.setString(2, latitude);
-		selectStatement.setString(3, longitude);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
+				new Object[] { venueName, latitude, longitude });
 		if (rs.next())
 			return true;
 		else
@@ -45,22 +41,16 @@ public class VenueDaoImpl extends BaseDaoImpl implements VenueDao {
 
 		String sql = "insert into venues (venueID, venueName, venueWebsite, "
 				+ "latitude, longitude) values (?,?,?,?,?)";
-		PreparedStatement insertStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		insertStatement.setString(1, venueID);
-		insertStatement.setString(2, venueName);
-		insertStatement.setString(3, venueWebsite);
-		insertStatement.setString(4, latitude);
-		insertStatement.setString(5, longitude);
-		insertStatement.executeUpdate();
+		getJdbcTemplate().update(
+				sql,
+				new Object[] { venueID, venueName, venueWebsite, latitude,
+						longitude });
 	}
 
 	public HashMap<String, String> getAllVenues() throws SQLException {
 
 		String sql = "select venueID, venueName, venueWebsite, latitude, longitude from venues";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql);
 		HashMap<String, String> venues = new HashMap<String, String>();
 		int count = 0;
 		while (rs.next()) {

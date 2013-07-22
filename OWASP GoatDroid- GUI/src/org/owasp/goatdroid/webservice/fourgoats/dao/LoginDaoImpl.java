@@ -15,12 +15,11 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class LoginDaoImpl extends BaseDaoImpl implements LoginDao {
 
@@ -28,12 +27,12 @@ public class LoginDaoImpl extends BaseDaoImpl implements LoginDao {
 			throws SQLException {
 
 		String sql = "select username from users where username = ? and password = ?";
-		PreparedStatement selectUser = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectUser.setString(1, userName);
-		selectUser.setString(2, LoginUtils.generateSaltedSHA512Hash(password,
-				Salts.PASSWORD_HASH_SALT));
-		ResultSet rs = selectUser.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(
+				sql,
+				new Object[] {
+						userName,
+						LoginUtils.generateSaltedSHA512Hash(password,
+								Salts.PASSWORD_HASH_SALT) });
 		if (rs.next()) {
 			return true;
 		} else {
@@ -45,12 +44,8 @@ public class LoginDaoImpl extends BaseDaoImpl implements LoginDao {
 			long sessionStartTime) throws SQLException {
 
 		String sql = "update users SET sessionToken = ?, sessionStartTime = ? where userName = ?";
-		PreparedStatement updateStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		updateStatement.setString(1, sessionToken);
-		updateStatement.setDouble(2, sessionStartTime);
-		updateStatement.setString(3, userName);
-		updateStatement.executeUpdate();
+		getJdbcTemplate().update(sql,
+				new Object[] { sessionToken, sessionStartTime, userName });
 	}
 
 	public HashMap<String, Boolean> getPreferences(String userName)
@@ -58,10 +53,7 @@ public class LoginDaoImpl extends BaseDaoImpl implements LoginDao {
 
 		String sql = "select autoCheckin, isPublic, isAdmin from users "
 				+ "where userName = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userName);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userName);
 		HashMap<String, Boolean> preferences = new HashMap<String, Boolean>();
 		rs.next();
 		preferences.put("autoCheckin", rs.getBoolean("autoCheckin"));
@@ -73,18 +65,12 @@ public class LoginDaoImpl extends BaseDaoImpl implements LoginDao {
 	public void terminateSession(String sessionToken) throws SQLException {
 
 		String sql = "update users SET sessionToken = '0', sessionStartTime = 0 where sessionToken = ?";
-		PreparedStatement updateStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		updateStatement.setString(1, sessionToken);
-		updateStatement.executeUpdate();
+		getJdbcTemplate().update(sql, sessionToken);
 	}
 
 	public String getSessionToken(String userName) throws SQLException {
 		String sql = "select sessionToken from users where username = ?";
-		PreparedStatement selectUser = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectUser.setString(1, userName);
-		ResultSet rs = selectUser.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userName);
 		if (rs.next()) {
 			if (rs.getString("sessionToken") != null)
 				return rs.getString("sessionToken");

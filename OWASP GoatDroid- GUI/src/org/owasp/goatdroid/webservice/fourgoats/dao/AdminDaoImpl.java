@@ -15,22 +15,18 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.model.UserModel;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class AdminDaoImpl extends BaseDaoImpl implements AdminDao {
 
 	public boolean isAdmin(String sessionToken) throws Exception {
 
 		String sql = "select * from users where sessionToken = ? and isAdmin = true";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, sessionToken);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
 		if (rs.next())
 			return true;
 		else
@@ -40,31 +36,24 @@ public class AdminDaoImpl extends BaseDaoImpl implements AdminDao {
 	public void deleteUser(String userName) throws Exception {
 
 		String sql = "delete from users where userName = ?";
-		PreparedStatement deleteStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		deleteStatement.setString(1, userName);
-		deleteStatement.executeUpdate();
+		getJdbcTemplate().update(sql, userName);
 	}
 
 	public void updatePassword(String userName, String newPassword)
 			throws Exception {
 
 		String sql = "update users SET password = ? where userName = ?";
-		PreparedStatement updateStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		updateStatement.setString(1, LoginUtils.generateSaltedSHA512Hash(
-				newPassword, Salts.PASSWORD_HASH_SALT));
-
-		updateStatement.setString(2, userName);
-		updateStatement.executeUpdate();
+		getJdbcTemplate().update(
+				sql,
+				new Object[] {
+						LoginUtils.generateSaltedSHA512Hash(newPassword,
+								Salts.PASSWORD_HASH_SALT), userName });
 	}
 
 	public ArrayList<UserModel> getUsers() throws Exception {
 
 		String sql = "select userName, firstName, lastName from users";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql);
 		ArrayList<UserModel> users = new ArrayList<UserModel>();
 		while (rs.next()) {
 			UserModel user = new UserModel();

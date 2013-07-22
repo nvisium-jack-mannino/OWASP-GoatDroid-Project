@@ -15,10 +15,10 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class CommentDaoImpl extends BaseDaoImpl implements CommentDao {
 
@@ -27,24 +27,16 @@ public class CommentDaoImpl extends BaseDaoImpl implements CommentDao {
 
 		String sql = "insert into comments (dateTime, commentID, userID, comment, checkinID) values "
 				+ "(?,?,?,?,?)";
-		PreparedStatement insertStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		insertStatement.setString(1, dateTime);
-		insertStatement.setString(2, commentID);
-		insertStatement.setString(3, userID);
-		insertStatement.setString(4, comment);
-		insertStatement.setString(5, checkinID);
-		insertStatement.executeUpdate();
-		conn.close();
+		getJdbcTemplate()
+				.update(sql,
+						new Object[] { dateTime, commentID, userID, comment,
+								checkinID });
 	}
 
 	public void deleteComment(String commentID) throws SQLException {
 
 		String sql = "delete from comments where commentID = ?";
-		PreparedStatement deleteStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		deleteStatement.setString(1, commentID);
-		deleteStatement.executeUpdate();
+		getJdbcTemplate().update(sql, commentID);
 	}
 
 	public HashMap<String, String> selectComments(String checkinID)
@@ -53,10 +45,7 @@ public class CommentDaoImpl extends BaseDaoImpl implements CommentDao {
 		String sql = "select comments.dateTime, comments.commentID, comments.userID, users.firstName, "
 				+ "users.lastName, comments.comment from comments inner join users on "
 				+ "comments.userID = users.userID where comments.checkinID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, checkinID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
 		HashMap<String, String> comments = new HashMap<String, String>();
 		int count = 0;
 		while (rs.next()) {
@@ -75,11 +64,8 @@ public class CommentDaoImpl extends BaseDaoImpl implements CommentDao {
 			throws SQLException {
 
 		String sql = "select userID from comments where userID = ? and commentID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userID);
-		selectStatement.setString(2, commentID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
+				new Object[] { userID, commentID });
 		if (rs.next())
 			return true;
 		else
@@ -89,10 +75,7 @@ public class CommentDaoImpl extends BaseDaoImpl implements CommentDao {
 	public String getCheckinOwner(String checkinID) throws SQLException {
 
 		String sql = "select userID from checkins where checkinID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, checkinID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
 		rs.next();
 		return rs.getString("userID");
 	}
@@ -100,10 +83,7 @@ public class CommentDaoImpl extends BaseDaoImpl implements CommentDao {
 	public String getCheckinID(String commentID) throws SQLException {
 
 		String sql = "select checkinID from comments where commentID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, commentID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, commentID);
 		rs.next();
 		return rs.getString("checkinID");
 	}
@@ -113,10 +93,7 @@ public class CommentDaoImpl extends BaseDaoImpl implements CommentDao {
 
 		String sql = "select venues.venueName, venues.venueWebsite from venues inner "
 				+ "join checkins on venues.venueID = checkins.venueID where checkins.checkinID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, checkinID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
 
 		HashMap<String, String> venueInfo = new HashMap<String, String>();
 

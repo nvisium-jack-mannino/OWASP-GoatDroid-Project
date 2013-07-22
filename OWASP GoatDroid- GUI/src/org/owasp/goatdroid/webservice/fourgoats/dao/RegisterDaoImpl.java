@@ -15,21 +15,17 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class RegisterDaoImpl extends BaseDaoImpl implements RegisterDao {
 
 	public boolean doesUserExist(String userName) throws SQLException {
 
 		String sql = "select userName from users where userName = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userName);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userName);
 		if (rs.next())
 			return true;
 		else
@@ -44,35 +40,17 @@ public class RegisterDaoImpl extends BaseDaoImpl implements RegisterDao {
 				+ "lastLongitude, lastCheckinTime, numberOfCheckins, "
 				+ "numberOfRewards, isAdmin, autoCheckin, isPublic) values "
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		PreparedStatement insertStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		insertStatement.setString(1, userName);
-		insertStatement.setString(2, LoginUtils.generateSaltedSHA512Hash(
-				password, Salts.PASSWORD_HASH_SALT));
-		insertStatement.setString(3, firstName);
-		insertStatement.setString(4, lastName);
-		/*
-		 * Generates the userID unique identifier
-		 */
-		insertStatement.setString(5, LoginUtils.generateSaltedSHA256Hash(
-				userName + LoginUtils.getTimeMilliseconds(),
-				Salts.USER_ID_GENERATOR_SALT));
-		// latitude
-		insertStatement.setString(6, "0");
-		// longitude
-		insertStatement.setString(7, "0");
-		// lastCheckinTime
-		insertStatement.setString(8, "");
-		// numberOfCheckins
-		insertStatement.setInt(9, 0);
-		// numberOfRewards
-		insertStatement.setInt(10, 0);
-		// isAdmin
-		insertStatement.setBoolean(11, false);
-		// autoCheckin
-		insertStatement.setBoolean(12, true);
-		// isPublic
-		insertStatement.setBoolean(13, true);
-		insertStatement.executeUpdate();
+		getJdbcTemplate().update(
+				sql,
+				new Object[] {
+						userName,
+						LoginUtils.generateSaltedSHA512Hash(password,
+								Salts.PASSWORD_HASH_SALT),
+						firstName,
+						lastName,
+						LoginUtils.generateSaltedSHA256Hash(userName
+								+ LoginUtils.getTimeMilliseconds(),
+								Salts.USER_ID_GENERATOR_SALT), "0", "0", "", 0,
+						0, false, true, true });
 	}
 }

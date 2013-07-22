@@ -15,10 +15,9 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.HashMap;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class CheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 
@@ -28,15 +27,10 @@ public class CheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 
 		String sql = "insert into checkins (dateTime, latitude, longitude, userID, venueID, checkinID) "
 				+ "values (?,?,?,?,?,?)";
-		PreparedStatement insertCheckinEvent = (PreparedStatement) conn
-				.prepareCall(sql);
-		insertCheckinEvent.setString(1, dateTime);
-		insertCheckinEvent.setString(2, latitude);
-		insertCheckinEvent.setString(3, longitude);
-		insertCheckinEvent.setString(4, userID);
-		insertCheckinEvent.setString(5, venueID);
-		insertCheckinEvent.setString(6, checkinID);
-		insertCheckinEvent.executeUpdate();
+		getJdbcTemplate().update(
+				sql,
+				new Object[] { dateTime, latitude, longitude, userID, venueID,
+						checkinID });
 	}
 
 	public void updateUserInfo(String latitude, String longitude,
@@ -44,24 +38,16 @@ public class CheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 
 		String sql = "update users SET lastLatitude = ?, lastLongitude = ?, lastCheckinTime = ?,"
 				+ " numberOfCheckins = ? where userID = ?";
-		PreparedStatement updateStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		updateStatement.setString(1, latitude);
-		updateStatement.setString(2, longitude);
-		updateStatement.setString(3, dateTime);
-		// Increment by 1 to reflect latest checkin
-		updateStatement.setInt(4, totalCheckins + 1);
-		updateStatement.setString(5, userID);
-		updateStatement.executeUpdate();
+		getJdbcTemplate().update(
+				sql,
+				new Object[] { latitude, longitude, dateTime,
+						totalCheckins + 1, userID });
 	}
 
 	public int getTotalCheckins(String userID) throws Exception {
 
 		String sql = "select numberOfCheckins from users where userID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
 		rs.next();
 		return rs.getInt("numberOfCheckins");
 	}
@@ -70,11 +56,8 @@ public class CheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 			throws Exception {
 
 		String sql = "select venueID from venues where latitude = ? and longitude = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, latitude);
-		selectStatement.setString(2, longitude);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
+				new Object[] { latitude, longitude });
 		if (rs.next())
 			return true;
 		else
@@ -85,11 +68,8 @@ public class CheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 			throws Exception {
 
 		String sql = "select venueID from venues where latitude = ? and longitude = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, latitude);
-		selectStatement.setString(2, longitude);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
+				new Object[] { latitude, longitude });
 		rs.next();
 		return rs.getString("venueID");
 
@@ -98,10 +78,7 @@ public class CheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 	public String getVenueName(String venueID) throws Exception {
 
 		String sql = "select venueName from venues where venueID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, venueID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, venueID);
 		rs.next();
 		return rs.getString("venueName");
 	}
@@ -109,10 +86,7 @@ public class CheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 	public boolean doesVenueHaveReward(String venueID) throws Exception {
 
 		String sql = "select rewards.venueID from rewards inner join venues on rewards.venueID = venues.venueID where rewards.venueID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, venueID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, venueID);
 		if (rs.next())
 			return true;
 		else
@@ -123,11 +97,8 @@ public class CheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 			throws Exception {
 
 		String sql = "select venueID from checkins where userID = ? and venueID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userID);
-		selectStatement.setString(2, venueID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
+				new Object[] { userID, venueID });
 		int count = 0;
 
 		while (rs.next())
@@ -139,10 +110,7 @@ public class CheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 	public String getRewardID(String venueID) throws Exception {
 
 		String sql = "select rewardID from rewards where venueID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, venueID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, venueID);
 		rs.next();
 		return rs.getString("rewardID");
 	}
@@ -150,10 +118,7 @@ public class CheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 	public int getRewardCheckinsRequired(String rewardID) throws Exception {
 
 		String sql = "select checkinsRequired from rewards where rewardID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, rewardID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, rewardID);
 		rs.next();
 
 		return rs.getInt("checkinsRequired");
@@ -163,12 +128,10 @@ public class CheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 	public void addReward(String userID, String rewardID) throws Exception {
 
 		String sql = "insert into earned_rewards (userID, rewardID, timeEarned) values (?,?,?)";
-		PreparedStatement insertStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		insertStatement.setString(1, userID);
-		insertStatement.setString(2, rewardID);
-		insertStatement.setString(3, LoginUtils.getCurrentDateTime());
-		insertStatement.executeUpdate();
+		getJdbcTemplate().update(
+				sql,
+				new Object[] { userID, rewardID,
+						LoginUtils.getCurrentDateTime() });
 	}
 
 	public HashMap<String, String> getRewardInfo(String rewardID, String venueID)
@@ -177,11 +140,8 @@ public class CheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 		String sql = "select venues.venueName, rewards.rewardName, rewards.rewardDescription "
 				+ "from rewards inner join venues on rewards.venueID = venues.venueID where "
 				+ "rewards.rewardID = ? and rewards.venueID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, rewardID);
-		selectStatement.setString(2, venueID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
+				new Object[] { rewardID, venueID });
 		HashMap<String, String> rewardInfo = new HashMap<String, String>();
 		if (rs.next()) {
 			rewardInfo.put("venueName", rs.getString("venueName"));
@@ -196,11 +156,8 @@ public class CheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 			throws Exception {
 
 		String sql = "select userID from earned_rewards where userID = ? and rewardID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userID);
-		selectStatement.setString(2, rewardID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
+				new Object[] { userID, rewardID });
 		if (rs.next())
 			return true;
 		else

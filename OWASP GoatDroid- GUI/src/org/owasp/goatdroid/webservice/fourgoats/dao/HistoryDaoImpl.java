@@ -15,13 +15,12 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.owasp.goatdroid.webservice.fourgoats.model.HistoryModel;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class HistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 
@@ -31,10 +30,7 @@ public class HistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 		String sql = "select checkins.dateTime, checkins.checkinID, checkins.latitude, checkins.longitude, "
 				+ "venues.venueName, venues.venueWebsite from checkins inner join venues on "
 				+ "checkins.venueID = venues.venueID where userID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
 		ArrayList<HistoryModel> checkins = new ArrayList<HistoryModel>();
 		while (rs.next()) {
 			HistoryModel checkin = new HistoryModel();
@@ -55,10 +51,7 @@ public class HistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 		String sql = "select checkins.dateTime, checkins.checkinID, checkins.latitude, checkins.longitude, "
 				+ "venues.venueName, venues.venueWebsite from checkins inner join venues on "
 				+ "checkins.venueID = venues.venueID inner join users on checkins.userID = users.userID where users.userName = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userName);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userName);
 		ArrayList<HistoryModel> checkins = new ArrayList<HistoryModel>();
 		while (rs.next()) {
 			HistoryModel checkin = new HistoryModel();
@@ -77,10 +70,7 @@ public class HistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 
 		String sql = "select venues.venueName from checkins inner "
 				+ "join venues on checkins.venueID = venues.venueID where checkinID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, checkinID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
 		rs.next();
 		return rs.getString("venueName");
 	}
@@ -89,10 +79,7 @@ public class HistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 			throws SQLException {
 
 		String sql = "select dateTime, latitude, longitude from checkins where checkinID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, checkinID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
 		HashMap<String, String> checkin = new HashMap<String, String>();
 		while (rs.next()) {
 			checkin.put("dateTime", rs.getString("dateTime"));
@@ -108,10 +95,7 @@ public class HistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 		String sql = "select comments.commentID, comments.userID, users.firstName, "
 				+ "users.lastName, comments.comment from comments inner join users on "
 				+ "comments.userID = users.userID where comments.checkinID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, checkinID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
 		HashMap<String, String> comments = new HashMap<String, String>();
 		int count = 0;
 		while (rs.next()) {
@@ -128,10 +112,7 @@ public class HistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 	public boolean isProfilePublic(String userID) throws SQLException {
 
 		String sql = "select isPublic from users where userID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
 		rs.next();
 		return rs.getBoolean("isPublic");
 
@@ -142,13 +123,8 @@ public class HistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 
 		String sql = "select userID from friends where (userID = ? and friendUserID = ?) "
 				+ " or (friendUserID = ? and userID = ?)";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userID);
-		selectStatement.setString(2, friendUserID);
-		selectStatement.setString(3, friendUserID);
-		selectStatement.setString(4, userID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
+				new Object[] { userID, friendUserID, friendUserID, userID });
 		if (rs.next())
 			return true;
 		else
@@ -159,10 +135,7 @@ public class HistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 
 		String sql = "select venues.venueWebsite from checkins inner "
 				+ "join venues on checkins.venueID = venues.venueID where checkinID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, checkinID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
 		rs.next();
 		return rs.getString("venueWebsite");
 	}

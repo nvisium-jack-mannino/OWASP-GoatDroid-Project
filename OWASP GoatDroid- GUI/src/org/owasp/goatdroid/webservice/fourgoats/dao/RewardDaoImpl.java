@@ -15,11 +15,10 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.fourgoats.model.RewardModel;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class RewardDaoImpl extends BaseDaoImpl implements RewardDao {
 
@@ -29,9 +28,7 @@ public class RewardDaoImpl extends BaseDaoImpl implements RewardDao {
 				+ "venues.venueName, rewards.checkinsRequired, venues.latitude, "
 				+ "venues.longitude from rewards inner join venues on rewards.venueID = "
 				+ "venues.venueID";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql);
 		ArrayList<RewardModel> rewards = new ArrayList<RewardModel>();
 		while (rs.next()) {
 			RewardModel reward = new RewardModel();
@@ -53,10 +50,7 @@ public class RewardDaoImpl extends BaseDaoImpl implements RewardDao {
 		String sql = "select rewards.rewardName, rewards.rewardDescription, earned_rewards.timeEarned "
 				+ "from earned_rewards inner join rewards on rewards.rewardID = earned_rewards.rewardID "
 				+ "where earned_rewards.userID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
 		ArrayList<RewardModel> rewards = new ArrayList<RewardModel>();
 
 		while (rs.next()) {
@@ -74,23 +68,16 @@ public class RewardDaoImpl extends BaseDaoImpl implements RewardDao {
 			throws SQLException {
 
 		String sql = "insert into rewards (rewardID, rewardName, rewardDescription, venueID, checkinsRequired) values (?,?,?,?,?)";
-		PreparedStatement insertStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		insertStatement.setString(1, rewardID);
-		insertStatement.setString(2, rewardName);
-		insertStatement.setString(3, rewardDescription);
-		insertStatement.setString(4, venueID);
-		insertStatement.setInt(5, checkinsRequired);
-		insertStatement.executeUpdate();
+		getJdbcTemplate().update(
+				sql,
+				new Object[] { rewardID, rewardName, rewardDescription,
+						venueID, checkinsRequired });
 	}
 
 	public boolean doesVenueExist(String venueID) throws SQLException {
 
 		String sql = "select venueID from venues where venueID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, venueID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, venueID);
 		if (rs.next())
 			return true;
 		else

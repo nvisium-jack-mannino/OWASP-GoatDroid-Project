@@ -15,33 +15,27 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-public class EditPreferencesDaoImpl extends BaseDaoImpl implements EditPreferencesDao {
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+
+public class EditPreferencesDaoImpl extends BaseDaoImpl implements
+		EditPreferencesDao {
 
 	public void updatePreferences(boolean autoCheckin, boolean isPublic,
 			String userID) throws SQLException {
 
 		String sql = "update users SET autoCheckin = ?, isPublic = ? where userID = ?";
-		PreparedStatement updateStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		updateStatement.setBoolean(1, autoCheckin);
-		updateStatement.setBoolean(2, isPublic);
-		updateStatement.setString(3, userID);
-		updateStatement.executeUpdate();
+		getJdbcTemplate().update(sql,
+				new Object[] { autoCheckin, isPublic, userID });
 	}
 
 	public HashMap<String, Boolean> getPreferences(String userID)
 			throws SQLException {
 
 		String sql = "select autoCheckin, isPublic from users where userID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
 		HashMap<String, Boolean> preferences = new HashMap<String, Boolean>();
 		rs.next();
 		preferences.put("autoCheckin", rs.getBoolean("autoCheckin"));

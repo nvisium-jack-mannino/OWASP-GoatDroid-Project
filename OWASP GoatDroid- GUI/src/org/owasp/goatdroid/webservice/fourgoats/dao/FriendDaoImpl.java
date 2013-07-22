@@ -15,8 +15,6 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +22,7 @@ import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.model.UserModel;
 import org.owasp.goatdroid.webservice.fourgoats.model.FriendRequestModel;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class FriendDaoImpl extends BaseDaoImpl implements FriendDao {
 
@@ -33,11 +32,8 @@ public class FriendDaoImpl extends BaseDaoImpl implements FriendDao {
 		String sql = "select friends.userID, users.userName, friends.friendUserID, users.firstName, "
 				+ "users.lastName from friends inner join users on users.userID = friends.userID or "
 				+ "users.userID = friends.friendUserID where friends.friendUserId = ? or friends.userID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userID);
-		selectStatement.setString(2, userID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
+				new Object[] { userID, userID });
 		ArrayList<UserModel> friends = new ArrayList<UserModel>();
 		while (rs.next()) {
 			/*
@@ -60,24 +56,15 @@ public class FriendDaoImpl extends BaseDaoImpl implements FriendDao {
 			throws SQLException {
 
 		String sql = "insert into friends (userID, friendUserID) values (?,?)";
-		PreparedStatement insertStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		insertStatement.setString(1, userID);
-		insertStatement.setString(2, friendUserID);
-		insertStatement.executeUpdate();
+		getJdbcTemplate().update(sql, new Object[] { userID, friendUserID });
 	}
 
 	public boolean isFriend(String userID, String friendUserID)
 			throws SQLException {
 
 		String sql = "select userID from friends where (userID = ? and friendUserID = ?) or (friendUserID = ? and userID = ?) ";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userID);
-		selectStatement.setString(2, friendUserID);
-		selectStatement.setString(3, userID);
-		selectStatement.setString(4, friendUserID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
+				new Object[] { userID, friendUserID, userID, friendUserID });
 		if (rs.next())
 			return true;
 		else
@@ -88,23 +75,15 @@ public class FriendDaoImpl extends BaseDaoImpl implements FriendDao {
 			throws SQLException {
 
 		String sql = "delete from friends where (userID = ? and friendUserID = ?) or (friendUserID = ? and userID = ?)";
-		PreparedStatement deleteStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		deleteStatement.setString(1, userID);
-		deleteStatement.setString(2, friendUserID);
-		deleteStatement.setString(3, friendUserID);
-		deleteStatement.setString(4, userID);
-		deleteStatement.executeUpdate();
+		getJdbcTemplate().update(sql,
+				new Object[] { userID, friendUserID, friendUserID, userID });
 	}
 
 	public HashMap<String, String> getProfile(String userID)
 			throws SQLException {
 
 		String sql = "select userID, firstName, lastName, lastCheckinTime, lastLatitude, lastLongitude from users where userID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
 		HashMap<String, String> profile = new HashMap<String, String>();
 		while (rs.next()) {
 			profile.put("userID", userID);
@@ -125,10 +104,7 @@ public class FriendDaoImpl extends BaseDaoImpl implements FriendDao {
 				+ "users.firstName, users.lastName from "
 				+ "friendrequests inner join users on users.userID = friendrequests.fromUserID "
 				+ "where friendrequests.toUserID = ? ";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
 		ArrayList<FriendRequestModel> requests = new ArrayList<FriendRequestModel>();
 		while (rs.next()) {
 			FriendRequestModel request = new FriendRequestModel();
@@ -145,9 +121,7 @@ public class FriendDaoImpl extends BaseDaoImpl implements FriendDao {
 			throws SQLException {
 
 		String sql = "select userID, userName, firstName, lastName from users where isPublic = true";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql);
 		ArrayList<UserModel> users = new ArrayList<UserModel>();
 		while (rs.next()) {
 			// checks to make sure we aren't returning ourselves
@@ -167,24 +141,21 @@ public class FriendDaoImpl extends BaseDaoImpl implements FriendDao {
 			throws SQLException {
 
 		String sql = "insert into friendrequests (requestID, fromUserID, toUserID) values (?,?,?)";
-		PreparedStatement insertStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		insertStatement.setString(1, LoginUtils.generateSaltedSHA256Hash(userID
-				+ friendUserID + LoginUtils.getTimeMilliseconds(),
-				Salts.FRIEND_REQUEST_ID_GENERATOR_SALT));
-		insertStatement.setString(2, userID);
-		insertStatement.setString(3, friendUserID);
-		insertStatement.executeUpdate();
+		getJdbcTemplate().update(
+				sql,
+				new Object[] {
+						LoginUtils.generateSaltedSHA256Hash(
+								userID + friendUserID
+										+ LoginUtils.getTimeMilliseconds(),
+								Salts.FRIEND_REQUEST_ID_GENERATOR_SALT),
+						userID, friendUserID });
 	}
 
 	public boolean isUserFriendRequested(String toUserID, String requestID)
 			throws SQLException {
 
 		String sql = "select toUserID from friendrequests where requestID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, requestID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, requestID);
 		rs.next();
 		if (rs.getString("toUserID").equals(toUserID))
 			return true;
@@ -195,10 +166,7 @@ public class FriendDaoImpl extends BaseDaoImpl implements FriendDao {
 	public String getFromFriendID(String requestID) throws SQLException {
 
 		String sql = "select fromUserID from friendrequests where requestID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, requestID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, requestID);
 		rs.next();
 		return rs.getString("fromUserID");
 	}
@@ -207,23 +175,15 @@ public class FriendDaoImpl extends BaseDaoImpl implements FriendDao {
 			throws SQLException {
 
 		String sql = "delete from friendrequests where requestID = ?";
-		PreparedStatement deleteStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		deleteStatement.setString(1, requestID);
-		deleteStatement.executeUpdate();
+		getJdbcTemplate().update(sql, requestID);
 	}
 
 	public boolean wasFriendRequestSent(String fromUserID, String toUserID)
 			throws SQLException {
 
 		String sql = "select requestID from friendrequests where (fromUserID = ? and toUserID = ?) or (fromUserID = ? and toUserID = ?)";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, fromUserID);
-		selectStatement.setString(2, toUserID);
-		selectStatement.setString(3, toUserID);
-		selectStatement.setString(4, fromUserID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
+				new Object[] { fromUserID, toUserID, toUserID, fromUserID });
 		if (rs.next())
 			return true;
 		else
@@ -233,10 +193,7 @@ public class FriendDaoImpl extends BaseDaoImpl implements FriendDao {
 	public String getUserID(String sessionToken) throws SQLException {
 
 		String sql = "select userID from users where sessionToken = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, sessionToken);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
 		rs.next();
 		return rs.getString("userID");
 	}
@@ -245,10 +202,7 @@ public class FriendDaoImpl extends BaseDaoImpl implements FriendDao {
 
 		String sql = "select userID from users where userName = ?";
 		;
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userName);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userName);
 		rs.next();
 		return rs.getString("userID");
 
@@ -259,11 +213,8 @@ public class FriendDaoImpl extends BaseDaoImpl implements FriendDao {
 
 		String sql = "select requestID from friendrequests inner join users "
 				+ "on users.userID = friendRequests.fromUserID where users.userName = ? and friendRequests.toUserID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userName);
-		selectStatement.setString(2, userID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
+				new Object[] { userName, userID });
 		rs.next();
 		return rs.getString("requestID");
 
@@ -272,10 +223,7 @@ public class FriendDaoImpl extends BaseDaoImpl implements FriendDao {
 	public String getUserName(String userID) throws SQLException {
 
 		String sql = "select userName from users where userID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
 		rs.next();
 		return rs.getString("userName");
 	}

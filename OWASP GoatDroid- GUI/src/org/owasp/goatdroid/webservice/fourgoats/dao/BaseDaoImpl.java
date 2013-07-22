@@ -15,14 +15,11 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 
@@ -33,10 +30,7 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 	public boolean checkSessionMatchesUserID(String sessionToken, String userID)
 			throws SQLException {
 		String sql = "select userID from users where sessionToken = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, sessionToken);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
 		if (rs.next())
 			return true;
 		else
@@ -45,10 +39,7 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 
 	public String getUserID(String sessionToken) throws Exception {
 		String sql = "select userID from users where sessionToken = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, sessionToken);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
 		rs.next();
 		return rs.getString("userID");
 	}
@@ -56,10 +47,7 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 	public String getCheckinOwner(String checkinID) throws Exception {
 
 		String sql = "select userID from checkins where checkinID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, checkinID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
 		if (rs.next())
 			return rs.getString("userID");
 		else
@@ -71,10 +59,7 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 
 		String sql = "select users.isPublic from checkins inner "
 				+ "join users on checkins.userID = users.userID where checkins.checkinID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, checkinID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
 		if (rs.next())
 			return rs.getBoolean("isPublic");
 		else
@@ -84,10 +69,7 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 	public boolean isProfilePublic(String userID) throws Exception {
 
 		String sql = "select isPublic from users where userID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
 		if (rs.next())
 			return rs.getBoolean("isPublic");
 		else
@@ -99,13 +81,8 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 
 		String sql = "select userID from friends where (userID = ? and friendUserID = ?) "
 				+ " or (friendUserID = ? and userID = ?)";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userID);
-		selectStatement.setString(2, friendUserID);
-		selectStatement.setString(3, friendUserID);
-		selectStatement.setString(4, userID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
+				new Object[] { userID, friendUserID, friendUserID, userID });
 		if (rs.next())
 			return true;
 		else
@@ -115,10 +92,7 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 	public boolean isAdmin(String userID) throws Exception {
 
 		String sql = "select isAdmin from users where userID = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, userID);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
 		if (rs.next())
 			return rs.getBoolean("isAdmin");
 		else
@@ -129,10 +103,7 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 			throws Exception {
 
 		String sql = "select userName from users where sessionToken = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, sessionToken);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
 		rs.next();
 		return rs.getString("userName");
 	}
@@ -140,10 +111,7 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 	public long getSessionStartTime(String sessionToken) throws Exception {
 
 		String sql = "select sessionStartTime from users where sessionToken = ?";
-		PreparedStatement selectStartTime = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStartTime.setString(1, sessionToken);
-		ResultSet rs = selectStartTime.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
 		rs.next();
 		return rs.getLong("sessionStartTime");
 	}
@@ -151,10 +119,7 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 	public boolean isSessionValid(String sessionToken) throws Exception {
 
 		String sql = "select sessionStartTime from users where sessionToken = ?";
-		PreparedStatement selectStatement = (PreparedStatement) conn
-				.prepareCall(sql);
-		selectStatement.setString(1, sessionToken);
-		ResultSet rs = selectStatement.executeQuery();
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
 		if (rs.next()) {
 			Long sessionStartTime = rs.getLong("sessionStartTime");
 			if (LoginUtils.getTimeMilliseconds() - sessionStartTime < Constants.SESSION_LIFETIME)
