@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.TransferBean;
-import org.owasp.goatdroid.webservice.herdfinancial.dao.StatementDaoImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.TransferDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

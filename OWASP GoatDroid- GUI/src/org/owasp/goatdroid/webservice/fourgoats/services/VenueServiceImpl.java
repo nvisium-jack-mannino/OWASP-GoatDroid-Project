@@ -22,7 +22,6 @@ import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.VenueListBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.VenueBean;
-import org.owasp.goatdroid.webservice.fourgoats.dao.AdminDaoImpl;
 import org.owasp.goatdroid.webservice.fourgoats.dao.VenueDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
