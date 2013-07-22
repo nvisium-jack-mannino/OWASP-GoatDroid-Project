@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.SecretQuestionBean;
@@ -34,19 +35,20 @@ public class SecretQuestionController {
 	SecretQuestionServiceImpl secretQuestionService;
 
 	@Autowired
-	public SecretQuestionController(SecretQuestionServiceImpl secretQuestionService) {
+	public SecretQuestionController(
+			SecretQuestionServiceImpl secretQuestionService) {
 		this.secretQuestionService = secretQuestionService;
 	}
-	
-	@RequestMapping(value="set", method = RequestMethod.POST)
+
+	@RequestMapping(value = "set", method = RequestMethod.POST)
 	public SecretQuestionBean setSecretQuestions(
-			@CookieParam(Constants.SESSION_TOKEN) int sessionToken,
-			@FormParam("answer1") String answer1,
-			@FormParam("answer2") String answer2,
-			@FormParam("answer3") String answer3) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken,
+			@RequestParam(value = "answer1", required = true) String answer1,
+			@RequestParam(value = "answer2", required = true) String answer2,
+			@RequestParam(value = "answer3", required = true) String answer3) {
 		try {
-			return SecretQuestionServiceImpl.setSecretQuestions(sessionToken, answer1,
-					answer2, answer3);
+			return SecretQuestionServiceImpl.setSecretQuestions(sessionToken,
+					answer1, answer2, answer3);
 		} catch (NullPointerException e) {
 			SecretQuestionBean bean = new SecretQuestionBean();
 			bean.setSuccess(false);

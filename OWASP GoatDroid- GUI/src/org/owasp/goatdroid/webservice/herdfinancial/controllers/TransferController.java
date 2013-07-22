@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
@@ -37,11 +38,13 @@ public class TransferController {
 	public TransferController(TransferServiceImpl transferService) {
 		this.transferService = transferService;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
-	public TransferBean doTransfer(@FormParam("from") String from,
-			@FormParam("to") String to, @FormParam("amount") double amount,
-			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {
+	public TransferBean doTransfer(
+			@RequestParam(value = "from", required = true) String from,
+			@RequestParam(value = "to", required = true) String to,
+			@RequestParam(value = "amount", required = true) double amount,
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {
 
 		try {
 			return TransferServiceImpl.transferFunds(sessionToken, from, to,

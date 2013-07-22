@@ -36,14 +36,14 @@ public class RegisterController {
 	public RegisterController(RegisterServiceImpl registerService) {
 		this.registerService = registerService;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
 	public RegisterBean doRegistration(
-			@FormParam("accountNumber") String accountNumber,
-			@FormParam("firstName") String firstName,
-			@FormParam("lastName") String lastName,
-			@FormParam("userName") String userName,
-			@FormParam("password") String password) {
+			@RequestParam(value = "accountNumber", required = true) String accountNumber,
+			@RequestParam(value = "firstName", required = true) String firstName,
+			@RequestParam(value = "lastName", required = true) String lastName,
+			@RequestParam(value = "userName", required = true) String userName,
+			@RequestParam(value = "password", required = true) String password) {
 		try {
 			return RegisterServiceImpl.registerUser(accountNumber, firstName,
 					lastName, userName, password);

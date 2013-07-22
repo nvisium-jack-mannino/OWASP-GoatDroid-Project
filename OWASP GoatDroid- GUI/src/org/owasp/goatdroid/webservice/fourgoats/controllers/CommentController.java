@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.CommentListBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.CommentBean;
@@ -71,7 +72,7 @@ public class CommentController {
 	@RequestMapping(value = "get/{checkinID}", method = RequestMethod.GET)
 	public CommentListBean getComments(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
-			@RequestParam(value = "checkinID", required = true) String checkinID) {
+			@PathVariable(value = "checkinID") String checkinID) {
 		try {
 			return CommentServiceImpl.getComments(sessionToken, checkinID);
 		} catch (NullPointerException e) {

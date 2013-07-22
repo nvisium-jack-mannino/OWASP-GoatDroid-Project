@@ -44,7 +44,7 @@ public class Constants {
 	public static final String INVALID_SECRET_QUESTION_ANSWER = "Invalid secret question answer";
 	public static final String INVALID_PASSWORD_RESET_CODE = "Invalid password reset code";
 	public static final String INVALID_PASSWORD_LENGTH = "Password cannot be empty and must be less than 30 characters";
-	public static final String SESSION_TOKEN = "AUTH";
+	public static final String AUTH_TOKEN_HEADER = "X-AUTH-TOKEN";
 	public static final String INVALID_CREDENTIALS = "Invalid credentials";
 	public static final String INVALID_RECIPIENT = "The recipient does not exist";
 }

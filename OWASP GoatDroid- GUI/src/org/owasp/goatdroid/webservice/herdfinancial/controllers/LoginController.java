@@ -20,8 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.LoginBean;
@@ -30,17 +32,18 @@ import org.owasp.goatdroid.webservice.herdfinancial.services.LoginServiceImpl;
 @Controller
 @RequestMapping("herdfinancial/api/v1/login")
 public class LoginController {
-	
+
 	LoginServiceImpl loginService;
 
 	@Autowired
 	public LoginController(LoginServiceImpl loginService) {
 		this.loginService = loginService;
 	}
-	
-	@RequestMapping(value="authenticate", method = RequestMethod.POST)
-	public LoginBean submitCredentials(@FormParam("userName") String userName,
-			@FormParam("password") String password) {
+
+	@RequestMapping(value = "authenticate", method = RequestMethod.POST)
+	public LoginBean submitCredentials(
+			@RequestParam(value = "userName", required = true) String userName,
+			@RequestParam(value = "password", required = true) String password) {
 		try {
 			return LoginServiceImpl.validateCredentials(userName, password);
 		} catch (NullPointerException e) {
@@ -50,9 +53,9 @@ public class LoginController {
 		}
 	}
 
-	@RequestMapping(value="device/{deviceID}", method = RequestMethod.GET)
+	@RequestMapping(value = "device/{deviceID}", method = RequestMethod.GET)
 	public LoginBean checkDeviceRegistration(
-			@PathParam("deviceID") String deviceID) {
+			@PathVariable("deviceID") String deviceID) {
 		try {
 			return LoginServiceImpl.isDevicePermanentlyAuthorized(deviceID);
 		} catch (NullPointerException e) {
@@ -62,13 +65,13 @@ public class LoginController {
 		}
 	}
 
-	@RequestMapping(value="device_or_session/{deviceID}", method = RequestMethod.GET)
+	@RequestMapping(value = "device_or_session/{deviceID}", method = RequestMethod.GET)
 	public LoginBean checkDeviceRegistration(
-			@CookieParam(Constants.SESSION_TOKEN) int sessionToken,
-			@PathParam("deviceID") String deviceID) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken,
+			@PathVariable("deviceID") String deviceID) {
 		try {
-			return LoginServiceImpl.isSessionValidOrDeviceAuthorized(sessionToken,
-					deviceID);
+			return LoginServiceImpl.isSessionValidOrDeviceAuthorized(
+					sessionToken, deviceID);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);
@@ -76,9 +79,9 @@ public class LoginController {
 		}
 	}
 
-	@RequestMapping(value= "sign_out", method = RequestMethod.GET)
+	@RequestMapping(value = "sign_out", method = RequestMethod.GET)
 	public LoginBean signOut(
-			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {
 		try {
 			return LoginServiceImpl.signOut(sessionToken);
 		} catch (NullPointerException e) {

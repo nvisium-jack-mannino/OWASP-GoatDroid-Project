@@ -22,6 +22,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.BalanceBean;
@@ -40,8 +42,8 @@ public class BalanceController {
 
 	@RequestMapping(value = "{accountNumber}", method = RequestMethod.GET)
 	public BalanceBean getBalances(
-			@PathParam("accountNumber") String accountNumber,
-			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {
+			@PathVariable("accountNumber") String accountNumber,
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {
 		try {
 			return BalanceServiceImpl.getBalances(accountNumber, sessionToken);
 		} catch (NullPointerException e) {

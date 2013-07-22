@@ -33,15 +33,16 @@ public class ForgotPasswordController {
 	ForgotPasswordServiceImpl forgotPasswordService;
 
 	@Autowired
-	public ForgotPasswordController(ForgotPasswordServiceImpl forgotPasswordService) {
+	public ForgotPasswordController(
+			ForgotPasswordServiceImpl forgotPasswordService) {
 		this.forgotPasswordService = forgotPasswordService;
 	}
-	
+
 	@RequestMapping(value = "request_code", method = RequestMethod.POST)
 	public ForgotPasswordBean requestCode(
-			@FormParam("userName") String userName,
-			@FormParam("secretQuestionIndex") int secretQuestionIndex,
-			@FormParam("secretQuestionAnswer") String secretQuestionAnswer) {
+			@RequestParam(value = "userName", required = true) String userName,
+			@RequestParam(value = "secretQuestionIndex", required = true) int secretQuestionIndex,
+			@RequestParam(value = "secretQuestionAnswer", required = true) String secretQuestionAnswer) {
 		try {
 			return ForgotPasswordServiceImpl.requestCode(userName,
 					secretQuestionIndex, secretQuestionAnswer);
@@ -54,8 +55,8 @@ public class ForgotPasswordController {
 
 	@RequestMapping(value = "verify_code", method = RequestMethod.POST)
 	public ForgotPasswordBean verifyCode(
-			@FormParam("userName") String userName,
-			@FormParam("passwordResetCode") int passwordResetCode) {
+			@RequestParam(value = "userName", required = true) String userName,
+			@RequestParam(value = "passwordResetCode", required = true) int passwordResetCode) {
 		try {
 			return ForgotPasswordServiceImpl.verifyCode(userName,
 					passwordResetCode);
@@ -68,9 +69,9 @@ public class ForgotPasswordController {
 
 	@RequestMapping(value = "update_password", method = RequestMethod.POST)
 	public ForgotPasswordBean getBalances(
-			@FormParam("userName") String userName,
-			@FormParam("passwordResetCode") int passwordResetCode,
-			@FormParam("password") String password) {
+			@RequestParam(value = "userName") String userName,
+			@RequestParam(value = "passwordResetCode") int passwordResetCode,
+			@RequestParam(value = "password") String password) {
 		try {
 			return ForgotPasswordServiceImpl.updatePassword(userName,
 					passwordResetCode, password);

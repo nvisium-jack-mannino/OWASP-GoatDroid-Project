@@ -21,7 +21,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.StatementBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.RegisterServiceImpl;
@@ -37,13 +39,13 @@ public class StatementController {
 	public StatementController(StatementServiceImpl statementService) {
 		this.statementService = statementService;
 	}
-	
+
 	@RequestMapping(value = "get_statement/{accountNumber}/{startDate}/{endDate}", method = RequestMethod.GET)
 	public StatementBean getStatement(
-			@PathParam("accountNumber") String accountNumber,
-			@PathParam("startDate") String startDate,
-			@PathParam("endDate") String endDate,
-			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {
+			@PathVariable("accountNumber") String accountNumber,
+			@PathVariable("startDate") String startDate,
+			@PathVariable("endDate") String endDate,
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {
 		try {
 			return StatementServiceImpl.getStatement(accountNumber, startDate,
 					endDate, sessionToken);
@@ -56,8 +58,8 @@ public class StatementController {
 
 	@RequestMapping(value = "poll_statement_updates/{accountNumber}", method = RequestMethod.GET)
 	public StatementBean getStatementSinceLastPoll(
-			@PathParam("accountNumber") String accountNumber,
-			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {
+			@PathVariable("accountNumber") String accountNumber,
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {
 		try {
 			return StatementServiceImpl.getStatementSinceLastPoll(
 					accountNumber, sessionToken);
