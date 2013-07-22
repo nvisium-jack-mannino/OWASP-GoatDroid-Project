@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,13 +39,12 @@ public class LoginController {
 	public LoginController(LoginServiceImpl loginService) {
 		this.loginService = loginService;
 	}
-	
+
 	@RequestMapping(value = "authenticate", method = RequestMethod.POST)
 	@ResponseBody
 	public LoginBean validateCredentials(
-			@FormParam("username") String userName,
-			@FormParam("password") String password)
-			throws WebApplicationException {
+			@RequestParam(value = "username", required = true) String userName,
+			@RequestParam(value = "password", required = true) String password) {
 		try {
 			return LoginServiceImpl.validateCredentials(userName, password);
 		} catch (NullPointerException e) {
@@ -54,12 +54,11 @@ public class LoginController {
 		}
 	}
 
-	@RequestMapping(value= "validate_api", method = RequestMethod.POST)
+	@RequestMapping(value = "validate_api", method = RequestMethod.POST)
 	@ResponseBody
 	public LoginBean validateCredentialsAPI(
-			@FormParam("username") String userName,
-			@FormParam("password") String password)
-			throws WebApplicationException {
+			@RequestParam(value = "username", required = true) String userName,
+			@RequestParam(value = "password", required = true) String password) {
 		try {
 			return LoginServiceImpl.validateCredentialsAPI(userName, password);
 		} catch (NullPointerException e) {
@@ -69,10 +68,10 @@ public class LoginController {
 		}
 	}
 
-	@RequestMapping(value="check_session", method = RequestMethod.GET)
+	@RequestMapping(value = "check_session", method = RequestMethod.GET)
 	@ResponseBody
 	public LoginBean checkSession(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
 			return LoginServiceImpl.checkSession(sessionToken);
 		} catch (NullPointerException e) {
@@ -82,10 +81,10 @@ public class LoginController {
 		}
 	}
 
-	@RequestMapping(value="sign_out", method = RequestMethod.POST)
+	@RequestMapping(value = "sign_out", method = RequestMethod.POST)
 	@ResponseBody
 	public LoginBean signOut(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
 			return LoginServiceImpl.signOut(sessionToken);
 		} catch (NullPointerException e) {

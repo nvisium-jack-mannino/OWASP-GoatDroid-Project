@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.CheckinBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
@@ -40,9 +41,9 @@ public class CheckinController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public CheckinBean doCheckin(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
-			@FormParam("latitude") String latitude,
-			@FormParam("longitude") String longitude) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
+			@RequestParam(value = "latitude", required = true) String latitude,
+			@RequestParam(value = "longitude", required = true) String longitude) {
 		try {
 			return CheckinServiceImpl.doCheckin(sessionToken, latitude,
 					longitude);

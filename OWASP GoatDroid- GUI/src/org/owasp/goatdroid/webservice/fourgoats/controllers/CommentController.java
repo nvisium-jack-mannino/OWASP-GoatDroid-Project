@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
@@ -41,9 +42,9 @@ public class CommentController {
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public CommentBean addComment(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
-			@FormParam("comment") String comment,
-			@FormParam("checkinID") String checkinID) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
+			@RequestParam(value = "comment", required = true) String comment,
+			@RequestParam(value = "checkinID", required = true) String checkinID) {
 		try {
 			return CommentServiceImpl.addComment(sessionToken, comment,
 					checkinID);
@@ -56,8 +57,8 @@ public class CommentController {
 
 	@RequestMapping(value = "remove", method = RequestMethod.POST)
 	public CommentBean removeComment(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
-			@FormParam("commentID") String commentID) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
+			@RequestParam(value = "commentID", required = true) String commentID) {
 		try {
 			return CommentServiceImpl.removeComment(sessionToken, commentID);
 		} catch (NullPointerException e) {
@@ -69,8 +70,8 @@ public class CommentController {
 
 	@RequestMapping(value = "get/{checkinID}", method = RequestMethod.GET)
 	public CommentListBean getComments(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
-			@PathParam("checkinID") String checkinID) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
+			@RequestParam(value = "checkinID", required = true) String checkinID) {
 		try {
 			return CommentServiceImpl.getComments(sessionToken, checkinID);
 		} catch (NullPointerException e) {

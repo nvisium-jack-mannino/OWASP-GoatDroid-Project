@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.EditPreferencesBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.GetPreferencesBean;
@@ -35,15 +36,16 @@ public class EditPreferencesController {
 	EditPreferencesServiceImpl editPreferencesService;
 
 	@Autowired
-	public EditPreferencesController(EditPreferencesServiceImpl editPreferencesService) {
+	public EditPreferencesController(
+			EditPreferencesServiceImpl editPreferencesService) {
 		this.editPreferencesService = editPreferencesService;
 	}
-	
+
 	@RequestMapping(value = "modify_preferences", method = RequestMethod.POST)
 	public EditPreferencesBean modifyPreferences(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
-			@FormParam("autoCheckin") boolean autoCheckin,
-			@FormParam("isPublic") boolean isPublic) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
+			@RequestParam(value = "autoCheckin", required = true) boolean autoCheckin,
+			@RequestParam(value = "isPublic", required = true) boolean isPublic) {
 
 		try {
 			return EditPreferencesServiceImpl.modifyPreferences(sessionToken,
@@ -57,7 +59,7 @@ public class EditPreferencesController {
 
 	@RequestMapping(value = "get_preferences", method = RequestMethod.GET)
 	public GetPreferencesBean getPreferences(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
 			return EditPreferencesServiceImpl.getPreferences(sessionToken);
 		} catch (NullPointerException e) {

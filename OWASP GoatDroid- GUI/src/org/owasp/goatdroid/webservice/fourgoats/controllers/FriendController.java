@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
@@ -41,18 +43,18 @@ public class FriendController {
 	public FriendController(FriendServiceImpl friendService) {
 		this.friendService = friendService;
 	}
-	
+
 	@RequestMapping(value = "list_friends", method = RequestMethod.GET)
 	public FriendListBean getFriends(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 
 		return FriendServiceImpl.getFriends(sessionToken);
 	}
 
 	@RequestMapping(value = "request_friend", method = RequestMethod.POST)
 	public FriendBean requestFriend(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
-			@FormParam("userName") String userName) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
+			@RequestParam(value = "userName", required = true) String userName) {
 
 		return FriendServiceImpl.requestFriend(sessionToken, userName);
 
@@ -60,8 +62,8 @@ public class FriendController {
 
 	@RequestMapping(value = "accept_friend_request", method = RequestMethod.POST)
 	public FriendBean acceptFriendRequest(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
-			@FormParam("userName") String userName) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
+			@RequestParam(value = "userName", required = true) String userName) {
 
 		return FriendServiceImpl.acceptOrDenyFriendRequest("accept",
 				sessionToken, userName);
@@ -70,8 +72,8 @@ public class FriendController {
 
 	@RequestMapping(value = "deny_friend_request", method = RequestMethod.POST)
 	public FriendBean denyFriendRequest(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
-			@FormParam("userName") String userName) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
+			@RequestParam(value = "userName", required = true) String userName) {
 
 		return FriendServiceImpl.acceptOrDenyFriendRequest("deny",
 				sessionToken, userName);
@@ -80,30 +82,30 @@ public class FriendController {
 
 	@RequestMapping(value = "remove_friend", method = RequestMethod.POST)
 	public FriendBean removeFriend(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
-			@FormParam("userName") String userName) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
+			@RequestParam(value = "userName", required = true) String userName) {
 
 		return FriendServiceImpl.removeFriend(sessionToken, userName);
 	}
 
 	@RequestMapping(value = "get_pending_requests", method = RequestMethod.GET)
 	public PendingFriendRequestsBean getPendingFriendRequests(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 
 		return FriendServiceImpl.getPendingFriendRequests(sessionToken);
 	}
 
 	@RequestMapping(value = "search_users", method = RequestMethod.GET)
 	public PublicUsersBean getPublicUsers(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 
 		return FriendServiceImpl.getPublicUsers(sessionToken);
 	}
 
 	@RequestMapping(value = "view_profile/{userName}", method = RequestMethod.GET)
 	public FriendProfileBean getProfile(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
-			@PathParam("userName") String userName) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
+			@PathVariable(value = "userName") String userName) {
 
 		return FriendServiceImpl.getProfile(sessionToken, userName);
 	}

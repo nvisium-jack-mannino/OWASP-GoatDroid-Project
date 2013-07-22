@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
@@ -37,10 +38,10 @@ public class RewardController {
 	public RewardController(RewardServiceImpl rewardService) {
 		this.rewardService = rewardService;
 	}
-	
+
 	@RequestMapping(value = "all_rewards", method = RequestMethod.GET)
 	public RewardBean getRewards(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
 			return RewardServiceImpl.getAllRewards(sessionToken);
 		} catch (NullPointerException e) {
@@ -52,7 +53,7 @@ public class RewardController {
 
 	@RequestMapping(value = "my_rewards", method = RequestMethod.GET)
 	public RewardBean getMyEarnedRewards(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
 			return RewardServiceImpl.getMyEarnedRewards(sessionToken);
 		} catch (NullPointerException e) {
@@ -64,11 +65,11 @@ public class RewardController {
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public RewardBean addNewReward(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
-			@FormParam("rewardName") String rewardName,
-			@FormParam("rewardDescription") String rewardDescription,
-			@FormParam("venueID") String venueID,
-			@FormParam("checkinsRequired") int checkinsRequired) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
+			@RequestParam(value = "rewardName", required = true) String rewardName,
+			@RequestParam(value = "rewardDescription", required = true) String rewardDescription,
+			@RequestParam(value = "venueID", required = true) String venueID,
+			@RequestParam(value = "checkinsRequired", required = true) int checkinsRequired) {
 
 		try {
 			return RewardServiceImpl.addNewReward(sessionToken, rewardName,

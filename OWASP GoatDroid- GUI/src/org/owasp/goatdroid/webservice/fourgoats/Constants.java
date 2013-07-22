@@ -27,7 +27,7 @@ public class Constants {
 																// =
 																// milliseconds
 																// per 28 days
-	public static final String SESSION_TOKEN_NAME = "SESS";
+	public static final String AUTH_TOKEN_HEADER = "X-AUTH-TOKEN";
 	public static final String INVALID_SESSION = "Invalid session";
 	public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	public static final String FIRST_NAME_INVALID = "First name can only contain letters and must be less than 20 characters";

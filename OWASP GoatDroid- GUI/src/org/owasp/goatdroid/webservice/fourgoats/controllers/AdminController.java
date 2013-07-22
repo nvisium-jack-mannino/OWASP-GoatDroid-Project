@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.AdminBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.GetUsersAdminBean;
@@ -40,8 +41,8 @@ public class AdminController {
 
 	@RequestMapping(value = "delete_user", method = RequestMethod.POST)
 	public AdminBean addComment(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
-			@FormParam("userName") String userName) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
+			@RequestParam(value = "userName", required = true) String userName) {
 		try {
 			return AdminServiceImpl.deleteUser(sessionToken, userName);
 		} catch (NullPointerException e) {
@@ -53,9 +54,9 @@ public class AdminController {
 
 	@RequestMapping(value = "reset_password", method = RequestMethod.POST)
 	public AdminBean addComment(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken,
-			@FormParam("userName") String userName,
-			@FormParam("newPassword") String newPassword) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
+			@RequestParam(value = "userName", required = true) String userName,
+			@RequestParam(value = "newPassword", required = true) String newPassword) {
 		try {
 			return AdminServiceImpl.resetPassword(sessionToken, userName,
 					newPassword);
@@ -68,7 +69,7 @@ public class AdminController {
 
 	@RequestMapping(value = "get_users", method = RequestMethod.GET)
 	public GetUsersAdminBean addComment(
-			@CookieParam(Constants.SESSION_TOKEN_NAME) String sessionToken) {
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
 			return AdminServiceImpl.getUsers(sessionToken);
 		} catch (NullPointerException e) {

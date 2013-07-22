@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
@@ -37,11 +38,11 @@ public class AuthorizeController {
 	public AuthorizeController(AuthorizeServiceImpl authorizeService) {
 		this.authorizeService = authorizeService;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
 	public AuthorizeBean authorizeDevice(
-			@FormParam("deviceID") String deviceID,
-			@CookieParam(Constants.SESSION_TOKEN) int sessionToken) {
+			@RequestParam(value = "deviceID", required = true) String deviceID,
+			@RequestHeader("X-AUTH-TOKEN") int sessionToken) {
 		try {
 			return AuthorizeServiceImpl.authorizeDevice(deviceID, sessionToken);
 		} catch (NullPointerException e) {
