@@ -29,7 +29,6 @@ public class BalanceServiceImpl implements BalanceService {
 
 	BalanceDaoImpl dao;
 
-	@Autowired
 	public BalanceServiceImpl() {
 		dao = new BalanceDaoImpl();
 	}

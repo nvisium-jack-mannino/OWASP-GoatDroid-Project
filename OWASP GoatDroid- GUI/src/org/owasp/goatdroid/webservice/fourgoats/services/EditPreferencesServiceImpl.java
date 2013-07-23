@@ -29,7 +29,6 @@ public class EditPreferencesServiceImpl implements EditPreferencesService {
 
 	EditPreferencesDaoImpl dao;
 
-	@Autowired
 	public EditPreferencesServiceImpl() {
 		dao = new EditPreferencesDaoImpl();
 	}

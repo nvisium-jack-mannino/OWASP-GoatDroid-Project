@@ -29,8 +29,7 @@ import org.springframework.stereotype.Service;
 public class CheckinServiceImpl implements CheckinService {
 
 	CheckinDaoImpl dao;
-
-	@Autowired
+	
 	public CheckinServiceImpl() {
 		dao = new CheckinDaoImpl();
 	}

@@ -31,7 +31,6 @@ public class LoginServiceImpl implements LoginService {
 
 	LoginDaoImpl dao;
 
-	@Autowired
 	public LoginServiceImpl() {
 		dao = new LoginDaoImpl();
 	}

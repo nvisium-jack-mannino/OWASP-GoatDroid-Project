@@ -29,7 +29,6 @@ public class TransferServiceImpl implements TransferService {
 
 	TransferDaoImpl dao;
 
-	@Autowired
 	public TransferServiceImpl() {
 		dao = new TransferDaoImpl();
 	}

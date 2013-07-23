@@ -30,7 +30,6 @@ public class RewardServiceImpl implements RewardService {
 
 	RewardDaoImpl dao;
 
-	@Autowired
 	public RewardServiceImpl() {
 		dao = new RewardDaoImpl();
 	}

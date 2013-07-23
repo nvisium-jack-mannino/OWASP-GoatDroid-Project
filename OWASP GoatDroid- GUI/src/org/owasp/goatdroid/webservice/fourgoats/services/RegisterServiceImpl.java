@@ -28,7 +28,6 @@ public class RegisterServiceImpl implements RegisterService {
 
 	RegisterDaoImpl dao;
 
-	@Autowired
 	public RegisterServiceImpl() {
 		dao = new RegisterDaoImpl();
 	}

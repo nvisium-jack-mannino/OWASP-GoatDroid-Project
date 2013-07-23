@@ -31,7 +31,6 @@ public class VenueServiceImpl implements VenueService {
 
 	VenueDaoImpl dao;
 
-	@Autowired
 	public VenueServiceImpl() {
 		dao = new VenueDaoImpl();
 	}

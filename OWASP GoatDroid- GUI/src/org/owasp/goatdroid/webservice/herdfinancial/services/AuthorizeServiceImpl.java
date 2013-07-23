@@ -28,7 +28,6 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 
 	AuthorizeDaoImpl dao;
 
-	@Autowired
 	public AuthorizeServiceImpl() {
 		dao = new AuthorizeDaoImpl();
 	}

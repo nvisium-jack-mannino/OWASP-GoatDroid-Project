@@ -29,7 +29,6 @@ public class AdminServiceImpl implements AdminService {
 
 	AdminDaoImpl dao;
 
-	@Autowired
 	public AdminServiceImpl() {
 		dao = new AdminDaoImpl();
 	}

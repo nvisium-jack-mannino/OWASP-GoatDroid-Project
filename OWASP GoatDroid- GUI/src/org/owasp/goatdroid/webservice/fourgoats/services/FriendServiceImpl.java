@@ -31,8 +31,7 @@ import org.springframework.stereotype.Service;
 public class FriendServiceImpl implements FriendService {
 
 	FriendDaoImpl dao;
-
-	@Autowired
+	
 	public FriendServiceImpl() {
 		dao = new FriendDaoImpl();
 	}

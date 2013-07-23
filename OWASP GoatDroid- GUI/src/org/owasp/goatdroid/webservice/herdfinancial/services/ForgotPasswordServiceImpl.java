@@ -30,7 +30,6 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 
 	ForgotPasswordDaoImpl dao;
 
-	@Autowired
 	public ForgotPasswordServiceImpl() {
 		dao = new ForgotPasswordDaoImpl();
 	}

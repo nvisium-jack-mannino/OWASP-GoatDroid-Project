@@ -40,6 +40,8 @@
 			<version>8.1.11.v20130520</version>
 		</dependency>
 
+
+
 		<!-- Jackson -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
@@ -149,11 +151,6 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-exec</artifactId>
 			<version>1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-bundle</artifactId>
-			<version>1.17.1</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.ws.rs</groupId>

@@ -38,7 +38,6 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "authenticate", method = RequestMethod.POST)
-	@ResponseBody
 	public LoginBean validateCredentials(
 			@RequestParam(value = "username", required = true) String userName,
 			@RequestParam(value = "password", required = true) String password) {

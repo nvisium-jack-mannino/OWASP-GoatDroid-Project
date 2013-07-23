@@ -29,7 +29,6 @@ public class StatementServiceImpl implements StatementService {
 
 	StatementDaoImpl dao;
 
-	@Autowired
 	public StatementServiceImpl() {
 		dao = new StatementDaoImpl();
 	}

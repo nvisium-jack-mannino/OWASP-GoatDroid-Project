@@ -32,7 +32,6 @@ public class CommentServiceImpl implements CommentService {
 
 	CommentDaoImpl dao;
 
-	@Autowired
 	public CommentServiceImpl() {
 		dao = new CommentDaoImpl();
 	}

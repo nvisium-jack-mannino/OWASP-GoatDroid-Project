@@ -28,7 +28,6 @@ public class SecretQuestionServiceImpl implements SecretQuestionService {
 
 	SecretQuestionDaoImpl dao;
 
-	@Autowired
 	public SecretQuestionServiceImpl() {
 		dao = new SecretQuestionDaoImpl();
 	}

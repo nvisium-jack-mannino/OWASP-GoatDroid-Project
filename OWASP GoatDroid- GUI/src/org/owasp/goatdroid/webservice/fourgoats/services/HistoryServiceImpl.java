@@ -30,7 +30,6 @@ public class HistoryServiceImpl implements HistoryService {
 
 	HistoryDaoImpl dao;
 
-	@Autowired
 	public HistoryServiceImpl() {
 		dao = new HistoryDaoImpl();
 	}

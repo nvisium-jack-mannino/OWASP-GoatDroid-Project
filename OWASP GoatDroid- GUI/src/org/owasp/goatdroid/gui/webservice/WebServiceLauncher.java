@@ -29,8 +29,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.owasp.goatdroid.gui.Utils;
-import org.owasp.goatdroid.gui.config.Config;
-import com.sun.jersey.spi.container.servlet.ServletContainer;
+import org.springframework.web.servlet.DispatcherServlet;
 
 public class WebServiceLauncher {
 
@@ -50,12 +49,10 @@ public class WebServiceLauncher {
 		/*
 		 * This loads the web service
 		 */
-		ServletHolder sh = new ServletHolder(ServletContainer.class);
-		sh.setInitParameter(
-				"com.sun.jersey.config.property.resourceConfigClass",
-				"com.sun.jersey.api.core.PackagesResourceConfig");
-		sh.setInitParameter("com.sun.jersey.config.property.packages",
-				"org.owasp.goatdroid.webservice");
+		DispatcherServlet dispatcher = new DispatcherServlet();
+		dispatcher
+				.setContextConfigLocation("classpath:/DefaultServlet-servlet.xml");
+		ServletHolder sh = new ServletHolder(dispatcher);
 		server = new Server(10000);
 		ServletContextHandler context = new ServletContextHandler(server, "/",
 				ServletContextHandler.SESSIONS);
