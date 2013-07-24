@@ -16,14 +16,23 @@
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
 import java.util.ArrayList;
+
+import javax.sql.DataSource;
+
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.model.UserModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AdminDaoImpl extends BaseDaoImpl implements AdminDao {
+public class FGAdminDaoImpl extends BaseDaoImpl implements AdminDao {
+
+	@Autowired
+	public FGAdminDaoImpl(DataSource dataSource) {
+		setDataSource(dataSource);
+	}
 
 	public boolean isAdmin(String sessionToken) throws Exception {
 

@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.AuthorizeBean;
-import org.owasp.goatdroid.webservice.herdfinancial.dao.AuthorizeDaoImpl;
+import org.owasp.goatdroid.webservice.herdfinancial.dao.HFAuthorizeDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service;
 public class HFAuthorizeServiceImpl implements AuthorizeService {
 
 	@Resource
-	AuthorizeDaoImpl dao;
+	HFAuthorizeDaoImpl dao;
 
 	public AuthorizeBean authorizeDevice(String deviceID, int sessionToken) {
 

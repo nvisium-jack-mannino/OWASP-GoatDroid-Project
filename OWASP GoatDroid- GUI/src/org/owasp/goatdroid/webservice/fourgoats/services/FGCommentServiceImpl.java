@@ -26,7 +26,7 @@ import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.CommentListBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.CommentBean;
-import org.owasp.goatdroid.webservice.fourgoats.dao.CommentDaoImpl;
+import org.owasp.goatdroid.webservice.fourgoats.dao.FGCommentDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +34,7 @@ import org.springframework.stereotype.Service;
 public class FGCommentServiceImpl implements CommentService {
 
 	@Resource
-	CommentDaoImpl dao;
+	FGCommentDaoImpl dao;
 
 	public CommentBean addComment(String sessionToken, String comment,
 			String checkinID) {

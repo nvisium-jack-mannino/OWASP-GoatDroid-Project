@@ -17,12 +17,21 @@ package org.owasp.goatdroid.webservice.fourgoats.dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import javax.sql.DataSource;
+
 import org.owasp.goatdroid.webservice.fourgoats.model.RewardModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RewardDaoImpl extends BaseDaoImpl implements RewardDao {
+public class FGRewardDaoImpl extends BaseDaoImpl implements RewardDao {
+
+	@Autowired
+	public FGRewardDaoImpl(DataSource dataSource) {
+		setDataSource(dataSource);
+	}
 
 	public ArrayList<RewardModel> getAllRewards() throws SQLException {
 

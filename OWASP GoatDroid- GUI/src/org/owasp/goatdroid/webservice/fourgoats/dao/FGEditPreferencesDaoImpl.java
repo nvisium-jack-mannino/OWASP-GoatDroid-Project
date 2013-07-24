@@ -18,12 +18,20 @@ package org.owasp.goatdroid.webservice.fourgoats.dao;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class EditPreferencesDaoImpl extends BaseDaoImpl implements
+public class FGEditPreferencesDaoImpl extends BaseDaoImpl implements
 		EditPreferencesDao {
+
+	@Autowired
+	public FGEditPreferencesDaoImpl(DataSource dataSource) {
+		setDataSource(dataSource);
+	}
 
 	public void updatePreferences(boolean autoCheckin, boolean isPublic,
 			String userID) throws SQLException {

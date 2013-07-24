@@ -17,11 +17,19 @@ package org.owasp.goatdroid.webservice.herdfinancial.dao;
 
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class LoginDaoImpl extends BaseDaoImpl implements LoginDao {
+public class HFLoginDaoImpl extends BaseDaoImpl implements LoginDao {
+
+	@Autowired
+	public HFLoginDaoImpl(DataSource dataSource) {
+		setDataSource(dataSource);
+	}
 
 	public boolean isDevicePermanentlyAuthorized(String deviceID)
 			throws SQLException {

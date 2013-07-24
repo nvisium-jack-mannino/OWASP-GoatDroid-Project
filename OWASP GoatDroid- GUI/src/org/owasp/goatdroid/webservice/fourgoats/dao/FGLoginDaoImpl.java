@@ -17,13 +17,22 @@ package org.owasp.goatdroid.webservice.fourgoats.dao;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+
+import javax.sql.DataSource;
+
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class LoginDaoImpl extends BaseDaoImpl implements LoginDao {
+public class FGLoginDaoImpl extends BaseDaoImpl implements LoginDao {
+
+	@Autowired
+	public FGLoginDaoImpl(DataSource dataSource) {
+		setDataSource(dataSource);
+	}
 
 	public boolean validateCredentials(String userName, String password)
 			throws SQLException {

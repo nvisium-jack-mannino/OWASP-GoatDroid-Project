@@ -24,7 +24,7 @@ import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Utils;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.ForgotPasswordBean;
-import org.owasp.goatdroid.webservice.herdfinancial.dao.ForgotPasswordDaoImpl;
+import org.owasp.goatdroid.webservice.herdfinancial.dao.HFForgotPasswordDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +32,7 @@ import org.springframework.stereotype.Service;
 public class HFForgotPasswordServiceImpl implements ForgotPasswordService {
 
 	@Resource
-	ForgotPasswordDaoImpl dao;
+	HFForgotPasswordDaoImpl dao;
 
 	public ForgotPasswordBean requestCode(String userName,
 			int secretQuestionIndex, String secretQuestionAnswer) {

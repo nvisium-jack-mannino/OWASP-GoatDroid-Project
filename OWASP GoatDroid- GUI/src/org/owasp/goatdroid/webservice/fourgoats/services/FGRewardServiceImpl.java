@@ -24,7 +24,7 @@ import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.RewardBean;
-import org.owasp.goatdroid.webservice.fourgoats.dao.RewardDaoImpl;
+import org.owasp.goatdroid.webservice.fourgoats.dao.FGRewardDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +32,7 @@ import org.springframework.stereotype.Service;
 public class FGRewardServiceImpl implements RewardService {
 
 	@Resource
-	RewardDaoImpl dao;
+	FGRewardDaoImpl dao;
 
 	public RewardBean getAllRewards(String sessionToken) {
 

@@ -26,7 +26,7 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.FriendProfileBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.FriendBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.PendingFriendRequestsBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.PublicUsersBean;
-import org.owasp.goatdroid.webservice.fourgoats.dao.FriendDaoImpl;
+import org.owasp.goatdroid.webservice.fourgoats.dao.FGFriendDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +34,7 @@ import org.springframework.stereotype.Service;
 public class FGFriendServiceImpl implements FriendService {
 
 	@Resource
-	FriendDaoImpl dao;
+	FGFriendDaoImpl dao;
 
 	public FriendListBean getFriends(String sessionToken) {
 

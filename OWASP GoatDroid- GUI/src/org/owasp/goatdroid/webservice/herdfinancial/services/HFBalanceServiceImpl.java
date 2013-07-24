@@ -23,7 +23,7 @@ import javax.annotation.Resource;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.BalanceBean;
-import org.owasp.goatdroid.webservice.herdfinancial.dao.BalanceDaoImpl;
+import org.owasp.goatdroid.webservice.herdfinancial.dao.HFBalanceDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,7 @@ import org.springframework.stereotype.Service;
 public class HFBalanceServiceImpl implements BalanceService {
 
 	@Resource
-	BalanceDaoImpl dao;
+	HFBalanceDaoImpl dao;
 
 	public BalanceBean getBalances(String accountNumber, int sessionToken) {
 

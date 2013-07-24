@@ -24,7 +24,7 @@ import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
-import org.owasp.goatdroid.webservice.fourgoats.dao.LoginDaoImpl;
+import org.owasp.goatdroid.webservice.fourgoats.dao.FGLoginDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +32,7 @@ import org.springframework.stereotype.Service;
 public class FGLoginServiceImpl implements LoginService {
 
 	@Resource
-	LoginDaoImpl dao;
+	FGLoginDaoImpl dao;
 
 	public LoginBean validateCredentials(String userName, String password) {
 

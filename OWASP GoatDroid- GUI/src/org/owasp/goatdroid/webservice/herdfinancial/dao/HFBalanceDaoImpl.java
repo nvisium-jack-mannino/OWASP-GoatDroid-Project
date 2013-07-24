@@ -16,29 +16,32 @@
 package org.owasp.goatdroid.webservice.herdfinancial.dao;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AuthorizeDaoImpl extends BaseDaoImpl implements AuthorizeDao {
+public class HFBalanceDaoImpl extends BaseDaoImpl implements BalanceDao {
 
-	public void authorizeDevice(String deviceID, int sessionToken)
-			throws SQLException {
-		String sql = "update users set deviceID = ?, isDeviceAuthorized = true where sessionToken = ?";
-		getJdbcTemplate().update(sql, new Object[] { deviceID, sessionToken });
+	@Autowired
+	public HFBalanceDaoImpl(DataSource dataSource) {
+		setDataSource(dataSource);
 	}
 
-	public boolean isDeviceAuthorized(String deviceID) throws SQLException {
-		String sql = "select isDeviceAuthorized from users where deviceID = ?";
-		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, deviceID);
+	public HashMap<String, Double> getBalances(String accountNumber)
+			throws SQLException {
+		HashMap<String, Double> result = new HashMap<String, Double>();
+		String sql = "select checkingBalance, savingsBalance from users where accountNumber = ?";
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, accountNumber);
 		if (rs.next()) {
-			if (rs.getBoolean("isDeviceAuthorized"))
-
-				return true;
-			else
-				return false;
+			result.put("checking", rs.getDouble("checkingBalance"));
+			result.put("savings", rs.getDouble("savingsBalance"));
+			return result;
 		} else
-			return false;
+			return result;
 	}
 }

@@ -24,7 +24,7 @@ import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryCheckinBean;
-import org.owasp.goatdroid.webservice.fourgoats.dao.HistoryDaoImpl;
+import org.owasp.goatdroid.webservice.fourgoats.dao.FGHistoryDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +32,7 @@ import org.springframework.stereotype.Service;
 public class FGHistoryServiceImpl implements HistoryService {
 
 	@Resource
-	HistoryDaoImpl dao;
+	FGHistoryDaoImpl dao;
 
 	public HistoryBean getHistory(String sessionToken) {
 

@@ -21,7 +21,7 @@ import javax.annotation.Resource;
 
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
-import org.owasp.goatdroid.webservice.fourgoats.dao.RegisterDaoImpl;
+import org.owasp.goatdroid.webservice.fourgoats.dao.FGRegisterDaoImpl;
 import org.owasp.goatdroid.webservice.fourgoats.bean.RegisterBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service;
 public class FGRegisterServiceImpl implements RegisterService {
 
 	@Resource
-	RegisterDaoImpl dao;
+	FGRegisterDaoImpl dao;
 
 	public RegisterBean registerUser(String firstName, String lastName,
 			String userName, String password) {

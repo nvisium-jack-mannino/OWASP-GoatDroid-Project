@@ -16,12 +16,21 @@
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
 import java.util.HashMap;
+
+import javax.sql.DataSource;
+
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
+public class FGCheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
+
+	@Autowired
+	public FGCheckinDaoImpl(DataSource dataSource) {
+		setDataSource(dataSource);
+	}
 
 	public void insertCheckin(String dateTime, String latitude,
 			String longitude, String userID, String venueID, String checkinID)

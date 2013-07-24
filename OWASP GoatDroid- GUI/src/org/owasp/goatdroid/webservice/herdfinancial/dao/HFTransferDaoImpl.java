@@ -17,12 +17,21 @@ package org.owasp.goatdroid.webservice.herdfinancial.dao;
 
 import java.sql.Date;
 import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
 import org.owasp.goatdroid.webservice.herdfinancial.Utils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TransferDaoImpl extends BaseDaoImpl implements TransferDao {
+public class HFTransferDaoImpl extends BaseDaoImpl implements TransferDao {
+
+	@Autowired
+	public HFTransferDaoImpl(DataSource dataSource) {
+		setDataSource(dataSource);
+	}
 
 	public double getBalance(String accountNumber) throws SQLException {
 

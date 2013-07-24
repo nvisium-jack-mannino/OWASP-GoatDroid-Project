@@ -18,8 +18,4 @@ package org.owasp.goatdroid.webservice.herdfinancial.dao;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
-
-	public BaseDaoImpl() {
-		super();
-	}
 }

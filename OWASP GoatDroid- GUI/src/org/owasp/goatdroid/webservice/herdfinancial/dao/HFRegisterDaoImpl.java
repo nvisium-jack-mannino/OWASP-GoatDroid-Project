@@ -17,11 +17,19 @@ package org.owasp.goatdroid.webservice.herdfinancial.dao;
 
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RegisterDaoImpl extends BaseDaoImpl implements RegisterDao {
+public class HFRegisterDaoImpl extends BaseDaoImpl implements RegisterDao {
+
+	@Autowired
+	public HFRegisterDaoImpl(DataSource dataSource) {
+		setDataSource(dataSource);
+	}
 
 	public void registerUser(String accountNumber, String firstName,
 			String lastName, String userName, String password)

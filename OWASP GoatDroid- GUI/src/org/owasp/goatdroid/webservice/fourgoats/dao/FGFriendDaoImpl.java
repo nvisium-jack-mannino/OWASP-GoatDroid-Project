@@ -18,15 +18,24 @@ package org.owasp.goatdroid.webservice.fourgoats.dao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.sql.DataSource;
+
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.model.UserModel;
 import org.owasp.goatdroid.webservice.fourgoats.model.FriendRequestModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class FriendDaoImpl extends BaseDaoImpl implements FriendDao {
+public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
+
+	@Autowired
+	public FGFriendDaoImpl(DataSource dataSource) {
+		setDataSource(dataSource);
+	}
 
 	public ArrayList<UserModel> getFriends(String userID, String userName)
 			throws SQLException {

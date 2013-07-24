@@ -16,11 +16,20 @@
 package org.owasp.goatdroid.webservice.herdfinancial.dao;
 
 import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SecretQuestionDaoImpl extends BaseDaoImpl implements
+public class HFSecretQuestionDaoImpl extends BaseDaoImpl implements
 		SecretQuestionDao {
+
+	@Autowired
+	public HFSecretQuestionDaoImpl(DataSource dataSource) {
+		setDataSource(dataSource);
+	}
 
 	public void updateAnswers(int sessionToken, String answer1, String answer2,
 			String answer3) throws SQLException {

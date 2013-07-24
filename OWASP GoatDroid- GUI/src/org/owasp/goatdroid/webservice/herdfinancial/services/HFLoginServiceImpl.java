@@ -19,11 +19,11 @@ import java.util.ArrayList;
 
 import javax.annotation.Resource;
 
-import org.owasp.goatdroid.webservice.fourgoats.dao.AdminDaoImpl;
+import org.owasp.goatdroid.webservice.fourgoats.dao.FGAdminDaoImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.LoginBean;
-import org.owasp.goatdroid.webservice.herdfinancial.dao.LoginDaoImpl;
+import org.owasp.goatdroid.webservice.herdfinancial.dao.HFLoginDaoImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ import org.springframework.stereotype.Service;
 public class HFLoginServiceImpl implements LoginService {
 
 	@Resource
-	LoginDaoImpl dao;
+	HFLoginDaoImpl dao;
 
 	public boolean isSessionValid(int sessionToken) {
 

@@ -16,16 +16,16 @@
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
 import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
-
-	public BaseDaoImpl() {
-		super();
-	}
 
 	public boolean checkSessionMatchesUserID(String sessionToken, String userID)
 			throws SQLException {

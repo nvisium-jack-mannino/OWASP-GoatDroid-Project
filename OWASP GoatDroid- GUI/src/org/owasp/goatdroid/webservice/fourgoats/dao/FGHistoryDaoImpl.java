@@ -19,12 +19,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.sql.DataSource;
+
 import org.owasp.goatdroid.webservice.fourgoats.model.HistoryModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
+public class FGHistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
+
+	@Autowired
+	public FGHistoryDaoImpl(DataSource dataSource) {
+		setDataSource(dataSource);
+	}
 
 	public ArrayList<HistoryModel> getCheckinHistory(String userID)
 			throws SQLException {

@@ -18,13 +18,22 @@ package org.owasp.goatdroid.webservice.herdfinancial.dao;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import javax.sql.DataSource;
+
 import org.owasp.goatdroid.webservice.herdfinancial.Utils;
 import org.owasp.goatdroid.webservice.herdfinancial.model.StatementModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class StatementDaoImpl extends BaseDaoImpl implements StatementDao {
+public class HFStatementDaoImpl extends BaseDaoImpl implements StatementDao {
+
+	@Autowired
+	public HFStatementDaoImpl(DataSource dataSource) {
+		setDataSource(dataSource);
+	}
 
 	public ArrayList<StatementModel> getStatement(String accountNumber,
 			Date startDate, Date endDate) throws SQLException {

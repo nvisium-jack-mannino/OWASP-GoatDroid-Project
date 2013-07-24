@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.SecretQuestionBean;
-import org.owasp.goatdroid.webservice.herdfinancial.dao.SecretQuestionDaoImpl;
+import org.owasp.goatdroid.webservice.herdfinancial.dao.HFSecretQuestionDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service;
 public class HFSecretQuestionServiceImpl implements SecretQuestionService {
 
 	@Resource
-	SecretQuestionDaoImpl dao;
+	HFSecretQuestionDaoImpl dao;
 
 	public SecretQuestionBean setSecretQuestions(int sessionToken,
 			String answer1, String answer2, String answer3) {

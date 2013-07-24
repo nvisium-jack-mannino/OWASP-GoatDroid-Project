@@ -18,11 +18,19 @@ package org.owasp.goatdroid.webservice.fourgoats.dao;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CommentDaoImpl extends BaseDaoImpl implements CommentDao {
+public class FGCommentDaoImpl extends BaseDaoImpl implements CommentDao {
+
+	@Autowired
+	public FGCommentDaoImpl(DataSource dataSource) {
+		setDataSource(dataSource);
+	}
 
 	public void insertComment(String dateTime, String commentID, String userID,
 			String comment, String checkinID) throws SQLException {

@@ -17,12 +17,20 @@ package org.owasp.goatdroid.webservice.herdfinancial.dao;
 
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ForgotPasswordDaoImpl extends BaseDaoImpl implements
+public class HFForgotPasswordDaoImpl extends BaseDaoImpl implements
 		ForgotPasswordDao {
+
+	@Autowired
+	public HFForgotPasswordDaoImpl(DataSource dataSource) {
+		setDataSource(dataSource);
+	}
 
 	public boolean confirmSecretQuestionAnswer(String userName,
 			String secretQuestionIndex, String secretQuestionAnswer)

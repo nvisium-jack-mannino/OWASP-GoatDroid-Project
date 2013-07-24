@@ -16,13 +16,22 @@
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
 import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RegisterDaoImpl extends BaseDaoImpl implements RegisterDao {
+public class FGRegisterDaoImpl extends BaseDaoImpl implements RegisterDao {
+
+	@Autowired
+	public FGRegisterDaoImpl(DataSource dataSource) {
+		setDataSource(dataSource);
+	}
 
 	public boolean doesUserExist(String userName) throws SQLException {
 

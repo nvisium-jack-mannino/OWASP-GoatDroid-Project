@@ -18,11 +18,19 @@ package org.owasp.goatdroid.webservice.fourgoats.dao;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class VenueDaoImpl extends BaseDaoImpl implements VenueDao {
+public class FGVenueDaoImpl extends BaseDaoImpl implements VenueDao {
+
+	@Autowired
+	public FGVenueDaoImpl(DataSource dataSource) {
+		setDataSource(dataSource);
+	}
 
 	public boolean doesVenueExist(String venueName, String latitude,
 			String longitude) throws SQLException {

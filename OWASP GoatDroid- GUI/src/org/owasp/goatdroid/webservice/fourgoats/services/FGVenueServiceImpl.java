@@ -25,7 +25,7 @@ import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.VenueListBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.VenueBean;
-import org.owasp.goatdroid.webservice.fourgoats.dao.VenueDaoImpl;
+import org.owasp.goatdroid.webservice.fourgoats.dao.FGVenueDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +33,7 @@ import org.springframework.stereotype.Service;
 public class FGVenueServiceImpl implements VenueService {
 
 	@Resource
-	VenueDaoImpl dao;
+	FGVenueDaoImpl dao;
 
 	public VenueBean addVenue(String sessionToken, String venueName,
 			String venueWebsite, String latitude, String longitude) {
