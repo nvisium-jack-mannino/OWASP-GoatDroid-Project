@@ -15,11 +15,8 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
-import java.sql.SQLException;
 import java.util.HashMap;
-
 import javax.sql.DataSource;
-
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +31,7 @@ public class FGLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 		setDataSource(dataSource);
 	}
 
-	public boolean validateCredentials(String userName, String password)
-			throws SQLException {
+	public boolean validateCredentials(String userName, String password) {
 
 		String sql = "select username from users where username = ? and password = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(
@@ -52,15 +48,14 @@ public class FGLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 	}
 
 	public void updateSessionInformation(String userName, String sessionToken,
-			long sessionStartTime) throws SQLException {
+			long sessionStartTime) {
 
 		String sql = "update users SET sessionToken = ?, sessionStartTime = ? where userName = ?";
 		getJdbcTemplate().update(sql,
 				new Object[] { sessionToken, sessionStartTime, userName });
 	}
 
-	public HashMap<String, Boolean> getPreferences(String userName)
-			throws SQLException {
+	public HashMap<String, Boolean> getPreferences(String userName) {
 
 		String sql = "select autoCheckin, isPublic, isAdmin from users "
 				+ "where userName = ?";
@@ -69,17 +64,17 @@ public class FGLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 		rs.next();
 		preferences.put("autoCheckin", rs.getBoolean("autoCheckin"));
 		preferences.put("isPublic", rs.getBoolean("isPublic"));
-		preferences.put("isAdmin", rs.getBoolean("isAdmin"));
+
 		return preferences;
 	}
 
-	public void terminateSession(String sessionToken) throws SQLException {
+	public void terminateSession(String sessionToken) {
 
 		String sql = "update users SET sessionToken = '0', sessionStartTime = 0 where sessionToken = ?";
 		getJdbcTemplate().update(sql, sessionToken);
 	}
 
-	public String getSessionToken(String userName) throws SQLException {
+	public String getSessionToken(String userName) {
 		String sql = "select sessionToken from users where username = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userName);
 		if (rs.next()) {

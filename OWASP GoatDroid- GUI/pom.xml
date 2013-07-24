@@ -46,7 +46,7 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<!-- Jetty -->
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
@@ -194,13 +194,17 @@
 			<version>2.1.v20100127</version>
 		</dependency>
 
-		<!-- SQLite -->
+		<!-- Derby -->
 		<dependency>
-			<groupId>org.xerial</groupId>
-			<artifactId>sqlite-jdbc</artifactId>
-			<version>3.7.2</version>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>10.10.1.1</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derbyclient</artifactId>
+			<version>10.10.1.1</version>
+		</dependency>
 
 		<!-- Test -->
 		<dependency>

@@ -56,6 +56,8 @@ public class WebServiceLauncher {
 		server = new Server(10000);
 		ServletContextHandler context = new ServletContextHandler(server, "/",
 				ServletContextHandler.SESSIONS);
+		//context.setInitParameter("contextConfigLocation",
+			//	"classpath*:**/spring/application-context.xml");
 		context.setAliases(true);
 		context.addServlet(sh, "/*");
 

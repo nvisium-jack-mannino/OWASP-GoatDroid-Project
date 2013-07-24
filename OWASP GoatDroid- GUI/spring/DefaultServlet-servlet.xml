@@ -14,10 +14,11 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
+	
 	<beans:bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<beans:property name="driverClassName"
-			value="org.apache.derby.jdbc.EmbeddedDriver" />
-		<beans:property name="url" value="jdbc:derby:dbs/fourgoats" />
+		<beans:property name="driverClassName" value="org.sqlite.JDBC" />
+		<beans:property name="url" value="jdbc:sqlite:goatdroid" />
 	</beans:bean>
 </beans:beans>
+
