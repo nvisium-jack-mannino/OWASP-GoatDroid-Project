@@ -6,7 +6,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<context:component-scan base-package="org.owasp.goatdroid.webservice.fourgoats" />
+	<context:component-scan base-package="org.owasp.goatdroid.webservice" />
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing 
 		infrastructure -->
