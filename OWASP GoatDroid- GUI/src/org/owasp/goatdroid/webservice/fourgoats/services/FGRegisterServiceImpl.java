@@ -16,6 +16,9 @@
 package org.owasp.goatdroid.webservice.fourgoats.services;
 
 import java.util.ArrayList;
+
+import javax.annotation.Resource;
+
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.dao.RegisterDaoImpl;
@@ -26,11 +29,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class FGRegisterServiceImpl implements RegisterService {
 
+	@Resource
 	RegisterDaoImpl dao;
-
-	public FGRegisterServiceImpl() {
-		dao = new RegisterDaoImpl();
-	}
 
 	public RegisterBean registerUser(String firstName, String lastName,
 			String userName, String password) {

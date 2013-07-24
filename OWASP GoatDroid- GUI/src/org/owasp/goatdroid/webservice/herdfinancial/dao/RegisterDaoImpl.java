@@ -18,7 +18,9 @@ package org.owasp.goatdroid.webservice.herdfinancial.dao;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class RegisterDaoImpl extends BaseDaoImpl implements RegisterDao {
 
 	public void registerUser(String accountNumber, String firstName,

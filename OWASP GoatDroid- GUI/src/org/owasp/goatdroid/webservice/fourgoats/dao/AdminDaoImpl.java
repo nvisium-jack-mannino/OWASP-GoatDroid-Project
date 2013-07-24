@@ -20,7 +20,9 @@ import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.model.UserModel;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class AdminDaoImpl extends BaseDaoImpl implements AdminDao {
 
 	public boolean isAdmin(String sessionToken) throws Exception {

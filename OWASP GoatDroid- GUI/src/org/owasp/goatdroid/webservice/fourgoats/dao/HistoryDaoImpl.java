@@ -21,7 +21,9 @@ import java.util.HashMap;
 
 import org.owasp.goatdroid.webservice.fourgoats.model.HistoryModel;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class HistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 
 	public ArrayList<HistoryModel> getCheckinHistory(String userID)

@@ -19,7 +19,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class CommentDaoImpl extends BaseDaoImpl implements CommentDao {
 
 	public void insertComment(String dateTime, String commentID, String userID,

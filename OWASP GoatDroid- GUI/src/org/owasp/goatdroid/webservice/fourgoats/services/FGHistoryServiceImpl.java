@@ -17,6 +17,9 @@ package org.owasp.goatdroid.webservice.fourgoats.services;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.annotation.Resource;
+
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryBean;
@@ -28,11 +31,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class FGHistoryServiceImpl implements HistoryService {
 
+	@Resource
 	HistoryDaoImpl dao;
-
-	public FGHistoryServiceImpl() {
-		dao = new HistoryDaoImpl();
-	}
 
 	public HistoryBean getHistory(String sessionToken) {
 

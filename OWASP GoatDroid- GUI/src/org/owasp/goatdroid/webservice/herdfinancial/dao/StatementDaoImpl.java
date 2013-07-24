@@ -21,7 +21,9 @@ import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.herdfinancial.Utils;
 import org.owasp.goatdroid.webservice.herdfinancial.model.StatementModel;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class StatementDaoImpl extends BaseDaoImpl implements StatementDao {
 
 	public ArrayList<StatementModel> getStatement(String accountNumber,

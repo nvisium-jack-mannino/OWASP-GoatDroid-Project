@@ -17,6 +17,9 @@ package org.owasp.goatdroid.webservice.herdfinancial.services;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.annotation.Resource;
+
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.BalanceBean;
@@ -27,11 +30,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class HFBalanceServiceImpl implements BalanceService {
 
+	@Resource
 	BalanceDaoImpl dao;
-
-	public HFBalanceServiceImpl() {
-		dao = new BalanceDaoImpl();
-	}
 
 	public BalanceBean getBalances(String accountNumber, int sessionToken) {
 

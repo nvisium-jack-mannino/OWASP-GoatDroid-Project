@@ -18,7 +18,9 @@ package org.owasp.goatdroid.webservice.herdfinancial.dao;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ForgotPasswordDaoImpl extends BaseDaoImpl implements
 		ForgotPasswordDao {
 

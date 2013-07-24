@@ -18,7 +18,9 @@ package org.owasp.goatdroid.webservice.fourgoats.dao;
 import java.util.HashMap;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class CheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 
 	public void insertCheckin(String dateTime, String latitude,

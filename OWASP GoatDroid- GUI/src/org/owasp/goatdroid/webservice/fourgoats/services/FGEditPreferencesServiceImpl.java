@@ -16,6 +16,9 @@
 package org.owasp.goatdroid.webservice.fourgoats.services;
 
 import java.util.ArrayList;
+
+import javax.annotation.Resource;
+
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.EditPreferencesBean;
@@ -27,11 +30,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class FGEditPreferencesServiceImpl implements EditPreferencesService {
 
+	@Resource
 	EditPreferencesDaoImpl dao;
-
-	public FGEditPreferencesServiceImpl() {
-		dao = new EditPreferencesDaoImpl();
-	}
 
 	public EditPreferencesBean modifyPreferences(String sessionToken,
 			boolean autoCheckin, boolean isPublic) {

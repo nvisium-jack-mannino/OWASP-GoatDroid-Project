@@ -16,6 +16,9 @@
 package org.owasp.goatdroid.webservice.fourgoats.services;
 
 import java.util.ArrayList;
+
+import javax.annotation.Resource;
+
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
@@ -28,11 +31,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class FGCheckinServiceImpl implements CheckinService {
 
+	@Resource
 	CheckinDaoImpl dao;
-	
-	public FGCheckinServiceImpl() {
-		dao = new CheckinDaoImpl();
-	}
 
 	public CheckinBean doCheckin(String sessionToken, String latitude,
 			String longitude) {

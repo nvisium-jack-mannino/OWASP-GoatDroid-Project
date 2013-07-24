@@ -16,7 +16,9 @@
 package org.owasp.goatdroid.webservice.herdfinancial.dao;
 
 import java.sql.SQLException;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class SecretQuestionDaoImpl extends BaseDaoImpl implements
 		SecretQuestionDao {
 

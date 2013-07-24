@@ -19,7 +19,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import org.owasp.goatdroid.webservice.fourgoats.model.RewardModel;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class RewardDaoImpl extends BaseDaoImpl implements RewardDao {
 
 	public ArrayList<RewardModel> getAllRewards() throws SQLException {

@@ -20,7 +20,9 @@ import java.util.HashMap;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class LoginDaoImpl extends BaseDaoImpl implements LoginDao {
 
 	public boolean validateCredentials(String userName, String password)

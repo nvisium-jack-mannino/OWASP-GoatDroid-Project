@@ -18,7 +18,9 @@ package org.owasp.goatdroid.webservice.herdfinancial.dao;
 import java.sql.SQLException;
 import java.util.HashMap;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class BalanceDaoImpl extends BaseDaoImpl implements BalanceDao {
 
 	public BalanceDaoImpl() {

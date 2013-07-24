@@ -17,6 +17,9 @@ package org.owasp.goatdroid.webservice.herdfinancial.services;
 
 import java.sql.Date;
 import java.util.ArrayList;
+
+import javax.annotation.Resource;
+
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.StatementBean;
@@ -27,11 +30,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class HFStatementServiceImpl implements StatementService {
 
+	@Resource
 	StatementDaoImpl dao;
-
-	public HFStatementServiceImpl() {
-		dao = new StatementDaoImpl();
-	}
 
 	public StatementBean getStatement(String accountNumber, String startDate,
 			String endDate, int sessionToken) {

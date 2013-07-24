@@ -17,6 +17,8 @@ package org.owasp.goatdroid.webservice.herdfinancial.services;
 
 import java.util.ArrayList;
 
+import javax.annotation.Resource;
+
 import org.owasp.goatdroid.webservice.fourgoats.dao.AdminDaoImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
@@ -29,11 +31,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class HFLoginServiceImpl implements LoginService {
 
+	@Resource
 	LoginDaoImpl dao;
-
-	public HFLoginServiceImpl() {
-		dao = new LoginDaoImpl();
-	}
 
 	public boolean isSessionValid(int sessionToken) {
 

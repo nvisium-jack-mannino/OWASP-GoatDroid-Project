@@ -16,6 +16,9 @@
 package org.owasp.goatdroid.webservice.herdfinancial.services;
 
 import java.util.ArrayList;
+
+import javax.annotation.Resource;
+
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.RegisterBean;
@@ -26,11 +29,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class HFRegisterServiceImpl implements RegisterService {
 
+	@Resource
 	RegisterDaoImpl dao;
-
-	public HFRegisterServiceImpl() {
-		dao = new RegisterDaoImpl();
-	}
 
 	public RegisterBean registerUser(String accountNumber, String firstName,
 			String lastName, String userName, String password) {

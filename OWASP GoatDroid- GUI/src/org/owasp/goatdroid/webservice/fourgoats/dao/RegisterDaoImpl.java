@@ -19,7 +19,9 @@ import java.sql.SQLException;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class RegisterDaoImpl extends BaseDaoImpl implements RegisterDao {
 
 	public boolean doesUserExist(String userName) throws SQLException {

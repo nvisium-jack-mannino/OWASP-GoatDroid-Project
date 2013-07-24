@@ -16,6 +16,9 @@
 package org.owasp.goatdroid.webservice.herdfinancial.services;
 
 import java.util.ArrayList;
+
+import javax.annotation.Resource;
+
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.SecretQuestionBean;
@@ -26,11 +29,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class HFSecretQuestionServiceImpl implements SecretQuestionService {
 
+	@Resource
 	SecretQuestionDaoImpl dao;
-
-	public HFSecretQuestionServiceImpl() {
-		dao = new SecretQuestionDaoImpl();
-	}
 
 	public SecretQuestionBean setSecretQuestions(int sessionToken,
 			String answer1, String answer2, String answer3) {

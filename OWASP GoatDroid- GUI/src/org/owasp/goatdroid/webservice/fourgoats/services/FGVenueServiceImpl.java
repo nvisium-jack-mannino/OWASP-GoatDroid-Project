@@ -16,6 +16,9 @@
 package org.owasp.goatdroid.webservice.fourgoats.services;
 
 import java.util.ArrayList;
+
+import javax.annotation.Resource;
+
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
@@ -29,11 +32,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class FGVenueServiceImpl implements VenueService {
 
+	@Resource
 	VenueDaoImpl dao;
-
-	public FGVenueServiceImpl() {
-		dao = new VenueDaoImpl();
-	}
 
 	public VenueBean addVenue(String sessionToken, String venueName,
 			String venueWebsite, String latitude, String longitude) {

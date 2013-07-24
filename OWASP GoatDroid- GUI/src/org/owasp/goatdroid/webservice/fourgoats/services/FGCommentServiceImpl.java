@@ -17,6 +17,9 @@ package org.owasp.goatdroid.webservice.fourgoats.services;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.annotation.Resource;
+
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
@@ -30,11 +33,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class FGCommentServiceImpl implements CommentService {
 
+	@Resource
 	CommentDaoImpl dao;
-
-	public FGCommentServiceImpl() {
-		dao = new CommentDaoImpl();
-	}
 
 	public CommentBean addComment(String sessionToken, String comment,
 			String checkinID) {

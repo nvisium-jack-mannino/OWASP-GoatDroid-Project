@@ -16,6 +16,9 @@
 package org.owasp.goatdroid.webservice.fourgoats.services;
 
 import java.util.ArrayList;
+
+import javax.annotation.Resource;
+
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.AdminBean;
@@ -27,11 +30,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class FGAdminServiceImpl implements AdminService {
 
+	@Resource
 	AdminDaoImpl dao;
-
-	public FGAdminServiceImpl() {
-		dao = new AdminDaoImpl();
-	}
 
 	public AdminBean deleteUser(String sessionToken, String userName) {
 

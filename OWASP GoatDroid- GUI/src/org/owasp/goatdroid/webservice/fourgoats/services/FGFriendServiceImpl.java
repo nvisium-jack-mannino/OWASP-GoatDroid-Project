@@ -16,6 +16,9 @@
 package org.owasp.goatdroid.webservice.fourgoats.services;
 
 import java.util.ArrayList;
+
+import javax.annotation.Resource;
+
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.FriendListBean;
@@ -30,11 +33,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class FGFriendServiceImpl implements FriendService {
 
+	@Resource
 	FriendDaoImpl dao;
-	
-	public FGFriendServiceImpl() {
-		dao = new FriendDaoImpl();
-	}
 
 	public FriendListBean getFriends(String sessionToken) {
 
