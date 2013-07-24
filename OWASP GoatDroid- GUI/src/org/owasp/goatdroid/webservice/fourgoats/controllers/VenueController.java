@@ -21,13 +21,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.VenueListBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.VenueBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.VenueServiceImpl;
 
 @Controller
-@RequestMapping("fourgoats/api/v1/venues")
+@RequestMapping(value = "fourgoats/api/v1/venues", produces = "application/json")
 public class VenueController {
 
 	VenueServiceImpl venueService;
@@ -38,6 +39,7 @@ public class VenueController {
 	}
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
+	@ResponseBody
 	public VenueBean addVenue(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@RequestParam(value = "venueName", required = true) String venueName,
@@ -55,6 +57,7 @@ public class VenueController {
 	}
 
 	@RequestMapping(value = "list", method = RequestMethod.GET)
+	@ResponseBody
 	public VenueListBean getAllVenues(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {

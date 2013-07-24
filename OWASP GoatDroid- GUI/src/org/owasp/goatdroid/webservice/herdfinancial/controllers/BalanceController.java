@@ -21,12 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.BalanceBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.BalanceServiceImpl;
 
 @Controller
-@RequestMapping("herdfinancial/api/v1/balances")
+@RequestMapping(value = "herdfinancial/api/v1/balances", produces = "application/json")
 public class BalanceController {
 
 	BalanceServiceImpl balanceService;
@@ -37,6 +38,7 @@ public class BalanceController {
 	}
 
 	@RequestMapping(value = "{accountNumber}", method = RequestMethod.GET)
+	@ResponseBody
 	public BalanceBean getBalances(
 			@PathVariable("accountNumber") String accountNumber,
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {

@@ -21,13 +21,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.AdminBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.GetUsersAdminBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.AdminServiceImpl;
 
 @Controller
-@RequestMapping("fourgoats/api/v1/admin")
+@RequestMapping(value = "fourgoats/api/v1/admin", produces = "application/json")
 public class AdminController {
 
 	AdminServiceImpl adminService;
@@ -38,6 +39,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "delete_user", method = RequestMethod.POST)
+	@ResponseBody
 	public AdminBean addComment(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@RequestParam(value = "userName", required = true) String userName) {
@@ -51,6 +53,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "reset_password", method = RequestMethod.POST)
+	@ResponseBody
 	public AdminBean addComment(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@RequestParam(value = "userName", required = true) String userName,
@@ -66,6 +69,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "get_users", method = RequestMethod.GET)
+	@ResponseBody
 	public GetUsersAdminBean addComment(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {

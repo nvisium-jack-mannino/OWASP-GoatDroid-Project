@@ -21,12 +21,13 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.HistoryServiceImpl;
 
 @Controller
-@RequestMapping("fourgoats/api/v1/history")
+@RequestMapping(value = "fourgoats/api/v1/history", produces = "application/json")
 public class HistoryController {
 
 	HistoryServiceImpl historyService;
@@ -37,6 +38,7 @@ public class HistoryController {
 	}
 
 	@RequestMapping(value = "list", method = RequestMethod.GET)
+	@ResponseBody
 	public HistoryBean getHistory(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
@@ -49,6 +51,7 @@ public class HistoryController {
 	}
 
 	@RequestMapping(value = "get_user_history/{userName}", method = RequestMethod.GET)
+	@ResponseBody
 	public HistoryBean getHistory(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@PathVariable(value = "userName") String userName) {

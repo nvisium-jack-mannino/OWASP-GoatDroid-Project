@@ -21,13 +21,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.EditPreferencesBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.GetPreferencesBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.EditPreferencesServiceImpl;
 
 @Controller
-@RequestMapping("fourgoats/api/v1/preferences")
+@RequestMapping(value = "fourgoats/api/v1/preferences", produces = "application/json")
 public class EditPreferencesController {
 
 	EditPreferencesServiceImpl editPreferencesService;
@@ -39,6 +40,7 @@ public class EditPreferencesController {
 	}
 
 	@RequestMapping(value = "modify_preferences", method = RequestMethod.POST)
+	@ResponseBody
 	public EditPreferencesBean modifyPreferences(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@RequestParam(value = "autoCheckin", required = true) boolean autoCheckin,
@@ -55,6 +57,7 @@ public class EditPreferencesController {
 	}
 
 	@RequestMapping(value = "get_preferences", method = RequestMethod.GET)
+	@ResponseBody
 	public GetPreferencesBean getPreferences(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {

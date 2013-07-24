@@ -22,12 +22,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.LoginBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.LoginServiceImpl;
 
 @Controller
-@RequestMapping("herdfinancial/api/v1/login")
+@RequestMapping(value = "herdfinancial/api/v1/login", produces = "application/json")
 public class LoginController {
 
 	LoginServiceImpl loginService;
@@ -38,6 +39,7 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "authenticate", method = RequestMethod.POST)
+	@ResponseBody
 	public LoginBean submitCredentials(
 			@RequestParam(value = "userName", required = true) String userName,
 			@RequestParam(value = "password", required = true) String password) {
@@ -51,6 +53,7 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "device/{deviceID}", method = RequestMethod.GET)
+	@ResponseBody
 	public LoginBean checkDeviceRegistration(
 			@PathVariable("deviceID") String deviceID) {
 		try {
@@ -63,6 +66,7 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "device_or_session/{deviceID}", method = RequestMethod.GET)
+	@ResponseBody
 	public LoginBean checkDeviceRegistration(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken,
 			@PathVariable("deviceID") String deviceID) {
@@ -77,6 +81,7 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "sign_out", method = RequestMethod.GET)
+	@ResponseBody
 	public LoginBean signOut(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {
 		try {

@@ -20,11 +20,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.ForgotPasswordBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.ForgotPasswordServiceImpl;
 
 @Controller
-@RequestMapping("herdfinancial/api/v1/forgot_password")
+@RequestMapping(value = "herdfinancial/api/v1/forgot_password", produces = "application/json")
 public class ForgotPasswordController {
 
 	ForgotPasswordServiceImpl forgotPasswordService;
@@ -36,6 +37,7 @@ public class ForgotPasswordController {
 	}
 
 	@RequestMapping(value = "request_code", method = RequestMethod.POST)
+	@ResponseBody
 	public ForgotPasswordBean requestCode(
 			@RequestParam(value = "userName", required = true) String userName,
 			@RequestParam(value = "secretQuestionIndex", required = true) int secretQuestionIndex,
@@ -51,12 +53,13 @@ public class ForgotPasswordController {
 	}
 
 	@RequestMapping(value = "verify_code", method = RequestMethod.POST)
+	@ResponseBody
 	public ForgotPasswordBean verifyCode(
 			@RequestParam(value = "userName", required = true) String userName,
 			@RequestParam(value = "passwordResetCode", required = true) int passwordResetCode) {
 		try {
-			return forgotPasswordService.verifyCode(userName,
-					passwordResetCode);
+			return forgotPasswordService
+					.verifyCode(userName, passwordResetCode);
 		} catch (NullPointerException e) {
 			ForgotPasswordBean bean = new ForgotPasswordBean();
 			bean.setSuccess(false);
@@ -65,6 +68,7 @@ public class ForgotPasswordController {
 	}
 
 	@RequestMapping(value = "update_password", method = RequestMethod.POST)
+	@ResponseBody
 	public ForgotPasswordBean getBalances(
 			@RequestParam(value = "userName") String userName,
 			@RequestParam(value = "passwordResetCode") int passwordResetCode,

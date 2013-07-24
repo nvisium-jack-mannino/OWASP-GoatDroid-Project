@@ -21,12 +21,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.RewardBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.RewardServiceImpl;
 
 @Controller
-@RequestMapping("fourgoats/api/v1/rewards")
+@RequestMapping(value = "fourgoats/api/v1/rewards", produces = "application/json")
 public class RewardController {
 
 	RewardServiceImpl rewardService;
@@ -37,6 +38,7 @@ public class RewardController {
 	}
 
 	@RequestMapping(value = "all_rewards", method = RequestMethod.GET)
+	@ResponseBody
 	public RewardBean getRewards(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
@@ -49,6 +51,7 @@ public class RewardController {
 	}
 
 	@RequestMapping(value = "my_rewards", method = RequestMethod.GET)
+	@ResponseBody
 	public RewardBean getMyEarnedRewards(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
@@ -61,6 +64,7 @@ public class RewardController {
 	}
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
+	@ResponseBody
 	public RewardBean addNewReward(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@RequestParam(value = "rewardName", required = true) String rewardName,

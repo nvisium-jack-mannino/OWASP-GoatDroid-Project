@@ -21,12 +21,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.AuthorizeBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.AuthorizeServiceImpl;
 
 @Controller
-@RequestMapping("herdfinancial/api/v1/authorize")
+@RequestMapping(value = "herdfinancial/api/v1/authorize", produces = "application/json")
 public class AuthorizeController {
 
 	AuthorizeServiceImpl authorizeService;
@@ -37,6 +38,7 @@ public class AuthorizeController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
+	@ResponseBody
 	public AuthorizeBean authorizeDevice(
 			@RequestParam(value = "deviceID", required = true) String deviceID,
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {

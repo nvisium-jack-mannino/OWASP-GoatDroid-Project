@@ -21,12 +21,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.CheckinBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.CheckinServiceImpl;
 
 @Controller
-@RequestMapping("fourgoats/api/v1/checkin")
+@RequestMapping(value = "fourgoats/api/v1/checkin", produces = "application/json")
 public class CheckinController {
 
 	CheckinServiceImpl checkinService;
@@ -36,14 +37,14 @@ public class CheckinController {
 		this.checkinService = checkinService;
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value = "thing", method = RequestMethod.POST)
+	@ResponseBody
 	public CheckinBean doCheckin(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@RequestParam(value = "latitude", required = true) String latitude,
 			@RequestParam(value = "longitude", required = true) String longitude) {
 		try {
-			return checkinService.doCheckin(sessionToken, latitude,
-					longitude);
+			return checkinService.doCheckin(sessionToken, latitude, longitude);
 		} catch (NullPointerException e) {
 			CheckinBean bean = new CheckinBean();
 			bean.setSuccess(false);

@@ -20,11 +20,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.RegisterBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.RegisterServiceImpl;
 
 @Controller
-@RequestMapping("herdfinancial/api/v1/register")
+@RequestMapping(value = "herdfinancial/api/v1/register", produces = "application/json")
 public class RegisterController {
 
 	RegisterServiceImpl registerService;
@@ -35,6 +36,7 @@ public class RegisterController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
+	@ResponseBody
 	public RegisterBean doRegistration(
 			@RequestParam(value = "accountNumber", required = true) String accountNumber,
 			@RequestParam(value = "firstName", required = true) String firstName,

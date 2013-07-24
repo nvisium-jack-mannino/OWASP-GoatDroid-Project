@@ -21,12 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.StatementBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.StatementServiceImpl;
 
 @Controller
-@RequestMapping("herdfinancial/api/v1/statements")
+@RequestMapping(value = "herdfinancial/api/v1/statements", produces = "application/json")
 public class StatementController {
 
 	StatementServiceImpl statementService;
@@ -37,6 +38,7 @@ public class StatementController {
 	}
 
 	@RequestMapping(value = "get_statement/{accountNumber}/{startDate}/{endDate}", method = RequestMethod.GET)
+	@ResponseBody
 	public StatementBean getStatement(
 			@PathVariable("accountNumber") String accountNumber,
 			@PathVariable("startDate") String startDate,
@@ -53,6 +55,7 @@ public class StatementController {
 	}
 
 	@RequestMapping(value = "poll_statement_updates/{accountNumber}", method = RequestMethod.GET)
+	@ResponseBody
 	public StatementBean getStatementSinceLastPoll(
 			@PathVariable("accountNumber") String accountNumber,
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {

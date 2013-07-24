@@ -15,6 +15,9 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +30,7 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.LoginServiceImpl;
 
 @Controller
-@RequestMapping("fourgoats/api/v1/login")
+@RequestMapping(value = "fourgoats/api/v1/login", produces = "application/json")
 public class LoginController {
 
 	LoginServiceImpl loginService;
@@ -38,15 +41,21 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "authenticate", method = RequestMethod.POST)
-	public LoginBean validateCredentials(
+	@ResponseBody
+	public Map<String, String> validateCredentials(
 			@RequestParam(value = "username", required = true) String userName,
 			@RequestParam(value = "password", required = true) String password) {
+		Map<String, String> things = new HashMap<String, String>();
+		things.put("thing1", "turtes");
+		things.put("thing2", "rabbits");
 		try {
-			return loginService.validateCredentials(userName, password);
+			return things;
+			// return loginService.validateCredentials(userName, password);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);
-			return bean;
+			// return bean;
+			return things;
 		}
 	}
 

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.FriendListBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.FriendProfileBean;
@@ -31,7 +32,7 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.PublicUsersBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.FriendServiceImpl;
 
 @Controller
-@RequestMapping("fourgoats/api/v1/friends")
+@RequestMapping(value = "fourgoats/api/v1/friends", produces = "application/json")
 public class FriendController {
 
 	FriendServiceImpl friendService;
@@ -42,6 +43,7 @@ public class FriendController {
 	}
 
 	@RequestMapping(value = "list_friends", method = RequestMethod.GET)
+	@ResponseBody
 	public FriendListBean getFriends(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 
@@ -49,6 +51,7 @@ public class FriendController {
 	}
 
 	@RequestMapping(value = "request_friend", method = RequestMethod.POST)
+	@ResponseBody
 	public FriendBean requestFriend(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@RequestParam(value = "userName", required = true) String userName) {
@@ -58,6 +61,7 @@ public class FriendController {
 	}
 
 	@RequestMapping(value = "accept_friend_request", method = RequestMethod.POST)
+	@ResponseBody
 	public FriendBean acceptFriendRequest(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@RequestParam(value = "userName", required = true) String userName) {
@@ -68,6 +72,7 @@ public class FriendController {
 	}
 
 	@RequestMapping(value = "deny_friend_request", method = RequestMethod.POST)
+	@ResponseBody
 	public FriendBean denyFriendRequest(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@RequestParam(value = "userName", required = true) String userName) {
@@ -78,6 +83,7 @@ public class FriendController {
 	}
 
 	@RequestMapping(value = "remove_friend", method = RequestMethod.POST)
+	@ResponseBody
 	public FriendBean removeFriend(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@RequestParam(value = "userName", required = true) String userName) {
@@ -86,6 +92,7 @@ public class FriendController {
 	}
 
 	@RequestMapping(value = "get_pending_requests", method = RequestMethod.GET)
+	@ResponseBody
 	public PendingFriendRequestsBean getPendingFriendRequests(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 
@@ -93,6 +100,7 @@ public class FriendController {
 	}
 
 	@RequestMapping(value = "search_users", method = RequestMethod.GET)
+	@ResponseBody
 	public PublicUsersBean getPublicUsers(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 
@@ -100,6 +108,7 @@ public class FriendController {
 	}
 
 	@RequestMapping(value = "view_profile/{userName}", method = RequestMethod.GET)
+	@ResponseBody
 	public FriendProfileBean getProfile(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@PathVariable(value = "userName") String userName) {
