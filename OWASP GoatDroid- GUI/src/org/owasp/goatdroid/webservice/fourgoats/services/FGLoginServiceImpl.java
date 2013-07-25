@@ -16,16 +16,13 @@
 package org.owasp.goatdroid.webservice.fourgoats.services;
 
 import java.util.ArrayList;
-
 import javax.annotation.Resource;
-
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGLoginDaoImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -64,6 +61,7 @@ public class FGLoginServiceImpl implements LoginService {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
 			bean.setErrors(errors);
+
 		}
 		return bean;
 	}

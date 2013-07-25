@@ -15,11 +15,13 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import javax.sql.DataSource;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
@@ -31,10 +33,13 @@ public class FGLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 		setDataSource(dataSource);
 	}
 
-	public boolean validateCredentials(String userName, String password) {
+	public boolean validateCredentials(String userName, String password)
+			throws SQLException, DataAccessException {
 
-		String sql = "select username from users where username = ? and password = ?";
-		SqlRowSet rs = getJdbcTemplate().queryForRowSet(
+		String sql = "select username from fg_users where username = ? and password = ?";
+		SqlRowSet rs;
+
+		rs = getJdbcTemplate().queryForRowSet(
 				sql,
 				new Object[] {
 						userName,
