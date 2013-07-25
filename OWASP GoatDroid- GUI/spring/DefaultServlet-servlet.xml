@@ -15,7 +15,7 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 
 	<jdbc:embedded-database id="dataSource" type="DERBY">
-		<jdbc:script location="classpath:fg-ds.sql" />
+		<jdbc:script location="classpath:fourgoats-db.sql" />
 	</jdbc:embedded-database>
 
 </beans:beans>
