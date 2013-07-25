@@ -15,14 +15,18 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.services;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.annotation.Resource;
+
+import org.apache.derby.client.am.SqlException;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGLoginDaoImpl;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -57,6 +61,10 @@ public class FGLoginServiceImpl implements LoginService {
 				} else
 					errors.add(Constants.LOGIN_CREDENTIALS_INVALID);
 			}
+		} catch (DataAccessException e) {
+			e.getMessage();
+		} catch (SQLException e) {
+			e.getMessage();
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {

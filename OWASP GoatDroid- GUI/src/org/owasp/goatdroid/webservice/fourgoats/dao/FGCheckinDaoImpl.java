@@ -36,8 +36,8 @@ public class FGCheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 			String longitude, String userID, String venueID, String checkinID)
 			throws Exception {
 
-		String sql = "insert into checkins (dateTime, latitude, longitude, userID, venueID, checkinID) "
-				+ "values (?,?,?,?,?,?)";
+		String sql = "INSERT INTO app.fg_checkins (dateTime, latitude, longitude, userID, venueID, checkinID) "
+				+ "VALUES (?,?,?,?,?,?)";
 		getJdbcTemplate().update(
 				sql,
 				new Object[] { dateTime, latitude, longitude, userID, venueID,
@@ -47,8 +47,8 @@ public class FGCheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 	public void updateUserInfo(String latitude, String longitude,
 			String dateTime, int totalCheckins, String userID) throws Exception {
 
-		String sql = "update users SET lastLatitude = ?, lastLongitude = ?, lastCheckinTime = ?,"
-				+ " numberOfCheckins = ? where userID = ?";
+		String sql = "UPDATE app.fg_users SET lastLatitude = ?, lastLongitude = ?, lastCheckinTime = ?,"
+				+ " numberOfCheckins = ? WHERE userID = ?";
 		getJdbcTemplate().update(
 				sql,
 				new Object[] { latitude, longitude, dateTime,
@@ -57,7 +57,7 @@ public class FGCheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 
 	public int getTotalCheckins(String userID) throws Exception {
 
-		String sql = "select numberOfCheckins from users where userID = ?";
+		String sql = "SELECT numberOfCheckins FROM app.fg_users WHERE userID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
 		rs.next();
 		return rs.getInt("numberOfCheckins");
@@ -66,7 +66,7 @@ public class FGCheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 	public boolean doesVenueExist(String latitude, String longitude)
 			throws Exception {
 
-		String sql = "select venueID from venues where latitude = ? and longitude = ?";
+		String sql = "SELECT venueID FROM app.fg_venues WHERE latitude = ? AND longitude = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
 				new Object[] { latitude, longitude });
 		if (rs.next())
@@ -78,7 +78,7 @@ public class FGCheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 	public String getVenueID(String latitude, String longitude)
 			throws Exception {
 
-		String sql = "select venueID from venues where latitude = ? and longitude = ?";
+		String sql = "SELECT venueID FROM app.fg_venues WHERE latitude = ? AND longitude = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
 				new Object[] { latitude, longitude });
 		rs.next();
@@ -88,7 +88,7 @@ public class FGCheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 
 	public String getVenueName(String venueID) throws Exception {
 
-		String sql = "select venueName from venues where venueID = ?";
+		String sql = "SELECT venueName FROM app.fg_venues WHERE venueID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, venueID);
 		rs.next();
 		return rs.getString("venueName");
@@ -96,7 +96,8 @@ public class FGCheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 
 	public boolean doesVenueHaveReward(String venueID) throws Exception {
 
-		String sql = "select rewards.venueID from rewards inner join venues on rewards.venueID = venues.venueID where rewards.venueID = ?";
+		String sql = "SELECT app.fg_rewards.venueID FROM rewards INNER JOIN app.fg_venues ON "
+				+ "app.fg_rewards.venueID = app.fg_venues.venueID WHERE app.fg_rewards.venueID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, venueID);
 		if (rs.next())
 			return true;
@@ -107,7 +108,7 @@ public class FGCheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 	public int getCheckinsAtVenue(String userID, String venueID)
 			throws Exception {
 
-		String sql = "select venueID from checkins where userID = ? and venueID = ?";
+		String sql = "SELECT venueID FROM app.fg_checkins WHERE userID = ? AND venueID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
 				new Object[] { userID, venueID });
 		int count = 0;
@@ -120,7 +121,7 @@ public class FGCheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 
 	public String getRewardID(String venueID) throws Exception {
 
-		String sql = "select rewardID from rewards where venueID = ?";
+		String sql = "SELECT rewardID FROM app.fg_rewards WHERE venueID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, venueID);
 		rs.next();
 		return rs.getString("rewardID");
@@ -128,7 +129,7 @@ public class FGCheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 
 	public int getRewardCheckinsRequired(String rewardID) throws Exception {
 
-		String sql = "select checkinsRequired from rewards where rewardID = ?";
+		String sql = "SELECT checkinsRequired FROM app.fg_rewards WHERE rewardID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, rewardID);
 		rs.next();
 
@@ -138,7 +139,7 @@ public class FGCheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 
 	public void addReward(String userID, String rewardID) throws Exception {
 
-		String sql = "insert into earned_rewards (userID, rewardID, timeEarned) values (?,?,?)";
+		String sql = "INSERT INTO app.fg_earned_rewards (userID, rewardID, timeEarned) VALUES (?,?,?)";
 		getJdbcTemplate().update(
 				sql,
 				new Object[] { userID, rewardID,
@@ -148,9 +149,9 @@ public class FGCheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 	public HashMap<String, String> getRewardInfo(String rewardID, String venueID)
 			throws Exception {
 
-		String sql = "select venues.venueName, rewards.rewardName, rewards.rewardDescription "
-				+ "from rewards inner join venues on rewards.venueID = venues.venueID where "
-				+ "rewards.rewardID = ? and rewards.venueID = ?";
+		String sql = "SELECT app.fg_venues.venueName, app.fg_rewards.rewardName, app.fg_rewards.rewardDescription "
+				+ "FROM app.fg_rewards INNER JOIN app.fg_venues on app.fg_rewards.venueID = app.fg_venues.venueID WHERE "
+				+ "app.fg_rewards.rewardID = ? AND app.fg_rewards.venueID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
 				new Object[] { rewardID, venueID });
 		HashMap<String, String> rewardInfo = new HashMap<String, String>();
@@ -166,7 +167,7 @@ public class FGCheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 	public boolean doesUserHaveReward(String userID, String rewardID)
 			throws Exception {
 
-		String sql = "select userID from earned_rewards where userID = ? and rewardID = ?";
+		String sql = "SELECT userID FROM app.fg_earned_rewards WHERE userID = ? AND rewardID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
 				new Object[] { userID, rewardID });
 		if (rs.next())

@@ -35,10 +35,10 @@ public class FGRewardDaoImpl extends BaseDaoImpl implements RewardDao {
 
 	public ArrayList<RewardModel> getAllRewards() throws SQLException {
 
-		String sql = "select rewards.rewardName, rewards.rewardDescription, "
-				+ "venues.venueName, rewards.checkinsRequired, venues.latitude, "
-				+ "venues.longitude from rewards inner join venues on rewards.venueID = "
-				+ "venues.venueID";
+		String sql = "SELECT app.fg_rewards.rewardName, app.fg_rewards.rewardDescription, "
+				+ "app.fg_venues.venueName, app.fg_rewards.checkinsRequired, app.fg_venues.latitude, "
+				+ "app.fg_venues.longitude FROM app.fg_rewards INNER JOIN app.fg_venues ON app.fg_rewards.venueID = "
+				+ "app.fg_venues.venueID";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql);
 		ArrayList<RewardModel> rewards = new ArrayList<RewardModel>();
 		while (rs.next()) {
@@ -58,9 +58,9 @@ public class FGRewardDaoImpl extends BaseDaoImpl implements RewardDao {
 	public ArrayList<RewardModel> getEarnedRewards(String userID)
 			throws SQLException {
 
-		String sql = "select rewards.rewardName, rewards.rewardDescription, earned_rewards.timeEarned "
-				+ "from earned_rewards inner join rewards on rewards.rewardID = earned_rewards.rewardID "
-				+ "where earned_rewards.userID = ?";
+		String sql = "SLEECT app.fg_rewards.rewardName, app.fg_rewards.rewardDescription, app.fg_earned_rewards.timeEarned "
+				+ "FROM app.fg_earned_rewards INNER JOIN app.fg_rewards ON app.fg_rewards.rewardID = app.fg_earned_rewards.rewardID "
+				+ "WHERE app.fg_earned_rewards.userID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
 		ArrayList<RewardModel> rewards = new ArrayList<RewardModel>();
 
@@ -78,7 +78,7 @@ public class FGRewardDaoImpl extends BaseDaoImpl implements RewardDao {
 			String rewardDescription, String venueID, int checkinsRequired)
 			throws SQLException {
 
-		String sql = "insert into rewards (rewardID, rewardName, rewardDescription, venueID, checkinsRequired) values (?,?,?,?,?)";
+		String sql = "INSERT INTO app.fg_rewards (rewardID, rewardName, rewardDescription, venueID, checkinsRequired) VALUES (?,?,?,?,?)";
 		getJdbcTemplate().update(
 				sql,
 				new Object[] { rewardID, rewardName, rewardDescription,
@@ -87,7 +87,7 @@ public class FGRewardDaoImpl extends BaseDaoImpl implements RewardDao {
 
 	public boolean doesVenueExist(String venueID) throws SQLException {
 
-		String sql = "select venueID from venues where venueID = ?";
+		String sql = "SELECT venueID FROM app.fg_venues where venueID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, venueID);
 		if (rs.next())
 			return true;

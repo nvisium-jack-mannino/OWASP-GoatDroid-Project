@@ -36,7 +36,7 @@ public class FGAdminDaoImpl extends BaseDaoImpl implements AdminDao {
 
 	public boolean isAdmin(String sessionToken) throws Exception {
 
-		String sql = "select * from users where sessionToken = ? and isAdmin = true";
+		String sql = "SELECT * FROM app.fg_users WHERE sessionToken = ? AND isAdmin = true";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
 		if (rs.next())
 			return true;
@@ -46,14 +46,14 @@ public class FGAdminDaoImpl extends BaseDaoImpl implements AdminDao {
 
 	public void deleteUser(String userName) throws Exception {
 
-		String sql = "delete from users where userName = ?";
+		String sql = "DELETE FROM app.fg_users WHERE userName = ?";
 		getJdbcTemplate().update(sql, userName);
 	}
 
 	public void updatePassword(String userName, String newPassword)
 			throws Exception {
 
-		String sql = "update users SET password = ? where userName = ?";
+		String sql = "UPDATE app.fg_users SET password = ? WHERE userName = ?";
 		getJdbcTemplate().update(
 				sql,
 				new Object[] {
@@ -63,7 +63,7 @@ public class FGAdminDaoImpl extends BaseDaoImpl implements AdminDao {
 
 	public ArrayList<UserModel> getUsers() throws Exception {
 
-		String sql = "select userName, firstName, lastName from users";
+		String sql = "SELECT userName, firstName, lastName FROM app.fg_users";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql);
 		ArrayList<UserModel> users = new ArrayList<UserModel>();
 		while (rs.next()) {

@@ -36,7 +36,7 @@ public class FGLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 	public boolean validateCredentials(String userName, String password)
 			throws SQLException, DataAccessException {
 
-		String sql = "select username from fg_users where username = ? and password = ?";
+		String sql = "SELECT username FROM app.users WHERE username = ? and password = ?";
 		SqlRowSet rs;
 
 		rs = getJdbcTemplate().queryForRowSet(
@@ -55,15 +55,15 @@ public class FGLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 	public void updateSessionInformation(String userName, String sessionToken,
 			long sessionStartTime) {
 
-		String sql = "update users SET sessionToken = ?, sessionStartTime = ? where userName = ?";
+		String sql = "UPDATE app.users SET sessionToken = ?, sessionStartTime = ? WHERE userName = ?";
 		getJdbcTemplate().update(sql,
 				new Object[] { sessionToken, sessionStartTime, userName });
 	}
 
 	public HashMap<String, Boolean> getPreferences(String userName) {
 
-		String sql = "select autoCheckin, isPublic, isAdmin from users "
-				+ "where userName = ?";
+		String sql = "SELECT autoCheckin, isPublic, isAdmin FROM app.users "
+				+ "WHERE userName = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userName);
 		HashMap<String, Boolean> preferences = new HashMap<String, Boolean>();
 		rs.next();
@@ -75,12 +75,12 @@ public class FGLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 
 	public void terminateSession(String sessionToken) {
 
-		String sql = "update users SET sessionToken = '0', sessionStartTime = 0 where sessionToken = ?";
+		String sql = "UPDATE app.users SET sessionToken = '0', sessionStartTime = 0 WHERE sessionToken = ?";
 		getJdbcTemplate().update(sql, sessionToken);
 	}
 
 	public String getSessionToken(String userName) {
-		String sql = "select sessionToken from users where username = ?";
+		String sql = "SELECT sessionToken FROM app.users WHERE username = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userName);
 		if (rs.next()) {
 			if (rs.getString("sessionToken") != null)

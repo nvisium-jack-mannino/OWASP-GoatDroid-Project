@@ -39,16 +39,17 @@ public class FGLoginController {
 
 	@RequestMapping(value = "authenticate", method = RequestMethod.POST)
 	@ResponseBody
-	public LoginBean validateCredentials(
+	public String validateCredentials(
 			@RequestParam(value = "username", required = true) String userName,
 			@RequestParam(value = "password", required = true) String password) {
 		try {
-			return loginService.validateCredentials(userName, password);
+			return "tomatoes";
+			// return loginService.validateCredentials(userName, password);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);
-			return bean;
-
+			// return bean;
+			return "potatoes";
 		}
 	}
 

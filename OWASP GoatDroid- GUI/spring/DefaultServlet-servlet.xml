@@ -9,14 +9,13 @@
 
 	<context:component-scan base-package="org.owasp.goatdroid.webservice" />
 
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
 
-	<beans:bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-
-		<beans:property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver" />
-		<beans:property name="url" value="jdbc:derby:classpath*:dbs/goatdroid.sql" />
-	</beans:bean>
+	<jdbc:embedded-database id="dataSource" type="DERBY">
+		<jdbc:script location="classpath:fg-ds.sql" />
+	</jdbc:embedded-database>
 
 </beans:beans>

@@ -35,8 +35,8 @@ public class FGVenueDaoImpl extends BaseDaoImpl implements VenueDao {
 	public boolean doesVenueExist(String venueName, String latitude,
 			String longitude) throws SQLException {
 
-		String sql = "select venueID from venues where venueName = ? or (latitude = ? "
-				+ "and longitude = ?)";
+		String sql = "SELECT venueID FROM app.fg_venues WHERE venueName = ? OR (latitude = ? "
+				+ "AND longitude = ?)";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
 				new Object[] { venueName, latitude, longitude });
 		if (rs.next())
@@ -49,8 +49,8 @@ public class FGVenueDaoImpl extends BaseDaoImpl implements VenueDao {
 			String venueWebsite, String latitude, String longitude)
 			throws SQLException {
 
-		String sql = "insert into venues (venueID, venueName, venueWebsite, "
-				+ "latitude, longitude) values (?,?,?,?,?)";
+		String sql = "INSERT INTO app.fg_venues (venueID, venueName, venueWebsite, "
+				+ "latitude, longitude) VALUES (?,?,?,?,?)";
 		getJdbcTemplate().update(
 				sql,
 				new Object[] { venueID, venueName, venueWebsite, latitude,
@@ -59,7 +59,7 @@ public class FGVenueDaoImpl extends BaseDaoImpl implements VenueDao {
 
 	public HashMap<String, String> getAllVenues() throws SQLException {
 
-		String sql = "select venueID, venueName, venueWebsite, latitude, longitude from venues";
+		String sql = "SELECT venueID, venueName, venueWebsite, latitude, longitude FROM app.fg_venues";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql);
 		HashMap<String, String> venues = new HashMap<String, String>();
 		int count = 0;

@@ -35,7 +35,7 @@ public class FGCommentDaoImpl extends BaseDaoImpl implements CommentDao {
 	public void insertComment(String dateTime, String commentID, String userID,
 			String comment, String checkinID) throws SQLException {
 
-		String sql = "insert into comments (dateTime, commentID, userID, comment, checkinID) values "
+		String sql = "INSERT INTO app.fg_comments (dateTime, commentID, userID, comment, checkinID) VALUES "
 				+ "(?,?,?,?,?)";
 		getJdbcTemplate()
 				.update(sql,
@@ -45,16 +45,16 @@ public class FGCommentDaoImpl extends BaseDaoImpl implements CommentDao {
 
 	public void deleteComment(String commentID) throws SQLException {
 
-		String sql = "delete from comments where commentID = ?";
+		String sql = "DELETE FROM app.fg_comments WHERE commentID = ?";
 		getJdbcTemplate().update(sql, commentID);
 	}
 
 	public HashMap<String, String> selectComments(String checkinID)
 			throws SQLException {
 
-		String sql = "select comments.dateTime, comments.commentID, comments.userID, users.firstName, "
-				+ "users.lastName, comments.comment from comments inner join users on "
-				+ "comments.userID = users.userID where comments.checkinID = ?";
+		String sql = "SELECT app.fg_comments.dateTime, app.fg_comments.commentID, app.fg_comments.userID, app.fg_users.firstName, "
+				+ "app.fg_users.lastName, app.fg_comments.comment FROM app.fg_comments INNER JOIN app.fg_users ON "
+				+ "app.fg_comments.userID = app.fg_users.userID WHERE app.fg_comments.checkinID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
 		HashMap<String, String> comments = new HashMap<String, String>();
 		int count = 0;
@@ -73,7 +73,7 @@ public class FGCommentDaoImpl extends BaseDaoImpl implements CommentDao {
 	public boolean isCommentOwner(String userID, String commentID)
 			throws SQLException {
 
-		String sql = "select userID from comments where userID = ? and commentID = ?";
+		String sql = "SELECT userID FROM app.fg_comments WHERE userID = ? AND commentID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
 				new Object[] { userID, commentID });
 		if (rs.next())
@@ -84,7 +84,7 @@ public class FGCommentDaoImpl extends BaseDaoImpl implements CommentDao {
 
 	public String getCheckinOwner(String checkinID) throws SQLException {
 
-		String sql = "select userID from checkins where checkinID = ?";
+		String sql = "SELECT userID FROM app.fg_checkins WHERE checkinID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
 		rs.next();
 		return rs.getString("userID");
@@ -92,7 +92,7 @@ public class FGCommentDaoImpl extends BaseDaoImpl implements CommentDao {
 
 	public String getCheckinID(String commentID) throws SQLException {
 
-		String sql = "select checkinID from comments where commentID = ?";
+		String sql = "SELECT checkinID FROM app.fg_comments WHERE commentID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, commentID);
 		rs.next();
 		return rs.getString("checkinID");
@@ -101,8 +101,8 @@ public class FGCommentDaoImpl extends BaseDaoImpl implements CommentDao {
 	public HashMap<String, String> getVenueInfo(String checkinID)
 			throws SQLException {
 
-		String sql = "select venues.venueName, venues.venueWebsite from venues inner "
-				+ "join checkins on venues.venueID = checkins.venueID where checkins.checkinID = ?";
+		String sql = "SELECT app.fg_venues.venueName, app.fg_venues.venueWebsite FROM app.fg_venues INNER "
+				+ "JOIN app.fg_checkins ON app.fg_venues.venueID = app.fg_checkins.venueID WHERE app.fg_checkins.checkinID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
 
 		HashMap<String, String> venueInfo = new HashMap<String, String>();

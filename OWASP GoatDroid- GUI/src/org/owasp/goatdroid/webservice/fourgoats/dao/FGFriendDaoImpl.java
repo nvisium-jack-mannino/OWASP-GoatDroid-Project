@@ -40,9 +40,9 @@ public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
 	public ArrayList<UserModel> getFriends(String userID, String userName)
 			throws SQLException {
 
-		String sql = "select friends.userID, users.userName, friends.friendUserID, users.firstName, "
-				+ "users.lastName from friends inner join users on users.userID = friends.userID or "
-				+ "users.userID = friends.friendUserID where friends.friendUserId = ? or friends.userID = ?";
+		String sql = "SELECT app.fg_friends.userID, app.fg_users.userName, app.fg_friends.friendUserID, app.fg_users.firstName, "
+				+ "app.fg_users.lastName FROM app.fg_friends INNER JOIN app.fg_users ON app.fg_users.userID = app.fg_friends.userID OR "
+				+ "app.fg_users.userID = app.fg_friends.friendUserID WHERE app.fg_friends.friendUserId = ? OR app.fg_friends.userID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
 				new Object[] { userID, userID });
 		ArrayList<UserModel> friends = new ArrayList<UserModel>();
@@ -66,14 +66,14 @@ public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
 	public void addFriend(String userID, String friendUserID)
 			throws SQLException {
 
-		String sql = "insert into friends (userID, friendUserID) values (?,?)";
+		String sql = "INSERT INTO app.fg_friends (userID, friendUserID) VALUES (?,?)";
 		getJdbcTemplate().update(sql, new Object[] { userID, friendUserID });
 	}
 
 	public boolean isFriend(String userID, String friendUserID)
 			throws SQLException {
 
-		String sql = "select userID from friends where (userID = ? and friendUserID = ?) or (friendUserID = ? and userID = ?) ";
+		String sql = "SELECT userID FROM app.fg_friends WHERE (userID = ? and friendUserID = ?) OR (friendUserID = ? and userID = ?) ";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
 				new Object[] { userID, friendUserID, userID, friendUserID });
 		if (rs.next())
@@ -85,7 +85,7 @@ public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
 	public void removeFriend(String userID, String friendUserID)
 			throws SQLException {
 
-		String sql = "delete from friends where (userID = ? and friendUserID = ?) or (friendUserID = ? and userID = ?)";
+		String sql = "DELETE FROM app.fg_friends WHERE (userID = ? AND friendUserID = ?) OR (friendUserID = ? AND userID = ?)";
 		getJdbcTemplate().update(sql,
 				new Object[] { userID, friendUserID, friendUserID, userID });
 	}
@@ -93,7 +93,7 @@ public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
 	public HashMap<String, String> getProfile(String userID)
 			throws SQLException {
 
-		String sql = "select userID, firstName, lastName, lastCheckinTime, lastLatitude, lastLongitude from users where userID = ?";
+		String sql = "SELECT userID, firstName, lastName, lastCheckinTime, lastLatitude, lastLongitude FROM app.fg_users WHERE userID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
 		HashMap<String, String> profile = new HashMap<String, String>();
 		while (rs.next()) {
@@ -111,10 +111,10 @@ public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
 	public ArrayList<FriendRequestModel> getPendingFriendRequests(String userID)
 			throws SQLException {
 
-		String sql = "select friendrequests.requestID, users.userName, "
-				+ "users.firstName, users.lastName from "
-				+ "friendrequests inner join users on users.userID = friendrequests.fromUserID "
-				+ "where friendrequests.toUserID = ? ";
+		String sql = "SELECT app.fg_friendrequests.requestID, app.fg_users.userName, "
+				+ "app.fg_users.firstName, app.fg_users.lastName FROM "
+				+ "app.fg_friendrequests INNER JOIN app.fg_users ON app.fg_users.userID = app.fg_friendrequests.fromUserID "
+				+ "WHERE app.fg_friendrequests.toUserID = ? ";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
 		ArrayList<FriendRequestModel> requests = new ArrayList<FriendRequestModel>();
 		while (rs.next()) {
@@ -131,7 +131,7 @@ public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
 	public ArrayList<UserModel> getPublicUsers(String userName)
 			throws SQLException {
 
-		String sql = "select userID, userName, firstName, lastName from users where isPublic = true";
+		String sql = "SELECT userID, userName, firstName, lastName fFROM app.fg_users WHERE isPublic = true";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql);
 		ArrayList<UserModel> users = new ArrayList<UserModel>();
 		while (rs.next()) {
@@ -151,7 +151,7 @@ public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
 	public void requestFriend(String userID, String friendUserID)
 			throws SQLException {
 
-		String sql = "insert into friendrequests (requestID, fromUserID, toUserID) values (?,?,?)";
+		String sql = "INSERT INTO app.fg_friendrequests (requestID, fromUserID, toUserID) VALUES (?,?,?)";
 		getJdbcTemplate().update(
 				sql,
 				new Object[] {
@@ -165,7 +165,7 @@ public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
 	public boolean isUserFriendRequested(String toUserID, String requestID)
 			throws SQLException {
 
-		String sql = "select toUserID from friendrequests where requestID = ?";
+		String sql = "SELECT toUserID FROM app.fg_friendrequests WHERE requestID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, requestID);
 		rs.next();
 		if (rs.getString("toUserID").equals(toUserID))
@@ -176,7 +176,7 @@ public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
 
 	public String getFromFriendID(String requestID) throws SQLException {
 
-		String sql = "select fromUserID from friendrequests where requestID = ?";
+		String sql = "SELECT fromUserID FROM app.fg_friendrequests WHERE requestID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, requestID);
 		rs.next();
 		return rs.getString("fromUserID");
@@ -185,14 +185,14 @@ public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
 	public void removePendingFriendRequest(String requestID)
 			throws SQLException {
 
-		String sql = "delete from friendrequests where requestID = ?";
+		String sql = "DELETE FROM friendrequests WHERE app.fg_requestID = ?";
 		getJdbcTemplate().update(sql, requestID);
 	}
 
 	public boolean wasFriendRequestSent(String fromUserID, String toUserID)
 			throws SQLException {
 
-		String sql = "select requestID from friendrequests where (fromUserID = ? and toUserID = ?) or (fromUserID = ? and toUserID = ?)";
+		String sql = "SELECT requestID FROM app.fg_friendrequests WHERE (fromUserID = ? AND toUserID = ?) OR (fromUserID = ? AND toUserID = ?)";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
 				new Object[] { fromUserID, toUserID, toUserID, fromUserID });
 		if (rs.next())
@@ -203,7 +203,7 @@ public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
 
 	public String getUserID(String sessionToken) throws SQLException {
 
-		String sql = "select userID from users where sessionToken = ?";
+		String sql = "SELECT userID FROM app.fg_users WHERE sessionToken = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
 		rs.next();
 		return rs.getString("userID");
@@ -211,7 +211,7 @@ public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
 
 	public String getUserIDByName(String userName) throws SQLException {
 
-		String sql = "select userID from users where userName = ?";
+		String sql = "SELECT userID FROM app.fg_users WHERE userName = ?";
 		;
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userName);
 		rs.next();
@@ -222,8 +222,8 @@ public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
 	public String getFriendRequestID(String userName, String userID)
 			throws SQLException {
 
-		String sql = "select requestID from friendrequests inner join users "
-				+ "on users.userID = friendRequests.fromUserID where users.userName = ? and friendRequests.toUserID = ?";
+		String sql = "SELECT requestID FROM app.fg_friendrequests INNER JOIN app.fg_users "
+				+ "on app.fg_users.userID = app.fg_friendRequests.fromUserID WHERE app.fg_users.userName = ? and app.fg_friendRequests.toUserID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
 				new Object[] { userName, userID });
 		rs.next();
@@ -233,7 +233,7 @@ public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
 
 	public String getUserName(String userID) throws SQLException {
 
-		String sql = "select userName from users where userID = ?";
+		String sql = "SELECT userName FROM app.fg_users WHERE userID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
 		rs.next();
 		return rs.getString("userName");

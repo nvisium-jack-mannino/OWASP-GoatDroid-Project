@@ -37,9 +37,9 @@ public class FGHistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 	public ArrayList<HistoryModel> getCheckinHistory(String userID)
 			throws SQLException {
 
-		String sql = "select checkins.dateTime, checkins.checkinID, checkins.latitude, checkins.longitude, "
-				+ "venues.venueName, venues.venueWebsite from checkins inner join venues on "
-				+ "checkins.venueID = venues.venueID where userID = ?";
+		String sql = "SELECT app.fg_checkins.dateTime, app.fg_checkins.checkinID, app.fg_checkins.latitude, app.fg_checkins.longitude, "
+				+ "app.fg_venues.venueName, app.fg_venues.venueWebsite FROM app.fg_checkins INNER JOIN app.fg_venues on "
+				+ "app.fg_checkins.venueID = app.fg_venues.venueID where userID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
 		ArrayList<HistoryModel> checkins = new ArrayList<HistoryModel>();
 		while (rs.next()) {
@@ -58,9 +58,10 @@ public class FGHistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 	public ArrayList<HistoryModel> getCheckinHistoryByUserName(String userName)
 			throws SQLException {
 
-		String sql = "select checkins.dateTime, checkins.checkinID, checkins.latitude, checkins.longitude, "
-				+ "venues.venueName, venues.venueWebsite from checkins inner join venues on "
-				+ "checkins.venueID = venues.venueID inner join users on checkins.userID = users.userID where users.userName = ?";
+		String sql = "SELECT app.fg_checkins.dateTime, app.fg_checkins.checkinID, app.fg_checkins.latitude, app.fg_checkins.longitude, "
+				+ "app.fg_venues.venueName, app.fg_venues.venueWebsite FROM app.fg_checkins inner join venues ON "
+				+ "app.fg_checkins.venueID = app.fg_venues.venueID INNER JOIN app.fg_users ON app.fg_checkins.userID = app.fg_users.userID WHERE "
+				+ "app.fg_users.userName = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userName);
 		ArrayList<HistoryModel> checkins = new ArrayList<HistoryModel>();
 		while (rs.next()) {
@@ -78,8 +79,8 @@ public class FGHistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 
 	public String getVenueName(String checkinID) throws SQLException {
 
-		String sql = "select venues.venueName from checkins inner "
-				+ "join venues on checkins.venueID = venues.venueID where checkinID = ?";
+		String sql = "SELECT app.fg_venues.venueName FROM app.fg_checkins INNER "
+				+ "JOIN app.fg_venues ON app.fg_checkins.venueID = app.fg_venues.venueID WHERE checkinID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
 		rs.next();
 		return rs.getString("venueName");
@@ -88,7 +89,7 @@ public class FGHistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 	public HashMap<String, String> getCheckinInfo(String checkinID)
 			throws SQLException {
 
-		String sql = "select dateTime, latitude, longitude from checkins where checkinID = ?";
+		String sql = "SELECT dateTime, latitude, longitude FROM app.fg_checkins WHERE checkinID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
 		HashMap<String, String> checkin = new HashMap<String, String>();
 		while (rs.next()) {
@@ -102,9 +103,9 @@ public class FGHistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 	public HashMap<String, String> selectComments(String checkinID)
 			throws SQLException {
 
-		String sql = "select comments.commentID, comments.userID, users.firstName, "
-				+ "users.lastName, comments.comment from comments inner join users on "
-				+ "comments.userID = users.userID where comments.checkinID = ?";
+		String sql = "SELECT app.fg_comments.commentID, app.fg_comments.userID, app.fg_users.firstName, "
+				+ "app.fg_users.lastName, app.fg_comments.comment FROM app.fg_comments INNER JOIN app.fg_users ON "
+				+ "app.fg_comments.userID = app.fg_users.userID WHERE app.fg_comments.checkinID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
 		HashMap<String, String> comments = new HashMap<String, String>();
 		int count = 0;
@@ -121,7 +122,7 @@ public class FGHistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 
 	public boolean isProfilePublic(String userID) throws SQLException {
 
-		String sql = "select isPublic from users where userID = ?";
+		String sql = "SELECT isPublic FROM app.fg_users where userID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
 		rs.next();
 		return rs.getBoolean("isPublic");
@@ -131,8 +132,8 @@ public class FGHistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 	public boolean isFriend(String userID, String friendUserID)
 			throws SQLException {
 
-		String sql = "select userID from friends where (userID = ? and friendUserID = ?) "
-				+ " or (friendUserID = ? and userID = ?)";
+		String sql = "SELECT userID FROM app.fg_friends WHERE (userID = ? AND friendUserID = ?) "
+				+ " OR (friendUserID = ? AND userID = ?)";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
 				new Object[] { userID, friendUserID, friendUserID, userID });
 		if (rs.next())
@@ -143,8 +144,8 @@ public class FGHistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 
 	public String getVenueWebsite(String checkinID) throws SQLException {
 
-		String sql = "select venues.venueWebsite from checkins inner "
-				+ "join venues on checkins.venueID = venues.venueID where checkinID = ?";
+		String sql = "SELECT app.fg_venues.venueWebsite FROM app.fg_checkins INNER "
+				+ "JOIN app.fg_venues ON app.fg_checkins.venueID = app.fg_venues.venueID WHERE checkinID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
 		rs.next();
 		return rs.getString("venueWebsite");
