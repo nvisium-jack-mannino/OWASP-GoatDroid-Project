@@ -34,7 +34,7 @@ public class HFLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 	public boolean isDevicePermanentlyAuthorized(String deviceID)
 			throws SQLException {
 
-		String sql = "select isDeviceAuthorized from users where deviceID= ?";
+		String sql = "SELECT isDeviceAuthorized FROM app.hf_users WHERE deviceID= ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, deviceID);
 		if (rs.next()) {
 			boolean isAuth = rs.getBoolean("isDeviceAuthorized");
@@ -46,14 +46,14 @@ public class HFLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 	public void updateSession(String userName, int sessionToken,
 			long sessionStartTime) throws SQLException {
 
-		String sql = "update users set sessionToken = ?, sessionStartTime = ? where username = ?";
+		String sql = "UPDATE app.hf_users SET sessionToken = ?, sessionStartTime = ? WHERE username = ?";
 		getJdbcTemplate().update(sql,
 				new Object[] { sessionToken, sessionStartTime, userName });
 	}
 
 	public long getSessionStartTime(int sessionToken) throws SQLException {
 
-		String sql = "select sessionStartTime from users where sessionToken = ?";
+		String sql = "SELECT sessionStartTime FROM app.hf_users WHERE sessionToken = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
 		if (rs.next()) {
 			long sessionStartTime = rs.getLong("sessionStartTime");
@@ -66,7 +66,7 @@ public class HFLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 	public boolean validateCredentials(String userName, String password)
 			throws SQLException {
 
-		String sql = "select accountNumber from users where username = ? and password = ?";
+		String sql = "SELECT accountNumber FROM app.hf_users WHERE username = ? AND password = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
 				new Object[] { userName, password });
 		if (rs.next()) {
@@ -79,14 +79,14 @@ public class HFLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 	public void updateAuthorizedDeviceSession(String deviceID,
 			int sessionToken, long sessionStartTime) throws SQLException {
 
-		String sql = "update users SET sessionToken = ?, sessionStartTime = ? where deviceID = ?";
+		String sql = "UPDATE app.hf_users SET sessionToken = ?, sessionStartTime = ? WHERE deviceID = ?";
 		getJdbcTemplate().update(sql,
 				new Object[] { sessionToken, sessionStartTime, deviceID });
 	}
 
 	public String getUserName(int sessionToken) throws SQLException {
 
-		String sql = "select userName from users where sessionToken = ?";
+		String sql = "SELECT userName FROM app.hf_users WHERE sessionToken = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
 		rs.next();
 		return rs.getString("userName");
@@ -94,7 +94,7 @@ public class HFLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 
 	public String getAccountNumber(int sessionToken) throws SQLException {
 
-		String sql = "select accountNumber from users where sessionToken = ?";
+		String sql = "SELECT accountNumber FROM app.hf_users WHERE sessionToken = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
 		rs.next();
 		return rs.getString("accountNumber");
@@ -102,7 +102,7 @@ public class HFLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 
 	public void terminateSession(int sessionToken) throws SQLException {
 
-		String sql = "update users SET sessionToken = 0, sessionStartTime = 0 where sessionToken = ?";
+		String sql = "UPDATE app.hf_users SET sessionToken = 0, sessionStartTime = 0 WHERE sessionToken = ?";
 		getJdbcTemplate().update(sql, sessionToken);
 	}
 }

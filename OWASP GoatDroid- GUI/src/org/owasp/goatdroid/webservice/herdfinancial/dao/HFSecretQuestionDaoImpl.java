@@ -34,7 +34,7 @@ public class HFSecretQuestionDaoImpl extends BaseDaoImpl implements
 	public void updateAnswers(int sessionToken, String answer1, String answer2,
 			String answer3) throws SQLException {
 
-		String sql = "update users SET answer1 = ?, answer2 = ?, answer3 = ? where sessionToken = ?";
+		String sql = "UPDATE app.hf_users SET answer1 = ?, answer2 = ?, answer3 = ? WHERE sessionToken = ?";
 		getJdbcTemplate().update(sql,
 				new Object[] { answer1, answer2, answer3, sessionToken });
 	}

@@ -35,7 +35,7 @@ public class HFBalanceDaoImpl extends BaseDaoImpl implements BalanceDao {
 	public HashMap<String, Double> getBalances(String accountNumber)
 			throws SQLException {
 		HashMap<String, Double> result = new HashMap<String, Double>();
-		String sql = "select checkingBalance, savingsBalance from users where accountNumber = ?";
+		String sql = "SELECT checkingBalance, savingsBalance FROM app.hf_users WHERE accountNumber = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, accountNumber);
 		if (rs.next()) {
 			result.put("checking", rs.getDouble("checkingBalance"));

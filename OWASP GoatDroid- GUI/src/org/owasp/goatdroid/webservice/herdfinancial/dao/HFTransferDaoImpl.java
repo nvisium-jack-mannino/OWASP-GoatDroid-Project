@@ -35,7 +35,7 @@ public class HFTransferDaoImpl extends BaseDaoImpl implements TransferDao {
 
 	public double getBalance(String accountNumber) throws SQLException {
 
-		String sql = "select checkingBalance from users where accountNumber = ?";
+		String sql = "SELECT checkingBalance FROM app.hf_users WHERE accountNumber = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, accountNumber);
 		double balance = 0;
 		while (rs.next()) {
@@ -46,8 +46,8 @@ public class HFTransferDaoImpl extends BaseDaoImpl implements TransferDao {
 
 	public void insertTransaction(String accountNumber, Date date,
 			double amount, String name, double balance) throws SQLException {
-		String sql = "insert into transactions (accountNumber, date, amount, name, balance, timeStamp)"
-				+ " values (?,?,?,?,?,?)";
+		String sql = "INSERT INTO app.hf_transactions (accountNumber, date, amount, name, balance, timeStamp)"
+				+ " VALUES (?,?,?,?,?,?)";
 		getJdbcTemplate().update(
 				sql,
 				new Object[] { accountNumber, date, amount, name,
@@ -56,13 +56,13 @@ public class HFTransferDaoImpl extends BaseDaoImpl implements TransferDao {
 
 	public void updateAccountBalance(String accountNumber, double amount,
 			double balance) throws SQLException {
-		String sql = "update users SET checkingBalance = ? where accountNumber = ?";
+		String sql = "UPDATE app.hf_users SET checkingBalance = ? WHERE accountNumber = ?";
 		getJdbcTemplate().update(sql,
 				new Object[] { balance + amount, accountNumber });
 	}
 
 	public String getName(String accountNumber) throws SQLException {
-		String sql = "select firstName, lastName from users where accountNumber = ?";
+		String sql = "SELECT firstName, lastName FROM app.hf_users WHERE accountNumber = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, accountNumber);
 		String name = "";
 		while (rs.next()) {
@@ -74,7 +74,7 @@ public class HFTransferDaoImpl extends BaseDaoImpl implements TransferDao {
 
 	public boolean doesAccountExist(String accountNumber) throws SQLException {
 
-		String sql = "select * from users where accountNumber = ?";
+		String sql = "SELECT * FROM app.hf_users WHERE accountNumber = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, accountNumber);
 		if (rs.next())
 			return true;

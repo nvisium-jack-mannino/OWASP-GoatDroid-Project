@@ -39,8 +39,8 @@ public class HFStatementDaoImpl extends BaseDaoImpl implements StatementDao {
 			Date startDate, Date endDate) throws SQLException {
 
 		ArrayList<StatementModel> transactions = new ArrayList<StatementModel>();
-		String sql = "select date, amount, name, balance from "
-				+ "transactions where accountNumber = ? and date >= ? "
+		String sql = "SELECT date, amount, name, balance FROM "
+				+ "app.hf_transactions where accountNumber = ? and date >= ? "
 				+ "and date <= ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
 				new Object[] { accountNumber, startDate, endDate });
@@ -59,7 +59,7 @@ public class HFStatementDaoImpl extends BaseDaoImpl implements StatementDao {
 	public ArrayList<StatementModel> getTransactionsSinceLastPoll(
 			String accountNumber, long timeStamp) throws SQLException {
 		ArrayList<StatementModel> transactions = new ArrayList<StatementModel>();
-		String sql = "select date, amount, name, balance from transactions where accountNumber = ? and timeStamp >  ?";
+		String sql = "SELECT date, amount, name, balance FROM app.hf_transactions WHERE accountNumber = ? AND timeStamp >  ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
 				new Object[] { accountNumber, timeStamp });
 		while (rs.next()) {
@@ -75,7 +75,7 @@ public class HFStatementDaoImpl extends BaseDaoImpl implements StatementDao {
 	}
 
 	public long getLastPollTime(String accountNumber) throws SQLException {
-		String sql = "select lastPollTime from users where accountNumber = ?";
+		String sql = "SELECT lastPollTime FROM app.hf_users WHERE accountNumber = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, accountNumber);
 		if (rs.next())
 			return rs.getLong("lastPollTime");
@@ -84,7 +84,7 @@ public class HFStatementDaoImpl extends BaseDaoImpl implements StatementDao {
 	}
 
 	public void updateLastPollTime(String accountNumber) throws SQLException {
-		String sql = "update users SET lastPollTime = ? where accountNumber = ?";
+		String sql = "UPDATE app.hf_users SET lastPollTime = ? WHERE accountNumber = ?";
 		getJdbcTemplate().update(sql,
 				new Object[] { Utils.getTimeMilliseconds(), accountNumber });
 	}

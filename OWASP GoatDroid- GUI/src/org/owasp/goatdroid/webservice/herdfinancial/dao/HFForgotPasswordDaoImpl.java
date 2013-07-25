@@ -39,11 +39,11 @@ public class HFForgotPasswordDaoImpl extends BaseDaoImpl implements
 		String sql = "";
 
 		if (secretQuestionIndex.equals("1"))
-			sql = "SELECT answer1 FROM users WHERE userName = ?";
+			sql = "SELECT answer1 FROM app.hf_users WHERE userName = ?";
 		else if (secretQuestionIndex.equals("2"))
-			sql = "SELECT answer2 FROM users WHERE userName = ?";
+			sql = "SELECT answer2 FROM app.hf_users WHERE userName = ?";
 		else
-			sql = "SELECT answer3 FROM users WHERE userName = ?";
+			sql = "SELECT answer3 FROM app.hf_users WHERE userName = ?";
 
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userName);
 
@@ -58,14 +58,14 @@ public class HFForgotPasswordDaoImpl extends BaseDaoImpl implements
 	public void updatePasswordResetCode(String userName, String code)
 			throws SQLException {
 
-		String sql = "UPDATE users SET passwordResetCode = ? WHERE userName = ?";
+		String sql = "UPDATE app.hf_users SET passwordResetCode = ? WHERE userName = ?";
 		getJdbcTemplate().update(sql, new Object[] { userName, code });
 	}
 
 	public boolean confirmPasswordResetCode(String userName,
 			int passwordResetCode) throws SQLException {
 
-		String sql = "SELECT passwordResetCode FROM users WHERE userName = ? and passwordResetCode = ?";
+		String sql = "SELECT passwordResetCode FROM app.hf_users WHERE userName = ? AND passwordResetCode = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
 				new Object[] { userName, passwordResetCode });
 		if (rs.next())
@@ -77,13 +77,13 @@ public class HFForgotPasswordDaoImpl extends BaseDaoImpl implements
 	public void updatePassword(String userName, String password)
 			throws SQLException {
 
-		String sql = "UPDATE users SET password = ? where userName = ?";
+		String sql = "UPDATE app.hf_users SET password = ? WHERE userName = ?";
 		getJdbcTemplate().update(sql, new Object[] { password, userName });
 	}
 
 	public void clearPasswordResetCode(String userName) throws SQLException {
 
-		String sql = "UPDATE users SET passwordResetCode = '' WHERE userName = ?";
+		String sql = "UPDATE app.hf_users SET passwordResetCode = '' WHERE userName = ?";
 		getJdbcTemplate().update(sql, userName);
 	}
 }

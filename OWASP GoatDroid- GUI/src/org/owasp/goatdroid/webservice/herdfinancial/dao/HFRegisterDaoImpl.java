@@ -34,9 +34,9 @@ public class HFRegisterDaoImpl extends BaseDaoImpl implements RegisterDao {
 	public void registerUser(String accountNumber, String firstName,
 			String lastName, String userName, String password)
 			throws SQLException {
-		String sql = "insert into users (accountNumber,"
+		String sql = "INSERT INTO app.hf_users (accountNumber,"
 				+ "firstName, lastName, deviceID, isDeviceAuthorized, checkingBalance, savingsBalance,"
-				+ "username, password, sessionToken, sessionStartTime) values (?,?,?,?,?,?,?,?,?,?,?)";
+				+ "username, password, sessionToken, sessionStartTime) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 		getJdbcTemplate().update(
 				sql,
 				new Object[] { accountNumber, firstName, lastName, "", false,
@@ -44,7 +44,7 @@ public class HFRegisterDaoImpl extends BaseDaoImpl implements RegisterDao {
 	}
 
 	public boolean doesUserNameExist(String userName) throws SQLException {
-		String sql = "select userName from users where userName = ?";
+		String sql = "SELECT userName FROM app.hf_users WHERE userName = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userName);
 		if (rs.next())
 			return true;
@@ -54,7 +54,7 @@ public class HFRegisterDaoImpl extends BaseDaoImpl implements RegisterDao {
 
 	public boolean doesAccountNumberExist(String accountNumber)
 			throws SQLException {
-		String sql = "select accountNumber from users where accountNumber = ?";
+		String sql = "SELECT accountNumber FROM app.hf_users WHERE accountNumber = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, accountNumber);
 		if (rs.next())
 			return true;
