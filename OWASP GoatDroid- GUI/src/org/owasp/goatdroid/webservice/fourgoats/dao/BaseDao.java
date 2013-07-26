@@ -24,7 +24,6 @@ public interface BaseDao {
 	public String getUserNameBySessionToken(String sessionToken)
 			throws Exception;
 
-	public long getSessionStartTime(String sessionToken) throws Exception;
-
-	public boolean isSessionValid(String sessionToken) throws Exception;
+	public boolean isAuthValid(String userName, String authToken)
+			throws Exception;
 }

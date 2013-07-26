@@ -19,8 +19,8 @@
 		<jdbc:script location="classpath:fourgoats-db.sql" />
 	</jdbc:embedded-database>
 
-	<security:http create-session="never" entry-point-ref="authenticationEntryPoint"
-		authentication-manager-ref="authenticationManager">
+	<security:http create-session="stateless"
+		entry-point-ref="authenticationEntryPoint" authentication-manager-ref="authenticationManager">
 		<security:custom-filter ref="customRestFilter"
 			position="BASIC_AUTH_FILTER" />
 		<security:intercept-url pattern="/**" access="ROLE_USER" />

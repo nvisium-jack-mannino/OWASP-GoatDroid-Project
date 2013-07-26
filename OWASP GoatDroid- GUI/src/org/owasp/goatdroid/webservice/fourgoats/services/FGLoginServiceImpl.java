@@ -18,8 +18,6 @@ package org.owasp.goatdroid.webservice.fourgoats.services;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.annotation.Resource;
-
-import org.apache.derby.client.am.SqlException;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
@@ -110,19 +108,19 @@ public class FGLoginServiceImpl implements LoginService {
 		return bean;
 	}
 
-	public LoginBean checkSession(String sessionToken) {
-
-		LoginBean bean = new LoginBean();
+	public boolean validateAuthToken(String userName, String authToken) {
 
 		try {
-			if (dao.isSessionValid(sessionToken))
-				bean.setSuccess(true);
+			if (dao.isAuthValid(userName, authToken))
+				return true;
 			else
-				bean.setSuccess(false);
+				return false;
 		} catch (Exception e) {
-			bean.setSuccess(false);
+			/*
+			 * Some exception handling here
+			 */
+			return false;
 		}
-		return bean;
 	}
 
 	public LoginBean signOut(String sessionToken) {

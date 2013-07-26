@@ -16,12 +16,6 @@
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
 import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
-import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
@@ -29,7 +23,7 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 
 	public boolean checkSessionMatchesUserID(String sessionToken, String userID)
 			throws SQLException {
-		String sql = "select userID from users where sessionToken = ?";
+		String sql = "SELECT userID FROM app.fg_users WHERE sessionToken = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
 		if (rs.next())
 			return true;
@@ -38,7 +32,7 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 	}
 
 	public String getUserID(String sessionToken) throws Exception {
-		String sql = "select userID from users where sessionToken = ?";
+		String sql = "SELECT userID FROM app.fg_users WHERE sessionToken = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
 		rs.next();
 		return rs.getString("userID");
@@ -46,7 +40,7 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 
 	public String getCheckinOwner(String checkinID) throws Exception {
 
-		String sql = "select userID from checkins where checkinID = ?";
+		String sql = "SELECT userID FROM app.fg_checkins WHERE checkinID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
 		if (rs.next())
 			return rs.getString("userID");
@@ -57,8 +51,9 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 	public boolean isCheckinOwnerProfilePublic(String checkinID)
 			throws Exception {
 
-		String sql = "select users.isPublic from checkins inner "
-				+ "join users on checkins.userID = users.userID where checkins.checkinID = ?";
+		String sql = "SELECT app.fg_users.isPublic FROM app.fg_checkins INNER "
+				+ "JOIN app.fg_users ON app.fg_checkins.userID = app.fg_users.userID "
+				+ "WHERE app.fg_checkins.checkinID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
 		if (rs.next())
 			return rs.getBoolean("isPublic");
@@ -68,7 +63,7 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 
 	public boolean isProfilePublic(String userID) throws Exception {
 
-		String sql = "select isPublic from users where userID = ?";
+		String sql = "SELECT isPublic FROM app.fg_users WHERE userID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
 		if (rs.next())
 			return rs.getBoolean("isPublic");
@@ -79,8 +74,8 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 	public boolean isFriend(String userID, String friendUserID)
 			throws Exception {
 
-		String sql = "select userID from friends where (userID = ? and friendUserID = ?) "
-				+ " or (friendUserID = ? and userID = ?)";
+		String sql = "SELECT userID FROM app.fg_friends WHERE (userID = ? AND friendUserID = ?) "
+				+ " OR (friendUserID = ? AND userID = ?)";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
 				new Object[] { userID, friendUserID, friendUserID, userID });
 		if (rs.next())
@@ -91,7 +86,7 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 
 	public boolean isAdmin(String userID) throws Exception {
 
-		String sql = "select isAdmin from users where userID = ?";
+		String sql = "SELECT isAdmin FROM app.fg_users WHERE userID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
 		if (rs.next())
 			return rs.getBoolean("isAdmin");
@@ -102,30 +97,20 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 	public String getUserNameBySessionToken(String sessionToken)
 			throws Exception {
 
-		String sql = "select userName from users where sessionToken = ?";
+		String sql = "SELECT userName FROM app.fg_users WHERE sessionToken = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
 		rs.next();
 		return rs.getString("userName");
 	}
 
-	public long getSessionStartTime(String sessionToken) throws Exception {
+	public boolean isAuthValid(String userName, String authToken)
+			throws Exception {
 
-		String sql = "select sessionStartTime from users where sessionToken = ?";
-		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
-		rs.next();
-		return rs.getLong("sessionStartTime");
-	}
-
-	public boolean isSessionValid(String sessionToken) throws Exception {
-
-		String sql = "select sessionStartTime from users where sessionToken = ?";
-		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
+		String sql = "SELECT * FROM app.fg_users WHERE userName = ? AND authToken = ?";
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
+				new Object[] { userName, authToken });
 		if (rs.next()) {
-			Long sessionStartTime = rs.getLong("sessionStartTime");
-			if (LoginUtils.getTimeMilliseconds() - sessionStartTime < Constants.SESSION_LIFETIME)
-				return true;
-			else
-				return false;
+			return true;
 		} else
 			return false;
 	}
