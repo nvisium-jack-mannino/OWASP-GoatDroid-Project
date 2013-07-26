@@ -21,10 +21,15 @@ package org.owasp.goatdroid.gui.webservice;
 //import org.eclipse.jetty.server.ssl.SslSocketConnector;
 //import org.eclipse.jetty.servlet.ServletContextHandler;
 //import org.eclipse.jetty.servlet.ServletHolder;
+import java.util.EnumSet;
+
+import javax.servlet.DispatcherType;
+
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.server.ssl.SslSocketConnector;
+import org.eclipse.jetty.servlet.FilterMapping;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
@@ -58,7 +63,11 @@ public class WebServiceLauncher {
 		ServletContextHandler context = new ServletContextHandler(server, "/");
 		context.setAliases(true);
 		context.addServlet(sh, "/*");
-
+		context.addFilter(
+				org.springframework.web.filter.DelegatingFilterProxy.class,
+				"/*",
+				EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD));
+		server.setHandler(context);
 		if (isHTTPS) {
 			SslSocketConnector sslConnector = new SslSocketConnector();
 			sslConnector.setPort(10000);
