@@ -40,7 +40,7 @@ public class FGHistoryServiceImpl implements HistoryService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isSessionValid(sessionToken)
+			if (!dao.isAuthValid("", sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
 
@@ -63,7 +63,7 @@ public class FGHistoryServiceImpl implements HistoryService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isSessionValid(sessionToken)
+			if (!dao.isAuthValid("", sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
 			else if (!Validators.validateIDFormat(checkinID))
@@ -102,7 +102,7 @@ public class FGHistoryServiceImpl implements HistoryService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isSessionValid(sessionToken)
+			if (!dao.isAuthValid("", sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
 			else if (!Validators.validateUserNameFormat(userName))

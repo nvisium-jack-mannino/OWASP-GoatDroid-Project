@@ -42,7 +42,7 @@ public class FGFriendServiceImpl implements FriendService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isSessionValid(sessionToken)
+			if (!dao.isAuthValid("", sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
 
@@ -67,7 +67,7 @@ public class FGFriendServiceImpl implements FriendService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isSessionValid(sessionToken)
+			if (!dao.isAuthValid("", sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
 			else if (!Validators.validateUserNameFormat(friendUserName))
@@ -107,7 +107,7 @@ public class FGFriendServiceImpl implements FriendService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isSessionValid(sessionToken)
+			if (!dao.isAuthValid("", sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
 			else if (!Validators.validateUserNameFormat(userName))
@@ -151,7 +151,7 @@ public class FGFriendServiceImpl implements FriendService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isSessionValid(sessionToken)
+			if (!dao.isAuthValid("", sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
 			else if (!Validators.validateUserNameFormat(friendUserName))
@@ -186,7 +186,7 @@ public class FGFriendServiceImpl implements FriendService {
 		FriendProfileBean bean = new FriendProfileBean();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
-			if (!dao.isSessionValid(sessionToken)
+			if (!dao.isAuthValid("", sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
 			else if (!Validators.validateUserNameFormat(friendUserName))
@@ -217,7 +217,7 @@ public class FGFriendServiceImpl implements FriendService {
 		PendingFriendRequestsBean bean = new PendingFriendRequestsBean();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
-			if (!dao.isSessionValid(sessionToken)
+			if (!dao.isAuthValid("", sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
 
@@ -240,7 +240,7 @@ public class FGFriendServiceImpl implements FriendService {
 		PublicUsersBean bean = new PublicUsersBean();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
-			if (!dao.isSessionValid(sessionToken)
+			if (!dao.isAuthValid("", sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
 

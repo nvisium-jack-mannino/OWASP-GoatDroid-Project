@@ -32,7 +32,7 @@
 	</beans:bean>
 
 	<beans:bean id="customRestFilter"
-		class="org.owasp.goatdroid.webservices.filters.RestAuthFilter">
+		class="org.owasp.goatdroid.webservice.filters.RestAuthFilter">
 		<beans:constructor-arg name="authenticationManager"
 			ref="authenticationManager" />
 	</beans:bean>
@@ -43,6 +43,6 @@
 	</security:authentication-manager>
 
 	<beans:bean id="restAuthenticationProvider"
-		class="org.owasp.goatdroid.webservices.authentication.RestAuthenticationProvider" />
+		class="org.owasp.goatdroid.webservice.authentication.RestAuthenticationProvider" />
 
 </beans:beans>

@@ -49,30 +49,24 @@ public class WebServiceLauncher {
 		/*
 		 * This loads the web service
 		 */
+
 		DispatcherServlet dispatcher = new DispatcherServlet();
 		dispatcher
 				.setContextConfigLocation("classpath:/DefaultServlet-servlet.xml");
 		ServletHolder sh = new ServletHolder(dispatcher);
 		server = new Server(10000);
-		ServletContextHandler context = new ServletContextHandler(server, "/",
-				ServletContextHandler.SESSIONS);
-		//context.setInitParameter("contextConfigLocation",
-			//	"classpath*:**/spring/application-context.xml");
+		ServletContextHandler context = new ServletContextHandler(server, "/");
 		context.setAliases(true);
 		context.addServlet(sh, "/*");
 
 		if (isHTTPS) {
 			SslSocketConnector sslConnector = new SslSocketConnector();
-			// sslConnector.setPort(Integer.parseInt(Config
-			// .getWebServiceHTTPSPort()));
 			sslConnector.setPort(10000);
 			sslConnector.setPassword("goatdroid");
 			sslConnector.setKeyPassword("goatdroid");
 			sslConnector.setTrustPassword("goatdroid");
 			sslConnector.setKeystore("keystore/keystore");
 			SelectChannelConnector selectChannelConnector = new SelectChannelConnector();
-			// selectChannelConnector.setPort(Integer.parseInt(config
-			// .getWebServicePort()));
 			server.setConnectors(new Connector[] { sslConnector,
 					selectChannelConnector });
 			server.start();

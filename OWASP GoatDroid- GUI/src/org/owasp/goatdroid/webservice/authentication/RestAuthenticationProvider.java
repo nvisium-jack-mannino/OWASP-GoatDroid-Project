@@ -1,4 +1,4 @@
-package org.owasp.goatdroid.webservices.authentication;
+package org.owasp.goatdroid.webservice.authentication;
 
 import java.util.ArrayList;
 import java.util.List;

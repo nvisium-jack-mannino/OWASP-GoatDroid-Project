@@ -6,10 +6,7 @@ public interface LoginService {
 
 	public LoginBean validateCredentials(String userName, String password);
 
-	public LoginBean validateCredentialsAPI(String userName,
-				String password);
-
-	public LoginBean checkSession(String sessionToken);
+	public LoginBean validateCredentialsAPI(String userName, String password);
 
 	public LoginBean signOut(String sessionToken);
 

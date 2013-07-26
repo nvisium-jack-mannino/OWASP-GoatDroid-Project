@@ -43,7 +43,7 @@ public class FGCommentServiceImpl implements CommentService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isSessionValid(sessionToken)
+			if (!dao.isAuthValid("", sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
 			else if (!Validators.validateCommentFields(comment, checkinID))
@@ -82,7 +82,7 @@ public class FGCommentServiceImpl implements CommentService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isSessionValid(sessionToken)
+			if (!dao.isAuthValid("", sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
 			else if (!Validators.validateIDFormat(commentID))
@@ -113,7 +113,7 @@ public class FGCommentServiceImpl implements CommentService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isSessionValid(sessionToken)
+			if (!dao.isAuthValid("", sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
 			else if (!Validators.validateIDFormat(checkinID))

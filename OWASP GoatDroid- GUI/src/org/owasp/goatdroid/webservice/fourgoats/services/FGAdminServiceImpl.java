@@ -39,7 +39,7 @@ public class FGAdminServiceImpl implements AdminService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isSessionValid(sessionToken)
+			if (!dao.isAuthValid(userName, sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
 			else if (!Validators.validateUserNameFormat(userName))
@@ -71,7 +71,7 @@ public class FGAdminServiceImpl implements AdminService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isSessionValid(sessionToken)
+			if (!dao.isAuthValid(userName, sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
 			else if (!Validators.validateUserNameFormat(userName))
@@ -103,7 +103,7 @@ public class FGAdminServiceImpl implements AdminService {
 		GetUsersAdminBean bean = new GetUsersAdminBean();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
-			if (!dao.isSessionValid(sessionToken)
+			if (!dao.isAuthValid("", sessionToken)
 					|| !Validators.validateSessionTokenFormat(sessionToken))
 				errors.add(Constants.INVALID_SESSION);
 

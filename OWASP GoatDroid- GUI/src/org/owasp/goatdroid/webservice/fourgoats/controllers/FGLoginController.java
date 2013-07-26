@@ -72,7 +72,9 @@ public class FGLoginController {
 	public LoginBean checkSession(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
-			return loginService.checkSession(sessionToken);
+			LoginBean bean = new LoginBean();
+			return bean;
+			//return loginService.checkSession(sessionToken);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);

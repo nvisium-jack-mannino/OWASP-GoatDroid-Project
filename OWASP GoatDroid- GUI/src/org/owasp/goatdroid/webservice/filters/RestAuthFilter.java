@@ -1,4 +1,4 @@
-package org.owasp.goatdroid.webservices.filters;
+package org.owasp.goatdroid.webservice.filters;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -32,7 +32,7 @@ public class RestAuthFilter extends GenericFilterBean {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
-
+		request.getParameterNames();
 	}
 
 	public String[] decodeHeader(String authorization) {
