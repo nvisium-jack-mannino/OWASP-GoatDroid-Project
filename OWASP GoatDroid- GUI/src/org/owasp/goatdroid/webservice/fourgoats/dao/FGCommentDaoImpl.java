@@ -104,15 +104,11 @@ public class FGCommentDaoImpl extends BaseDaoImpl implements CommentDao {
 		String sql = "SELECT app.fg_venues.venueName, app.fg_venues.venueWebsite FROM app.fg_venues INNER "
 				+ "JOIN app.fg_checkins ON app.fg_venues.venueID = app.fg_checkins.venueID WHERE app.fg_checkins.checkinID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
-
 		HashMap<String, String> venueInfo = new HashMap<String, String>();
-
 		while (rs.next()) {
-
 			venueInfo.put("venueName", rs.getString("venueName"));
 			venueInfo.put("venueWebsite", rs.getString("venueWebsite"));
 		}
-
 		return venueInfo;
 	}
 }

@@ -28,7 +28,8 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.owasp.goatdroid.gui.Utils;
-import org.owasp.goatdroid.webservice.filters.AuthenticationFilter;
+import org.owasp.goatdroid.webservice.interceptors.AuthenticationInterceptor;
+import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -59,8 +60,6 @@ public class WebServiceLauncher {
 		ServletContextHandler context = new ServletContextHandler(server, "/");
 		context.setAliases(true);
 		context.addServlet(sh, "/*");
-		context.addFilter(AuthenticationFilter.class, "/*",
-				EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD));
 		server.setHandler(context);
 		if (isHTTPS) {
 			SslSocketConnector sslConnector = new SslSocketConnector();
