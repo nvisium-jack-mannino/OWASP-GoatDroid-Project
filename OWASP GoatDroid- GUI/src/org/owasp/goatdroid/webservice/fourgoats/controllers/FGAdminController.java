@@ -25,10 +25,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.bean.AdminBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.GetUsersAdminBean;
+import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGAdminServiceImpl;
 
 @Controller
-@RequestMapping(value = "fourgoats/api/v1/admin", produces = "application/json")
+@RequestMapping(value = "fourgoats/api/v1/priv/admin", produces = "application/json")
 public class FGAdminController {
 
 	FGAdminServiceImpl adminService;
@@ -76,6 +77,19 @@ public class FGAdminController {
 			return adminService.getUsers(sessionToken);
 		} catch (NullPointerException e) {
 			GetUsersAdminBean bean = new GetUsersAdminBean();
+			bean.setSuccess(false);
+			return bean;
+		}
+	}
+
+	@RequestMapping(value = "sign_out", method = RequestMethod.POST)
+	@ResponseBody
+	public LoginBean signOut(
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
+		try {
+			return adminService.signOut(sessionToken);
+		} catch (NullPointerException e) {
+			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);
 			return bean;
 		}

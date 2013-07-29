@@ -25,7 +25,7 @@ import org.owasp.goatdroid.webservice.herdfinancial.bean.ForgotPasswordBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFForgotPasswordServiceImpl;
 
 @Controller
-@RequestMapping(value = "herdfinancial/api/v1/forgot_password", produces = "application/json")
+@RequestMapping(value = "herdfinancial/api/v1/pub/forgot_password", produces = "application/json")
 public class HFForgotPasswordController {
 
 	HFForgotPasswordServiceImpl forgotPasswordService;

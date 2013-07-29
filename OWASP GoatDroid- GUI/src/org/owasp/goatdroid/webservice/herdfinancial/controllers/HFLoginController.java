@@ -28,7 +28,7 @@ import org.owasp.goatdroid.webservice.herdfinancial.bean.LoginBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFLoginServiceImpl;
 
 @Controller
-@RequestMapping(value = "herdfinancial/api/v1/login", produces = "application/json")
+@RequestMapping(value = "herdfinancial/api/v1/pub/login", produces = "application/json")
 public class HFLoginController {
 
 	HFLoginServiceImpl loginService;
@@ -73,19 +73,6 @@ public class HFLoginController {
 		try {
 			return loginService.isSessionValidOrDeviceAuthorized(sessionToken,
 					deviceID);
-		} catch (NullPointerException e) {
-			LoginBean bean = new LoginBean();
-			bean.setSuccess(false);
-			return bean;
-		}
-	}
-
-	@RequestMapping(value = "sign_out", method = RequestMethod.GET)
-	@ResponseBody
-	public LoginBean signOut(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {
-		try {
-			return loginService.signOut(sessionToken);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);

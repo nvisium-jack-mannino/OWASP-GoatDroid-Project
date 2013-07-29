@@ -4,9 +4,6 @@ import java.sql.SQLException;
 
 public interface LoginDao {
 
-	public boolean isDevicePermanentlyAuthorized(String deviceID)
-			throws SQLException;
-
 	public void updateSession(String userName, int sessionToken,
 			long sessionStartTime) throws SQLException;
 
@@ -22,6 +19,6 @@ public interface LoginDao {
 
 	public String getAccountNumber(int sessionToken) throws SQLException;
 
-	public void terminateSession(int sessionToken) throws SQLException;
-
+	public boolean isDevicePermanentlyAuthorized(String deviceID)
+			throws SQLException;
 }

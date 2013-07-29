@@ -23,6 +23,7 @@ import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.AdminBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.GetUsersAdminBean;
+import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGAdminDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -117,6 +118,28 @@ public class FGAdminServiceImpl implements AdminService {
 				} else {
 					errors.add(Constants.NOT_AUTHORIZED);
 				}
+			}
+		} catch (Exception e) {
+			errors.add(Constants.UNEXPECTED_ERROR);
+		} finally {
+			bean.setErrors(errors);
+		}
+		return bean;
+	}
+
+	public LoginBean signOut(String sessionToken) {
+
+		LoginBean bean = new LoginBean();
+		ArrayList<String> errors = new ArrayList<String>();
+
+		try {
+			if (!dao.isAuthValid("", sessionToken)
+					|| !Validators.validateSessionTokenFormat(sessionToken))
+				errors.add(Constants.INVALID_SESSION);
+
+			if (errors.size() == 0) {
+				dao.terminateSession(sessionToken);
+				bean.setSuccess(true);
 			}
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);

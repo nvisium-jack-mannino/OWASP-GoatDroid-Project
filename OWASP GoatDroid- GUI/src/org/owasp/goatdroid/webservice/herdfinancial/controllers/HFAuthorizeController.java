@@ -27,7 +27,7 @@ import org.owasp.goatdroid.webservice.herdfinancial.bean.AuthorizeBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFAuthorizeServiceImpl;
 
 @Controller
-@RequestMapping(value = "herdfinancial/api/v1/authorize", produces = "application/json")
+@RequestMapping(value = "herdfinancial/api/v1/priv/authorize", produces = "application/json")
 public class HFAuthorizeController {
 
 	HFAuthorizeServiceImpl authorizeService;

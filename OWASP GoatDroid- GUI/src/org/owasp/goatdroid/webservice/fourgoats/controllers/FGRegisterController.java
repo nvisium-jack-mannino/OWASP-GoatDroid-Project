@@ -25,7 +25,7 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.RegisterBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGRegisterServiceImpl;
 
 @Controller
-@RequestMapping(value = "fourgoats/api/v1/register", produces = "application/json")
+@RequestMapping(value = "fourgoats/api/v1/pub/register", produces = "application/json")
 public class FGRegisterController {
 
 	FGRegisterServiceImpl registerService;

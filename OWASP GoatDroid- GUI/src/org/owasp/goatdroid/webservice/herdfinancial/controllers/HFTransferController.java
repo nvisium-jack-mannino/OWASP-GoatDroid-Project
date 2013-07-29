@@ -27,7 +27,7 @@ import org.owasp.goatdroid.webservice.herdfinancial.bean.TransferBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFTransferServiceImpl;
 
 @Controller
-@RequestMapping(value = "herdfinancial/api/v1/transfer", produces = "application/json")
+@RequestMapping(value = "herdfinancial/api/v1/priv/transfer", produces = "application/json")
 public class HFTransferController {
 
 	HFTransferServiceImpl transferService;

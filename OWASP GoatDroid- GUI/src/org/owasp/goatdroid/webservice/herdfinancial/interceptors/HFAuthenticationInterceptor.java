@@ -1,4 +1,4 @@
-package org.owasp.goatdroid.webservice.interceptors;
+package org.owasp.goatdroid.webservice.herdfinancial.interceptors;
 
 import java.io.IOException;
 
@@ -36,8 +36,8 @@ import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-@Component("authenticationFilter")
-public class AuthenticationInterceptor implements HandlerInterceptor {
+@Component()
+public class HFAuthenticationInterceptor implements HandlerInterceptor {
 
 	@Autowired
 	FGLoginServiceImpl loginService;
@@ -111,6 +111,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 			 * return 401 unauthorized
 			 */
 		}
-		return true;
+		httpServletResponse.getWriter().write("things");
+		return false;
 	}
 }

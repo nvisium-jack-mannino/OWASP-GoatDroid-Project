@@ -25,7 +25,7 @@ import org.owasp.goatdroid.webservice.herdfinancial.bean.RegisterBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFRegisterServiceImpl;
 
 @Controller
-@RequestMapping(value = "herdfinancial/api/v1/register", produces = "application/json")
+@RequestMapping(value = "herdfinancial/api/v1/pub/register", produces = "application/json")
 public class HFRegisterController {
 
 	HFRegisterServiceImpl registerService;

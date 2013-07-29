@@ -28,7 +28,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.owasp.goatdroid.gui.Utils;
-import org.owasp.goatdroid.webservice.interceptors.AuthenticationInterceptor;
+import org.owasp.goatdroid.webservice.fourgoats.interceptors.FGAuthenticationInterceptor;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
@@ -54,7 +54,7 @@ public class WebServiceLauncher {
 		 */
 		DispatcherServlet dispatcher = new DispatcherServlet();
 		dispatcher
-				.setContextConfigLocation("classpath:/DefaultServlet-servlet.xml");
+				.setContextConfigLocation("classpath:/spring-context.xml");
 		ServletHolder sh = new ServletHolder(dispatcher);
 		server = new Server(10000);
 		ServletContextHandler context = new ServletContextHandler(server, "/");

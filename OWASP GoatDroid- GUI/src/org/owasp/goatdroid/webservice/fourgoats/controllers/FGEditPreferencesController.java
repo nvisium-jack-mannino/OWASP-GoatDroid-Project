@@ -28,7 +28,7 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.GetPreferencesBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGEditPreferencesServiceImpl;
 
 @Controller
-@RequestMapping(value = "fourgoats/api/v1/preferences", produces = "application/json")
+@RequestMapping(value = "fourgoats/api/v1/priv/preferences", produces = "application/json")
 public class FGEditPreferencesController {
 
 	FGEditPreferencesServiceImpl editPreferencesService;

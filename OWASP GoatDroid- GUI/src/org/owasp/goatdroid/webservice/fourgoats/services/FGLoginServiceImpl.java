@@ -122,26 +122,4 @@ public class FGLoginServiceImpl implements LoginService {
 			return false;
 		}
 	}
-
-	public LoginBean signOut(String sessionToken) {
-
-		LoginBean bean = new LoginBean();
-		ArrayList<String> errors = new ArrayList<String>();
-
-		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-
-			if (errors.size() == 0) {
-				dao.terminateSession(sessionToken);
-				bean.setSuccess(true);
-			}
-		} catch (Exception e) {
-			errors.add(Constants.UNEXPECTED_ERROR);
-		} finally {
-			bean.setErrors(errors);
-		}
-		return bean;
-	}
 }

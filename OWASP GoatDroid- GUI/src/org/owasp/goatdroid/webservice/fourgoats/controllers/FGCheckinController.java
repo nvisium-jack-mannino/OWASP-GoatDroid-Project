@@ -27,7 +27,7 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.CheckinBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGCheckinServiceImpl;
 
 @Controller
-@RequestMapping(value = "fourgoats/api/v1/checkin", produces = "application/json")
+@RequestMapping(value = "fourgoats/api/v1/priv/checkin", produces = "application/json")
 public class FGCheckinController {
 
 	FGCheckinServiceImpl checkinService;

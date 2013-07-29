@@ -8,6 +8,4 @@ public interface LoginService {
 
 	public LoginBean validateCredentialsAPI(String userName, String password);
 
-	public LoginBean signOut(String sessionToken);
-
 }

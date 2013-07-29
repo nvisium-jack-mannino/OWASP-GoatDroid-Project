@@ -28,7 +28,7 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.VenueBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGVenueServiceImpl;
 
 @Controller
-@RequestMapping(value = "fourgoats/api/v1/venues", produces = "application/json")
+@RequestMapping(value = "fourgoats/api/v1/priv/venues", produces = "application/json")
 public class FGVenueController {
 
 	FGVenueServiceImpl venueService;

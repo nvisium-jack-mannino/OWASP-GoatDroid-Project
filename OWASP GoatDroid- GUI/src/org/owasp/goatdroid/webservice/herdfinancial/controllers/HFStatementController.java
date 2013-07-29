@@ -27,7 +27,7 @@ import org.owasp.goatdroid.webservice.herdfinancial.bean.StatementBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFStatementServiceImpl;
 
 @Controller
-@RequestMapping(value = "herdfinancial/api/v1/statements", produces = "application/json")
+@RequestMapping(value = "herdfinancial/api/v1/priv/statements", produces = "application/json")
 public class HFStatementController {
 
 	HFStatementServiceImpl statementService;

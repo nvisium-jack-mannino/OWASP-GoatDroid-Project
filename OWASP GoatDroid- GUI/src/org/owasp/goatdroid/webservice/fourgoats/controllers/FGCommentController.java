@@ -29,7 +29,7 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.CommentBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGCommentServiceImpl;
 
 @Controller
-@RequestMapping(value = "fourgoats/api/v1/comments", produces = "application/json")
+@RequestMapping(value = "fourgoats/api/v1/priv/comments", produces = "application/json")
 public class FGCommentController {
 
 	FGCommentServiceImpl commentService;

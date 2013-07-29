@@ -27,7 +27,7 @@ import org.owasp.goatdroid.webservice.herdfinancial.bean.SecretQuestionBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFSecretQuestionServiceImpl;
 
 @Controller
-@RequestMapping(value = "herdfinancial/api/v1/secret_questions", produces = "application/json")
+@RequestMapping(value = "herdfinancial/api/v1/priv/secret_questions", produces = "application/json")
 public class HFSecretQuestionController {
 
 	HFSecretQuestionServiceImpl secretQuestionService;

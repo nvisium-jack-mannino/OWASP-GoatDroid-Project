@@ -27,7 +27,7 @@ import org.owasp.goatdroid.webservice.herdfinancial.bean.BalanceBean;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFBalanceServiceImpl;
 
 @Controller
-@RequestMapping(value = "herdfinancial/api/v1/balances", produces = "application/json")
+@RequestMapping(value = "herdfinancial/api/v1/priv/balances", produces = "application/json")
 public class HFBalanceController {
 
 	HFBalanceServiceImpl balanceService;

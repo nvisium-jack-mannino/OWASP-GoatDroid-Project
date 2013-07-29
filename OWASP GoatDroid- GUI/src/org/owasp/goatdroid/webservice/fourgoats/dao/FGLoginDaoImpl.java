@@ -73,12 +73,6 @@ public class FGLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 		return preferences;
 	}
 
-	public void terminateSession(String sessionToken) {
-
-		String sql = "UPDATE app.users SET sessionToken = '0', sessionStartTime = 0 WHERE sessionToken = ?";
-		getJdbcTemplate().update(sql, sessionToken);
-	}
-
 	public String getSessionToken(String userName) {
 		String sql = "SELECT sessionToken FROM app.users WHERE username = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userName);

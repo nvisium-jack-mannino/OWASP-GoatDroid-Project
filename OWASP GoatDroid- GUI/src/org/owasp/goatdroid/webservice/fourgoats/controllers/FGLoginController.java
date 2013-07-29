@@ -27,7 +27,7 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGLoginServiceImpl;
 
 @Controller
-@RequestMapping(value = "fourgoats/api/v1/login", produces = "application/json")
+@RequestMapping(value = "fourgoats/api/v1/pub/login", produces = "application/json")
 public class FGLoginController {
 
 	FGLoginServiceImpl loginService;
@@ -60,34 +60,6 @@ public class FGLoginController {
 			@RequestParam(value = "password", required = true) String password) {
 		try {
 			return loginService.validateCredentialsAPI(userName, password);
-		} catch (NullPointerException e) {
-			LoginBean bean = new LoginBean();
-			bean.setSuccess(false);
-			return bean;
-		}
-	}
-
-	@RequestMapping(value = "check_session", method = RequestMethod.GET)
-	@ResponseBody
-	public LoginBean checkSession(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
-		try {
-			LoginBean bean = new LoginBean();
-			return bean;
-			//return loginService.checkSession(sessionToken);
-		} catch (NullPointerException e) {
-			LoginBean bean = new LoginBean();
-			bean.setSuccess(false);
-			return bean;
-		}
-	}
-
-	@RequestMapping(value = "sign_out", method = RequestMethod.POST)
-	@ResponseBody
-	public LoginBean signOut(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
-		try {
-			return loginService.signOut(sessionToken);
 		} catch (NullPointerException e) {
 			LoginBean bean = new LoginBean();
 			bean.setSuccess(false);

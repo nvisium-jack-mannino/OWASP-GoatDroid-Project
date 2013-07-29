@@ -27,7 +27,7 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGHistoryServiceImpl;
 
 @Controller
-@RequestMapping(value = "fourgoats/api/v1/history", produces = "application/json")
+@RequestMapping(value = "fourgoats/api/v1/priv/history", produces = "application/json")
 public class FGHistoryController {
 
 	FGHistoryServiceImpl historyService;

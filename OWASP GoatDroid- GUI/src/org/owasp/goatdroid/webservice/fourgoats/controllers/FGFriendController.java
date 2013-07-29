@@ -32,7 +32,7 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.PublicUsersBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGFriendServiceImpl;
 
 @Controller
-@RequestMapping(value = "fourgoats/api/v1/friends", produces = "application/json")
+@RequestMapping(value = "fourgoats/api/v1/priv/friends", produces = "application/json")
 public class FGFriendController {
 
 	FGFriendServiceImpl friendService;

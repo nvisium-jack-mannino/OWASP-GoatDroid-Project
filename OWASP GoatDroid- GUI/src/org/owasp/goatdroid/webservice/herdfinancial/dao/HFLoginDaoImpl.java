@@ -99,10 +99,4 @@ public class HFLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 		rs.next();
 		return rs.getString("accountNumber");
 	}
-
-	public void terminateSession(int sessionToken) throws SQLException {
-
-		String sql = "UPDATE app.hf_users SET sessionToken = 0, sessionStartTime = 0 WHERE sessionToken = ?";
-		getJdbcTemplate().update(sql, sessionToken);
-	}
 }

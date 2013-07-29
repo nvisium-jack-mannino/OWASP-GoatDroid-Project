@@ -27,7 +27,7 @@ import org.owasp.goatdroid.webservice.fourgoats.bean.RewardBean;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGRewardServiceImpl;
 
 @Controller
-@RequestMapping(value = "fourgoats/api/v1/rewards", produces = "application/json")
+@RequestMapping(value = "fourgoats/api/v1/priv/rewards", produces = "application/json")
 public class FGRewardController {
 
 	FGRewardServiceImpl rewardService;
