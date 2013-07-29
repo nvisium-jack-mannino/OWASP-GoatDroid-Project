@@ -86,7 +86,6 @@ public class FGAuthenticationInterceptor implements HandlerInterceptor {
 				else
 					token += ch;
 			}
-
 			/*
 			 * Check to make sure we had a username and a token, neither can be
 			 * blank
@@ -98,20 +97,16 @@ public class FGAuthenticationInterceptor implements HandlerInterceptor {
 				 */
 				boolean isAuthValid = loginService.validateAuthToken(userName,
 						token);
+				if (isAuthValid)
+					return true;
+				else
+					return false;
 
-				/*
-				 * If valid, pass on the filter chain
-				 */
-			} else {
-				// Return 401 unauthorized, bad auth string
-			}
-
-		} else {
-			/*
-			 * return 401 unauthorized
-			 */
+			} else
+				return false;
 		}
-		httpServletResponse.getWriter().write("things");
-		return false;
+		else
+			return false;
+
 	}
 }
