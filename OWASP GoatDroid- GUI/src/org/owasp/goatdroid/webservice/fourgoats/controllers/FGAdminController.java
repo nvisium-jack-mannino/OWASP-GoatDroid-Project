@@ -15,18 +15,21 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
-import org.springframework.web.bind.annotation.RequestParam;
+import javax.servlet.http.HttpServletRequest;
+
+import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.UserPassModel;
+import org.owasp.goatdroid.webservice.fourgoats.services.FGAdminServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.model.AdminModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.GetUsersAdminModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.LoginModel;
-import org.owasp.goatdroid.webservice.fourgoats.services.FGAdminServiceImpl;
 
 @Controller
 @RequestMapping(value = "fourgoats/api/v1/priv/admin", produces = "application/json")
@@ -35,60 +38,63 @@ public class FGAdminController {
 	@Autowired
 	FGAdminServiceImpl adminService;
 
-	@RequestMapping(value = "delete_user", method = RequestMethod.POST)
+	@RequestMapping(value = "delete-user", method = RequestMethod.POST)
 	@ResponseBody
-	public AdminModel addComment(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
-			@RequestParam(value = "userName", required = true) String userName) {
+	public BaseModel deleteUser(HttpServletRequest request,
+			@RequestParam(value = "username", required = true) String userName) {
 		try {
-			
-			return adminService.deleteUser(sessionToken, userName);
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
+			return adminService.deleteUser(authHeader.getAuthToken(), userName);
 		} catch (NullPointerException e) {
-			AdminModel bean = new AdminModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel model = new BaseModel();
+			model.setSuccess(false);
+			return model;
 		}
 	}
 
-	@RequestMapping(value = "reset_password", method = RequestMethod.POST)
+	@RequestMapping(value = "reset-password", method = RequestMethod.POST)
 	@ResponseBody
-	public AdminModel addComment(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
-			@RequestParam(value = "userName", required = true) String userName,
-			@RequestParam(value = "newPassword", required = true) String newPassword) {
+	public BaseModel resetPassword(HttpServletRequest request, Model model,
+			@ModelAttribute("userPassModel") UserPassModel userPass,
+			BindingResult result) {
 		try {
-			return adminService.resetPassword(sessionToken, userName,
-					newPassword);
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
+			return adminService.resetPassword(authHeader.getAuthToken(),
+					userPass.getUsername(), userPass.getPassword());
 		} catch (NullPointerException e) {
-			AdminModel bean = new AdminModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new BaseModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 
-	@RequestMapping(value = "get_users", method = RequestMethod.GET)
+	@RequestMapping(value = "get-users", method = RequestMethod.GET)
 	@ResponseBody
-	public GetUsersAdminModel addComment(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
+	public BaseModel getUsers(HttpServletRequest request) {
 		try {
-			return adminService.getUsers(sessionToken);
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
+			return adminService.getUsers(authHeader.getAuthToken());
 		} catch (NullPointerException e) {
-			GetUsersAdminModel bean = new GetUsersAdminModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new BaseModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 
-	@RequestMapping(value = "sign_out", method = RequestMethod.POST)
+	@RequestMapping(value = "sign-out", method = RequestMethod.POST)
 	@ResponseBody
-	public LoginModel signOut(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
+	public BaseModel signOut(HttpServletRequest request) {
 		try {
-			return adminService.signOut(sessionToken);
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
+			return adminService.signOut(authHeader.getAuthToken());
 		} catch (NullPointerException e) {
-			LoginModel bean = new LoginModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new BaseModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 }

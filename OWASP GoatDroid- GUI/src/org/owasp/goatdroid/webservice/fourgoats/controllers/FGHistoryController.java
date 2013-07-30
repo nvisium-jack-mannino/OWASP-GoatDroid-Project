@@ -48,13 +48,11 @@ public class FGHistoryController {
 		}
 	}
 
-	@RequestMapping(value = "get_user_history/{userName}", method = RequestMethod.GET)
+	@RequestMapping(value = "get-user-history/{userName}", method = RequestMethod.GET)
 	@ResponseBody
 	public HistoryModel getHistory(HttpServletRequest request,
 			@PathVariable(value = "userName") String userName) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
-					.getAttribute("authHeader");
 			return historyService.getUserHistory(userName);
 		} catch (NullPointerException e) {
 			HistoryModel bean = new HistoryModel();

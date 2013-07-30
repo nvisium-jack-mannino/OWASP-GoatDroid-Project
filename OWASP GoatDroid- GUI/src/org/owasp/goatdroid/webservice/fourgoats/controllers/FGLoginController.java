@@ -43,7 +43,7 @@ public class FGLoginController {
 				userPass.getPassword());
 	}
 
-	@RequestMapping(value = "validate_api", method = RequestMethod.POST)
+	@RequestMapping(value = "validate-api", method = RequestMethod.POST)
 	@ResponseBody
 	public LoginModel validateCredentialsAPI(Model model,
 			@ModelAttribute("userPassModel") UserPassModel userPass,

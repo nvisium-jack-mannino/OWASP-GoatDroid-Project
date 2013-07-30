@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGAdminDaoImpl;
 import org.owasp.goatdroid.webservice.fourgoats.model.AdminModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
 import org.owasp.goatdroid.webservice.fourgoats.model.GetUsersAdminModel;
 import org.owasp.goatdroid.webservice.fourgoats.model.LoginModel;
 import org.springframework.stereotype.Service;
@@ -32,9 +33,9 @@ public class FGAdminServiceImpl implements AdminService {
 	@Resource
 	FGAdminDaoImpl dao;
 
-	public AdminModel deleteUser(String sessionToken, String userName) {
+	public BaseModel deleteUser(String sessionToken, String userName) {
 
-		AdminModel bean = new AdminModel();
+		BaseModel base = new BaseModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -43,21 +44,21 @@ public class FGAdminServiceImpl implements AdminService {
 			 */
 			if (dao.isAdmin(sessionToken)) {
 				dao.deleteUser(userName);
-				bean.setSuccess(true);
+				base.setSuccess(true);
 			} else
 				errors.add(Constants.NOT_AUTHORIZED);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			base.setErrors(errors);
 		}
-		return bean;
+		return base;
 	}
 
-	public AdminModel resetPassword(String sessionToken, String userName,
+	public BaseModel resetPassword(String sessionToken, String userName,
 			String newPassword) {
 
-		AdminModel bean = new AdminModel();
+		BaseModel base = new BaseModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -67,51 +68,51 @@ public class FGAdminServiceImpl implements AdminService {
 			 */
 			if (dao.isAdmin(sessionToken)) {
 				dao.updatePassword(userName, newPassword);
-				bean.setSuccess(true);
+				base.setSuccess(true);
 			} else
 				errors.add(Constants.NOT_AUTHORIZED);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			base.setErrors(errors);
 		}
-		return bean;
+		return base;
 	}
 
 	public GetUsersAdminModel getUsers(String sessionToken) {
 
-		GetUsersAdminModel bean = new GetUsersAdminModel();
+		GetUsersAdminModel model = new GetUsersAdminModel();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
 			/*
 			 * If the user has the admin role then we proceed
 			 */
 			if (dao.isAdmin(sessionToken)) {
-				bean.setUsers(dao.getUsers());
-				bean.setSuccess(true);
+				model.setUsers(dao.getUsers());
+				model.setSuccess(true);
 			} else
 				errors.add(Constants.NOT_AUTHORIZED);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			model.setErrors(errors);
 		}
-		return bean;
+		return model;
 	}
 
-	public LoginModel signOut(String sessionToken) {
+	public BaseModel signOut(String sessionToken) {
 
-		LoginModel bean = new LoginModel();
+		BaseModel base = new BaseModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
 			dao.terminateAuth(sessionToken);
-			bean.setSuccess(true);
+			base.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			base.setErrors(errors);
 		}
-		return bean;
+		return base;
 	}
 }

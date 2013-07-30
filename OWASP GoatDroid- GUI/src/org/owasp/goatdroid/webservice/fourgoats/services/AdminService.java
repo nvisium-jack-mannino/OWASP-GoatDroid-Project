@@ -1,17 +1,16 @@
 package org.owasp.goatdroid.webservice.fourgoats.services;
 
-import org.owasp.goatdroid.webservice.fourgoats.model.AdminModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
 import org.owasp.goatdroid.webservice.fourgoats.model.GetUsersAdminModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.LoginModel;
 
 public interface AdminService {
 
-	public AdminModel deleteUser(String sessionToken, String userName);
+	public BaseModel deleteUser(String authToken, String userName);
 
-	public AdminModel resetPassword(String sessionToken, String userName,
+	public BaseModel resetPassword(String authToken, String userName,
 			String newPassword);
 
-	public GetUsersAdminModel getUsers(String sessionToken);
+	public GetUsersAdminModel getUsers(String authToken);
 
-	public LoginModel signOut(String sessionToken);
+	public BaseModel signOut(String authToken);
 }
