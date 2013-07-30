@@ -105,7 +105,7 @@ public class FGAdminServiceImpl implements AdminService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			dao.terminateSession(sessionToken);
+			dao.terminateAuth(sessionToken);
 			bean.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);

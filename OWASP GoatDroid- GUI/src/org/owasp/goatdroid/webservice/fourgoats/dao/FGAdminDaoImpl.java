@@ -34,10 +34,10 @@ public class FGAdminDaoImpl extends BaseDaoImpl implements AdminDao {
 		setDataSource(dataSource);
 	}
 
-	public boolean isAdmin(String sessionToken) throws Exception {
+	public boolean isAdmin(String authToken) throws Exception {
 
-		String sql = "SELECT * FROM app.fg_users WHERE sessionToken = ? AND isAdmin = true";
-		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
+		String sql = "SELECT * FROM app.fg_users WHERE authToken = ? AND isAdmin = true";
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, authToken);
 		if (rs.next())
 			return true;
 		else
@@ -76,9 +76,9 @@ public class FGAdminDaoImpl extends BaseDaoImpl implements AdminDao {
 		return users;
 	}
 
-	public void terminateSession(String sessionToken) {
+	public void terminateAuth(String authToken) {
 
-		String sql = "UPDATE app.fg_users SET sessionToken = '0', sessionStartTime = 0 WHERE sessionToken = ?";
-		getJdbcTemplate().update(sql, sessionToken);
+		String sql = "UPDATE app.fg_users SET authToken = '0', authStartTime = 0 WHERE authToken = ?";
+		getJdbcTemplate().update(sql, authToken);
 	}
 }

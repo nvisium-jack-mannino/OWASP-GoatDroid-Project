@@ -201,10 +201,10 @@ public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
 			return false;
 	}
 
-	public String getUserID(String sessionToken) throws SQLException {
+	public String getUserID(String authToken) throws SQLException {
 
-		String sql = "SELECT userID FROM app.fg_users WHERE sessionToken = ?";
-		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
+		String sql = "SELECT userID FROM app.fg_users WHERE authToken = ?";
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, authToken);
 		rs.next();
 		return rs.getString("userID");
 	}

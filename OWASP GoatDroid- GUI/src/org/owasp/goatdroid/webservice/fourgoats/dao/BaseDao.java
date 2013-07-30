@@ -4,10 +4,10 @@ import java.sql.SQLException;
 
 public interface BaseDao {
 
-	public boolean checkSessionMatchesUserID(String sessionToken, String userID)
+	public boolean checkAuthMatchesUserID(String authToken, String userID)
 			throws SQLException;
 
-	public String getUserID(String sessionToken) throws Exception;
+	public String getUserID(String authToken) throws Exception;
 
 	public String getCheckinOwner(String checkinID) throws Exception;
 
@@ -21,8 +21,7 @@ public interface BaseDao {
 
 	public boolean isAdmin(String userID) throws Exception;
 
-	public String getUserNameBySessionToken(String sessionToken)
-			throws Exception;
+	public String getUserNameByAuthToken(String authToken) throws Exception;
 
 	public boolean isAuthValid(String userName, String authToken)
 			throws Exception;

@@ -21,10 +21,10 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 
-	public boolean checkSessionMatchesUserID(String sessionToken, String userID)
+	public boolean checkAuthMatchesUserID(String authToken, String userID)
 			throws SQLException {
 		String sql = "SELECT userID FROM app.fg_users WHERE authToken = ?";
-		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, authToken);
 		if (rs.next())
 			return true;
 		else
@@ -96,11 +96,10 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 			return false;
 	}
 
-	public String getUserNameBySessionToken(String sessionToken)
-			throws Exception {
+	public String getUserNameByAuthToken(String authToken) throws Exception {
 
-		String sql = "SELECT userName FROM app.fg_users WHERE sessionToken = ?";
-		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
+		String sql = "SELECT userName FROM app.fg_users WHERE authToken = ?";
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, authToken);
 		rs.next();
 		return rs.getString("userName");
 	}

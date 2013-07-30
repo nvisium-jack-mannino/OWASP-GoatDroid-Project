@@ -7,7 +7,7 @@ import org.owasp.goatdroid.webservice.fourgoats.model.UserModel;
 
 public interface AdminDao {
 
-	public boolean isAdmin(String sessionToken) throws Exception;
+	public boolean isAdmin(String authToken) throws Exception;
 
 	public void deleteUser(String userName) throws Exception;
 
@@ -16,6 +16,6 @@ public interface AdminDao {
 
 	public ArrayList<UserModel> getUsers() throws Exception;
 
-	public void terminateSession(String sessionToken) throws SQLException;
+	public void terminateAuth(String AuthToken) throws SQLException;
 
 }

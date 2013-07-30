@@ -15,14 +15,17 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
-import org.springframework.web.bind.annotation.RequestParam;
+import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.RegisterModel;
+import org.owasp.goatdroid.webservice.fourgoats.services.FGRegisterServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.owasp.goatdroid.webservice.fourgoats.model.RegisterModel;
-import org.owasp.goatdroid.webservice.fourgoats.services.FGRegisterServiceImpl;
 
 @Controller
 @RequestMapping(value = "fourgoats/api/v1/pub/register", produces = "application/json")
@@ -33,18 +36,17 @@ public class FGRegisterController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public RegisterModel doRegistration(
-			@RequestParam(value = "firstName", required = true) String firstName,
-			@RequestParam(value = "lastName", required = true) String lastName,
-			@RequestParam(value = "userName", required = true) String userName,
-			@RequestParam(value = "password", required = true) String password) {
+	public BaseModel doRegistration(Model model,
+			@ModelAttribute("registerModel") RegisterModel register,
+			BindingResult result) {
 		try {
-			return registerService.registerUser(firstName, lastName, userName,
-					password);
+			return registerService.registerUser(register.getFirstname(),
+					register.getLastname(), register.getUsername(),
+					register.getPassword());
 		} catch (NullPointerException e) {
-			RegisterModel bean = new RegisterModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new BaseModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 }

@@ -35,7 +35,7 @@ public class FGLoginServiceImpl implements LoginService {
 
 	public LoginModel validateCredentials(String userName, String password) {
 
-		LoginModel bean = new LoginModel();
+		LoginModel login = new LoginModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -50,10 +50,10 @@ public class FGLoginServiceImpl implements LoginService {
 					String authToken = LoginUtils.generateSaltedSHA512Hash(
 							userNameAndTime, Salts.SESSION_TOKEN_SALT);
 					dao.updateAuthInformation(userName, authToken, 0);
-					bean.setPreferences(dao.getPreferences(userName));
-					bean.setUsername(userName);
-					bean.setAuthToken(authToken);
-					bean.setSuccess(true);
+					login.setPreferences(dao.getPreferences(userName));
+					login.setUsername(userName);
+					login.setAuthToken(authToken);
+					login.setSuccess(true);
 				} else
 					errors.add(Constants.LOGIN_CREDENTIALS_INVALID);
 			}
@@ -64,15 +64,15 @@ public class FGLoginServiceImpl implements LoginService {
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			login.setErrors(errors);
 
 		}
-		return bean;
+		return login;
 	}
 
 	public LoginModel validateCredentialsAPI(String userName, String password) {
 
-		LoginModel bean = new LoginModel();
+		LoginModel login = new LoginModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -87,19 +87,19 @@ public class FGLoginServiceImpl implements LoginService {
 						String sessionToken = LoginUtils
 								.generateSaltedSHA512Hash(userNameAndTime,
 										Salts.SESSION_TOKEN_SALT);
-						bean.setAuthToken(sessionToken);
+						login.setAuthToken(sessionToken);
 					} else
-						bean.setAuthToken(dao.getAuthToken(userName));
-					bean.setSuccess(true);
+						login.setAuthToken(dao.getAuthToken(userName));
+					login.setSuccess(true);
 				} else
 					errors.add(Constants.LOGIN_CREDENTIALS_INVALID);
 			}
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			login.setErrors(errors);
 		}
-		return bean;
+		return login;
 	}
 
 	public boolean validateAuthToken(String userName, String authToken) {

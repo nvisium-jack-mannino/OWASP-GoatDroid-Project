@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGRegisterDaoImpl;
-import org.owasp.goatdroid.webservice.fourgoats.model.RegisterModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,13 +31,12 @@ public class FGRegisterServiceImpl implements RegisterService {
 	@Resource
 	FGRegisterDaoImpl dao;
 
-	public RegisterModel registerUser(String firstName, String lastName,
+	public BaseModel registerUser(String firstName, String lastName,
 			String userName, String password) {
 
-		RegisterModel bean = new RegisterModel();
+		BaseModel register = new BaseModel();
 		ArrayList<String> errors = Validators.validateRegistrationFields(
 				firstName, lastName, userName, password);
-
 		try {
 			if (errors.size() == 0) {
 				// if the user exists, we set an error and don't insert
@@ -47,14 +46,14 @@ public class FGRegisterServiceImpl implements RegisterService {
 				// if the user doesn't exist, we insert
 				else {
 					dao.insertNewUser(firstName, lastName, userName, password);
-					bean.setSuccess(true);
+					register.setSuccess(true);
 				}
 			}
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			register.setErrors(errors);
 		}
-		return bean;
+		return register;
 	}
 }

@@ -196,7 +196,7 @@ public class FGFriendServiceImpl implements FriendService {
 		PublicUsersModel bean = new PublicUsersModel();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
-			String userName = dao.getUserNameBySessionToken(sessionToken);
+			String userName = dao.getUserNameByAuthToken(sessionToken);
 			bean.setUsers(dao.getPublicUsers(userName));
 			bean.setSuccess(true);
 		} catch (Exception e) {

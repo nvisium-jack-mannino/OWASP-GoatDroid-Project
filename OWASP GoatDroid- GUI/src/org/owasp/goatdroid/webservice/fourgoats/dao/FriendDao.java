@@ -44,7 +44,7 @@ public interface FriendDao {
 	public boolean wasFriendRequestSent(String fromUserID, String toUserID)
 			throws SQLException;
 
-	public String getUserID(String sessionToken) throws SQLException;
+	public String getUserID(String authToken) throws SQLException;
 
 	public String getUserIDByName(String userName) throws SQLException;
 
