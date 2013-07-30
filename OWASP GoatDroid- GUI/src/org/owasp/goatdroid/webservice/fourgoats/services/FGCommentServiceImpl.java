@@ -24,10 +24,9 @@ import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
-import org.owasp.goatdroid.webservice.fourgoats.bean.CommentListBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.CommentBean;
+import org.owasp.goatdroid.webservice.fourgoats.bean.CommentListBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGCommentDaoImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -43,10 +42,8 @@ public class FGCommentServiceImpl implements CommentService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-			else if (!Validators.validateCommentFields(comment, checkinID))
+
+			if (!Validators.validateCommentFields(comment, checkinID))
 				errors.add(Constants.UNEXPECTED_ERROR);
 
 			if (errors.size() == 0) {
@@ -82,10 +79,8 @@ public class FGCommentServiceImpl implements CommentService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-			else if (!Validators.validateIDFormat(commentID))
+
+			if (!Validators.validateIDFormat(commentID))
 				errors.add(Constants.UNEXPECTED_ERROR);
 
 			if (errors.size() == 0) {
@@ -113,10 +108,7 @@ public class FGCommentServiceImpl implements CommentService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-			else if (!Validators.validateIDFormat(checkinID))
+			if (!Validators.validateIDFormat(checkinID))
 				errors.add(Constants.UNEXPECTED_ERROR);
 
 			if (errors.size() == 0) {

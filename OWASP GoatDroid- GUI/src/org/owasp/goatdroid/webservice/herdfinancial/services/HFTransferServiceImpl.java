@@ -24,7 +24,6 @@ import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.TransferBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFTransferDaoImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -38,10 +37,7 @@ public class HFTransferServiceImpl implements TransferService {
 
 		TransferBean bean = new TransferBean();
 		ArrayList<String> errors = new ArrayList<String>();
-		HFLoginServiceImpl loginService = new HFLoginServiceImpl();
-		if (!loginService.isSessionValid(sessionToken))
-			errors.add(Constants.SESSION_EXPIRED);
-		else if (from.equals(to))
+		 if (from.equals(to))
 			errors.add(Constants.LULZ);
 		else if (!Validators.validateAmountFormat(amount))
 			errors.add(Constants.INVALID_CURRENCY_FORMAT);

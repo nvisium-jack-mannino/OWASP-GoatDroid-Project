@@ -25,7 +25,6 @@ import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.RewardBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGRewardDaoImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -40,14 +39,8 @@ public class FGRewardServiceImpl implements RewardService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-
-			if (errors.size() == 0) {
-				bean.setRewards(dao.getAllRewards());
-				bean.setSuccess(true);
-			}
+			bean.setRewards(dao.getAllRewards());
+			bean.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
@@ -62,15 +55,9 @@ public class FGRewardServiceImpl implements RewardService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-
-			if (errors.size() == 0) {
-				String userID = dao.getUserID(sessionToken);
-				bean.setRewards(dao.getEarnedRewards(userID));
-				bean.setSuccess(true);
-			}
+			String userID = dao.getUserID(sessionToken);
+			bean.setRewards(dao.getEarnedRewards(userID));
+			bean.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {

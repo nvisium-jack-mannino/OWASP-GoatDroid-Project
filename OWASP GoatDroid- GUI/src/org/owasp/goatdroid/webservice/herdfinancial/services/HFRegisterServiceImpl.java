@@ -23,7 +23,6 @@ import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.RegisterBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFRegisterDaoImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service

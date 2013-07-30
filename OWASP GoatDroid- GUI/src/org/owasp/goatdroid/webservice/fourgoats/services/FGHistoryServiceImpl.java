@@ -25,7 +25,6 @@ import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryCheckinBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGHistoryDaoImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -40,15 +39,8 @@ public class FGHistoryServiceImpl implements HistoryService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-
-			if (errors.size() == 0) {
-				bean.setHistory(dao.getCheckinHistory(dao
-						.getUserID(sessionToken)));
-				bean.setSuccess(true);
-			}
+			bean.setHistory(dao.getCheckinHistory(dao.getUserID(sessionToken)));
+			bean.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
@@ -63,10 +55,7 @@ public class FGHistoryServiceImpl implements HistoryService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-			else if (!Validators.validateIDFormat(checkinID))
+			if (!Validators.validateIDFormat(checkinID))
 				errors.add(Constants.UNEXPECTED_ERROR);
 
 			if (errors.size() == 0) {
@@ -102,16 +91,8 @@ public class FGHistoryServiceImpl implements HistoryService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-			else if (!Validators.validateUserNameFormat(userName))
-				errors.add(Constants.USERNAME_FORMAT_INVALID);
-
-			if (errors.size() == 0) {
-				bean.setHistory(dao.getCheckinHistoryByUserName(userName));
-				bean.setSuccess(true);
-			}
+			bean.setHistory(dao.getCheckinHistoryByUserName(userName));
+			bean.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {

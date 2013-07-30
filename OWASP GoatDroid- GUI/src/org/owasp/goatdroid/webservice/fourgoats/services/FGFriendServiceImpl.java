@@ -21,13 +21,12 @@ import javax.annotation.Resource;
 
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
+import org.owasp.goatdroid.webservice.fourgoats.bean.FriendBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.FriendListBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.FriendProfileBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.FriendBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.PendingFriendRequestsBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.PublicUsersBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGFriendDaoImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -42,17 +41,10 @@ public class FGFriendServiceImpl implements FriendService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-
-			if (errors.size() == 0) {
-				String userID = dao.getUserID(sessionToken);
-				String userName = dao.getUserName(userID);
-
-				bean.setFriends(dao.getFriends(userID, userName));
-				bean.setSuccess(true);
-			}
+			String userID = dao.getUserID(sessionToken);
+			String userName = dao.getUserName(userID);
+			bean.setFriends(dao.getFriends(userID, userName));
+			bean.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
@@ -67,30 +59,22 @@ public class FGFriendServiceImpl implements FriendService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-			else if (!Validators.validateUserNameFormat(friendUserName))
-				errors.add(Constants.USERNAME_FORMAT_INVALID);
+			String userID = dao.getUserID(sessionToken);
+			String friendUserID = dao.getUserIDByName(friendUserName);
 
-			if (errors.size() == 0) {
-				String userID = dao.getUserID(sessionToken);
-				String friendUserID = dao.getUserIDByName(friendUserName);
-
-				if (!dao.isFriend(userID, friendUserID)) {
-					if (!dao.wasFriendRequestSent(friendUserID, userID)) {
-						if (!userID.equals(friendUserID)) {
-							dao.requestFriend(userID, friendUserID);
-							bean.setSuccess(true);
-						} else {
-							errors.add(Constants.CANNOT_DO_TO_YOURSELF);
-						}
+			if (!dao.isFriend(userID, friendUserID)) {
+				if (!dao.wasFriendRequestSent(friendUserID, userID)) {
+					if (!userID.equals(friendUserID)) {
+						dao.requestFriend(userID, friendUserID);
+						bean.setSuccess(true);
 					} else {
-						errors.add(Constants.FRIEND_ALREADY_REQUESTED);
+						errors.add(Constants.CANNOT_DO_TO_YOURSELF);
 					}
 				} else {
-					errors.add(Constants.ALREADY_FRIENDS);
+					errors.add(Constants.FRIEND_ALREADY_REQUESTED);
 				}
+			} else {
+				errors.add(Constants.ALREADY_FRIENDS);
 			}
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
@@ -107,12 +91,7 @@ public class FGFriendServiceImpl implements FriendService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-			else if (!Validators.validateUserNameFormat(userName))
-				errors.add(Constants.USERNAME_FORMAT_INVALID);
-			else if (!Validators.validateFriendRequestAction(action))
+			if (!Validators.validateFriendRequestAction(action))
 				errors.add(Constants.UNEXPECTED_ERROR);
 
 			if (errors.size() == 0) {
@@ -151,26 +130,18 @@ public class FGFriendServiceImpl implements FriendService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-			else if (!Validators.validateUserNameFormat(friendUserName))
-				errors.add(Constants.USERNAME_FORMAT_INVALID);
+			String userID = dao.getUserID(sessionToken);
+			String friendUserID = dao.getUserIDByName(friendUserName);
 
-			if (errors.size() == 0) {
-				String userID = dao.getUserID(sessionToken);
-				String friendUserID = dao.getUserIDByName(friendUserName);
-
-				if (!userID.equals(friendUserID)) {
-					if (dao.isFriend(userID, friendUserID)) {
-						dao.removeFriend(userID, friendUserID);
-						bean.setSuccess(true);
-					} else {
-						errors.add(Constants.NOT_AUTHORIZED);
-					}
+			if (!userID.equals(friendUserID)) {
+				if (dao.isFriend(userID, friendUserID)) {
+					dao.removeFriend(userID, friendUserID);
+					bean.setSuccess(true);
 				} else {
-					errors.add(Constants.CANNOT_DO_TO_YOURSELF);
+					errors.add(Constants.NOT_AUTHORIZED);
 				}
+			} else {
+				errors.add(Constants.CANNOT_DO_TO_YOURSELF);
 			}
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
@@ -186,23 +157,15 @@ public class FGFriendServiceImpl implements FriendService {
 		FriendProfileBean bean = new FriendProfileBean();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-			else if (!Validators.validateUserNameFormat(friendUserName))
-				errors.add(Constants.USERNAME_FORMAT_INVALID);
-
-			if (errors.size() == 0) {
-				String friendUserID = dao.getUserIDByName(friendUserName);
-				// Hmmmm interesting
-				/*
-				 * if (dao.isFriend(userID, friendUserID) ||
-				 * dao.isProfilePublic(friendUserID) ||
-				 * userID.equals(friendUserID)) {
-				 */
-				bean.setProfile(dao.getProfile(friendUserID));
-				bean.setSuccess(true);
-			}
+			String friendUserID = dao.getUserIDByName(friendUserName);
+			// Hmmmm interesting
+			/*
+			 * if (dao.isFriend(userID, friendUserID) ||
+			 * dao.isProfilePublic(friendUserID) || userID.equals(friendUserID))
+			 * {
+			 */
+			bean.setProfile(dao.getProfile(friendUserID));
+			bean.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
@@ -217,16 +180,9 @@ public class FGFriendServiceImpl implements FriendService {
 		PendingFriendRequestsBean bean = new PendingFriendRequestsBean();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-
-			if (errors.size() == 0) {
-				String userID = dao.getUserID(sessionToken);
-				bean.setPendingFriendRequests(dao
-						.getPendingFriendRequests(userID));
-				bean.setSuccess(true);
-			}
+			String userID = dao.getUserID(sessionToken);
+			bean.setPendingFriendRequests(dao.getPendingFriendRequests(userID));
+			bean.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
@@ -240,15 +196,9 @@ public class FGFriendServiceImpl implements FriendService {
 		PublicUsersBean bean = new PublicUsersBean();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-
-			if (errors.size() == 0) {
-				String userName = dao.getUserNameBySessionToken(sessionToken);
-				bean.setUsers(dao.getPublicUsers(userName));
-				bean.setSuccess(true);
-			}
+			String userName = dao.getUserNameBySessionToken(sessionToken);
+			bean.setUsers(dao.getPublicUsers(userName));
+			bean.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {

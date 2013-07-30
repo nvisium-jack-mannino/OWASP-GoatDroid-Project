@@ -23,7 +23,6 @@ import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.AuthorizeBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFAuthorizeDaoImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,9 +36,7 @@ public class HFAuthorizeServiceImpl implements AuthorizeService {
 		AuthorizeBean bean = new AuthorizeBean();
 		ArrayList<String> errors = new ArrayList<String>();
 		HFLoginServiceImpl loginService = new HFLoginServiceImpl();
-		if (!loginService.isSessionValid(sessionToken))
-			errors.add(Constants.SESSION_EXPIRED);
-		else if (!Validators.validateDeviceID(deviceID))
+		if (!Validators.validateDeviceID(deviceID))
 			errors.add(Constants.INVALID_DEVICE_ID);
 
 		try {

@@ -20,11 +20,9 @@ import java.util.ArrayList;
 import javax.annotation.Resource;
 
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.EditPreferencesBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.GetPreferencesBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGEditPreferencesDaoImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -40,16 +38,10 @@ public class FGEditPreferencesServiceImpl implements EditPreferencesService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-
-			if (errors.size() == 0) {
-				String userID = dao.getUserID(sessionToken);
-				dao.updatePreferences(autoCheckin, isPublic, userID);
-				bean.setSuccess(true);
-				return bean;
-			}
+			String userID = dao.getUserID(sessionToken);
+			dao.updatePreferences(autoCheckin, isPublic, userID);
+			bean.setSuccess(true);
+			return bean;
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
@@ -64,16 +56,10 @@ public class FGEditPreferencesServiceImpl implements EditPreferencesService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-
-			if (errors.size() == 0) {
-				String userID = dao.getUserID(sessionToken);
-				bean.setPreferences(dao.getPreferences(userID));
-				bean.setSuccess(true);
-				return bean;
-			}
+			String userID = dao.getUserID(sessionToken);
+			bean.setPreferences(dao.getPreferences(userID));
+			bean.setSuccess(true);
+			return bean;
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {

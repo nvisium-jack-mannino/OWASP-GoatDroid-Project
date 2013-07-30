@@ -21,9 +21,8 @@ import javax.annotation.Resource;
 
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
-import org.owasp.goatdroid.webservice.fourgoats.dao.FGRegisterDaoImpl;
 import org.owasp.goatdroid.webservice.fourgoats.bean.RegisterBean;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.owasp.goatdroid.webservice.fourgoats.dao.FGRegisterDaoImpl;
 import org.springframework.stereotype.Service;
 
 @Service

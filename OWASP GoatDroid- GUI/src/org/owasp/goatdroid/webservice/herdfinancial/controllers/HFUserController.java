@@ -2,7 +2,6 @@ package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.LoginBean;
-import org.owasp.goatdroid.webservice.herdfinancial.services.HFTransferServiceImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

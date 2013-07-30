@@ -24,7 +24,6 @@ import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.StatementBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFStatementDaoImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -38,11 +37,7 @@ public class HFStatementServiceImpl implements StatementService {
 
 		ArrayList<String> errors = new ArrayList<String>();
 		StatementBean bean = new StatementBean();
-		HFLoginServiceImpl loginService = new HFLoginServiceImpl();
-		if (!loginService.isSessionValid(sessionToken))
-			errors.add(Constants.SESSION_EXPIRED);
-
-		else if (!Validators.validateDateTimeFormat(startDate)
+		if (!Validators.validateDateTimeFormat(startDate)
 				|| !Validators.validateDateTimeFormat(endDate))
 			errors.add(Constants.INVALID_ACCOUNT_NUMBER);
 
@@ -72,11 +67,7 @@ public class HFStatementServiceImpl implements StatementService {
 
 		ArrayList<String> errors = new ArrayList<String>();
 		StatementBean bean = new StatementBean();
-		HFLoginServiceImpl loginService = new HFLoginServiceImpl();
-		if (!loginService.isSessionValid(sessionToken))
-			errors.add(Constants.SESSION_EXPIRED);
-
-		else if (!Validators.validateAccountNumber(accountNumber))
+		if (!Validators.validateAccountNumber(accountNumber))
 			errors.add(Constants.INVALID_ACCOUNT_NUMBER);
 
 		try {

@@ -15,9 +15,6 @@
  */
 package org.owasp.goatdroid.gui.webservice;
 
-import javax.swing.JTree;
-import org.owasp.goatdroid.gui.ResourceTreeBuilder;
-import org.owasp.goatdroid.gui.Utils;
 
 public class WebService {
 /*

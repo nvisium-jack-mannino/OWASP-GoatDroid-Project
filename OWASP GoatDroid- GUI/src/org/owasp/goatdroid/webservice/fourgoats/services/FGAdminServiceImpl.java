@@ -20,12 +20,10 @@ import java.util.ArrayList;
 import javax.annotation.Resource;
 
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.bean.AdminBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.GetUsersAdminBean;
 import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGAdminDaoImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -40,23 +38,14 @@ public class FGAdminServiceImpl implements AdminService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid(userName, sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-			else if (!Validators.validateUserNameFormat(userName))
-				errors.add(Constants.USERNAME_FORMAT_INVALID);
-
-			if (errors.size() == 0) {
-				/*
-				 * If the user has the admin role then we proceed
-				 */
-				if (dao.isAdmin(sessionToken)) {
-					dao.deleteUser(userName);
-					bean.setSuccess(true);
-				} else {
-					errors.add(Constants.NOT_AUTHORIZED);
-				}
-			}
+			/*
+			 * If the user has the admin role then we proceed
+			 */
+			if (dao.isAdmin(sessionToken)) {
+				dao.deleteUser(userName);
+				bean.setSuccess(true);
+			} else
+				errors.add(Constants.NOT_AUTHORIZED);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
@@ -72,25 +61,15 @@ public class FGAdminServiceImpl implements AdminService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid(userName, sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-			else if (!Validators.validateUserNameFormat(userName))
-				errors.add(Constants.USERNAME_FORMAT_INVALID);
-			else if (!Validators.validatePasswordLength(newPassword))
-				errors.add(Constants.PASSWORD_FORMAT_INVALID);
 
-			if (errors.size() == 0) {
-				/*
-				 * If the user has the admin role then we proceed
-				 */
-				if (dao.isAdmin(sessionToken)) {
-					dao.updatePassword(userName, newPassword);
-					bean.setSuccess(true);
-				} else {
-					errors.add(Constants.NOT_AUTHORIZED);
-				}
-			}
+			/*
+			 * If the user has the admin role then we proceed
+			 */
+			if (dao.isAdmin(sessionToken)) {
+				dao.updatePassword(userName, newPassword);
+				bean.setSuccess(true);
+			} else
+				errors.add(Constants.NOT_AUTHORIZED);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
@@ -104,21 +83,14 @@ public class FGAdminServiceImpl implements AdminService {
 		GetUsersAdminBean bean = new GetUsersAdminBean();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-
-			if (errors.size() == 0) {
-				/*
-				 * If the user has the admin role then we proceed
-				 */
-				if (dao.isAdmin(sessionToken)) {
-					bean.setUsers(dao.getUsers());
-					bean.setSuccess(true);
-				} else {
-					errors.add(Constants.NOT_AUTHORIZED);
-				}
-			}
+			/*
+			 * If the user has the admin role then we proceed
+			 */
+			if (dao.isAdmin(sessionToken)) {
+				bean.setUsers(dao.getUsers());
+				bean.setSuccess(true);
+			} else
+				errors.add(Constants.NOT_AUTHORIZED);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
@@ -133,14 +105,8 @@ public class FGAdminServiceImpl implements AdminService {
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-
-			if (errors.size() == 0) {
-				dao.terminateSession(sessionToken);
-				bean.setSuccess(true);
-			}
+			dao.terminateSession(sessionToken);
+			bean.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {

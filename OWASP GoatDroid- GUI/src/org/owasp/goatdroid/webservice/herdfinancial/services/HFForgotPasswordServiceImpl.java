@@ -25,7 +25,6 @@ import org.owasp.goatdroid.webservice.herdfinancial.Utils;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.bean.ForgotPasswordBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFForgotPasswordDaoImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
