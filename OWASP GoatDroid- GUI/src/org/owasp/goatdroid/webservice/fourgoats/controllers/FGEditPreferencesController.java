@@ -23,25 +23,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.bean.EditPreferencesBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.GetPreferencesBean;
+import org.owasp.goatdroid.webservice.fourgoats.model.EditPreferencesModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.GetPreferencesModel;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGEditPreferencesServiceImpl;
 
 @Controller
-@RequestMapping(value = "fourgoats/api/v1/preferences", produces = "application/json")
+@RequestMapping(value = "fourgoats/api/v1/priv/preferences", produces = "application/json")
 public class FGEditPreferencesController {
 
-	FGEditPreferencesServiceImpl editPreferencesService;
-
 	@Autowired
-	public FGEditPreferencesController(
-			FGEditPreferencesServiceImpl editPreferencesService) {
-		this.editPreferencesService = editPreferencesService;
-	}
+	FGEditPreferencesServiceImpl editPreferencesService;
 
 	@RequestMapping(value = "modify_preferences", method = RequestMethod.POST)
 	@ResponseBody
-	public EditPreferencesBean modifyPreferences(
+	public EditPreferencesModel modifyPreferences(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@RequestParam(value = "autoCheckin", required = true) boolean autoCheckin,
 			@RequestParam(value = "isPublic", required = true) boolean isPublic) {
@@ -50,7 +45,7 @@ public class FGEditPreferencesController {
 			return editPreferencesService.modifyPreferences(sessionToken,
 					autoCheckin, isPublic);
 		} catch (NullPointerException e) {
-			EditPreferencesBean bean = new EditPreferencesBean();
+			EditPreferencesModel bean = new EditPreferencesModel();
 			bean.setSuccess(false);
 			return bean;
 		}
@@ -58,12 +53,12 @@ public class FGEditPreferencesController {
 
 	@RequestMapping(value = "get_preferences", method = RequestMethod.GET)
 	@ResponseBody
-	public GetPreferencesBean getPreferences(
+	public GetPreferencesModel getPreferences(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
 			return editPreferencesService.getPreferences(sessionToken);
 		} catch (NullPointerException e) {
-			GetPreferencesBean bean = new GetPreferencesBean();
+			GetPreferencesModel bean = new GetPreferencesModel();
 			bean.setSuccess(false);
 			return bean;
 		}

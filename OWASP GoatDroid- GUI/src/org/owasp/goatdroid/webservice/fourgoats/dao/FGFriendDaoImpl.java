@@ -23,8 +23,8 @@ import javax.sql.DataSource;
 
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
-import org.owasp.goatdroid.webservice.fourgoats.model.UserModel;
 import org.owasp.goatdroid.webservice.fourgoats.model.FriendRequestModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;

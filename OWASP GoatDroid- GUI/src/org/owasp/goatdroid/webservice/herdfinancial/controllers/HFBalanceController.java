@@ -23,29 +23,25 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
-import org.owasp.goatdroid.webservice.herdfinancial.bean.BalanceBean;
+import org.owasp.goatdroid.webservice.herdfinancial.model.BalanceModel;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFBalanceServiceImpl;
 
 @Controller
-@RequestMapping(value = "herdfinancial/api/v1/balances", produces = "application/json")
+@RequestMapping(value = "herdfinancial/api/v1/priv/balances", produces = "application/json")
 public class HFBalanceController {
 
-	HFBalanceServiceImpl balanceService;
-
 	@Autowired
-	public HFBalanceController(HFBalanceServiceImpl balanceService) {
-		this.balanceService = balanceService;
-	}
+	HFBalanceServiceImpl balanceService;
 
 	@RequestMapping(value = "{accountNumber}", method = RequestMethod.GET)
 	@ResponseBody
-	public BalanceBean getBalances(
+	public BalanceModel getBalances(
 			@PathVariable("accountNumber") String accountNumber,
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {
 		try {
 			return balanceService.getBalances(accountNumber, sessionToken);
 		} catch (NullPointerException e) {
-			BalanceBean bean = new BalanceBean();
+			BalanceModel bean = new BalanceModel();
 			bean.setSuccess(false);
 			return bean;
 		}

@@ -1,13 +1,11 @@
 package org.owasp.goatdroid.webservice.fourgoats.services;
 
-import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
+import org.owasp.goatdroid.webservice.fourgoats.model.LoginModel;
 
 public interface LoginService {
 
-	public LoginBean validateCredentials(String userName, String password);
+	public LoginModel validateCredentials(String userName, String password);
 
-	public LoginBean validateCredentialsAPI(String userName, String password);
-
-	public LoginBean signOut(String sessionToken);
+	public LoginModel validateCredentialsAPI(String userName, String password);
 
 }

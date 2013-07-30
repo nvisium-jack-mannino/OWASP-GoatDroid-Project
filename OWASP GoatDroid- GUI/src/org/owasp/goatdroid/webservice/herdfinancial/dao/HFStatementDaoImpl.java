@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import javax.sql.DataSource;
 
 import org.owasp.goatdroid.webservice.herdfinancial.Utils;
-import org.owasp.goatdroid.webservice.herdfinancial.model.StatementModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model._StatementModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -35,17 +35,17 @@ public class HFStatementDaoImpl extends BaseDaoImpl implements StatementDao {
 		setDataSource(dataSource);
 	}
 
-	public ArrayList<StatementModel> getStatement(String accountNumber,
+	public ArrayList<_StatementModel> getStatement(String accountNumber,
 			Date startDate, Date endDate) throws SQLException {
 
-		ArrayList<StatementModel> transactions = new ArrayList<StatementModel>();
+		ArrayList<_StatementModel> transactions = new ArrayList<_StatementModel>();
 		String sql = "SELECT date, amount, name, balance FROM "
 				+ "app.hf_transactions where accountNumber = ? and date >= ? "
 				+ "and date <= ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
 				new Object[] { accountNumber, startDate, endDate });
 		while (rs.next()) {
-			StatementModel transaction = new StatementModel();
+			_StatementModel transaction = new _StatementModel();
 			transaction.setDate(rs.getDate("date").toString());
 			transaction.setAmount(Double.toString(rs.getDouble("amount")));
 			transaction.setName(rs.getString("name"));
@@ -56,14 +56,14 @@ public class HFStatementDaoImpl extends BaseDaoImpl implements StatementDao {
 		return transactions;
 	}
 
-	public ArrayList<StatementModel> getTransactionsSinceLastPoll(
+	public ArrayList<_StatementModel> getTransactionsSinceLastPoll(
 			String accountNumber, long timeStamp) throws SQLException {
-		ArrayList<StatementModel> transactions = new ArrayList<StatementModel>();
+		ArrayList<_StatementModel> transactions = new ArrayList<_StatementModel>();
 		String sql = "SELECT date, amount, name, balance FROM app.hf_transactions WHERE accountNumber = ? AND timeStamp >  ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
 				new Object[] { accountNumber, timeStamp });
 		while (rs.next()) {
-			StatementModel transaction = new StatementModel();
+			_StatementModel transaction = new _StatementModel();
 			transaction.setDate(rs.getDate("date").toString());
 			transaction.setAmount(Double.toString(rs.getDouble("amount")));
 			transaction.setName(rs.getString("name"));

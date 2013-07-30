@@ -23,24 +23,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
-import org.owasp.goatdroid.webservice.herdfinancial.bean.SecretQuestionBean;
+import org.owasp.goatdroid.webservice.herdfinancial.model.SecretQuestionModel;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFSecretQuestionServiceImpl;
 
 @Controller
-@RequestMapping(value = "herdfinancial/api/v1/secret_questions", produces = "application/json")
+@RequestMapping(value = "herdfinancial/api/v1/priv/secret_questions", produces = "application/json")
 public class HFSecretQuestionController {
 
-	HFSecretQuestionServiceImpl secretQuestionService;
-
 	@Autowired
-	public HFSecretQuestionController(
-			HFSecretQuestionServiceImpl secretQuestionService) {
-		this.secretQuestionService = secretQuestionService;
-	}
+	HFSecretQuestionServiceImpl secretQuestionService;
 
 	@RequestMapping(value = "set", method = RequestMethod.POST)
 	@ResponseBody
-	public SecretQuestionBean setSecretQuestions(
+	public SecretQuestionModel setSecretQuestions(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken,
 			@RequestParam(value = "answer1", required = true) String answer1,
 			@RequestParam(value = "answer2", required = true) String answer2,
@@ -49,7 +44,7 @@ public class HFSecretQuestionController {
 			return secretQuestionService.setSecretQuestions(sessionToken,
 					answer1, answer2, answer3);
 		} catch (NullPointerException e) {
-			SecretQuestionBean bean = new SecretQuestionBean();
+			SecretQuestionModel bean = new SecretQuestionModel();
 			bean.setSuccess(false);
 			return bean;
 		}

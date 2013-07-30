@@ -36,10 +36,8 @@ public class FGLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 	public boolean validateCredentials(String userName, String password)
 			throws SQLException, DataAccessException {
 
-		String sql = "SELECT username FROM app.users WHERE username = ? and password = ?";
-		SqlRowSet rs;
-
-		rs = getJdbcTemplate().queryForRowSet(
+		String sql = "SELECT username FROM app.fg_users WHERE username = ? and password = ?";
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(
 				sql,
 				new Object[] {
 						userName,
@@ -55,14 +53,14 @@ public class FGLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 	public void updateSessionInformation(String userName, String sessionToken,
 			long sessionStartTime) {
 
-		String sql = "UPDATE app.users SET sessionToken = ?, sessionStartTime = ? WHERE userName = ?";
+		String sql = "UPDATE app.fg_users SET authToken = ?, sessionStartTime = ? WHERE userName = ?";
 		getJdbcTemplate().update(sql,
 				new Object[] { sessionToken, sessionStartTime, userName });
 	}
 
 	public HashMap<String, Boolean> getPreferences(String userName) {
 
-		String sql = "SELECT autoCheckin, isPublic, isAdmin FROM app.users "
+		String sql = "SELECT autoCheckin, isPublic, isAdmin FROM app.fg_users "
 				+ "WHERE userName = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userName);
 		HashMap<String, Boolean> preferences = new HashMap<String, Boolean>();
@@ -73,18 +71,12 @@ public class FGLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 		return preferences;
 	}
 
-	public void terminateSession(String sessionToken) {
-
-		String sql = "UPDATE app.users SET sessionToken = '0', sessionStartTime = 0 WHERE sessionToken = ?";
-		getJdbcTemplate().update(sql, sessionToken);
-	}
-
-	public String getSessionToken(String userName) {
-		String sql = "SELECT sessionToken FROM app.users WHERE username = ?";
+	public String getAuthToken(String userName) {
+		String sql = "SELECT authToken FROM app.fg_users WHERE username = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userName);
 		if (rs.next()) {
-			if (rs.getString("sessionToken") != null)
-				return rs.getString("sessionToken");
+			if (rs.getString("authToken") != null)
+				return rs.getString("authToken");
 			else
 				return "";
 		} else {

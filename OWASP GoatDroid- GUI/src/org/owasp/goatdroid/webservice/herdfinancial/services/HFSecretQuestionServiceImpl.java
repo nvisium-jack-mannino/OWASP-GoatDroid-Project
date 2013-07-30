@@ -21,9 +21,8 @@ import javax.annotation.Resource;
 
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
-import org.owasp.goatdroid.webservice.herdfinancial.bean.SecretQuestionBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFSecretQuestionDaoImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.owasp.goatdroid.webservice.herdfinancial.model.SecretQuestionModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,17 +31,13 @@ public class HFSecretQuestionServiceImpl implements SecretQuestionService {
 	@Resource
 	HFSecretQuestionDaoImpl dao;
 
-	public SecretQuestionBean setSecretQuestions(int sessionToken,
+	public SecretQuestionModel setSecretQuestions(int sessionToken,
 			String answer1, String answer2, String answer3) {
 
-		SecretQuestionBean bean = new SecretQuestionBean();
+		SecretQuestionModel bean = new SecretQuestionModel();
 		ArrayList<String> errors = new ArrayList<String>();
-		HFLoginServiceImpl loginService = new HFLoginServiceImpl();
-		if (!loginService.isSessionValid(sessionToken))
-			errors.add(Constants.SESSION_EXPIRED);
-
-		else if (!Validators.validateSecretQuestionAnswers(answer1, answer2,
-				answer3))
+		if (!Validators
+				.validateSecretQuestionAnswers(answer1, answer2, answer3))
 			errors.add(Constants.SECRET_QUESTION_ANSWER_TOO_LONG);
 
 		try {

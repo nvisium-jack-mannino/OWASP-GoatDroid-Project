@@ -1,14 +1,14 @@
 package org.owasp.goatdroid.webservice.herdfinancial.services;
 
-import org.owasp.goatdroid.webservice.herdfinancial.bean.ForgotPasswordBean;
+import org.owasp.goatdroid.webservice.herdfinancial.model.ForgotPasswordModel;
 
 public interface ForgotPasswordService {
 
-	public ForgotPasswordBean requestCode(String userName,
+	public ForgotPasswordModel requestCode(String userName,
 			int secretQuestionIndex, String secretQuestionAnswer);
 
-	public ForgotPasswordBean verifyCode(String userName, int passwordResetCode);
+	public ForgotPasswordModel verifyCode(String userName, int passwordResetCode);
 
-	public ForgotPasswordBean updatePassword(String userName,
+	public ForgotPasswordModel updatePassword(String userName,
 			int passwordResetCode, String password);
 }

@@ -1,12 +1,12 @@
 package org.owasp.goatdroid.webservice.fourgoats.services;
 
-import org.owasp.goatdroid.webservice.fourgoats.bean.EditPreferencesBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.GetPreferencesBean;
+import org.owasp.goatdroid.webservice.fourgoats.model.EditPreferencesModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.GetPreferencesModel;
 
 public interface EditPreferencesService {
 
-	public EditPreferencesBean modifyPreferences(String sessionToken,
+	public EditPreferencesModel modifyPreferences(String sessionToken,
 			boolean autoCheckin, boolean isPublic);
 
-	public GetPreferencesBean getPreferences(String sessionToken);
+	public GetPreferencesModel getPreferences(String sessionToken);
 }

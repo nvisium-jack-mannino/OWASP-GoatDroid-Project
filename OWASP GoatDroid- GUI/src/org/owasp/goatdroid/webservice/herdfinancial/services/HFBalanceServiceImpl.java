@@ -22,9 +22,8 @@ import javax.annotation.Resource;
 
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
-import org.owasp.goatdroid.webservice.herdfinancial.bean.BalanceBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFBalanceDaoImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.owasp.goatdroid.webservice.herdfinancial.model.BalanceModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,15 +32,12 @@ public class HFBalanceServiceImpl implements BalanceService {
 	@Resource
 	HFBalanceDaoImpl dao;
 
-	public BalanceBean getBalances(String accountNumber, int sessionToken) {
+	public BalanceModel getBalances(String accountNumber, int sessionToken) {
 
-		BalanceBean bean = new BalanceBean();
+		BalanceModel bean = new BalanceModel();
 		ArrayList<String> errors = new ArrayList<String>();
 		HFLoginServiceImpl loginService = new HFLoginServiceImpl();
-
-		if (!loginService.isSessionValid(sessionToken))
-			errors.add(Constants.SESSION_EXPIRED);
-		else if (!Validators.validateAccountNumber(accountNumber))
+		if (!Validators.validateAccountNumber(accountNumber))
 			errors.add(Constants.INVALID_ACCOUNT_NUMBER);
 
 		try {

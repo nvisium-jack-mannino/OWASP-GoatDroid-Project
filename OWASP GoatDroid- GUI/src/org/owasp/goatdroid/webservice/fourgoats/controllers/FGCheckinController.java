@@ -15,38 +15,32 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
-import org.springframework.web.bind.annotation.RequestParam;
+import org.owasp.goatdroid.webservice.fourgoats.model.CheckinModel;
+import org.owasp.goatdroid.webservice.fourgoats.services.FGCheckinServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.bean.CheckinBean;
-import org.owasp.goatdroid.webservice.fourgoats.services.FGCheckinServiceImpl;
 
 @Controller
-@RequestMapping(value = "fourgoats/api/v1/checkin", produces = "application/json")
+@RequestMapping(value = "fourgoats/api/v1/priv/checkin", produces = "application/json")
 public class FGCheckinController {
 
+	@Autowired
 	FGCheckinServiceImpl checkinService;
 
-	@Autowired
-	public FGCheckinController(FGCheckinServiceImpl checkinService) {
-		this.checkinService = checkinService;
-	}
-
-	@RequestMapping(value = "thing", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public CheckinBean doCheckin(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
-			@RequestParam(value = "latitude", required = true) String latitude,
+	public CheckinModel doCheckin(
+
+	@RequestParam(value = "latitude", required = true) String latitude,
 			@RequestParam(value = "longitude", required = true) String longitude) {
 		try {
-			return checkinService.doCheckin(sessionToken, latitude, longitude);
+			return checkinService.doCheckin("", latitude, longitude);
 		} catch (NullPointerException e) {
-			CheckinBean bean = new CheckinBean();
+			CheckinModel bean = new CheckinModel();
 			bean.setSuccess(false);
 			return bean;
 		}

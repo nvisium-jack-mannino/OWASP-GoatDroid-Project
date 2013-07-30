@@ -15,36 +15,34 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.HistoryModel;
+import org.owasp.goatdroid.webservice.fourgoats.services.FGHistoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryBean;
-import org.owasp.goatdroid.webservice.fourgoats.services.FGHistoryServiceImpl;
 
 @Controller
-@RequestMapping(value = "fourgoats/api/v1/history", produces = "application/json")
+@RequestMapping(value = "fourgoats/api/v1/priv/history", produces = "application/json")
 public class FGHistoryController {
 
-	FGHistoryServiceImpl historyService;
-
 	@Autowired
-	public FGHistoryController(FGHistoryServiceImpl historyService) {
-		this.historyService = historyService;
-	}
+	FGHistoryServiceImpl historyService;
 
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	@ResponseBody
-	public HistoryBean getHistory(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
+	public HistoryModel getHistory(HttpServletRequest request) {
 		try {
-			return historyService.getHistory(sessionToken);
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
+			return historyService.getHistory(authHeader.getAuthToken());
 		} catch (NullPointerException e) {
-			HistoryBean bean = new HistoryBean();
+			HistoryModel bean = new HistoryModel();
 			bean.setSuccess(false);
 			return bean;
 		}
@@ -52,13 +50,14 @@ public class FGHistoryController {
 
 	@RequestMapping(value = "get_user_history/{userName}", method = RequestMethod.GET)
 	@ResponseBody
-	public HistoryBean getHistory(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
+	public HistoryModel getHistory(HttpServletRequest request,
 			@PathVariable(value = "userName") String userName) {
 		try {
-			return historyService.getUserHistory(sessionToken, userName);
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
+			return historyService.getUserHistory(userName);
 		} catch (NullPointerException e) {
-			HistoryBean bean = new HistoryBean();
+			HistoryModel bean = new HistoryModel();
 			bean.setSuccess(false);
 			return bean;
 		}

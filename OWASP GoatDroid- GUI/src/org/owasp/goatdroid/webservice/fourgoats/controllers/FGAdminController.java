@@ -23,30 +23,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.bean.AdminBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.GetUsersAdminBean;
+import org.owasp.goatdroid.webservice.fourgoats.model.AdminModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.GetUsersAdminModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.LoginModel;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGAdminServiceImpl;
 
 @Controller
-@RequestMapping(value = "fourgoats/api/v1/admin", produces = "application/json")
+@RequestMapping(value = "fourgoats/api/v1/priv/admin", produces = "application/json")
 public class FGAdminController {
 
-	FGAdminServiceImpl adminService;
-
 	@Autowired
-	public FGAdminController(FGAdminServiceImpl adminService) {
-		this.adminService = adminService;
-	}
+	FGAdminServiceImpl adminService;
 
 	@RequestMapping(value = "delete_user", method = RequestMethod.POST)
 	@ResponseBody
-	public AdminBean addComment(
+	public AdminModel addComment(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@RequestParam(value = "userName", required = true) String userName) {
 		try {
+			
 			return adminService.deleteUser(sessionToken, userName);
 		} catch (NullPointerException e) {
-			AdminBean bean = new AdminBean();
+			AdminModel bean = new AdminModel();
 			bean.setSuccess(false);
 			return bean;
 		}
@@ -54,7 +52,7 @@ public class FGAdminController {
 
 	@RequestMapping(value = "reset_password", method = RequestMethod.POST)
 	@ResponseBody
-	public AdminBean addComment(
+	public AdminModel addComment(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@RequestParam(value = "userName", required = true) String userName,
 			@RequestParam(value = "newPassword", required = true) String newPassword) {
@@ -62,7 +60,7 @@ public class FGAdminController {
 			return adminService.resetPassword(sessionToken, userName,
 					newPassword);
 		} catch (NullPointerException e) {
-			AdminBean bean = new AdminBean();
+			AdminModel bean = new AdminModel();
 			bean.setSuccess(false);
 			return bean;
 		}
@@ -70,12 +68,25 @@ public class FGAdminController {
 
 	@RequestMapping(value = "get_users", method = RequestMethod.GET)
 	@ResponseBody
-	public GetUsersAdminBean addComment(
+	public GetUsersAdminModel addComment(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
 			return adminService.getUsers(sessionToken);
 		} catch (NullPointerException e) {
-			GetUsersAdminBean bean = new GetUsersAdminBean();
+			GetUsersAdminModel bean = new GetUsersAdminModel();
+			bean.setSuccess(false);
+			return bean;
+		}
+	}
+
+	@RequestMapping(value = "sign_out", method = RequestMethod.POST)
+	@ResponseBody
+	public LoginModel signOut(
+			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
+		try {
+			return adminService.signOut(sessionToken);
+		} catch (NullPointerException e) {
+			LoginModel bean = new LoginModel();
 			bean.setSuccess(false);
 			return bean;
 		}

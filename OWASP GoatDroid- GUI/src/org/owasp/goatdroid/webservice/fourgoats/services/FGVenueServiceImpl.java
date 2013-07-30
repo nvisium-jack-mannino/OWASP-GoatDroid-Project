@@ -23,10 +23,9 @@ import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
-import org.owasp.goatdroid.webservice.fourgoats.bean.VenueListBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.VenueBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGVenueDaoImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.owasp.goatdroid.webservice.fourgoats.model.VenueModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.VenueListModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,10 +34,10 @@ public class FGVenueServiceImpl implements VenueService {
 	@Resource
 	FGVenueDaoImpl dao;
 
-	public VenueBean addVenue(String sessionToken, String venueName,
+	public VenueModel addVenue(String sessionToken, String venueName,
 			String venueWebsite, String latitude, String longitude) {
 
-		VenueBean bean = new VenueBean();
+		VenueModel bean = new VenueModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -63,20 +62,14 @@ public class FGVenueServiceImpl implements VenueService {
 		return bean;
 	}
 
-	public VenueListBean getAllVenues(String sessionToken) {
+	public VenueListModel getAllVenues(String sessionToken) {
 
-		VenueListBean bean = new VenueListBean();
+		VenueListModel bean = new VenueListModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-
-			if (errors.size() == 0) {
-				bean.setVenues(dao.getAllVenues());
-				bean.setSuccess(true);
-			}
+			bean.setVenues(dao.getAllVenues());
+			bean.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {

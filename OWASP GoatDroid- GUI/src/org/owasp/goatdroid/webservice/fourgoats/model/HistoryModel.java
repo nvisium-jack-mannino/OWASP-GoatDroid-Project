@@ -15,60 +15,23 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.model;
 
-public class HistoryModel {
+import java.util.ArrayList;
 
-	String dateTime;
-	String checkinID;
-	String latitude;
-	String longitude;
-	String venueName;
-	String venueWebsite;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
-	public String getDateTime() {
-		return dateTime;
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class HistoryModel extends BaseModel {
+
+	public ArrayList<HistoryEventModel> history;
+
+	public ArrayList<HistoryEventModel> getHistory() {
+		return history;
 	}
 
-	public void setDateTime(String dateTime) {
-		this.dateTime = dateTime;
-	}
-
-	public String getCheckinID() {
-		return checkinID;
-	}
-
-	public void setCheckinID(String checkinID) {
-		this.checkinID = checkinID;
-	}
-
-	public String getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
-
-	public String getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
-
-	public String getVenueName() {
-		return venueName;
-	}
-
-	public void setVenueName(String venueName) {
-		this.venueName = venueName;
-	}
-
-	public String getVenueWebsite() {
-		return venueWebsite;
-	}
-
-	public void setVenueWebsite(String venueWebsite) {
-		this.venueWebsite = venueWebsite;
+	public void setHistory(ArrayList<HistoryEventModel> history) {
+		this.history = history;
 	}
 }

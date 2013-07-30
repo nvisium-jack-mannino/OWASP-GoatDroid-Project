@@ -20,6 +20,10 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import org.owasp.goatdroid.webservice.fourgoats.exception.Base64Exception;
+import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.springframework.security.crypto.codec.Base64;
+
 public class LoginUtils {
 
 	static public long getTimeMilliseconds() {
@@ -65,5 +69,46 @@ public class LoginUtils {
 					.substring(1));
 		}
 		return sb.toString();
+	}
+
+	static public AuthorizationHeaderModel decodeAuthorizationHeader(
+			String encodedAuthorizationString) throws Base64Exception {
+		/*
+		 * First we check to ensure that the string is real Base64 and not
+		 * garbage
+		 */
+		if (Base64.isBase64(encodedAuthorizationString.getBytes())) {
+			String authorizationString = new String(
+					Base64.decode(encodedAuthorizationString.getBytes()));
+
+			/*
+			 * We split the username and password on the first colon. Any colons
+			 * encountered afterwards are considered part of the password.
+			 */
+			String username = "";
+			String authToken = "";
+			boolean isColonFound = false;
+			for (char ch : authorizationString.toCharArray()) {
+				if (ch == ':')
+					isColonFound = true;
+				else if (!isColonFound)
+					username += ch;
+				else
+					authToken += ch;
+			}
+			AuthorizationHeaderModel authHeader = new AuthorizationHeaderModel();
+			authHeader.setUsername(username);
+			authHeader.setAuthToken(authToken);
+			/*
+			 * We check to make sure both the username and token were there
+			 * after we decode and parse the Base64 string
+			 */
+			if (authHeader.getUsername().isEmpty()
+					|| authHeader.getAuthToken().isEmpty())
+				throw new Base64Exception(Constants.INVALID_BASE64);
+			else
+				return authHeader;
+		} else
+			throw new Base64Exception(Constants.INVALID_BASE64);
 	}
 }

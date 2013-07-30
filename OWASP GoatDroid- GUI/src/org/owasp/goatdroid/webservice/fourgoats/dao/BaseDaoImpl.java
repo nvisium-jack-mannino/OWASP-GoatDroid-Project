@@ -23,7 +23,7 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 
 	public boolean checkSessionMatchesUserID(String sessionToken, String userID)
 			throws SQLException {
-		String sql = "SELECT userID FROM app.fg_users WHERE sessionToken = ?";
+		String sql = "SELECT userID FROM app.fg_users WHERE authToken = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
 		if (rs.next())
 			return true;
@@ -31,11 +31,13 @@ public class BaseDaoImpl extends JdbcDaoSupport implements BaseDao {
 			return false;
 	}
 
-	public String getUserID(String sessionToken) throws Exception {
-		String sql = "SELECT userID FROM app.fg_users WHERE sessionToken = ?";
-		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, sessionToken);
-		rs.next();
-		return rs.getString("userID");
+	public String getUserID(String authToken) throws Exception {
+		String sql = "SELECT userID FROM app.fg_users WHERE authToken = ?";
+		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, authToken);
+		if (rs.next())
+			return rs.getString("userID");
+		else
+			return "";
 	}
 
 	public String getCheckinOwner(String checkinID) throws Exception {

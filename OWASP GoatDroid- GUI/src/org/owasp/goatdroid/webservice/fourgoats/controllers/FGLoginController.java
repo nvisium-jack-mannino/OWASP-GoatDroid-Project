@@ -15,83 +15,46 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
-import org.springframework.web.bind.annotation.RequestParam;
+import org.owasp.goatdroid.webservice.fourgoats.model.LoginModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.UserPassModel;
+import org.owasp.goatdroid.webservice.fourgoats.services.FGLoginServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
-import org.owasp.goatdroid.webservice.fourgoats.services.FGLoginServiceImpl;
 
 @Controller
-@RequestMapping(value = "fourgoats/api/v1/login", produces = "application/json")
+@RequestMapping(value = "fourgoats/api/v1/pub/login", produces = "application/json")
 public class FGLoginController {
 
-	FGLoginServiceImpl loginService;
-
 	@Autowired
-	public FGLoginController(FGLoginServiceImpl loginService) {
-		this.loginService = loginService;
-	}
+	FGLoginServiceImpl loginService;
 
 	@RequestMapping(value = "authenticate", method = RequestMethod.POST)
 	@ResponseBody
-	public String validateCredentials(
-			@RequestParam(value = "username", required = true) String userName,
-			@RequestParam(value = "password", required = true) String password) {
-		try {
-			return "tomatoes";
-			// return loginService.validateCredentials(userName, password);
-		} catch (NullPointerException e) {
-			LoginBean bean = new LoginBean();
-			bean.setSuccess(false);
-			// return bean;
-			return "potatoes";
-		}
+	public LoginModel authenticate(Model model,
+			@ModelAttribute("userPassModel") UserPassModel userPass,
+			BindingResult result) {
+		return loginService.validateCredentials(userPass.getUsername(),
+				userPass.getPassword());
 	}
 
 	@RequestMapping(value = "validate_api", method = RequestMethod.POST)
 	@ResponseBody
-	public LoginBean validateCredentialsAPI(
+	public LoginModel validateCredentialsAPI(
 			@RequestParam(value = "username", required = true) String userName,
 			@RequestParam(value = "password", required = true) String password) {
 		try {
 			return loginService.validateCredentialsAPI(userName, password);
 		} catch (NullPointerException e) {
-			LoginBean bean = new LoginBean();
-			bean.setSuccess(false);
-			return bean;
-		}
-	}
-
-	@RequestMapping(value = "check_session", method = RequestMethod.GET)
-	@ResponseBody
-	public LoginBean checkSession(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
-		try {
-			LoginBean bean = new LoginBean();
-			return bean;
-			//return loginService.checkSession(sessionToken);
-		} catch (NullPointerException e) {
-			LoginBean bean = new LoginBean();
-			bean.setSuccess(false);
-			return bean;
-		}
-	}
-
-	@RequestMapping(value = "sign_out", method = RequestMethod.POST)
-	@ResponseBody
-	public LoginBean signOut(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
-		try {
-			return loginService.signOut(sessionToken);
-		} catch (NullPointerException e) {
-			LoginBean bean = new LoginBean();
-			bean.setSuccess(false);
-			return bean;
+			LoginModel login = new LoginModel();
+			login.setSuccess(false);
+			return login;
 		}
 	}
 }

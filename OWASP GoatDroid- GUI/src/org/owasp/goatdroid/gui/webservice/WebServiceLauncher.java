@@ -15,14 +15,6 @@
  */
 package org.owasp.goatdroid.gui.webservice;
 
-//import org.eclipse.jetty.server.Connector;
-//import org.eclipse.jetty.server.Server;
-//import org.eclipse.jetty.server.nio.SelectChannelConnector;
-//import org.eclipse.jetty.server.ssl.SslSocketConnector;
-//import org.eclipse.jetty.servlet.ServletContextHandler;
-//import org.eclipse.jetty.servlet.ServletHolder;
-import java.util.EnumSet;
-import javax.servlet.DispatcherType;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
@@ -51,19 +43,13 @@ public class WebServiceLauncher {
 		/*
 		 * This loads the web service
 		 */
-
 		DispatcherServlet dispatcher = new DispatcherServlet();
-		dispatcher
-				.setContextConfigLocation("classpath:/DefaultServlet-servlet.xml");
+		dispatcher.setContextConfigLocation("classpath:/spring-context.xml");
 		ServletHolder sh = new ServletHolder(dispatcher);
 		server = new Server(10000);
 		ServletContextHandler context = new ServletContextHandler(server, "/");
 		context.setAliases(true);
 		context.addServlet(sh, "/*");
-		context.addFilter(
-				org.springframework.web.filter.DelegatingFilterProxy.class,
-				"/**",
-				EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD));
 		server.setHandler(context);
 		if (isHTTPS) {
 			SslSocketConnector sslConnector = new SslSocketConnector();
@@ -75,7 +61,11 @@ public class WebServiceLauncher {
 			SelectChannelConnector selectChannelConnector = new SelectChannelConnector();
 			server.setConnectors(new Connector[] { sslConnector,
 					selectChannelConnector });
-			server.start();
+			try {
+				server.start();
+			} catch (InstantiationException e) {
+				e.getMessage();
+			}
 		} else {
 			server.start();
 		}

@@ -21,23 +21,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.owasp.goatdroid.webservice.herdfinancial.bean.RegisterBean;
+import org.owasp.goatdroid.webservice.herdfinancial.model.RegisterModel;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFRegisterServiceImpl;
 
 @Controller
-@RequestMapping(value = "herdfinancial/api/v1/register", produces = "application/json")
+@RequestMapping(value = "herdfinancial/api/v1/pub/register", produces = "application/json")
 public class HFRegisterController {
 
-	HFRegisterServiceImpl registerService;
-
 	@Autowired
-	public HFRegisterController(HFRegisterServiceImpl registerService) {
-		this.registerService = registerService;
-	}
+	HFRegisterServiceImpl registerService;
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public RegisterBean doRegistration(
+	public RegisterModel doRegistration(
 			@RequestParam(value = "accountNumber", required = true) String accountNumber,
 			@RequestParam(value = "firstName", required = true) String firstName,
 			@RequestParam(value = "lastName", required = true) String lastName,
@@ -47,7 +43,7 @@ public class HFRegisterController {
 			return registerService.registerUser(accountNumber, firstName,
 					lastName, userName, password);
 		} catch (NullPointerException e) {
-			RegisterBean bean = new RegisterBean();
+			RegisterModel bean = new RegisterModel();
 			bean.setSuccess(false);
 			return bean;
 		}

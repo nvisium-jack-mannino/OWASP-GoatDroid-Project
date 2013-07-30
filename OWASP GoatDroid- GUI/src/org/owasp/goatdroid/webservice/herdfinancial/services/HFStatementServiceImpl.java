@@ -22,9 +22,8 @@ import javax.annotation.Resource;
 
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
-import org.owasp.goatdroid.webservice.herdfinancial.bean.StatementBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFStatementDaoImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.owasp.goatdroid.webservice.herdfinancial.model.StatementModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,16 +32,12 @@ public class HFStatementServiceImpl implements StatementService {
 	@Resource
 	HFStatementDaoImpl dao;
 
-	public StatementBean getStatement(String accountNumber, String startDate,
+	public StatementModel getStatement(String accountNumber, String startDate,
 			String endDate, int sessionToken) {
 
 		ArrayList<String> errors = new ArrayList<String>();
-		StatementBean bean = new StatementBean();
-		HFLoginServiceImpl loginService = new HFLoginServiceImpl();
-		if (!loginService.isSessionValid(sessionToken))
-			errors.add(Constants.SESSION_EXPIRED);
-
-		else if (!Validators.validateDateTimeFormat(startDate)
+		StatementModel bean = new StatementModel();
+		if (!Validators.validateDateTimeFormat(startDate)
 				|| !Validators.validateDateTimeFormat(endDate))
 			errors.add(Constants.INVALID_ACCOUNT_NUMBER);
 
@@ -67,16 +62,12 @@ public class HFStatementServiceImpl implements StatementService {
 		return bean;
 	}
 
-	public StatementBean getStatementSinceLastPoll(String accountNumber,
+	public StatementModel getStatementSinceLastPoll(String accountNumber,
 			int sessionToken) {
 
 		ArrayList<String> errors = new ArrayList<String>();
-		StatementBean bean = new StatementBean();
-		HFLoginServiceImpl loginService = new HFLoginServiceImpl();
-		if (!loginService.isSessionValid(sessionToken))
-			errors.add(Constants.SESSION_EXPIRED);
-
-		else if (!Validators.validateAccountNumber(accountNumber))
+		StatementModel bean = new StatementModel();
+		if (!Validators.validateAccountNumber(accountNumber))
 			errors.add(Constants.INVALID_ACCOUNT_NUMBER);
 
 		try {

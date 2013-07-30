@@ -23,9 +23,8 @@ import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
-import org.owasp.goatdroid.webservice.fourgoats.bean.RewardBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGRewardDaoImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.owasp.goatdroid.webservice.fourgoats.model.RewardModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,20 +33,14 @@ public class FGRewardServiceImpl implements RewardService {
 	@Resource
 	FGRewardDaoImpl dao;
 
-	public RewardBean getAllRewards(String sessionToken) {
+	public RewardModel getAllRewards(String sessionToken) {
 
-		RewardBean bean = new RewardBean();
+		RewardModel bean = new RewardModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-
-			if (errors.size() == 0) {
-				bean.setRewards(dao.getAllRewards());
-				bean.setSuccess(true);
-			}
+			bean.setRewards(dao.getAllRewards());
+			bean.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
@@ -56,21 +49,15 @@ public class FGRewardServiceImpl implements RewardService {
 		return bean;
 	}
 
-	public RewardBean getMyEarnedRewards(String sessionToken) {
+	public RewardModel getMyEarnedRewards(String sessionToken) {
 
-		RewardBean bean = new RewardBean();
+		RewardModel bean = new RewardModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-
-			if (errors.size() == 0) {
-				String userID = dao.getUserID(sessionToken);
-				bean.setRewards(dao.getEarnedRewards(userID));
-				bean.setSuccess(true);
-			}
+			String userID = dao.getUserID(sessionToken);
+			bean.setRewards(dao.getEarnedRewards(userID));
+			bean.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
@@ -82,10 +69,10 @@ public class FGRewardServiceImpl implements RewardService {
 	/*
 	 * This feature is only available to administrative users
 	 */
-	public RewardBean addNewReward(String sessionToken, String rewardName,
+	public RewardModel addNewReward(String sessionToken, String rewardName,
 			String rewardDescription, String venueID, int checkinsRequired) {
 
-		RewardBean bean = new RewardBean();
+		RewardModel bean = new RewardModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {

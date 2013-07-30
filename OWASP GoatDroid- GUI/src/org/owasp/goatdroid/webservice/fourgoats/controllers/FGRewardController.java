@@ -23,28 +23,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.bean.RewardBean;
+import org.owasp.goatdroid.webservice.fourgoats.model.RewardModel;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGRewardServiceImpl;
 
 @Controller
-@RequestMapping(value = "fourgoats/api/v1/rewards", produces = "application/json")
+@RequestMapping(value = "fourgoats/api/v1/priv/rewards", produces = "application/json")
 public class FGRewardController {
 
-	FGRewardServiceImpl rewardService;
-
 	@Autowired
-	public FGRewardController(FGRewardServiceImpl rewardService) {
-		this.rewardService = rewardService;
-	}
+	FGRewardServiceImpl rewardService;
 
 	@RequestMapping(value = "all_rewards", method = RequestMethod.GET)
 	@ResponseBody
-	public RewardBean getRewards(
+	public RewardModel getRewards(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
 			return rewardService.getAllRewards(sessionToken);
 		} catch (NullPointerException e) {
-			RewardBean bean = new RewardBean();
+			RewardModel bean = new RewardModel();
 			bean.setSuccess(false);
 			return bean;
 		}
@@ -52,12 +48,12 @@ public class FGRewardController {
 
 	@RequestMapping(value = "my_rewards", method = RequestMethod.GET)
 	@ResponseBody
-	public RewardBean getMyEarnedRewards(
+	public RewardModel getMyEarnedRewards(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
 			return rewardService.getMyEarnedRewards(sessionToken);
 		} catch (NullPointerException e) {
-			RewardBean bean = new RewardBean();
+			RewardModel bean = new RewardModel();
 			bean.setSuccess(false);
 			return bean;
 		}
@@ -65,7 +61,7 @@ public class FGRewardController {
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@ResponseBody
-	public RewardBean addNewReward(
+	public RewardModel addNewReward(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@RequestParam(value = "rewardName", required = true) String rewardName,
 			@RequestParam(value = "rewardDescription", required = true) String rewardDescription,
@@ -76,7 +72,7 @@ public class FGRewardController {
 			return rewardService.addNewReward(sessionToken, rewardName,
 					rewardDescription, venueID, checkinsRequired);
 		} catch (NullPointerException e) {
-			RewardBean bean = new RewardBean();
+			RewardModel bean = new RewardModel();
 			bean.setSuccess(false);
 			return bean;
 		}

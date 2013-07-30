@@ -16,16 +16,12 @@
 package org.owasp.goatdroid.webservice.fourgoats.services;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.annotation.Resource;
 
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.Validators;
-import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryCheckinBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGHistoryDaoImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.owasp.goatdroid.webservice.fourgoats.model.HistoryModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,89 +30,37 @@ public class FGHistoryServiceImpl implements HistoryService {
 	@Resource
 	FGHistoryDaoImpl dao;
 
-	public HistoryBean getHistory(String sessionToken) {
+	public HistoryModel getHistory(String authToken) {
 
-		HistoryBean bean = new HistoryBean();
+		HistoryModel history = new HistoryModel();
 		ArrayList<String> errors = new ArrayList<String>();
-
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-
-			if (errors.size() == 0) {
-				bean.setHistory(dao.getCheckinHistory(dao
-						.getUserID(sessionToken)));
-				bean.setSuccess(true);
-			}
+			history.setHistory(dao.getCheckinHistory(dao.getUserID(authToken)));
+			history.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			history.setErrors(errors);
 		}
-		return bean;
+		return history;
 	}
 
-	public HistoryCheckinBean getCheckin(String sessionToken, String checkinID) {
+	/*
+	 * All we pass into this is the username...hmm
+	 */
+	public HistoryModel getUserHistory(String username) {
 
-		HistoryCheckinBean bean = new HistoryCheckinBean();
+		HistoryModel history = new HistoryModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-			else if (!Validators.validateIDFormat(checkinID))
-				errors.add(Constants.UNEXPECTED_ERROR);
-
-			if (errors.size() == 0) {
-				String userID = dao.getUserID(sessionToken);
-				String checkinOwner = dao.getCheckinOwner(checkinID);
-
-				if (userID.equals(checkinOwner)
-						|| dao.isProfilePublic(checkinOwner)
-						|| dao.isFriend(userID, checkinOwner)) {
-
-					bean.setVenueName(dao.getVenueName(checkinID));
-					HashMap<String, String> checkinInfo = dao
-							.getCheckinInfo(checkinID);
-					bean.setDateTime(checkinInfo.get("dateTime"));
-					bean.setVenueWebsite(dao.getVenueWebsite(checkinID));
-					bean.setLatitude(checkinInfo.get("latitude"));
-					bean.setLongitude(checkinInfo.get("longitude"));
-					bean.setComments(dao.selectComments(checkinID));
-					bean.setSuccess(true);
-				}
-			}
+			history.setHistory(dao.getCheckinHistoryByUserName(username));
+			history.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			history.setErrors(errors);
 		}
-		return bean;
-	}
-
-	public HistoryBean getUserHistory(String sessionToken, String userName) {
-
-		HistoryBean bean = new HistoryBean();
-		ArrayList<String> errors = new ArrayList<String>();
-
-		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-			else if (!Validators.validateUserNameFormat(userName))
-				errors.add(Constants.USERNAME_FORMAT_INVALID);
-
-			if (errors.size() == 0) {
-				bean.setHistory(dao.getCheckinHistoryByUserName(userName));
-				bean.setSuccess(true);
-			}
-		} catch (Exception e) {
-			errors.add(Constants.UNEXPECTED_ERROR);
-		} finally {
-			bean.setErrors(errors);
-		}
-		return bean;
+		return history;
 	}
 }

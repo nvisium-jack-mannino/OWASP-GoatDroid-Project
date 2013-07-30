@@ -17,25 +17,25 @@ package org.owasp.goatdroid.webservice.fourgoats.services;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.annotation.Resource;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
-import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGLoginDaoImpl;
+import org.owasp.goatdroid.webservice.fourgoats.model.LoginModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class FGLoginServiceImpl implements LoginService {
 
-	@Resource
+	@Autowired
 	FGLoginDaoImpl dao;
 
-	public LoginBean validateCredentials(String userName, String password) {
+	public LoginModel validateCredentials(String userName, String password) {
 
-		LoginBean bean = new LoginBean();
+		LoginModel bean = new LoginModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -44,17 +44,13 @@ public class FGLoginServiceImpl implements LoginService {
 
 			if (errors.size() == 0) {
 				if (dao.validateCredentials(userName, password)) {
-
 					String userNameAndTime = userName
 							+ LoginUtils.getCurrentDateTime();
-					long sessionStartTime = LoginUtils.getTimeMilliseconds();
 					String sessionToken = LoginUtils.generateSaltedSHA512Hash(
 							userNameAndTime, Salts.SESSION_TOKEN_SALT);
-					dao.updateSessionInformation(userName, sessionToken,
-							sessionStartTime);
 					bean.setPreferences(dao.getPreferences(userName));
-					bean.setUserName(userName);
-					bean.setSessionToken(sessionToken);
+					bean.setUsername(userName);
+					bean.setAuthToken(sessionToken);
 					bean.setSuccess(true);
 				} else
 					errors.add(Constants.LOGIN_CREDENTIALS_INVALID);
@@ -72,9 +68,9 @@ public class FGLoginServiceImpl implements LoginService {
 		return bean;
 	}
 
-	public LoginBean validateCredentialsAPI(String userName, String password) {
+	public LoginModel validateCredentialsAPI(String userName, String password) {
 
-		LoginBean bean = new LoginBean();
+		LoginModel bean = new LoginModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -83,19 +79,15 @@ public class FGLoginServiceImpl implements LoginService {
 
 			if (errors.size() == 0) {
 				if (dao.validateCredentials(userName, password)) {
-					if (dao.getSessionToken(userName).isEmpty()) {
+					if (dao.getAuthToken(userName).isEmpty()) {
 						String userNameAndTime = userName
 								+ LoginUtils.getCurrentDateTime();
-						long sessionStartTime = LoginUtils
-								.getTimeMilliseconds();
 						String sessionToken = LoginUtils
 								.generateSaltedSHA512Hash(userNameAndTime,
 										Salts.SESSION_TOKEN_SALT);
-						dao.updateSessionInformation(userName, sessionToken,
-								sessionStartTime);
-						bean.setSessionToken(sessionToken);
+						bean.setAuthToken(sessionToken);
 					} else
-						bean.setSessionToken(dao.getSessionToken(userName));
+						bean.setAuthToken(dao.getAuthToken(userName));
 					bean.setSuccess(true);
 				} else
 					errors.add(Constants.LOGIN_CREDENTIALS_INVALID);
@@ -121,27 +113,5 @@ public class FGLoginServiceImpl implements LoginService {
 			 */
 			return false;
 		}
-	}
-
-	public LoginBean signOut(String sessionToken) {
-
-		LoginBean bean = new LoginBean();
-		ArrayList<String> errors = new ArrayList<String>();
-
-		try {
-			if (!dao.isAuthValid("", sessionToken)
-					|| !Validators.validateSessionTokenFormat(sessionToken))
-				errors.add(Constants.INVALID_SESSION);
-
-			if (errors.size() == 0) {
-				dao.terminateSession(sessionToken);
-				bean.setSuccess(true);
-			}
-		} catch (Exception e) {
-			errors.add(Constants.UNEXPECTED_ERROR);
-		} finally {
-			bean.setErrors(errors);
-		}
-		return bean;
 	}
 }

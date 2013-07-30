@@ -21,7 +21,7 @@ import java.net.URLDecoder;
 
 public class Utils {
 
-	static public String getCurrentPath() {
+	public static String getCurrentPath() {
 
 		String path;
 		String slash = getFileSeparator();
@@ -57,7 +57,7 @@ public class Utils {
 		}
 	}
 
-	static public String getFileSeparator() {
+	public static String getFileSeparator() {
 
 		if (System.getProperty("os.name").toLowerCase().startsWith("windows"))
 			return File.separator + File.separator;
@@ -65,7 +65,8 @@ public class Utils {
 			return File.separator;
 	}
 
-	static public String getOS() {
+	public static String getOS() {
 		return System.getProperty("os.name").toLowerCase();
 	}
+
 }
