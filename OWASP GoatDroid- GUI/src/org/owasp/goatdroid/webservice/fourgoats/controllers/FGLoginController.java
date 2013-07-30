@@ -16,9 +16,13 @@
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
 import org.owasp.goatdroid.webservice.fourgoats.model.LoginModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.UserPassModel;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGLoginServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,18 +41,11 @@ public class FGLoginController {
 
 	@RequestMapping(value = "authenticate", method = RequestMethod.POST)
 	@ResponseBody
-	public String validateCredentials(
-			@RequestParam(value = "username", required = true) String userName,
-			@RequestParam(value = "password", required = true) String password) {
-		try {
-			return "tomatoes";
-			// return loginService.validateCredentials(userName, password);
-		} catch (NullPointerException e) {
-			LoginModel bean = new LoginModel();
-			bean.setSuccess(false);
-			// return bean;
-			return "potatoes";
-		}
+	public LoginModel authenticate(Model model,
+			@ModelAttribute("userPassModel") UserPassModel userPass,
+			BindingResult result) {
+		return loginService.validateCredentials(userPass.getUsername(),
+				userPass.getPassword());
 	}
 
 	@RequestMapping(value = "validate_api", method = RequestMethod.POST)

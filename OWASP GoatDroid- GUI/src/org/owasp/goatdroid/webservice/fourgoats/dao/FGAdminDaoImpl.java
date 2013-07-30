@@ -78,7 +78,7 @@ public class FGAdminDaoImpl extends BaseDaoImpl implements AdminDao {
 
 	public void terminateSession(String sessionToken) {
 
-		String sql = "UPDATE app.users SET sessionToken = '0', sessionStartTime = 0 WHERE sessionToken = ?";
+		String sql = "UPDATE app.fg_users SET sessionToken = '0', sessionStartTime = 0 WHERE sessionToken = ?";
 		getJdbcTemplate().update(sql, sessionToken);
 	}
 }

@@ -35,7 +35,7 @@ public class FGRegisterDaoImpl extends BaseDaoImpl implements RegisterDao {
 
 	public boolean doesUserExist(String userName) throws SQLException {
 
-		String sql = "SELECT userName FROM app.users WHERE userName = ?";
+		String sql = "SELECT userName FROM app.fg_users WHERE userName = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userName);
 		if (rs.next())
 			return true;
@@ -46,7 +46,7 @@ public class FGRegisterDaoImpl extends BaseDaoImpl implements RegisterDao {
 	public void insertNewUser(String firstName, String lastName,
 			String userName, String password) throws SQLException {
 
-		String sql = "INSERT INTO app.users (userName, password, firstName, "
+		String sql = "INSERT INTO app.fg_users (userName, password, firstName, "
 				+ "lastName, userID, lastLatitude, "
 				+ "lastLongitude, lastCheckinTime, numberOfCheckins, "
 				+ "numberOfRewards, isAdmin, autoCheckin, isPublic) VALUES "

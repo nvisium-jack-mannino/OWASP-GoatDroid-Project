@@ -53,8 +53,8 @@ public class FGLoginServiceImpl implements LoginService {
 					dao.updateSessionInformation(userName, sessionToken,
 							sessionStartTime);
 					bean.setPreferences(dao.getPreferences(userName));
-					bean.setUserName(userName);
-					bean.setSessionToken(sessionToken);
+					bean.setUsername(userName);
+					bean.setAuthToken(sessionToken);
 					bean.setSuccess(true);
 				} else
 					errors.add(Constants.LOGIN_CREDENTIALS_INVALID);
@@ -83,7 +83,7 @@ public class FGLoginServiceImpl implements LoginService {
 
 			if (errors.size() == 0) {
 				if (dao.validateCredentials(userName, password)) {
-					if (dao.getSessionToken(userName).isEmpty()) {
+					if (dao.getAuthToken(userName).isEmpty()) {
 						String userNameAndTime = userName
 								+ LoginUtils.getCurrentDateTime();
 						long sessionStartTime = LoginUtils
@@ -93,9 +93,9 @@ public class FGLoginServiceImpl implements LoginService {
 										Salts.SESSION_TOKEN_SALT);
 						dao.updateSessionInformation(userName, sessionToken,
 								sessionStartTime);
-						bean.setSessionToken(sessionToken);
+						bean.setAuthToken(sessionToken);
 					} else
-						bean.setSessionToken(dao.getSessionToken(userName));
+						bean.setAuthToken(dao.getAuthToken(userName));
 					bean.setSuccess(true);
 				} else
 					errors.add(Constants.LOGIN_CREDENTIALS_INVALID);

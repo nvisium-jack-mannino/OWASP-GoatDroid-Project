@@ -14,5 +14,5 @@ public interface LoginDao {
 	public HashMap<String, Boolean> getPreferences(String userName)
 			throws SQLException;
 
-	public String getSessionToken(String userName) throws SQLException;
+	public String getAuthToken(String userName) throws SQLException;
 }

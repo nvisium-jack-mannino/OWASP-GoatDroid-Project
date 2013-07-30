@@ -20,28 +20,30 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessorType;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class LoginModel extends BaseModel {
 
-	public String sessionToken;
-	public String userName;
+	public String authToken;
+	public String username;
 	public HashMap<String, Boolean> preferences;
 
-	public String getSessionToken() {
-		return sessionToken;
+	public String getAuthToken() {
+		return authToken;
 	}
 
-	public void setSessionToken(String sessionToken) {
-		this.sessionToken = sessionToken;
+	public void setAuthToken(String authToken) {
+		this.authToken = authToken;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public HashMap<String, Boolean> getPreferences() {
