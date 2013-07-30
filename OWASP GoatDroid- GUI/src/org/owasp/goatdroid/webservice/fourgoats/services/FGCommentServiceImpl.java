@@ -24,9 +24,9 @@ import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
-import org.owasp.goatdroid.webservice.fourgoats.bean.CommentBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.CommentListBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGCommentDaoImpl;
+import org.owasp.goatdroid.webservice.fourgoats.model.CommentModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.CommentListModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,10 +35,10 @@ public class FGCommentServiceImpl implements CommentService {
 	@Resource
 	FGCommentDaoImpl dao;
 
-	public CommentBean addComment(String sessionToken, String comment,
+	public CommentModel addComment(String sessionToken, String comment,
 			String checkinID) {
 
-		CommentBean bean = new CommentBean();
+		CommentModel bean = new CommentModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -73,9 +73,9 @@ public class FGCommentServiceImpl implements CommentService {
 		return bean;
 	}
 
-	public CommentBean removeComment(String sessionToken, String commentID) {
+	public CommentModel removeComment(String sessionToken, String commentID) {
 
-		CommentBean bean = new CommentBean();
+		CommentModel bean = new CommentModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -102,9 +102,9 @@ public class FGCommentServiceImpl implements CommentService {
 		return bean;
 	}
 
-	public CommentListBean getComments(String sessionToken, String checkinID) {
+	public CommentListModel getComments(String sessionToken, String checkinID) {
 
-		CommentListBean bean = new CommentListBean();
+		CommentListModel bean = new CommentListModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {

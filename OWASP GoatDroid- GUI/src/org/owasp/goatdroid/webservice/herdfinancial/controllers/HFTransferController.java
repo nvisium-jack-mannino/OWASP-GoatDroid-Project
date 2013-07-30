@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
-import org.owasp.goatdroid.webservice.herdfinancial.bean.TransferBean;
+import org.owasp.goatdroid.webservice.herdfinancial.model.TransferModel;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFTransferServiceImpl;
 
 @Controller
@@ -39,7 +39,7 @@ public class HFTransferController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public TransferBean doTransfer(
+	public TransferModel doTransfer(
 			@RequestParam(value = "from", required = true) String from,
 			@RequestParam(value = "to", required = true) String to,
 			@RequestParam(value = "amount", required = true) double amount,
@@ -49,7 +49,7 @@ public class HFTransferController {
 			return transferService
 					.transferFunds(sessionToken, from, to, amount);
 		} catch (NullPointerException e) {
-			TransferBean bean = new TransferBean();
+			TransferModel bean = new TransferModel();
 			bean.setSuccess(false);
 			return bean;
 		}

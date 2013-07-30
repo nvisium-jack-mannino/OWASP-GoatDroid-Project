@@ -3,6 +3,7 @@ package org.owasp.goatdroid.webservice.fourgoats.dao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import org.owasp.goatdroid.webservice.fourgoats.model.FriendRequestModel;
 import org.owasp.goatdroid.webservice.fourgoats.model.UserModel;
 

@@ -13,25 +13,24 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.bean;
+package org.owasp.goatdroid.webservice.fourgoats.model;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessorType;
-import org.owasp.goatdroid.webservice.fourgoats.model.UserModel;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PublicUsersBean extends BaseBean {
+public class CommentListModel extends BaseModel {
 
-	ArrayList<UserModel> users;
+	public HashMap<String, String> comments;
 
-	public ArrayList<UserModel> getUsers() {
-		return users;
+	public HashMap<String, String> getComments() {
+		return comments;
 	}
 
-	public void setUsers(ArrayList<UserModel> users) {
-		this.users = users;
+	public void setComments(HashMap<String, String> comments) {
+		this.comments = comments;
 	}
 }

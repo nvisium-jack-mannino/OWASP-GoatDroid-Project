@@ -15,22 +15,42 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.model;
 
-import java.util.ArrayList;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlAccessorType;
+public class _StatementModel {
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
-public class StatementModel extends BaseModel {
+	String date;
+	String amount;
+	String name;
+	String balance;
 
-	public ArrayList<_StatementModel> statementData;
-
-	public ArrayList<_StatementModel> getStatementData() {
-		return statementData;
+	public String getDate() {
+		return date;
 	}
 
-	public void setStatementData(ArrayList<_StatementModel> statementData) {
-		this.statementData = statementData;
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public String getAmount() {
+		return amount;
+	}
+
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getBalance() {
+		return balance;
+	}
+
+	public void setBalance(String balance) {
+		this.balance = balance;
 	}
 }

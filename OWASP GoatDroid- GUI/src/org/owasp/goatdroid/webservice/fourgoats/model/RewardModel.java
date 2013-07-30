@@ -15,69 +15,32 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.model;
 
-public class RewardModel {
+import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlAccessorType;
 
-	String rewardName;
-	String rewardDescription;
-	String venueName;
-	String checkinsRequired;
-	String latitude;
-	String longitude;
-	String timeEarned;
 
-	public String getRewardName() {
-		return rewardName;
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class RewardModel extends BaseModel {
+
+	public String rewardID;
+	ArrayList<_RewardModel> rewards;
+
+	public String getRewardID() {
+		return rewardID;
 	}
 
-	public void setRewardName(String rewardName) {
-		this.rewardName = rewardName;
+	public void setRewardID(String rewardID) {
+		this.rewardID = rewardID;
 	}
 
-	public String getRewardDescription() {
-		return rewardDescription;
+	public ArrayList<_RewardModel> getRewards() {
+		return rewards;
 	}
 
-	public void setRewardDescription(String rewardDescription) {
-		this.rewardDescription = rewardDescription;
-	}
-
-	public String getVenueName() {
-		return venueName;
-	}
-
-	public void setVenueName(String venueName) {
-		this.venueName = venueName;
-	}
-
-	public String getCheckinsRequired() {
-		return checkinsRequired;
-	}
-
-	public void setCheckinsRequired(String checkinsRequired) {
-		this.checkinsRequired = checkinsRequired;
-	}
-
-	public String getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
-
-	public String getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
-
-	public String getTimeEarned() {
-		return timeEarned;
-	}
-
-	public void setTimeEarned(String timeEarned) {
-		this.timeEarned = timeEarned;
+	public void setRewards(ArrayList<_RewardModel> rewards) {
+		this.rewards = rewards;
 	}
 }

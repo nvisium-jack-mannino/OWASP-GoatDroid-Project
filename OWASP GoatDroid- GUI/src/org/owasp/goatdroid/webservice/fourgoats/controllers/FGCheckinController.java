@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.bean.CheckinBean;
+import org.owasp.goatdroid.webservice.fourgoats.model.CheckinModel;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGCheckinServiceImpl;
 
 @Controller
@@ -39,14 +39,14 @@ public class FGCheckinController {
 
 	@RequestMapping(value = "thing", method = RequestMethod.POST)
 	@ResponseBody
-	public CheckinBean doCheckin(
+	public CheckinModel doCheckin(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@RequestParam(value = "latitude", required = true) String latitude,
 			@RequestParam(value = "longitude", required = true) String longitude) {
 		try {
 			return checkinService.doCheckin(sessionToken, latitude, longitude);
 		} catch (NullPointerException e) {
-			CheckinBean bean = new CheckinBean();
+			CheckinModel bean = new CheckinModel();
 			bean.setSuccess(false);
 			return bean;
 		}

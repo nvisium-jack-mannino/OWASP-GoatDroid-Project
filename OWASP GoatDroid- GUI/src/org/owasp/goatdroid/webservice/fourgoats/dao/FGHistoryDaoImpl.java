@@ -21,7 +21,7 @@ import java.util.HashMap;
 
 import javax.sql.DataSource;
 
-import org.owasp.goatdroid.webservice.fourgoats.model.HistoryModel;
+import org.owasp.goatdroid.webservice.fourgoats.model._HistoryModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -34,16 +34,16 @@ public class FGHistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 		setDataSource(dataSource);
 	}
 
-	public ArrayList<HistoryModel> getCheckinHistory(String userID)
+	public ArrayList<_HistoryModel> getCheckinHistory(String userID)
 			throws SQLException {
 
 		String sql = "SELECT app.fg_checkins.dateTime, app.fg_checkins.checkinID, app.fg_checkins.latitude, app.fg_checkins.longitude, "
 				+ "app.fg_venues.venueName, app.fg_venues.venueWebsite FROM app.fg_checkins INNER JOIN app.fg_venues on "
 				+ "app.fg_checkins.venueID = app.fg_venues.venueID where userID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
-		ArrayList<HistoryModel> checkins = new ArrayList<HistoryModel>();
+		ArrayList<_HistoryModel> checkins = new ArrayList<_HistoryModel>();
 		while (rs.next()) {
-			HistoryModel checkin = new HistoryModel();
+			_HistoryModel checkin = new _HistoryModel();
 			checkin.setDateTime(rs.getString("dateTime"));
 			checkin.setCheckinID(rs.getString("checkinID"));
 			checkin.setLatitude(rs.getString("latitude"));
@@ -55,7 +55,7 @@ public class FGHistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 		return checkins;
 	}
 
-	public ArrayList<HistoryModel> getCheckinHistoryByUserName(String userName)
+	public ArrayList<_HistoryModel> getCheckinHistoryByUserName(String userName)
 			throws SQLException {
 
 		String sql = "SELECT app.fg_checkins.dateTime, app.fg_checkins.checkinID, app.fg_checkins.latitude, app.fg_checkins.longitude, "
@@ -63,9 +63,9 @@ public class FGHistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 				+ "app.fg_checkins.venueID = app.fg_venues.venueID INNER JOIN app.fg_users ON app.fg_checkins.userID = app.fg_users.userID WHERE "
 				+ "app.fg_users.userName = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userName);
-		ArrayList<HistoryModel> checkins = new ArrayList<HistoryModel>();
+		ArrayList<_HistoryModel> checkins = new ArrayList<_HistoryModel>();
 		while (rs.next()) {
-			HistoryModel checkin = new HistoryModel();
+			_HistoryModel checkin = new _HistoryModel();
 			checkin.setDateTime(rs.getString("dateTime"));
 			checkin.setCheckinID(rs.getString("checkinID"));
 			checkin.setLatitude(rs.getString("latitude"));

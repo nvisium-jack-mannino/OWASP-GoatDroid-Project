@@ -1,13 +1,13 @@
 package org.owasp.goatdroid.webservice.fourgoats.services;
 
-import org.owasp.goatdroid.webservice.fourgoats.bean.VenueBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.VenueListBean;
+import org.owasp.goatdroid.webservice.fourgoats.model.VenueModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.VenueListModel;
 
 public interface VenueService {
 
-	public VenueBean addVenue(String sessionToken, String venueName,
+	public VenueModel addVenue(String sessionToken, String venueName,
 			String venueWebsite, String latitude, String longitude);
 
-	public VenueListBean getAllVenues(String sessionToken);
+	public VenueListModel getAllVenues(String sessionToken);
 
 }

@@ -13,35 +13,14 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.bean;
+package org.owasp.goatdroid.webservice.herdfinancial.model;
 
-import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessorType;
 
+@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class BaseBean {
+public class RegisterModel extends BaseModel {
 
-	public boolean success;
-	public ArrayList<String> errors;
-
-	public BaseBean() {
-		this.success = false;
-	}
-
-	public boolean isSuccess() {
-		return success;
-	}
-
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
-
-	public ArrayList<String> getErrors() {
-		return errors;
-	}
-
-	public void setErrors(ArrayList<String> errors) {
-		this.errors = errors;
-	}
 }

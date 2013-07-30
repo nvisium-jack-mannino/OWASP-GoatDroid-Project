@@ -1,29 +1,29 @@
 package org.owasp.goatdroid.webservice.fourgoats.services;
 
-import org.owasp.goatdroid.webservice.fourgoats.bean.FriendBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.FriendListBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.FriendProfileBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.PendingFriendRequestsBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.PublicUsersBean;
+import org.owasp.goatdroid.webservice.fourgoats.model.FriendModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.FriendListModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.FriendProfileModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.PendingFriendRequestsModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.PublicUsersModel;
 
 public interface FriendService {
 
-	public FriendListBean getFriends(String sessionToken);
+	public FriendListModel getFriends(String sessionToken);
 
-	public FriendBean requestFriend(String sessionToken,
+	public FriendModel requestFriend(String sessionToken,
 				String friendUserName);
 
-	public FriendBean acceptOrDenyFriendRequest(String action,
+	public FriendModel acceptOrDenyFriendRequest(String action,
 				String sessionToken, String userName);
 
-	public FriendBean removeFriend(String sessionToken,
+	public FriendModel removeFriend(String sessionToken,
 				String friendUserName);
 
-	public FriendProfileBean getProfile(String sessionToken,
+	public FriendProfileModel getProfile(String sessionToken,
 				String friendUserName);
 
-	public PendingFriendRequestsBean getPendingFriendRequests(
+	public PendingFriendRequestsModel getPendingFriendRequests(
 				String sessionToken);
 
-	public PublicUsersBean getPublicUsers(String sessionToken);
+	public PublicUsersModel getPublicUsers(String sessionToken);
 }

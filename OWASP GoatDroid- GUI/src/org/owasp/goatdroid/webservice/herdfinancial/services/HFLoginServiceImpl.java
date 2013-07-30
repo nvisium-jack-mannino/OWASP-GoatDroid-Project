@@ -22,8 +22,8 @@ import javax.annotation.Resource;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Utils;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
-import org.owasp.goatdroid.webservice.herdfinancial.bean.LoginBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFLoginDaoImpl;
+import org.owasp.goatdroid.webservice.herdfinancial.model.LoginModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -54,10 +54,10 @@ public class HFLoginServiceImpl implements LoginService {
 		return success;
 	}
 
-	public LoginBean isSessionValidOrDeviceAuthorized(int sessionToken,
+	public LoginModel isSessionValidOrDeviceAuthorized(int sessionToken,
 			String deviceID) {
 
-		LoginBean bean = new LoginBean();
+		LoginModel bean = new LoginModel();
 		ArrayList<String> errors = new ArrayList<String>();
 		if (!Validators.validateDeviceID(deviceID))
 			errors.add(Constants.INVALID_DEVICE_ID);
@@ -87,9 +87,9 @@ public class HFLoginServiceImpl implements LoginService {
 		return bean;
 	}
 
-	public LoginBean validateCredentials(String userName, String password) {
+	public LoginModel validateCredentials(String userName, String password) {
 
-		LoginBean bean = new LoginBean();
+		LoginModel bean = new LoginModel();
 		ArrayList<String> errors = Validators.validateCredentials(userName,
 				password);
 
@@ -114,9 +114,9 @@ public class HFLoginServiceImpl implements LoginService {
 		return bean;
 	}
 
-	public LoginBean isDevicePermanentlyAuthorized(String deviceID) {
+	public LoginModel isDevicePermanentlyAuthorized(String deviceID) {
 
-		LoginBean bean = new LoginBean();
+		LoginModel bean = new LoginModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		if (!Validators.validateDeviceID(deviceID))

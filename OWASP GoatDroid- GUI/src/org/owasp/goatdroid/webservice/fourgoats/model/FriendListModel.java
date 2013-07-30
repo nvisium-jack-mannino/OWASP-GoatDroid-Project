@@ -13,14 +13,25 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.herdfinancial.bean;
+package org.owasp.goatdroid.webservice.fourgoats.model;
 
+import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlAccessorType;
+
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ForgotPasswordBean extends BaseBean {
+public class FriendListModel extends BaseModel {
 
+	ArrayList<UserModel> friends;
+
+	public ArrayList<UserModel> getFriends() {
+		return friends;
+	}
+
+	public void setFriends(ArrayList<UserModel> friends) {
+		this.friends = friends;
+	}
 }

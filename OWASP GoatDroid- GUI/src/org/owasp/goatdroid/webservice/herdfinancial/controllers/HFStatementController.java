@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
-import org.owasp.goatdroid.webservice.herdfinancial.bean.StatementBean;
+import org.owasp.goatdroid.webservice.herdfinancial.model.StatementModel;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFStatementServiceImpl;
 
 @Controller
@@ -39,7 +39,7 @@ public class HFStatementController {
 
 	@RequestMapping(value = "get_statement/{accountNumber}/{startDate}/{endDate}", method = RequestMethod.GET)
 	@ResponseBody
-	public StatementBean getStatement(
+	public StatementModel getStatement(
 			@PathVariable("accountNumber") String accountNumber,
 			@PathVariable("startDate") String startDate,
 			@PathVariable("endDate") String endDate,
@@ -48,7 +48,7 @@ public class HFStatementController {
 			return statementService.getStatement(accountNumber, startDate,
 					endDate, sessionToken);
 		} catch (NullPointerException e) {
-			StatementBean bean = new StatementBean();
+			StatementModel bean = new StatementModel();
 			bean.setSuccess(false);
 			return bean;
 		}
@@ -56,14 +56,14 @@ public class HFStatementController {
 
 	@RequestMapping(value = "poll_statement_updates/{accountNumber}", method = RequestMethod.GET)
 	@ResponseBody
-	public StatementBean getStatementSinceLastPoll(
+	public StatementModel getStatementSinceLastPoll(
 			@PathVariable("accountNumber") String accountNumber,
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {
 		try {
 			return statementService.getStatementSinceLastPoll(accountNumber,
 					sessionToken);
 		} catch (NullPointerException e) {
-			StatementBean bean = new StatementBean();
+			StatementModel bean = new StatementModel();
 			bean.setSuccess(false);
 			return bean;
 		}

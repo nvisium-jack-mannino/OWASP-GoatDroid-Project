@@ -20,10 +20,10 @@ import java.util.ArrayList;
 import javax.annotation.Resource;
 
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.bean.AdminBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.GetUsersAdminBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGAdminDaoImpl;
+import org.owasp.goatdroid.webservice.fourgoats.model.AdminModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.GetUsersAdminModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.LoginModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,9 +32,9 @@ public class FGAdminServiceImpl implements AdminService {
 	@Resource
 	FGAdminDaoImpl dao;
 
-	public AdminBean deleteUser(String sessionToken, String userName) {
+	public AdminModel deleteUser(String sessionToken, String userName) {
 
-		AdminBean bean = new AdminBean();
+		AdminModel bean = new AdminModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -54,10 +54,10 @@ public class FGAdminServiceImpl implements AdminService {
 		return bean;
 	}
 
-	public AdminBean resetPassword(String sessionToken, String userName,
+	public AdminModel resetPassword(String sessionToken, String userName,
 			String newPassword) {
 
-		AdminBean bean = new AdminBean();
+		AdminModel bean = new AdminModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -78,9 +78,9 @@ public class FGAdminServiceImpl implements AdminService {
 		return bean;
 	}
 
-	public GetUsersAdminBean getUsers(String sessionToken) {
+	public GetUsersAdminModel getUsers(String sessionToken) {
 
-		GetUsersAdminBean bean = new GetUsersAdminBean();
+		GetUsersAdminModel bean = new GetUsersAdminModel();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
 			/*
@@ -99,9 +99,9 @@ public class FGAdminServiceImpl implements AdminService {
 		return bean;
 	}
 
-	public LoginBean signOut(String sessionToken) {
+	public LoginModel signOut(String sessionToken) {
 
-		LoginBean bean = new LoginBean();
+		LoginModel bean = new LoginModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {

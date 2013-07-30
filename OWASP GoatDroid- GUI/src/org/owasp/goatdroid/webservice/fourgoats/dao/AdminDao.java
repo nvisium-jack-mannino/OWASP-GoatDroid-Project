@@ -2,6 +2,7 @@ package org.owasp.goatdroid.webservice.fourgoats.dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import org.owasp.goatdroid.webservice.fourgoats.model.UserModel;
 
 public interface AdminDao {

@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.bean;
+package org.owasp.goatdroid.webservice.fourgoats.model;
 
 import java.util.HashMap;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -22,14 +22,22 @@ import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class HistoryCheckinBean extends BaseBean {
+public class CheckinModel extends BaseModel {
 
+	public String checkinID;
 	public String venueName;
-	public String venueWebsite;
 	public String dateTime;
 	public String latitude;
 	public String longitude;
-	public HashMap<String, String> comments;
+	public HashMap<String, String> rewardEarned;
+
+	public String getCheckinID() {
+		return checkinID;
+	}
+
+	public void setCheckinID(String checkinID) {
+		this.checkinID = checkinID;
+	}
 
 	public String getVenueName() {
 		return venueName;
@@ -37,14 +45,6 @@ public class HistoryCheckinBean extends BaseBean {
 
 	public void setVenueName(String venueName) {
 		this.venueName = venueName;
-	}
-
-	public String getVenueWebsite() {
-		return venueWebsite;
-	}
-
-	public void setVenueWebsite(String venueWebsite) {
-		this.venueWebsite = venueWebsite;
 	}
 
 	public String getDateTime() {
@@ -71,11 +71,11 @@ public class HistoryCheckinBean extends BaseBean {
 		this.longitude = longitude;
 	}
 
-	public HashMap<String, String> getComments() {
-		return comments;
+	public HashMap<String, String> getRewardEarned() {
+		return rewardEarned;
 	}
 
-	public void setComments(HashMap<String, String> comments) {
-		this.comments = comments;
+	public void setRewardEarned(HashMap<String, String> rewardEarned) {
+		this.rewardEarned = rewardEarned;
 	}
 }

@@ -13,30 +13,32 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.bean;
+package org.owasp.goatdroid.webservice.fourgoats.model;
 
-import java.util.HashMap;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlAccessorType;
+public class _RewardModel {
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
-public class CheckinBean extends BaseBean {
+	String rewardName;
+	String rewardDescription;
+	String venueName;
+	String checkinsRequired;
+	String latitude;
+	String longitude;
+	String timeEarned;
 
-	public String checkinID;
-	public String venueName;
-	public String dateTime;
-	public String latitude;
-	public String longitude;
-	public HashMap<String, String> rewardEarned;
-
-	public String getCheckinID() {
-		return checkinID;
+	public String getRewardName() {
+		return rewardName;
 	}
 
-	public void setCheckinID(String checkinID) {
-		this.checkinID = checkinID;
+	public void setRewardName(String rewardName) {
+		this.rewardName = rewardName;
+	}
+
+	public String getRewardDescription() {
+		return rewardDescription;
+	}
+
+	public void setRewardDescription(String rewardDescription) {
+		this.rewardDescription = rewardDescription;
 	}
 
 	public String getVenueName() {
@@ -47,12 +49,12 @@ public class CheckinBean extends BaseBean {
 		this.venueName = venueName;
 	}
 
-	public String getDateTime() {
-		return dateTime;
+	public String getCheckinsRequired() {
+		return checkinsRequired;
 	}
 
-	public void setDateTime(String dateTime) {
-		this.dateTime = dateTime;
+	public void setCheckinsRequired(String checkinsRequired) {
+		this.checkinsRequired = checkinsRequired;
 	}
 
 	public String getLatitude() {
@@ -71,11 +73,11 @@ public class CheckinBean extends BaseBean {
 		this.longitude = longitude;
 	}
 
-	public HashMap<String, String> getRewardEarned() {
-		return rewardEarned;
+	public String getTimeEarned() {
+		return timeEarned;
 	}
 
-	public void setRewardEarned(HashMap<String, String> rewardEarned) {
-		this.rewardEarned = rewardEarned;
+	public void setTimeEarned(String timeEarned) {
+		this.timeEarned = timeEarned;
 	}
 }

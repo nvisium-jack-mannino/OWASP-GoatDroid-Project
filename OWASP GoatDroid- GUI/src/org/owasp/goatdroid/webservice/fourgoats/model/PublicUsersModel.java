@@ -13,26 +13,25 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.bean;
+package org.owasp.goatdroid.webservice.fourgoats.model;
 
 import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessorType;
-import org.owasp.goatdroid.webservice.fourgoats.model.FriendRequestModel;
+
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PendingFriendRequestsBean extends BaseBean {
+public class PublicUsersModel extends BaseModel {
 
-	ArrayList<FriendRequestModel> pendingFriendRequests;
+	ArrayList<UserModel> users;
 
-	public ArrayList<FriendRequestModel> getPendingFriendRequests() {
-		return pendingFriendRequests;
+	public ArrayList<UserModel> getUsers() {
+		return users;
 	}
 
-	public void setPendingFriendRequests(
-			ArrayList<FriendRequestModel> pendingFriendRequests) {
-		this.pendingFriendRequests = pendingFriendRequests;
+	public void setUsers(ArrayList<UserModel> users) {
+		this.users = users;
 	}
 }

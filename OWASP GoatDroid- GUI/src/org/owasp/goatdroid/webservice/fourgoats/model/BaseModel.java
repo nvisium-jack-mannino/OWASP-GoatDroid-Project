@@ -13,25 +13,35 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.bean;
+package org.owasp.goatdroid.webservice.fourgoats.model;
 
 import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessorType;
-import org.owasp.goatdroid.webservice.fourgoats.model.UserModel;
 
-@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class FriendListBean extends BaseBean {
+public class BaseModel {
 
-	ArrayList<UserModel> friends;
+	public boolean success;
+	public ArrayList<String> errors;
 
-	public ArrayList<UserModel> getFriends() {
-		return friends;
+	public BaseModel() {
+		this.success = false;
 	}
 
-	public void setFriends(ArrayList<UserModel> friends) {
-		this.friends = friends;
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
+
+	public ArrayList<String> getErrors() {
+		return errors;
+	}
+
+	public void setErrors(ArrayList<String> errors) {
+		this.errors = errors;
 	}
 }

@@ -21,12 +21,12 @@ import javax.annotation.Resource;
 
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
-import org.owasp.goatdroid.webservice.fourgoats.bean.FriendBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.FriendListBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.FriendProfileBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.PendingFriendRequestsBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.PublicUsersBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGFriendDaoImpl;
+import org.owasp.goatdroid.webservice.fourgoats.model.FriendModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.FriendListModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.FriendProfileModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.PendingFriendRequestsModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.PublicUsersModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,9 +35,9 @@ public class FGFriendServiceImpl implements FriendService {
 	@Resource
 	FGFriendDaoImpl dao;
 
-	public FriendListBean getFriends(String sessionToken) {
+	public FriendListModel getFriends(String sessionToken) {
 
-		FriendListBean bean = new FriendListBean();
+		FriendListModel bean = new FriendListModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -53,9 +53,9 @@ public class FGFriendServiceImpl implements FriendService {
 		return bean;
 	}
 
-	public FriendBean requestFriend(String sessionToken, String friendUserName) {
+	public FriendModel requestFriend(String sessionToken, String friendUserName) {
 
-		FriendBean bean = new FriendBean();
+		FriendModel bean = new FriendModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -84,10 +84,10 @@ public class FGFriendServiceImpl implements FriendService {
 		return bean;
 	}
 
-	public FriendBean acceptOrDenyFriendRequest(String action,
+	public FriendModel acceptOrDenyFriendRequest(String action,
 			String sessionToken, String userName) {
 
-		FriendBean bean = new FriendBean();
+		FriendModel bean = new FriendModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -124,9 +124,9 @@ public class FGFriendServiceImpl implements FriendService {
 		return bean;
 	}
 
-	public FriendBean removeFriend(String sessionToken, String friendUserName) {
+	public FriendModel removeFriend(String sessionToken, String friendUserName) {
 
-		FriendBean bean = new FriendBean();
+		FriendModel bean = new FriendModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -151,10 +151,10 @@ public class FGFriendServiceImpl implements FriendService {
 		return bean;
 	}
 
-	public FriendProfileBean getProfile(String sessionToken,
+	public FriendProfileModel getProfile(String sessionToken,
 			String friendUserName) {
 
-		FriendProfileBean bean = new FriendProfileBean();
+		FriendProfileModel bean = new FriendProfileModel();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
 			String friendUserID = dao.getUserIDByName(friendUserName);
@@ -174,10 +174,10 @@ public class FGFriendServiceImpl implements FriendService {
 		return bean;
 	}
 
-	public PendingFriendRequestsBean getPendingFriendRequests(
+	public PendingFriendRequestsModel getPendingFriendRequests(
 			String sessionToken) {
 
-		PendingFriendRequestsBean bean = new PendingFriendRequestsBean();
+		PendingFriendRequestsModel bean = new PendingFriendRequestsModel();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
 			String userID = dao.getUserID(sessionToken);
@@ -191,9 +191,9 @@ public class FGFriendServiceImpl implements FriendService {
 		return bean;
 	}
 
-	public PublicUsersBean getPublicUsers(String sessionToken) {
+	public PublicUsersModel getPublicUsers(String sessionToken) {
 
-		PublicUsersBean bean = new PublicUsersBean();
+		PublicUsersModel bean = new PublicUsersModel();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
 			String userName = dao.getUserNameBySessionToken(sessionToken);

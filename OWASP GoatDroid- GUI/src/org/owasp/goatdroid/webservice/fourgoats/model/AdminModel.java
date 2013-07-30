@@ -13,25 +13,14 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.herdfinancial.bean;
+package org.owasp.goatdroid.webservice.fourgoats.model;
 
-import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessorType;
-import org.owasp.goatdroid.webservice.herdfinancial.model.StatementModel;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class StatementBean extends BaseBean {
+public class AdminModel extends BaseModel {
 
-	public ArrayList<StatementModel> statementData;
-
-	public ArrayList<StatementModel> getStatementData() {
-		return statementData;
-	}
-
-	public void setStatementData(ArrayList<StatementModel> statementData) {
-		this.statementData = statementData;
-	}
 }

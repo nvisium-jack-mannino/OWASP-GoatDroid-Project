@@ -1,9 +1,9 @@
 package org.owasp.goatdroid.webservice.fourgoats.services;
 
-import org.owasp.goatdroid.webservice.fourgoats.bean.RegisterBean;
+import org.owasp.goatdroid.webservice.fourgoats.model.RegisterModel;
 
 public interface RegisterService {
 
-	public RegisterBean registerUser(String firstName, String lastName,
+	public RegisterModel registerUser(String firstName, String lastName,
 			String userName, String password);
 }

@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.bean;
+package org.owasp.goatdroid.webservice.fourgoats.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,13 +23,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GetPreferencesBean {
+public class GetPreferencesModel {
 
 	HashMap<String, Boolean> preferences;
 	public boolean success;
 	public ArrayList<String> errors;
 
-	public GetPreferencesBean() {
+	public GetPreferencesModel() {
 		this.success = false;
 	}
 

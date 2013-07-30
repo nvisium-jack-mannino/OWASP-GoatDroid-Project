@@ -13,25 +13,14 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.bean;
+package org.owasp.goatdroid.webservice.herdfinancial.model;
 
-import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessorType;
-import org.owasp.goatdroid.webservice.fourgoats.model.HistoryModel;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class HistoryBean extends BaseBean {
+public class TransferModel extends BaseModel {
 
-	public ArrayList<HistoryModel> history;
-
-	public ArrayList<HistoryModel> getHistory() {
-		return history;
-	}
-
-	public void setHistory(ArrayList<HistoryModel> history) {
-		this.history = history;
-	}
 }

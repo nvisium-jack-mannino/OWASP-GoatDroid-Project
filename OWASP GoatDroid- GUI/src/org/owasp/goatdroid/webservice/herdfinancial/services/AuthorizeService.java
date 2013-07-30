@@ -1,8 +1,8 @@
 package org.owasp.goatdroid.webservice.herdfinancial.services;
 
-import org.owasp.goatdroid.webservice.herdfinancial.bean.AuthorizeBean;
+import org.owasp.goatdroid.webservice.herdfinancial.model.AuthorizeModel;
 
 public interface AuthorizeService {
 
-	public AuthorizeBean authorizeDevice(String deviceID, int sessionToken);
+	public AuthorizeModel authorizeDevice(String deviceID, int sessionToken);
 }

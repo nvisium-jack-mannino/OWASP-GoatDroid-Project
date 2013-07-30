@@ -21,7 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.owasp.goatdroid.webservice.herdfinancial.bean.ForgotPasswordBean;
+import org.owasp.goatdroid.webservice.herdfinancial.model.ForgotPasswordModel;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFForgotPasswordServiceImpl;
 
 @Controller
@@ -38,7 +38,7 @@ public class HFForgotPasswordController {
 
 	@RequestMapping(value = "request_code", method = RequestMethod.POST)
 	@ResponseBody
-	public ForgotPasswordBean requestCode(
+	public ForgotPasswordModel requestCode(
 			@RequestParam(value = "userName", required = true) String userName,
 			@RequestParam(value = "secretQuestionIndex", required = true) int secretQuestionIndex,
 			@RequestParam(value = "secretQuestionAnswer", required = true) String secretQuestionAnswer) {
@@ -46,7 +46,7 @@ public class HFForgotPasswordController {
 			return forgotPasswordService.requestCode(userName,
 					secretQuestionIndex, secretQuestionAnswer);
 		} catch (NullPointerException e) {
-			ForgotPasswordBean bean = new ForgotPasswordBean();
+			ForgotPasswordModel bean = new ForgotPasswordModel();
 			bean.setSuccess(false);
 			return bean;
 		}
@@ -54,14 +54,14 @@ public class HFForgotPasswordController {
 
 	@RequestMapping(value = "verify_code", method = RequestMethod.POST)
 	@ResponseBody
-	public ForgotPasswordBean verifyCode(
+	public ForgotPasswordModel verifyCode(
 			@RequestParam(value = "userName", required = true) String userName,
 			@RequestParam(value = "passwordResetCode", required = true) int passwordResetCode) {
 		try {
 			return forgotPasswordService
 					.verifyCode(userName, passwordResetCode);
 		} catch (NullPointerException e) {
-			ForgotPasswordBean bean = new ForgotPasswordBean();
+			ForgotPasswordModel bean = new ForgotPasswordModel();
 			bean.setSuccess(false);
 			return bean;
 		}
@@ -69,7 +69,7 @@ public class HFForgotPasswordController {
 
 	@RequestMapping(value = "update_password", method = RequestMethod.POST)
 	@ResponseBody
-	public ForgotPasswordBean getBalances(
+	public ForgotPasswordModel getBalances(
 			@RequestParam(value = "userName") String userName,
 			@RequestParam(value = "passwordResetCode") int passwordResetCode,
 			@RequestParam(value = "password") String password) {
@@ -77,7 +77,7 @@ public class HFForgotPasswordController {
 			return forgotPasswordService.updatePassword(userName,
 					passwordResetCode, password);
 		} catch (NullPointerException e) {
-			ForgotPasswordBean bean = new ForgotPasswordBean();
+			ForgotPasswordModel bean = new ForgotPasswordModel();
 			bean.setSuccess(false);
 			return bean;
 		}

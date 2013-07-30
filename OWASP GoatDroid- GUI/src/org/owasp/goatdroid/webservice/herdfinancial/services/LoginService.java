@@ -1,15 +1,15 @@
 package org.owasp.goatdroid.webservice.herdfinancial.services;
 
-import org.owasp.goatdroid.webservice.herdfinancial.bean.LoginBean;
+import org.owasp.goatdroid.webservice.herdfinancial.model.LoginModel;
 
 public interface LoginService {
-	public LoginBean isDevicePermanentlyAuthorized(String deviceID);
+	public LoginModel isDevicePermanentlyAuthorized(String deviceID);
 
 	public boolean isSessionValid(int sessionToken);
 
-	public LoginBean isSessionValidOrDeviceAuthorized(int sessionToken,
+	public LoginModel isSessionValidOrDeviceAuthorized(int sessionToken,
 			String deviceID);
 
-	public LoginBean validateCredentials(String userName, String password);
+	public LoginModel validateCredentials(String userName, String password);
 
 }

@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.bean.CommentListBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.CommentBean;
+import org.owasp.goatdroid.webservice.fourgoats.model.CommentModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.CommentListModel;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGCommentServiceImpl;
 
 @Controller
@@ -41,14 +41,14 @@ public class FGCommentController {
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@ResponseBody
-	public CommentBean addComment(
+	public CommentModel addComment(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@RequestParam(value = "comment", required = true) String comment,
 			@RequestParam(value = "checkinID", required = true) String checkinID) {
 		try {
 			return commentService.addComment(sessionToken, comment, checkinID);
 		} catch (NullPointerException e) {
-			CommentBean bean = new CommentBean();
+			CommentModel bean = new CommentModel();
 			bean.setSuccess(false);
 			return bean;
 		}
@@ -56,13 +56,13 @@ public class FGCommentController {
 
 	@RequestMapping(value = "remove", method = RequestMethod.POST)
 	@ResponseBody
-	public CommentBean removeComment(
+	public CommentModel removeComment(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@RequestParam(value = "commentID", required = true) String commentID) {
 		try {
 			return commentService.removeComment(sessionToken, commentID);
 		} catch (NullPointerException e) {
-			CommentBean bean = new CommentBean();
+			CommentModel bean = new CommentModel();
 			bean.setSuccess(false);
 			return bean;
 		}
@@ -70,13 +70,13 @@ public class FGCommentController {
 
 	@RequestMapping(value = "get/{checkinID}", method = RequestMethod.GET)
 	@ResponseBody
-	public CommentListBean getComments(
+	public CommentListModel getComments(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@PathVariable(value = "checkinID") String checkinID) {
 		try {
 			return commentService.getComments(sessionToken, checkinID);
 		} catch (NullPointerException e) {
-			CommentListBean bean = new CommentListBean();
+			CommentListModel bean = new CommentListModel();
 			bean.setSuccess(false);
 			return bean;
 		}

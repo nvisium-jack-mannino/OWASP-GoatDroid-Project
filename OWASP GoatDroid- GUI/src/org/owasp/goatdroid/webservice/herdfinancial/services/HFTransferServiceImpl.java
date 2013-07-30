@@ -22,8 +22,8 @@ import javax.annotation.Resource;
 
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
-import org.owasp.goatdroid.webservice.herdfinancial.bean.TransferBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFTransferDaoImpl;
+import org.owasp.goatdroid.webservice.herdfinancial.model.TransferModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,10 +32,10 @@ public class HFTransferServiceImpl implements TransferService {
 	@Resource
 	HFTransferDaoImpl dao;
 
-	public TransferBean transferFunds(int sessionToken, String from, String to,
+	public TransferModel transferFunds(int sessionToken, String from, String to,
 			double amount) {
 
-		TransferBean bean = new TransferBean();
+		TransferModel bean = new TransferModel();
 		ArrayList<String> errors = new ArrayList<String>();
 		 if (from.equals(to))
 			errors.add(Constants.LULZ);

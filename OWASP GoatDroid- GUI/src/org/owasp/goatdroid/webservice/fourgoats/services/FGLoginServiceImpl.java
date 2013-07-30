@@ -21,8 +21,8 @@ import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
-import org.owasp.goatdroid.webservice.fourgoats.bean.LoginBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGLoginDaoImpl;
+import org.owasp.goatdroid.webservice.fourgoats.model.LoginModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -33,9 +33,9 @@ public class FGLoginServiceImpl implements LoginService {
 	@Autowired
 	FGLoginDaoImpl dao;
 
-	public LoginBean validateCredentials(String userName, String password) {
+	public LoginModel validateCredentials(String userName, String password) {
 
-		LoginBean bean = new LoginBean();
+		LoginModel bean = new LoginModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -72,9 +72,9 @@ public class FGLoginServiceImpl implements LoginService {
 		return bean;
 	}
 
-	public LoginBean validateCredentialsAPI(String userName, String password) {
+	public LoginModel validateCredentialsAPI(String userName, String password) {
 
-		LoginBean bean = new LoginBean();
+		LoginModel bean = new LoginModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {

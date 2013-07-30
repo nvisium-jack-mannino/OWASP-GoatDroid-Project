@@ -13,14 +13,25 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.herdfinancial.bean;
+package org.owasp.goatdroid.webservice.fourgoats.model;
 
+import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SecretQuestionBean extends BaseBean {
+public class GetUsersAdminModel extends BaseModel {
 
+	ArrayList<UserModel> users;
+
+	public ArrayList<UserModel> getUsers() {
+		return users;
+	}
+
+	public void setUsers(ArrayList<UserModel> users) {
+		this.users = users;
+	}
 }

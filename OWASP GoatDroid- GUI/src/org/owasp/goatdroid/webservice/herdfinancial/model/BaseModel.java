@@ -1,16 +1,16 @@
-package org.owasp.goatdroid.webservice.herdfinancial.bean;
+package org.owasp.goatdroid.webservice.herdfinancial.model;
 
 import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class BaseBean {
+public class BaseModel {
 
 	public boolean success;
 	public ArrayList<String> errors;
 
-	public BaseBean() {
+	public BaseModel() {
 		this.success = false;
 	}
 

@@ -23,8 +23,8 @@ import org.owasp.goatdroid.gui.emulator.Emulator;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Utils;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
-import org.owasp.goatdroid.webservice.herdfinancial.bean.ForgotPasswordBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFForgotPasswordDaoImpl;
+import org.owasp.goatdroid.webservice.herdfinancial.model.ForgotPasswordModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,10 +33,10 @@ public class HFForgotPasswordServiceImpl implements ForgotPasswordService {
 	@Resource
 	HFForgotPasswordDaoImpl dao;
 
-	public ForgotPasswordBean requestCode(String userName,
+	public ForgotPasswordModel requestCode(String userName,
 			int secretQuestionIndex, String secretQuestionAnswer) {
 
-		ForgotPasswordBean bean = new ForgotPasswordBean();
+		ForgotPasswordModel bean = new ForgotPasswordModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		if (!Validators.validateUserNameFormat(userName))
@@ -76,9 +76,9 @@ public class HFForgotPasswordServiceImpl implements ForgotPasswordService {
 		return bean;
 	}
 
-	public ForgotPasswordBean verifyCode(String userName, int passwordResetCode) {
+	public ForgotPasswordModel verifyCode(String userName, int passwordResetCode) {
 
-		ForgotPasswordBean bean = new ForgotPasswordBean();
+		ForgotPasswordModel bean = new ForgotPasswordModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		if (!Validators.validateUserNameFormat(userName))
@@ -103,10 +103,10 @@ public class HFForgotPasswordServiceImpl implements ForgotPasswordService {
 		return bean;
 	}
 
-	public ForgotPasswordBean updatePassword(String userName,
+	public ForgotPasswordModel updatePassword(String userName,
 			int passwordResetCode, String password) {
 
-		ForgotPasswordBean bean = new ForgotPasswordBean();
+		ForgotPasswordModel bean = new ForgotPasswordModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		if (!Validators.validateUserNameFormat(userName))

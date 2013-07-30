@@ -13,34 +13,14 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.webservice.fourgoats.bean;
+package org.owasp.goatdroid.webservice.fourgoats.model;
 
-import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessorType;
-import org.owasp.goatdroid.webservice.fourgoats.model.RewardModel;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class RewardBean extends BaseBean {
+public class RegisterModel extends BaseModel {
 
-	public String rewardID;
-	ArrayList<RewardModel> rewards;
-
-	public String getRewardID() {
-		return rewardID;
-	}
-
-	public void setRewardID(String rewardID) {
-		this.rewardID = rewardID;
-	}
-
-	public ArrayList<RewardModel> getRewards() {
-		return rewards;
-	}
-
-	public void setRewards(ArrayList<RewardModel> rewards) {
-		this.rewards = rewards;
-	}
 }

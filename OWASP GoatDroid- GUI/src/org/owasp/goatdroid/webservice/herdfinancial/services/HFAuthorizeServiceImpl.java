@@ -21,8 +21,8 @@ import javax.annotation.Resource;
 
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
-import org.owasp.goatdroid.webservice.herdfinancial.bean.AuthorizeBean;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFAuthorizeDaoImpl;
+import org.owasp.goatdroid.webservice.herdfinancial.model.AuthorizeModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,9 +31,9 @@ public class HFAuthorizeServiceImpl implements AuthorizeService {
 	@Resource
 	HFAuthorizeDaoImpl dao;
 
-	public AuthorizeBean authorizeDevice(String deviceID, int sessionToken) {
+	public AuthorizeModel authorizeDevice(String deviceID, int sessionToken) {
 
-		AuthorizeBean bean = new AuthorizeBean();
+		AuthorizeModel bean = new AuthorizeModel();
 		ArrayList<String> errors = new ArrayList<String>();
 		HFLoginServiceImpl loginService = new HFLoginServiceImpl();
 		if (!Validators.validateDeviceID(deviceID))

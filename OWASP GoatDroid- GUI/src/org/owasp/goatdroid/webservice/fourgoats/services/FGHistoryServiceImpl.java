@@ -22,9 +22,9 @@ import javax.annotation.Resource;
 
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
-import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryCheckinBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGHistoryDaoImpl;
+import org.owasp.goatdroid.webservice.fourgoats.model.HistoryModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.HistoryCheckinModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,9 +33,9 @@ public class FGHistoryServiceImpl implements HistoryService {
 	@Resource
 	FGHistoryDaoImpl dao;
 
-	public HistoryBean getHistory(String sessionToken) {
+	public HistoryModel getHistory(String sessionToken) {
 
-		HistoryBean bean = new HistoryBean();
+		HistoryModel bean = new HistoryModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -49,9 +49,9 @@ public class FGHistoryServiceImpl implements HistoryService {
 		return bean;
 	}
 
-	public HistoryCheckinBean getCheckin(String sessionToken, String checkinID) {
+	public HistoryCheckinModel getCheckin(String sessionToken, String checkinID) {
 
-		HistoryCheckinBean bean = new HistoryCheckinBean();
+		HistoryCheckinModel bean = new HistoryCheckinModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -85,9 +85,9 @@ public class FGHistoryServiceImpl implements HistoryService {
 		return bean;
 	}
 
-	public HistoryBean getUserHistory(String sessionToken, String userName) {
+	public HistoryModel getUserHistory(String sessionToken, String userName) {
 
-		HistoryBean bean = new HistoryBean();
+		HistoryModel bean = new HistoryModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {

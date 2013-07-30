@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
-import org.owasp.goatdroid.webservice.herdfinancial.bean.LoginBean;
+import org.owasp.goatdroid.webservice.herdfinancial.model.LoginModel;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFLoginServiceImpl;
 
 @Controller
@@ -40,13 +40,13 @@ public class HFLoginController {
 
 	@RequestMapping(value = "authenticate", method = RequestMethod.POST)
 	@ResponseBody
-	public LoginBean submitCredentials(
+	public LoginModel submitCredentials(
 			@RequestParam(value = "userName", required = true) String userName,
 			@RequestParam(value = "password", required = true) String password) {
 		try {
 			return loginService.validateCredentials(userName, password);
 		} catch (NullPointerException e) {
-			LoginBean bean = new LoginBean();
+			LoginModel bean = new LoginModel();
 			bean.setSuccess(false);
 			return bean;
 		}
@@ -54,12 +54,12 @@ public class HFLoginController {
 
 	@RequestMapping(value = "device/{deviceID}", method = RequestMethod.GET)
 	@ResponseBody
-	public LoginBean checkDeviceRegistration(
+	public LoginModel checkDeviceRegistration(
 			@PathVariable("deviceID") String deviceID) {
 		try {
 			return loginService.isDevicePermanentlyAuthorized(deviceID);
 		} catch (NullPointerException e) {
-			LoginBean bean = new LoginBean();
+			LoginModel bean = new LoginModel();
 			bean.setSuccess(false);
 			return bean;
 		}
@@ -67,14 +67,14 @@ public class HFLoginController {
 
 	@RequestMapping(value = "device_or_session/{deviceID}", method = RequestMethod.GET)
 	@ResponseBody
-	public LoginBean checkDeviceRegistration(
+	public LoginModel checkDeviceRegistration(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken,
 			@PathVariable("deviceID") String deviceID) {
 		try {
 			return loginService.isSessionValidOrDeviceAuthorized(sessionToken,
 					deviceID);
 		} catch (NullPointerException e) {
-			LoginBean bean = new LoginBean();
+			LoginModel bean = new LoginModel();
 			bean.setSuccess(false);
 			return bean;
 		}

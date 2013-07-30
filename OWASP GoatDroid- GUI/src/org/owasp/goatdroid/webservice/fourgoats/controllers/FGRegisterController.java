@@ -21,7 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.owasp.goatdroid.webservice.fourgoats.bean.RegisterBean;
+import org.owasp.goatdroid.webservice.fourgoats.model.RegisterModel;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGRegisterServiceImpl;
 
 @Controller
@@ -37,7 +37,7 @@ public class FGRegisterController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public RegisterBean doRegistration(
+	public RegisterModel doRegistration(
 			@RequestParam(value = "firstName", required = true) String firstName,
 			@RequestParam(value = "lastName", required = true) String lastName,
 			@RequestParam(value = "userName", required = true) String userName,
@@ -46,7 +46,7 @@ public class FGRegisterController {
 			return registerService.registerUser(firstName, lastName, userName,
 					password);
 		} catch (NullPointerException e) {
-			RegisterBean bean = new RegisterBean();
+			RegisterModel bean = new RegisterModel();
 			bean.setSuccess(false);
 			return bean;
 		}

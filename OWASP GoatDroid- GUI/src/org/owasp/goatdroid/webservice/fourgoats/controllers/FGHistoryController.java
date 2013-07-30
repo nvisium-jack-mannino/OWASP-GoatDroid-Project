@@ -16,7 +16,7 @@
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.bean.HistoryBean;
+import org.owasp.goatdroid.webservice.fourgoats.model.HistoryModel;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGHistoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,12 +39,12 @@ public class FGHistoryController {
 
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	@ResponseBody
-	public HistoryBean getHistory(
+	public HistoryModel getHistory(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
 			return historyService.getHistory(sessionToken);
 		} catch (NullPointerException e) {
-			HistoryBean bean = new HistoryBean();
+			HistoryModel bean = new HistoryModel();
 			bean.setSuccess(false);
 			return bean;
 		}
@@ -52,13 +52,13 @@ public class FGHistoryController {
 
 	@RequestMapping(value = "get_user_history/{userName}", method = RequestMethod.GET)
 	@ResponseBody
-	public HistoryBean getHistory(
+	public HistoryModel getHistory(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@PathVariable(value = "userName") String userName) {
 		try {
 			return historyService.getUserHistory(sessionToken, userName);
 		} catch (NullPointerException e) {
-			HistoryBean bean = new HistoryBean();
+			HistoryModel bean = new HistoryModel();
 			bean.setSuccess(false);
 			return bean;
 		}

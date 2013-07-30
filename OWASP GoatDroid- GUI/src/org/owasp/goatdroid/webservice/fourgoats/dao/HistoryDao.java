@@ -3,14 +3,15 @@ package org.owasp.goatdroid.webservice.fourgoats.dao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.owasp.goatdroid.webservice.fourgoats.model.HistoryModel;
+
+import org.owasp.goatdroid.webservice.fourgoats.model._HistoryModel;
 
 public interface HistoryDao {
 
-	public ArrayList<HistoryModel> getCheckinHistory(String userID)
+	public ArrayList<_HistoryModel> getCheckinHistory(String userID)
 			throws SQLException;
 
-	public ArrayList<HistoryModel> getCheckinHistoryByUserName(String userName)
+	public ArrayList<_HistoryModel> getCheckinHistoryByUserName(String userName)
 			throws SQLException;
 
 	public String getVenueName(String checkinID) throws SQLException;

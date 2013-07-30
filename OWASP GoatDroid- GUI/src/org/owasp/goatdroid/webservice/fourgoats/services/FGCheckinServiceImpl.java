@@ -23,8 +23,8 @@ import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
-import org.owasp.goatdroid.webservice.fourgoats.bean.CheckinBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGCheckinDaoImpl;
+import org.owasp.goatdroid.webservice.fourgoats.model.CheckinModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,10 +33,10 @@ public class FGCheckinServiceImpl implements CheckinService {
 	@Resource
 	FGCheckinDaoImpl dao;
 
-	public CheckinBean doCheckin(String sessionToken, String latitude,
+	public CheckinModel doCheckin(String sessionToken, String latitude,
 			String longitude) {
 
-		CheckinBean bean = new CheckinBean();
+		CheckinModel bean = new CheckinModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {

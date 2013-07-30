@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.bean.VenueListBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.VenueBean;
+import org.owasp.goatdroid.webservice.fourgoats.model.VenueModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.VenueListModel;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGVenueServiceImpl;
 
 @Controller
@@ -40,7 +40,7 @@ public class FGVenueController {
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@ResponseBody
-	public VenueBean addVenue(
+	public VenueModel addVenue(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
 			@RequestParam(value = "venueName", required = true) String venueName,
 			@RequestParam(value = "venueWebsite", required = true) String venueWebsite,
@@ -50,7 +50,7 @@ public class FGVenueController {
 			return venueService.addVenue(sessionToken, venueName, venueWebsite,
 					latitude, longitude);
 		} catch (NullPointerException e) {
-			VenueBean bean = new VenueBean();
+			VenueModel bean = new VenueModel();
 			bean.setSuccess(false);
 			return bean;
 		}
@@ -58,12 +58,12 @@ public class FGVenueController {
 
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	@ResponseBody
-	public VenueListBean getAllVenues(
+	public VenueListModel getAllVenues(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
 		try {
 			return venueService.getAllVenues(sessionToken);
 		} catch (NullPointerException e) {
-			VenueListBean bean = new VenueListBean();
+			VenueListModel bean = new VenueListModel();
 			bean.setSuccess(false);
 			return bean;
 		}

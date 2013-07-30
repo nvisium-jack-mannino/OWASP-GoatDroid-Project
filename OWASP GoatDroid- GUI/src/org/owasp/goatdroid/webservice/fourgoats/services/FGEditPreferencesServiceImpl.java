@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import javax.annotation.Resource;
 
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.bean.EditPreferencesBean;
-import org.owasp.goatdroid.webservice.fourgoats.bean.GetPreferencesBean;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGEditPreferencesDaoImpl;
+import org.owasp.goatdroid.webservice.fourgoats.model.EditPreferencesModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.GetPreferencesModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,10 +31,10 @@ public class FGEditPreferencesServiceImpl implements EditPreferencesService {
 	@Resource
 	FGEditPreferencesDaoImpl dao;
 
-	public EditPreferencesBean modifyPreferences(String sessionToken,
+	public EditPreferencesModel modifyPreferences(String sessionToken,
 			boolean autoCheckin, boolean isPublic) {
 
-		EditPreferencesBean bean = new EditPreferencesBean();
+		EditPreferencesModel bean = new EditPreferencesModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -50,9 +50,9 @@ public class FGEditPreferencesServiceImpl implements EditPreferencesService {
 		return bean;
 	}
 
-	public GetPreferencesBean getPreferences(String sessionToken) {
+	public GetPreferencesModel getPreferences(String sessionToken) {
 
-		GetPreferencesBean bean = new GetPreferencesBean();
+		GetPreferencesModel bean = new GetPreferencesModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
