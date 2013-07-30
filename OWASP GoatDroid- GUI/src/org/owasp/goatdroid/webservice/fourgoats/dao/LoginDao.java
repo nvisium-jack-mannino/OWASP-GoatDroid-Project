@@ -8,8 +8,8 @@ public interface LoginDao {
 	public boolean validateCredentials(String userName, String password)
 			throws SQLException;
 
-	public void updateSessionInformation(String userName, String sessionToken,
-			long sessionStartTime) throws SQLException;
+	public void updateAuthInformation(String userName, String authToken,
+			long authStartTime) throws SQLException;
 
 	public HashMap<String, Boolean> getPreferences(String userName)
 			throws SQLException;

@@ -46,11 +46,13 @@ public class FGLoginServiceImpl implements LoginService {
 				if (dao.validateCredentials(userName, password)) {
 					String userNameAndTime = userName
 							+ LoginUtils.getCurrentDateTime();
-					String sessionToken = LoginUtils.generateSaltedSHA512Hash(
+
+					String authToken = LoginUtils.generateSaltedSHA512Hash(
 							userNameAndTime, Salts.SESSION_TOKEN_SALT);
+					dao.updateAuthInformation(userName, authToken, 0);
 					bean.setPreferences(dao.getPreferences(userName));
 					bean.setUsername(userName);
-					bean.setAuthToken(sessionToken);
+					bean.setAuthToken(authToken);
 					bean.setSuccess(true);
 				} else
 					errors.add(Constants.LOGIN_CREDENTIALS_INVALID);
