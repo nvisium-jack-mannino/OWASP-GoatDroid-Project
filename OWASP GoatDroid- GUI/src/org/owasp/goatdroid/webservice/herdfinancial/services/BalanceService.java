@@ -4,5 +4,5 @@ import org.owasp.goatdroid.webservice.herdfinancial.model.BalanceModel;
 
 public interface BalanceService {
 
-	public BalanceModel getBalances(String accountNumber, int sessionToken);
+	public BalanceModel getBalances(String accountNumber, String authToken);
 }

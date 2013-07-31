@@ -33,7 +33,7 @@ public class HFStatementController {
 	@Autowired
 	HFStatementServiceImpl statementService;
 
-	@RequestMapping(value = "get_statement/{accountNumber}/{startDate}/{endDate}", method = RequestMethod.GET)
+	@RequestMapping(value = "get-statement/{accountNumber}/{startDate}/{endDate}", method = RequestMethod.GET)
 	@ResponseBody
 	public StatementModel getStatement(
 			@PathVariable("accountNumber") String accountNumber,
@@ -50,7 +50,7 @@ public class HFStatementController {
 		}
 	}
 
-	@RequestMapping(value = "poll_statement_updates/{accountNumber}", method = RequestMethod.GET)
+	@RequestMapping(value = "poll-statement-updates/{accountNumber}", method = RequestMethod.GET)
 	@ResponseBody
 	public StatementModel getStatementSinceLastPoll(
 			@PathVariable("accountNumber") String accountNumber,

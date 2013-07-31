@@ -32,6 +32,10 @@ public class HFBalanceDaoImpl extends BaseDaoImpl implements BalanceDao {
 		setDataSource(dataSource);
 	}
 
+	/*
+	 * The account number should match the user, I think. Because they would
+	 * never lie.
+	 */
 	public HashMap<String, Double> getBalances(String accountNumber)
 			throws SQLException {
 		HashMap<String, Double> result = new HashMap<String, Double>();

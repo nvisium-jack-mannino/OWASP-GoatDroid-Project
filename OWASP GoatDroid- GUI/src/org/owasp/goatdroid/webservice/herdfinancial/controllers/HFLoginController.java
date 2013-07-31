@@ -61,7 +61,7 @@ public class HFLoginController {
 		}
 	}
 
-	@RequestMapping(value = "device_or_session/{deviceID}", method = RequestMethod.GET)
+	@RequestMapping(value = "device-or-session/{deviceID}", method = RequestMethod.GET)
 	@ResponseBody
 	public LoginModel checkDeviceRegistration(
 			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken,

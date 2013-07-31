@@ -24,7 +24,7 @@ import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Utils;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFForgotPasswordDaoImpl;
-import org.owasp.goatdroid.webservice.herdfinancial.model.ForgotPasswordModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,10 +33,10 @@ public class HFForgotPasswordServiceImpl implements ForgotPasswordService {
 	@Resource
 	HFForgotPasswordDaoImpl dao;
 
-	public ForgotPasswordModel requestCode(String userName,
-			int secretQuestionIndex, String secretQuestionAnswer) {
+	public BaseModel requestCode(String userName, int secretQuestionIndex,
+			String secretQuestionAnswer) {
 
-		ForgotPasswordModel bean = new ForgotPasswordModel();
+		BaseModel base = new BaseModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		if (!Validators.validateUserNameFormat(userName))
@@ -64,21 +64,21 @@ public class HFForgotPasswordServiceImpl implements ForgotPasswordService {
 					 */
 					Emulator.sendSMSToEmulator("8885551234",
 							Integer.toString(token));
-					bean.setSuccess(true);
+					base.setSuccess(true);
 				} else
 					errors.add(Constants.USERNAME_FORMAT_INVALID);
 			}
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			base.setErrors(errors);
 		}
-		return bean;
+		return base;
 	}
 
-	public ForgotPasswordModel verifyCode(String userName, int passwordResetCode) {
+	public BaseModel verifyCode(String userName, int passwordResetCode) {
 
-		ForgotPasswordModel bean = new ForgotPasswordModel();
+		BaseModel base = new BaseModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		if (!Validators.validateUserNameFormat(userName))
@@ -91,22 +91,22 @@ public class HFForgotPasswordServiceImpl implements ForgotPasswordService {
 		try {
 			if (errors.size() == 0) {
 				if (dao.confirmPasswordResetCode(userName, passwordResetCode))
-					bean.setSuccess(true);
+					base.setSuccess(true);
 				else
 					errors.add(Constants.INVALID_PASSWORD_RESET_CODE);
 			}
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			base.setErrors(errors);
 		}
-		return bean;
+		return base;
 	}
 
-	public ForgotPasswordModel updatePassword(String userName,
-			int passwordResetCode, String password) {
+	public BaseModel updatePassword(String userName, int passwordResetCode,
+			String password) {
 
-		ForgotPasswordModel bean = new ForgotPasswordModel();
+		BaseModel base = new BaseModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		if (!Validators.validateUserNameFormat(userName))
@@ -134,14 +134,14 @@ public class HFForgotPasswordServiceImpl implements ForgotPasswordService {
 					 * re-initiating the process properly
 					 */
 					dao.clearPasswordResetCode(userName);
-					bean.setSuccess(true);
+					base.setSuccess(true);
 				}
 			}
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			base.setErrors(errors);
 		}
-		return bean;
+		return base;
 	}
 }

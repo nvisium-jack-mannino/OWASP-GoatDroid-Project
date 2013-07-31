@@ -15,14 +15,14 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
-import org.springframework.web.bind.annotation.RequestParam;
+import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
+import org.owasp.goatdroid.webservice.herdfinancial.services.HFForgotPasswordServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.owasp.goatdroid.webservice.herdfinancial.model.ForgotPasswordModel;
-import org.owasp.goatdroid.webservice.herdfinancial.services.HFForgotPasswordServiceImpl;
 
 @Controller
 @RequestMapping(value = "herdfinancial/api/v1/pub/forgot_password", produces = "application/json")
@@ -31,9 +31,9 @@ public class HFForgotPasswordController {
 	@Autowired
 	HFForgotPasswordServiceImpl forgotPasswordService;
 
-	@RequestMapping(value = "request_code", method = RequestMethod.POST)
+	@RequestMapping(value = "request-code", method = RequestMethod.POST)
 	@ResponseBody
-	public ForgotPasswordModel requestCode(
+	public BaseModel requestCode(
 			@RequestParam(value = "userName", required = true) String userName,
 			@RequestParam(value = "secretQuestionIndex", required = true) int secretQuestionIndex,
 			@RequestParam(value = "secretQuestionAnswer", required = true) String secretQuestionAnswer) {
@@ -41,30 +41,30 @@ public class HFForgotPasswordController {
 			return forgotPasswordService.requestCode(userName,
 					secretQuestionIndex, secretQuestionAnswer);
 		} catch (NullPointerException e) {
-			ForgotPasswordModel bean = new ForgotPasswordModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new BaseModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 
-	@RequestMapping(value = "verify_code", method = RequestMethod.POST)
+	@RequestMapping(value = "verify-code", method = RequestMethod.POST)
 	@ResponseBody
-	public ForgotPasswordModel verifyCode(
+	public BaseModel verifyCode(
 			@RequestParam(value = "userName", required = true) String userName,
 			@RequestParam(value = "passwordResetCode", required = true) int passwordResetCode) {
 		try {
 			return forgotPasswordService
 					.verifyCode(userName, passwordResetCode);
 		} catch (NullPointerException e) {
-			ForgotPasswordModel bean = new ForgotPasswordModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new BaseModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 
-	@RequestMapping(value = "update_password", method = RequestMethod.POST)
+	@RequestMapping(value = "update-password", method = RequestMethod.POST)
 	@ResponseBody
-	public ForgotPasswordModel getBalances(
+	public BaseModel getBalances(
 			@RequestParam(value = "userName") String userName,
 			@RequestParam(value = "passwordResetCode") int passwordResetCode,
 			@RequestParam(value = "password") String password) {
@@ -72,9 +72,9 @@ public class HFForgotPasswordController {
 			return forgotPasswordService.updatePassword(userName,
 					passwordResetCode, password);
 		} catch (NullPointerException e) {
-			ForgotPasswordModel bean = new ForgotPasswordModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new BaseModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 }

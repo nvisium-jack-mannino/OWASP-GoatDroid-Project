@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 public interface AuthorizeDao {
 
-	public void authorizeDevice(String deviceID, int sessionToken)
+	public void authorizeDevice(String deviceID, String sessionToken)
 			throws SQLException;
 
 	public boolean isDeviceAuthorized(String deviceID) throws SQLException;

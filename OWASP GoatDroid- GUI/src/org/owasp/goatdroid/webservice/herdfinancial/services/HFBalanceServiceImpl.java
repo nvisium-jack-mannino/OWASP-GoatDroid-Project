@@ -32,11 +32,13 @@ public class HFBalanceServiceImpl implements BalanceService {
 	@Resource
 	HFBalanceDaoImpl dao;
 
-	public BalanceModel getBalances(String accountNumber, int sessionToken) {
+	/*
+	 * It would suck if we could see everyone's balances.....
+	 */
+	public BalanceModel getBalances(String accountNumber, String authToken) {
 
-		BalanceModel bean = new BalanceModel();
+		BalanceModel balance = new BalanceModel();
 		ArrayList<String> errors = new ArrayList<String>();
-		HFLoginServiceImpl loginService = new HFLoginServiceImpl();
 		if (!Validators.validateAccountNumber(accountNumber))
 			errors.add(Constants.INVALID_ACCOUNT_NUMBER);
 
@@ -44,15 +46,15 @@ public class HFBalanceServiceImpl implements BalanceService {
 			if (errors.size() == 0) {
 				HashMap<String, Double> balances = dao
 						.getBalances(accountNumber);
-				bean.setCheckingBalance(balances.get("checking"));
-				bean.setSavingsBalance(balances.get("savings"));
-				bean.setSuccess(true);
+				balance.setCheckingBalance(balances.get("checking"));
+				balance.setSavingsBalance(balances.get("savings"));
+				balance.setSuccess(true);
 			}
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			balance.setErrors(errors);
 		}
-		return bean;
+		return balance;
 	}
 }

@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFAuthorizeDaoImpl;
-import org.owasp.goatdroid.webservice.herdfinancial.model.AuthorizeModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,25 +31,24 @@ public class HFAuthorizeServiceImpl implements AuthorizeService {
 	@Resource
 	HFAuthorizeDaoImpl dao;
 
-	public AuthorizeModel authorizeDevice(String deviceID, int sessionToken) {
+	public BaseModel authorizeDevice(String deviceID, String authToken) {
 
-		AuthorizeModel bean = new AuthorizeModel();
+		BaseModel base = new BaseModel();
 		ArrayList<String> errors = new ArrayList<String>();
-		HFLoginServiceImpl loginService = new HFLoginServiceImpl();
 		if (!Validators.validateDeviceID(deviceID))
 			errors.add(Constants.INVALID_DEVICE_ID);
 
 		try {
 			if (!dao.isDeviceAuthorized(deviceID)) {
-				dao.authorizeDevice(deviceID, sessionToken);
-				bean.setSuccess(true);
+				dao.authorizeDevice(deviceID, authToken);
+				base.setSuccess(true);
 			} else
 				errors.add(Constants.DEVICE_ALREADY_AUTHORIZED);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			base.setErrors(errors);
 		}
-		return bean;
+		return base;
 	}
 }

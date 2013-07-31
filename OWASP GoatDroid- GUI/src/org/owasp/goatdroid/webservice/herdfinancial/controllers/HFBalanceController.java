@@ -15,16 +15,17 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
+import org.owasp.goatdroid.webservice.herdfinancial.services.HFBalanceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.owasp.goatdroid.webservice.herdfinancial.Constants;
-import org.owasp.goatdroid.webservice.herdfinancial.model.BalanceModel;
-import org.owasp.goatdroid.webservice.herdfinancial.services.HFBalanceServiceImpl;
 
 @Controller
 @RequestMapping(value = "herdfinancial/api/v1/priv/balances", produces = "application/json")
@@ -35,15 +36,18 @@ public class HFBalanceController {
 
 	@RequestMapping(value = "{accountNumber}", method = RequestMethod.GET)
 	@ResponseBody
-	public BalanceModel getBalances(
+	public BaseModel getBalances(
 			@PathVariable("accountNumber") String accountNumber,
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {
+			HttpServletRequest request) {
 		try {
-			return balanceService.getBalances(accountNumber, sessionToken);
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
+			return balanceService.getBalances(accountNumber,
+					authHeader.getAuthToken());
 		} catch (NullPointerException e) {
-			BalanceModel bean = new BalanceModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new BaseModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 }

@@ -31,7 +31,7 @@ public class HFAuthorizeDaoImpl extends BaseDaoImpl implements AuthorizeDao {
 		setDataSource(dataSource);
 	}
 
-	public void authorizeDevice(String deviceID, int sessionToken)
+	public void authorizeDevice(String deviceID, String sessionToken)
 			throws SQLException {
 		String sql = "UPDATE app.hf_users SET deviceID = ?, isDeviceAuthorized = true WHERE sessionToken = ?";
 		getJdbcTemplate().update(sql, new Object[] { deviceID, sessionToken });

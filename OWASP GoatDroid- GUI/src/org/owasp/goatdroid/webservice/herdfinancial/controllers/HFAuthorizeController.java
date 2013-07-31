@@ -15,16 +15,17 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
-import org.springframework.web.bind.annotation.RequestParam;
+import javax.servlet.http.HttpServletRequest;
+
+import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
+import org.owasp.goatdroid.webservice.herdfinancial.services.HFAuthorizeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.owasp.goatdroid.webservice.herdfinancial.Constants;
-import org.owasp.goatdroid.webservice.herdfinancial.model.AuthorizeModel;
-import org.owasp.goatdroid.webservice.herdfinancial.services.HFAuthorizeServiceImpl;
 
 @Controller
 @RequestMapping(value = "herdfinancial/api/v1/priv/authorize", produces = "application/json")
@@ -35,15 +36,18 @@ public class HFAuthorizeController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public AuthorizeModel authorizeDevice(
+	public BaseModel authorizeDevice(
 			@RequestParam(value = "deviceID", required = true) String deviceID,
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {
+			HttpServletRequest request) {
 		try {
-			return authorizeService.authorizeDevice(deviceID, sessionToken);
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
+			return authorizeService.authorizeDevice(deviceID,
+					authHeader.getAuthToken());
 		} catch (NullPointerException e) {
-			AuthorizeModel bean = new AuthorizeModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new BaseModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 }
