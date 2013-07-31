@@ -39,7 +39,7 @@ public class StatementsRequest {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/herdfinancial/api/v1/priv/statements/"
-				+ accountNumber + "/" + startDate + "/" + endDate, sessionToken);
+				+ accountNumber + "/" + startDate + "/" + endDate);
 		client.Execute(RequestMethod.GET, context);
 		return StatementsResponse.parseStatusAndStatement(client.getResponse());
 	}
@@ -47,10 +47,11 @@ public class StatementsRequest {
 	public ArrayList<HashMap<String, String>> getStatementUpdate(
 			String sessionToken, String accountNumber) throws Exception {
 
-		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo
-				+ "/herdfinancial/api/v1/priv/statements/poll-statement-updates/"
-				+ accountNumber, sessionToken);
+		AuthenticatedRestClient client = new AuthenticatedRestClient(
+				"https://"
+						+ destinationInfo
+						+ "/herdfinancial/api/v1/priv/statements/poll-statement-updates/"
+						+ accountNumber);
 		client.Execute(RequestMethod.GET, context);
 		return StatementsResponse.parseStatusAndStatement(client.getResponse());
 	}

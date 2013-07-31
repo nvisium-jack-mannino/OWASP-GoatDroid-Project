@@ -37,8 +37,7 @@ public class SecretQuestionsRequest {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
-				+ "/herdfinancial/api/v1/priv/secret_questions/set",
-				sessionToken);
+				+ "/herdfinancial/api/v1/priv/secret_questions/set");
 		client.AddParam("answer1", answer1);
 		client.AddParam("answer2", answer2);
 		client.AddParam("answer3", answer3);

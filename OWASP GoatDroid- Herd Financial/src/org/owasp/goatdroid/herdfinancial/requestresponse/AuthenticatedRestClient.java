@@ -50,7 +50,6 @@ public class AuthenticatedRestClient {
 	private ArrayList<NameValuePair> params;
 	private ArrayList<NameValuePair> headers;
 	private String url;
-	private String sessionToken;
 	private int responseCode;
 	private String message;
 	private String response;
@@ -67,9 +66,8 @@ public class AuthenticatedRestClient {
 		return responseCode;
 	}
 
-	public AuthenticatedRestClient(String url, String sessionToken) {
+	public AuthenticatedRestClient(String url) {
 		this.url = url;
-		this.sessionToken = sessionToken;
 		params = new ArrayList<NameValuePair>();
 		headers = new ArrayList<NameValuePair>();
 		AddHeader("Authorization", "username:base64string");

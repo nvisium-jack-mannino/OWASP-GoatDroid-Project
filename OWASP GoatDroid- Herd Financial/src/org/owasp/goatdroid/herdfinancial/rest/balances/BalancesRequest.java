@@ -37,7 +37,7 @@ public class BalancesRequest {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/herdfinancial/api/v1/priv/balances/"
-				+ accountNumber, sessionToken);
+				+ accountNumber);
 		client.Execute(RequestMethod.GET, context);
 		return BalancesResponse.parseStatusAndBalances(client.getResponse());
 	}
