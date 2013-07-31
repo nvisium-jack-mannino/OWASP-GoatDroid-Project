@@ -24,17 +24,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class LoginModel extends BaseModel {
 
-	int sessionToken;
+	String authToken;
 	String userName;
 	String accountNumber;
 	HashMap<String, String> secretQuestions;
 
-	public int getSessionToken() {
-		return sessionToken;
+	public String getAuthToken() {
+		return authToken;
 	}
 
-	public void setSessionToken(int sessionToken) {
-		this.sessionToken = sessionToken;
+	public void setAuthToken(String authToken) {
+		this.authToken = authToken;
 	}
 
 	public String getUserName() {

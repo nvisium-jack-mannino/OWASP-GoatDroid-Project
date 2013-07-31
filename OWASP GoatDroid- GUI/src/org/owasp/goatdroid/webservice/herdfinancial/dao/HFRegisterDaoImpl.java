@@ -36,7 +36,7 @@ public class HFRegisterDaoImpl extends BaseDaoImpl implements RegisterDao {
 			throws SQLException {
 		String sql = "INSERT INTO app.hf_users (accountNumber,"
 				+ "firstName, lastName, deviceID, isDeviceAuthorized, checkingBalance, savingsBalance,"
-				+ "username, password, sessionToken, sessionStartTime) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+				+ "username, password, authToken) VALUES (?,?,?,?,?,?,?,?,?,?)";
 		getJdbcTemplate().update(
 				sql,
 				new Object[] { accountNumber, firstName, lastName, "", false,

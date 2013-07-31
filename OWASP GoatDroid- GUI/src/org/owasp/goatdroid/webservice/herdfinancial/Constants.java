@@ -28,7 +28,6 @@ public class Constants {
 																// milliseconds
 																// per 28 days
 	public static final String UNEXPECTED_ERROR = "An unexpected error has occurred";
-	public static final String SESSION_EXPIRED = "Session expired";
 	public static final String INVALID_ACCOUNT_NUMBER = "Invalid account number";
 	public static final String DEVICE_ALREADY_AUTHORIZED = "Device is already authorized";
 	public static final String INVALID_DEVICE_ID = "Invalid device ID";

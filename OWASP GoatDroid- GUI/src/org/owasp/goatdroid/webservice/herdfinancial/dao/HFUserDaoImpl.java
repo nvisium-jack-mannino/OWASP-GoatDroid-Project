@@ -15,7 +15,7 @@ public class HFUserDaoImpl extends BaseDaoImpl implements UserDao {
 
 	public void terminateAuth(String authToken) throws SQLException {
 
-		String sql = "UPDATE app.hf_users SET sessionToken = 0 WHERE authToken = ?";
+		String sql = "UPDATE app.hf_users SET authToken = 0 WHERE authToken = ?";
 		getJdbcTemplate().update(sql, authToken);
 	}
 }

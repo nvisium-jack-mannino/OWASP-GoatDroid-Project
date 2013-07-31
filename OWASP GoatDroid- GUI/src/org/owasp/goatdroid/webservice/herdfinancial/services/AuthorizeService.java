@@ -4,5 +4,5 @@ import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
 
 public interface AuthorizeService {
 
-	public BaseModel authorizeDevice(String deviceID, String sessionToken);
+	public BaseModel authorizeDevice(String deviceID, String authToken);
 }

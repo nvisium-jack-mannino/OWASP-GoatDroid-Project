@@ -20,9 +20,9 @@ import java.util.Random;
 
 public class Utils {
 
-	static public int generateSessionToken() {
+	static public String generateAuthToken() {
 		Random rand = new Random();
-		return rand.nextInt(10000000);
+		return Integer.toString(rand.nextInt(10000000));
 	}
 
 	static public long getTimeMilliseconds() {

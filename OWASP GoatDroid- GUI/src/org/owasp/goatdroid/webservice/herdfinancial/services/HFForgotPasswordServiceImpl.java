@@ -55,15 +55,13 @@ public class HFForgotPasswordServiceImpl implements ForgotPasswordService {
 				if (dao.confirmSecretQuestionAnswer(userName,
 						Integer.toString(secretQuestionIndex),
 						secretQuestionAnswer)) {
-					int token = Utils.generateSessionToken();
-					dao.updatePasswordResetCode(userName,
-							Integer.toString(token));
+					String token = Utils.generateAuthToken();
+					dao.updatePasswordResetCode(userName, token);
 					/*
 					 * We send our out-of-band password reset code straight to
 					 * the device
 					 */
-					Emulator.sendSMSToEmulator("8885551234",
-							Integer.toString(token));
+					Emulator.sendSMSToEmulator("8885551234", token);
 					base.setSuccess(true);
 				} else
 					errors.add(Constants.USERNAME_FORMAT_INVALID);

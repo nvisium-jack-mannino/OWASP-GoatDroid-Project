@@ -28,7 +28,7 @@ public class Validators {
 	public static final String COOKIE_PATTERN = "^\\d{8}$";
 	public static final String DATE_TIME_PATTERN = "^\\d{4}-\\d{2}-\\d{2}$";
 	public static final String MONEY_PATTERN = "\\d{0,20}.\\d{1,2}";
-	public static final String SESSION_TOKEN_PATTERN = "^\\d{1,7}";
+	public static final String AUTH_TOKEN_PATTERN = "^\\d{1,7}";
 	public static final String PASSWORD_RESET_TOKEN_PATTERN = "^\\d{6,7}";
 	public static final String SECRET_QUESTION_INDEX_PATTERN = "^[1-3]$";
 
@@ -94,9 +94,8 @@ public class Validators {
 		return isFormatValid(Double.toString(amount), Validators.MONEY_PATTERN);
 	}
 
-	static public boolean validateSessionTokenFormat(int sessionToken) {
-		return isFormatValid(Integer.toString(sessionToken),
-				SESSION_TOKEN_PATTERN);
+	static public boolean validateAuthTokenFormat(String authToken) {
+		return isFormatValid(authToken, AUTH_TOKEN_PATTERN);
 	}
 
 	static public boolean validatePasswordResetTokenFormat(int resetToken) {

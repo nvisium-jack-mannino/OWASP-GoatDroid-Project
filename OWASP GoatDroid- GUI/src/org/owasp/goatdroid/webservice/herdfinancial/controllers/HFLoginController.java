@@ -44,28 +44,28 @@ public class HFLoginController {
 		try {
 			return loginService.validateCredentials(userName, password);
 		} catch (NullPointerException e) {
-			BaseModel bean = new BaseModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new BaseModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 
 	@RequestMapping(value = "device/{deviceID}", method = RequestMethod.GET)
 	@ResponseBody
-	public LoginModel checkDeviceRegistration(
+	public BaseModel checkDeviceRegistration(
 			@PathVariable("deviceID") String deviceID) {
 		try {
 			return loginService.isDevicePermanentlyAuthorized(deviceID);
 		} catch (NullPointerException e) {
-			LoginModel bean = new LoginModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new BaseModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 
 	@RequestMapping(value = "device-or-auth/{deviceID}", method = RequestMethod.GET)
 	@ResponseBody
-	public LoginModel checkDeviceRegistration(HttpServletRequest request,
+	public BaseModel checkDeviceRegistration(HttpServletRequest request,
 			@PathVariable("deviceID") String deviceID) {
 		try {
 			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
@@ -73,9 +73,9 @@ public class HFLoginController {
 			return loginService.isAuthValidOrDeviceAuthorized(
 					authHeader.getAuthToken(), deviceID);
 		} catch (NullPointerException e) {
-			LoginModel bean = new LoginModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new BaseModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 }

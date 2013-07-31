@@ -43,7 +43,7 @@ public class HFLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 			return false;
 	}
 
-	public void updateSession(String userName, String authToken)
+	public void updateAuth(String userName, String authToken)
 			throws SQLException {
 
 		String sql = "UPDATE app.hf_users SET authToken = ? WHERE username = ?";
@@ -63,7 +63,7 @@ public class HFLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 		}
 	}
 
-	public void updateAuthorizedDeviceSession(String deviceID, String authToken)
+	public void updateAuthorizedDeviceAuth(String deviceID, String authToken)
 			throws SQLException {
 
 		String sql = "UPDATE app.hf_users SET authToken = ? WHERE deviceID = ?";

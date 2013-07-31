@@ -34,7 +34,7 @@ public class HFRegisterServiceImpl implements RegisterService {
 	public RegisterModel registerUser(String accountNumber, String firstName,
 			String lastName, String userName, String password) {
 
-		RegisterModel bean = new RegisterModel();
+		RegisterModel register = new RegisterModel();
 		ArrayList<String> errors = Validators.validateRegistrationFields(
 				accountNumber, firstName, lastName, userName, password);
 
@@ -44,7 +44,7 @@ public class HFRegisterServiceImpl implements RegisterService {
 					if (!dao.doesAccountNumberExist(accountNumber)) {
 						dao.registerUser(accountNumber, firstName, lastName,
 								userName, password);
-						bean.setSuccess(true);
+						register.setSuccess(true);
 					} else
 						errors.add(Constants.ACCOUNT_NUMBER_ALREADY_REGISTERED);
 				} else
@@ -53,8 +53,8 @@ public class HFRegisterServiceImpl implements RegisterService {
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			register.setErrors(errors);
 		}
-		return bean;
+		return register;
 	}
 }
