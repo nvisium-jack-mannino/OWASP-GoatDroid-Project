@@ -38,7 +38,7 @@ public class LoginRequest {
 			String sessionToken, String deviceID) throws Exception {
 
 		RestClient client = new RestClient("https://" + destinationInfo
-				+ "/herdfinancial/api/v1/login/device_or_session/" + deviceID);
+				+ "/herdfinancial/api/v1/pub/login/device-or-session/" + deviceID);
 		client.AddHeader("Cookie", "AUTH=" + sessionToken);
 		client.Execute(RequestMethod.GET, context);
 		return LoginResponse.parseStatusAndToken(client.getResponse());
@@ -48,7 +48,7 @@ public class LoginRequest {
 			String password) throws Exception {
 
 		RestClient client = new RestClient("https://" + destinationInfo
-				+ "/herdfinancial/api/v1/login/authenticate");
+				+ "/herdfinancial/api/v1/pub/login/authenticate");
 		client.AddParam("userName", userName);
 		client.AddParam("password", password);
 		client.Execute(RequestMethod.POST, context);
@@ -59,7 +59,7 @@ public class LoginRequest {
 	public HashMap<String, String> logOut(String sessionToken) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/herdfinancial/api/v1/login/sign_out",
+				+ destinationInfo + "/herdfinancial/api/v1/priv/user/sign-out",
 				sessionToken);
 		client.Execute(RequestMethod.GET, context);
 		return LoginResponse.parseStatusAndErrors(client.getResponse());

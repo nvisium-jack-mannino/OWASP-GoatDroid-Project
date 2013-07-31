@@ -38,7 +38,7 @@ public class StatementsRequest {
 			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/herdfinancial/api/v1/statements/"
+				+ destinationInfo + "/herdfinancial/api/v1/priv/statements/"
 				+ accountNumber + "/" + startDate + "/" + endDate, sessionToken);
 		client.Execute(RequestMethod.GET, context);
 		return StatementsResponse.parseStatusAndStatement(client.getResponse());
@@ -49,7 +49,7 @@ public class StatementsRequest {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
-				+ "/herdfinancial/api/v1/statements/poll_statement_updates/"
+				+ "/herdfinancial/api/v1/priv/statements/poll-statement-updates/"
 				+ accountNumber, sessionToken);
 		client.Execute(RequestMethod.GET, context);
 		return StatementsResponse.parseStatusAndStatement(client.getResponse());

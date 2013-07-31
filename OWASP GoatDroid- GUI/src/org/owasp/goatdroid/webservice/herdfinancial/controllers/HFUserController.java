@@ -18,7 +18,7 @@ public class HFUserController {
 	@Autowired
 	HFUserServiceImpl userService;
 
-	@RequestMapping(value = "sign_out", method = RequestMethod.GET)
+	@RequestMapping(value = "sign-out", method = RequestMethod.GET)
 	@ResponseBody
 	public BaseModel signOut(HttpServletRequest request) {
 		try {

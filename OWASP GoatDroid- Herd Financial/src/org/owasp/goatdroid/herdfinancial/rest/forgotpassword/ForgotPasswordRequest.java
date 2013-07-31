@@ -37,7 +37,7 @@ public class ForgotPasswordRequest {
 			throws Exception {
 
 		RestClient client = new RestClient("https://" + destinationInfo
-				+ "/herdfinancial/api/v1/forgot_password/request_code");
+				+ "/herdfinancial/api/v1/priv/forgot-password/request-code");
 		client.AddParam("userName", userName);
 		client.AddParam("secretQuestionIndex", secretQuestionIndex);
 		client.AddParam("secretQuestionAnswer", secretQuestionAnswer);
@@ -50,7 +50,7 @@ public class ForgotPasswordRequest {
 			String passwordResetCode) throws Exception {
 
 		RestClient client = new RestClient("https://" + destinationInfo
-				+ "/herdfinancial/api/v1/forgot_password/verify_code");
+				+ "/herdfinancial/api/v1/priv/forgot-password/verify-code");
 		client.AddParam("userName", userName);
 		client.AddParam("passwordResetCode", passwordResetCode);
 		client.Execute(RequestMethod.POST, context);
@@ -62,7 +62,7 @@ public class ForgotPasswordRequest {
 			String passwordResetCode, String password) throws Exception {
 
 		RestClient client = new RestClient("https://" + destinationInfo
-				+ "/herdfinancial/api/v1/forgot_password/update_password");
+				+ "/herdfinancial/api/v1/priv/forgot-password/update_password");
 		client.AddParam("userName", userName);
 		client.AddParam("passwordResetCode", passwordResetCode);
 		client.AddParam("password", password);

@@ -15,15 +15,14 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
-import org.springframework.web.bind.annotation.RequestParam;
+import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
+import org.owasp.goatdroid.webservice.herdfinancial.services.HFRegisterServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
-import org.owasp.goatdroid.webservice.herdfinancial.model.RegisterModel;
-import org.owasp.goatdroid.webservice.herdfinancial.services.HFRegisterServiceImpl;
 
 @Controller
 @RequestMapping(value = "herdfinancial/api/v1/pub/register", produces = "application/json")

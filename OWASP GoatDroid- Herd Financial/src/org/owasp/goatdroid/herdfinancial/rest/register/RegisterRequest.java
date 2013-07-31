@@ -39,7 +39,7 @@ public class RegisterRequest {
 			String accountNumber) throws Exception {
 
 		RestClient client = new RestClient("https://" + destinationInfo
-				+ "/herdfinancial/api/v1/register");
+				+ "/herdfinancial/api/v1/pub/register");
 		client.AddParam("accountNumber", accountNumber);
 		client.AddParam("firstName", firstName);
 		client.AddParam("lastName", lastName);

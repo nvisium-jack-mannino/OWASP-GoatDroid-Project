@@ -36,7 +36,7 @@ public class AuthorizeRequest {
 			String accountNumber) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/herdfinancial/api/v1/authorize",
+				+ destinationInfo + "/herdfinancial/api/v1/priv/authorize",
 				sessionToken);
 		client.AddParam("deviceID", Utils.getDeviceID(context));
 		client.Execute(RequestMethod.POST, context);

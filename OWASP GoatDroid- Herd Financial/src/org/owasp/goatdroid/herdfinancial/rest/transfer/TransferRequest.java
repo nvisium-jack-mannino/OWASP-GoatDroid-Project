@@ -37,7 +37,7 @@ public class TransferRequest {
 			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/herdfinancial/api/v1/transfer",
+				+ destinationInfo + "/herdfinancial/api/v1/priv/transfer",
 				sessionToken);
 		client.AddParam("from", fromAccount);
 		client.AddParam("to", toAccount);
