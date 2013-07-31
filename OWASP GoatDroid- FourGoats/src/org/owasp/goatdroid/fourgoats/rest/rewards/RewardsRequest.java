@@ -37,10 +37,8 @@ public class RewardsRequest {
 	public ArrayList<HashMap<String, String>> getMyRewards(String sessionToken)
 			throws Exception {
 
-		AuthenticatedRestClient client = new AuthenticatedRestClient(
-				"https://" + destinationInfo
-						+ "/fourgoats/api/v1/priv/rewards/my-rewards",
-				sessionToken);
+		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
+				+ destinationInfo + "/fourgoats/api/v1/priv/rewards/my-rewards");
 
 		client.Execute(RequestMethod.GET, context);
 
@@ -52,7 +50,7 @@ public class RewardsRequest {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
-				+ "/fourgoats/api/v1/priv/rewards/all-rewards", sessionToken);
+				+ "/fourgoats/api/v1/priv/rewards/all-rewards");
 
 		client.Execute(RequestMethod.GET, context);
 

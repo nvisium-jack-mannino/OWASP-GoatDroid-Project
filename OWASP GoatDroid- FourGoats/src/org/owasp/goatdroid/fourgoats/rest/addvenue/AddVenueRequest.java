@@ -39,8 +39,7 @@ public class AddVenueRequest {
 			String longitude) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/priv/venues/add",
-				sessionToken);
+				+ destinationInfo + "/fourgoats/api/v1/priv/venues/add");
 
 		client.AddParam("venueName", venueName);
 		client.AddParam("venueWebsite", venueWebsite);

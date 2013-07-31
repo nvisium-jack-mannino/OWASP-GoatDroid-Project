@@ -37,7 +37,7 @@ public class CheckinRequest {
 			String latitude, String longitude) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/priv/checkin", sessionToken);
+				+ destinationInfo + "/fourgoats/api/v1/priv/checkin");
 
 		client.AddParam("latitude", latitude);
 		client.AddParam("longitude", longitude);

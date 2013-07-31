@@ -72,6 +72,7 @@ public class AuthenticatedRestClient {
 		this.sessionToken = sessionToken;
 		params = new ArrayList<NameValuePair>();
 		headers = new ArrayList<NameValuePair>();
+		AddHeader("Authorization", "username:base64string");
 	}
 
 	public void AddParam(String name, String value) {
@@ -106,7 +107,6 @@ public class AuthenticatedRestClient {
 			for (NameValuePair h : headers) {
 				request.addHeader(h.getName(), h.getValue());
 			}
-			request.addHeader("Cookie", "AUTH=" + sessionToken);
 
 			executeRequest(request, url, context);
 			break;
@@ -121,7 +121,6 @@ public class AuthenticatedRestClient {
 			if (!params.isEmpty()) {
 				request.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
 			}
-			request.addHeader("Cookie", "AUTH=" + sessionToken);
 
 			executeRequest(request, url, context);
 			break;

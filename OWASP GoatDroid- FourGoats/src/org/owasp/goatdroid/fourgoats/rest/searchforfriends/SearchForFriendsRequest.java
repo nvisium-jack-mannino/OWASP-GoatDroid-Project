@@ -38,8 +38,8 @@ public class SearchForFriendsRequest {
 			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/priv/friends/search-users",
-				sessionToken);
+				+ destinationInfo
+				+ "/fourgoats/api/v1/priv/friends/search-users");
 		client.Execute(RequestMethod.GET, context);
 
 		return SearchForFriendsResponse.parseSearchForFriendsResponse(client

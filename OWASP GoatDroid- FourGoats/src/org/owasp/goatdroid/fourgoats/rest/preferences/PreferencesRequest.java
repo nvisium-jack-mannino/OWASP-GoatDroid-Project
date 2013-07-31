@@ -38,8 +38,7 @@ public class PreferencesRequest {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
-				+ "/fourgoats/api/v1/priv/preferences/modify-preferences",
-				sessionToken);
+				+ "/fourgoats/api/v1/priv/preferences/modify-preferences");
 
 		client.AddParam("isPublic", isPublic);
 		client.AddParam("autoCheckin", autoCheckin);

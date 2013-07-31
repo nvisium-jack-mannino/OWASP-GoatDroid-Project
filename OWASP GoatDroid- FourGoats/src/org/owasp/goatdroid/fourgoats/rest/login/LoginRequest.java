@@ -70,8 +70,7 @@ public class LoginRequest {
 	public HashMap<String, String> logOut(String sessionToken) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/pub/login/sign-out",
-				sessionToken);
+				+ destinationInfo + "/fourgoats/api/v1/pub/login/sign-out");
 		client.Execute(RequestMethod.POST, context);
 
 		return LoginResponse.parseStatusAndErrors(client.getResponse());
