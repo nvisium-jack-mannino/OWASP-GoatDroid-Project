@@ -15,7 +15,7 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.model;
 
-public class FriendRequestModel {
+public class FriendRequestModel extends BaseModel {
 
 	String userName;
 	String firstName;

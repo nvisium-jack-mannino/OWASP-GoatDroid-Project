@@ -15,17 +15,19 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
-import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.model.CommentListModel;
+import javax.servlet.http.HttpServletRequest;
+
+import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
 import org.owasp.goatdroid.webservice.fourgoats.model.CommentModel;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGCommentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -37,44 +39,52 @@ public class FGCommentController {
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@ResponseBody
-	public CommentModel addComment(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
-			@RequestParam(value = "comment", required = true) String comment,
-			@RequestParam(value = "checkinID", required = true) String checkinID) {
+	public BaseModel addComment(HttpServletRequest request, Model model,
+			@ModelAttribute("commentModel") CommentModel commentModel,
+			BindingResult result) {
 		try {
-			return commentService.addComment(sessionToken, comment, checkinID);
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
+			return commentService.addComment(authHeader.getAuthToken(),
+					commentModel.getComment(), commentModel.getCheckinID());
 		} catch (NullPointerException e) {
-			CommentModel bean = new CommentModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new BaseModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 
 	@RequestMapping(value = "remove", method = RequestMethod.POST)
 	@ResponseBody
-	public CommentModel removeComment(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
-			@RequestParam(value = "commentID", required = true) String commentID) {
+	public BaseModel removeComment(HttpServletRequest request, Model model,
+			@ModelAttribute("commentModel") CommentModel commentModel,
+			BindingResult result) {
 		try {
-			return commentService.removeComment(sessionToken, commentID);
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
+			return commentService.removeComment(authHeader.getAuthToken(),
+					commentModel.getCommentID());
 		} catch (NullPointerException e) {
-			CommentModel bean = new CommentModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new BaseModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 
 	@RequestMapping(value = "get/{checkinID}", method = RequestMethod.GET)
 	@ResponseBody
-	public CommentListModel getComments(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
-			@PathVariable(value = "checkinID") String checkinID) {
+	public BaseModel getComments(HttpServletRequest request, Model model,
+			@ModelAttribute("commentModel") CommentModel commentModel,
+			BindingResult result) {
 		try {
-			return commentService.getComments(sessionToken, checkinID);
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
+			return commentService.getComments(authHeader.getAuthToken(),
+					commentModel.getCheckinID());
 		} catch (NullPointerException e) {
-			CommentListModel bean = new CommentListModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new BaseModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 }

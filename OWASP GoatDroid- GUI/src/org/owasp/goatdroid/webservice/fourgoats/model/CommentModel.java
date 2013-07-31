@@ -22,4 +22,32 @@ import javax.xml.bind.annotation.XmlAccessorType;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CommentModel extends BaseModel {
+
+	String comment;
+	String commentID;
+	String checkinID;
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public String getCommentID() {
+		return commentID;
+	}
+
+	public void setCommentID(String commentID) {
+		this.commentID = commentID;
+	}
+
+	public String getCheckinID() {
+		return checkinID;
+	}
+
+	public void setCheckinID(String checkinID) {
+		this.checkinID = checkinID;
+	}
 }

@@ -15,7 +15,7 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.model;
 
-public class HistoryEventModel {
+public class HistoryEventModel extends BaseModel {
 
 	String dateTime;
 	String checkinID;

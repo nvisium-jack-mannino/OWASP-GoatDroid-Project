@@ -15,7 +15,7 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.model;
 
-public class UserModel {
+public class UserModel extends BaseModel {
 
 	String userID;
 	String userName;

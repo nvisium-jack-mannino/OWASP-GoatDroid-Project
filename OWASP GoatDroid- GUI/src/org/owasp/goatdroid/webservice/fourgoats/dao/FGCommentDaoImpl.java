@@ -16,10 +16,12 @@
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.sql.DataSource;
 
+import org.owasp.goatdroid.webservice.fourgoats.model.CommentFieldModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -49,25 +51,24 @@ public class FGCommentDaoImpl extends BaseDaoImpl implements CommentDao {
 		getJdbcTemplate().update(sql, commentID);
 	}
 
-	public HashMap<String, String> selectComments(String checkinID)
-			throws SQLException {
+	public ArrayList<CommentFieldModel> selectComments(String checkinID) {
 
 		String sql = "SELECT app.fg_comments.dateTime, app.fg_comments.commentID, app.fg_comments.userID, app.fg_users.firstName, "
 				+ "app.fg_users.lastName, app.fg_comments.comment FROM app.fg_comments INNER JOIN app.fg_users ON "
 				+ "app.fg_comments.userID = app.fg_users.userID WHERE app.fg_comments.checkinID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
-		HashMap<String, String> comments = new HashMap<String, String>();
-		int count = 0;
+		ArrayList<CommentFieldModel> commentList = new ArrayList<CommentFieldModel>();
 		while (rs.next()) {
-			comments.put("dateTime" + count, rs.getString("dateTime"));
-			comments.put("commentID" + count, rs.getString("commentID"));
-			comments.put("userID" + count, rs.getString("userID"));
-			comments.put("firstName" + count, rs.getString("firstName"));
-			comments.put("lastName" + count, rs.getString("lastName"));
-			comments.put("comment" + count, rs.getString("comment"));
-			count++;
+			CommentFieldModel comment = new CommentFieldModel();
+			comment.setDateTime(rs.getString("dateTime"));
+			comment.setCommentID(rs.getString("commentID"));
+			comment.setUserID(rs.getString("userID"));
+			comment.setFirstName(rs.getString("firstName"));
+			comment.setLastName(rs.getString("lastName"));
+			comment.setComment(rs.getString("comment"));
+			commentList.add(comment);
 		}
-		return comments;
+		return commentList;
 	}
 
 	public boolean isCommentOwner(String userID, String commentID)

@@ -1,7 +1,10 @@
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import org.owasp.goatdroid.webservice.fourgoats.model.CommentFieldModel;
 
 public interface CommentDao {
 
@@ -10,8 +13,7 @@ public interface CommentDao {
 
 	public void deleteComment(String commentID) throws SQLException;
 
-	public HashMap<String, String> selectComments(String checkinID)
-			throws SQLException;
+	public ArrayList<CommentFieldModel> selectComments(String checkinID);
 
 	public boolean isCommentOwner(String userID, String commentID)
 			throws SQLException;

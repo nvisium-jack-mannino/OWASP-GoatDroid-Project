@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class RegisterModel {
+public class RegisterModel extends BaseModel {
 
 	String firstname;
 	String lastname;

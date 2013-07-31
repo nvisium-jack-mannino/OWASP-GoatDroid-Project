@@ -25,6 +25,7 @@ import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGCommentDaoImpl;
+import org.owasp.goatdroid.webservice.fourgoats.model.CommentFieldModel;
 import org.owasp.goatdroid.webservice.fourgoats.model.CommentModel;
 import org.owasp.goatdroid.webservice.fourgoats.model.CommentListModel;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class FGCommentServiceImpl implements CommentService {
 	@Resource
 	FGCommentDaoImpl dao;
 
-	public CommentModel addComment(String sessionToken, String comment,
+	public CommentModel addComment(String authToken, String comment,
 			String checkinID) {
 
 		CommentModel bean = new CommentModel();
@@ -48,7 +49,7 @@ public class FGCommentServiceImpl implements CommentService {
 
 			if (errors.size() == 0) {
 
-				String userID = dao.getUserID(sessionToken);
+				String userID = dao.getUserID(authToken);
 				String checkinOwner = dao.getCheckinOwner(checkinID);
 				if (checkinOwner.equals(userID)
 						|| dao.isFriend(userID, checkinOwner)) {
@@ -73,7 +74,7 @@ public class FGCommentServiceImpl implements CommentService {
 		return bean;
 	}
 
-	public CommentModel removeComment(String sessionToken, String commentID) {
+	public CommentModel removeComment(String authToken, String commentID) {
 
 		CommentModel bean = new CommentModel();
 		ArrayList<String> errors = new ArrayList<String>();
@@ -84,7 +85,7 @@ public class FGCommentServiceImpl implements CommentService {
 				errors.add(Constants.UNEXPECTED_ERROR);
 
 			if (errors.size() == 0) {
-				String userID = dao.getUserID(sessionToken);
+				String userID = dao.getUserID(authToken);
 				String checkinID = dao.getCheckinID(commentID);
 				String checkinOwner = dao.getCheckinOwner(checkinID);
 				if (checkinOwner.equals(userID)
@@ -102,7 +103,7 @@ public class FGCommentServiceImpl implements CommentService {
 		return bean;
 	}
 
-	public CommentListModel getComments(String sessionToken, String checkinID) {
+	public CommentListModel getComments(String authToken, String checkinID) {
 
 		CommentListModel bean = new CommentListModel();
 		ArrayList<String> errors = new ArrayList<String>();
@@ -112,13 +113,13 @@ public class FGCommentServiceImpl implements CommentService {
 				errors.add(Constants.UNEXPECTED_ERROR);
 
 			if (errors.size() == 0) {
-				String userID = dao.getUserID(sessionToken);
+				String userID = dao.getUserID(authToken);
 				String checkinOwner = dao.getCheckinOwner(checkinID);
 				if (checkinOwner.equals(userID)
 						|| dao.isFriend(userID, checkinOwner)
 						|| dao.isCheckinOwnerProfilePublic(checkinID)) {
 
-					HashMap<String, String> comments = new HashMap<String, String>();
+					ArrayList<CommentFieldModel> comments = new HashMap<String, String>();
 					comments = dao.selectComments(checkinID);
 					HashMap<String, String> venueData = dao
 							.getVenueInfo(checkinID);

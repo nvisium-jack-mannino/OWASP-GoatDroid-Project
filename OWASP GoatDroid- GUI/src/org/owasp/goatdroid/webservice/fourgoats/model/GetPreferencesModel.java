@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GetPreferencesModel {
+public class GetPreferencesModel extends BaseModel {
 
 	HashMap<String, Boolean> preferences;
 	public boolean success;

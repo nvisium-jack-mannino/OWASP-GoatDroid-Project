@@ -1,6 +1,6 @@
 package org.owasp.goatdroid.webservice.fourgoats.model;
 
-public class AuthorizationHeaderModel {
+public class AuthorizationHeaderModel extends BaseModel {
 
 	String username;
 	String authToken;
