@@ -4,5 +4,5 @@ import java.sql.SQLException;
 
 public interface UserDao {
 
-	public void terminateSession(int sessionToken) throws SQLException;
+	public void terminateAuth(String authToken) throws SQLException;
 }

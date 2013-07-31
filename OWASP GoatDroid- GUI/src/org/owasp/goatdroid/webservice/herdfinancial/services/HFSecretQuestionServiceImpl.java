@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFSecretQuestionDaoImpl;
+import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
 import org.owasp.goatdroid.webservice.herdfinancial.model.SecretQuestionModel;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +32,10 @@ public class HFSecretQuestionServiceImpl implements SecretQuestionService {
 	@Resource
 	HFSecretQuestionDaoImpl dao;
 
-	public SecretQuestionModel setSecretQuestions(int sessionToken,
-			String answer1, String answer2, String answer3) {
+	public BaseModel setSecretQuestions(String authToken, String answer1,
+			String answer2, String answer3) {
 
-		SecretQuestionModel bean = new SecretQuestionModel();
+		BaseModel base = new BaseModel();
 		ArrayList<String> errors = new ArrayList<String>();
 		if (!Validators
 				.validateSecretQuestionAnswers(answer1, answer2, answer3))
@@ -42,14 +43,14 @@ public class HFSecretQuestionServiceImpl implements SecretQuestionService {
 
 		try {
 			if (errors.size() == 0) {
-				dao.updateAnswers(sessionToken, answer1, answer2, answer3);
-				bean.setSuccess(true);
+				dao.updateAnswers(authToken, answer1, answer2, answer3);
+				base.setSuccess(true);
 			}
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			base.setErrors(errors);
 		}
-		return bean;
+		return base;
 	}
 }

@@ -1,8 +1,8 @@
 package org.owasp.goatdroid.webservice.herdfinancial.services;
 
-import org.owasp.goatdroid.webservice.herdfinancial.model.LoginModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
 
 public interface UserService {
 
-	public LoginModel signOut(int sessionToken);
+	public BaseModel signOut(String authToken);
 }

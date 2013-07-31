@@ -17,13 +17,11 @@ package org.owasp.goatdroid.webservice.herdfinancial.services;
 
 import java.sql.Date;
 import java.util.ArrayList;
-
 import javax.annotation.Resource;
-
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFTransferDaoImpl;
-import org.owasp.goatdroid.webservice.herdfinancial.model.TransferModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,12 +30,15 @@ public class HFTransferServiceImpl implements TransferService {
 	@Resource
 	HFTransferDaoImpl dao;
 
-	public TransferModel transferFunds(int sessionToken, String from, String to,
+	/*
+	 * Impossible to break! ;-)
+	 */
+	public BaseModel transferFunds(String authToken, String from, String to,
 			double amount) {
 
-		TransferModel bean = new TransferModel();
+		BaseModel transfer = new BaseModel();
 		ArrayList<String> errors = new ArrayList<String>();
-		 if (from.equals(to))
+		if (from.equals(to))
 			errors.add(Constants.LULZ);
 		else if (!Validators.validateAmountFormat(amount))
 			errors.add(Constants.INVALID_CURRENCY_FORMAT);
@@ -69,7 +70,7 @@ public class HFTransferServiceImpl implements TransferService {
 						// now we set the success, close connection,
 						// and
 						// return
-						bean.setSuccess(true);
+						transfer.setSuccess(true);
 					} else {
 						errors.add(Constants.INSUFFICIENT_FUNDS);
 					}
@@ -79,8 +80,8 @@ public class HFTransferServiceImpl implements TransferService {
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			transfer.setErrors(errors);
 		}
-		return bean;
+		return transfer;
 	}
 }

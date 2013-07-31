@@ -4,6 +4,6 @@ import java.sql.SQLException;
 
 public interface SecretQuestionDao {
 
-	public void updateAnswers(int sessionToken, String answer1, String answer2,
+	public void updateAnswers(String authToken, String answer1, String answer2,
 			String answer3) throws SQLException;
 }

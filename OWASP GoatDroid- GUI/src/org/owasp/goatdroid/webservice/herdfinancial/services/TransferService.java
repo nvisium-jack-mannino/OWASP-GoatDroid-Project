@@ -1,9 +1,9 @@
 package org.owasp.goatdroid.webservice.herdfinancial.services;
 
-import org.owasp.goatdroid.webservice.herdfinancial.model.TransferModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
 
 public interface TransferService {
 
-	public TransferModel transferFunds(int sessionToken, String from, String to,
+	public BaseModel transferFunds(String authToken, String from, String to,
 			double amount);
 }

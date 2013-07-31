@@ -1,6 +1,10 @@
 package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
+import org.owasp.goatdroid.webservice.herdfinancial.model.AuthorizationHeaderModel;
 import org.owasp.goatdroid.webservice.herdfinancial.model.LoginModel;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +23,15 @@ public class HFUserController {
 
 	@RequestMapping(value = "sign_out", method = RequestMethod.GET)
 	@ResponseBody
-	public LoginModel signOut(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {
+	public BaseModel signOut(HttpServletRequest request) {
 		try {
-			return userService.signOut(sessionToken);
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
+			return userService.signOut(authHeader.getAuthToken());
 		} catch (NullPointerException e) {
-			LoginModel bean = new LoginModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new BaseModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 }

@@ -31,11 +31,11 @@ public class HFSecretQuestionDaoImpl extends BaseDaoImpl implements
 		setDataSource(dataSource);
 	}
 
-	public void updateAnswers(int sessionToken, String answer1, String answer2,
+	public void updateAnswers(String authToken, String answer1, String answer2,
 			String answer3) throws SQLException {
 
-		String sql = "UPDATE app.hf_users SET answer1 = ?, answer2 = ?, answer3 = ? WHERE sessionToken = ?";
+		String sql = "UPDATE app.hf_users SET answer1 = ?, answer2 = ?, answer3 = ? WHERE authToken = ?";
 		getJdbcTemplate().update(sql,
-				new Object[] { answer1, answer2, answer3, sessionToken });
+				new Object[] { answer1, answer2, answer3, authToken });
 	}
 }

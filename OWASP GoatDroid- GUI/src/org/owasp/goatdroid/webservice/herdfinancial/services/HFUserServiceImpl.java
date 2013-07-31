@@ -6,7 +6,7 @@ import javax.annotation.Resource;
 
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFUserDaoImpl;
-import org.owasp.goatdroid.webservice.herdfinancial.model.LoginModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,18 +15,18 @@ public class HFUserServiceImpl implements UserService {
 	@Resource
 	HFUserDaoImpl dao;
 
-	public LoginModel signOut(int sessionToken) {
+	public BaseModel signOut(String authToken) {
 
-		LoginModel bean = new LoginModel();
+		BaseModel base = new BaseModel();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
-			dao.terminateSession(sessionToken);
-			bean.setSuccess(true);
+			dao.terminateAuth(authToken);
+			base.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			base.setErrors(errors);
 		}
-		return bean;
+		return base;
 	}
 }

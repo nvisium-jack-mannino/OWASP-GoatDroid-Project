@@ -5,9 +5,7 @@ import org.owasp.goatdroid.webservice.herdfinancial.model.LoginModel;
 public interface LoginService {
 	public LoginModel isDevicePermanentlyAuthorized(String deviceID);
 
-	public boolean isSessionValid(int sessionToken);
-
-	public LoginModel isSessionValidOrDeviceAuthorized(int sessionToken,
+	public LoginModel isAuthValidOrDeviceAuthorized(String authToken,
 			String deviceID);
 
 	public LoginModel validateCredentials(String userName, String password);

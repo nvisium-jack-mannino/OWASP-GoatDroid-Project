@@ -32,9 +32,9 @@ public class HFLoginServiceImpl implements LoginService {
 	@Resource
 	HFLoginDaoImpl dao;
 
-	public boolean isSessionValid(int sessionToken) {
+	public boolean isAuthValid(String authToken) {
 
-		if (!Validators.validateSessionTokenFormat(sessionToken))
+		if (!Validators.validateSessionTokenFormat(authToken))
 			return false;
 
 		boolean success = false;
@@ -54,7 +54,7 @@ public class HFLoginServiceImpl implements LoginService {
 		return success;
 	}
 
-	public LoginModel isSessionValidOrDeviceAuthorized(int sessionToken,
+	public LoginModel isSessionValidOrDeviceAuthorized(String authToken,
 			String deviceID) {
 
 		LoginModel bean = new LoginModel();
@@ -64,7 +64,7 @@ public class HFLoginServiceImpl implements LoginService {
 
 		try {
 			if (errors.size() == 0) {
-				if (isSessionValid(sessionToken)) {
+				if (isSessionValid(authToken)) {
 					bean.setSuccess(true);
 				} else {
 					if (dao.isDevicePermanentlyAuthorized(deviceID)) {
@@ -89,7 +89,7 @@ public class HFLoginServiceImpl implements LoginService {
 
 	public LoginModel validateCredentials(String userName, String password) {
 
-		LoginModel bean = new LoginModel();
+		LoginModel login = new LoginModel();
 		ArrayList<String> errors = Validators.validateCredentials(userName,
 				password);
 
@@ -99,24 +99,24 @@ public class HFLoginServiceImpl implements LoginService {
 					int sessionToken = Utils.generateSessionToken();
 					dao.updateSession(userName, sessionToken,
 							Utils.getTimeMilliseconds());
-					bean.setSessionToken(sessionToken);
-					bean.setUserName(dao.getUserName(sessionToken));
-					bean.setAccountNumber(dao.getAccountNumber(sessionToken));
-					bean.setSuccess(true);
+					login.setSessionToken(sessionToken);
+					login.setUserName(dao.getUserName(sessionToken));
+					login.setAccountNumber(dao.getAccountNumber(sessionToken));
+					login.setSuccess(true);
 				} else
 					errors.add(Constants.INVALID_CREDENTIALS);
 			}
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			login.setErrors(errors);
 		}
-		return bean;
+		return login;
 	}
 
 	public LoginModel isDevicePermanentlyAuthorized(String deviceID) {
 
-		LoginModel bean = new LoginModel();
+		LoginModel login = new LoginModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		if (!Validators.validateDeviceID(deviceID))
@@ -128,15 +128,15 @@ public class HFLoginServiceImpl implements LoginService {
 					int sessionToken = Utils.generateSessionToken();
 					dao.updateAuthorizedDeviceSession(deviceID, sessionToken,
 							Utils.getTimeMilliseconds());
-					bean.setSessionToken(sessionToken);
-					bean.setSuccess(true);
+					login.setSessionToken(sessionToken);
+					login.setSuccess(true);
 				}
 			}
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			login.setErrors(errors);
 		}
-		return bean;
+		return login;
 	}
 }

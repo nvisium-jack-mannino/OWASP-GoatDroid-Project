@@ -33,10 +33,10 @@ public class HFStatementServiceImpl implements StatementService {
 	HFStatementDaoImpl dao;
 
 	public StatementModel getStatement(String accountNumber, String startDate,
-			String endDate, int sessionToken) {
+			String endDate, String authToken) {
 
 		ArrayList<String> errors = new ArrayList<String>();
-		StatementModel bean = new StatementModel();
+		StatementModel statement = new StatementModel();
 		if (!Validators.validateDateTimeFormat(startDate)
 				|| !Validators.validateDateTimeFormat(endDate))
 			errors.add(Constants.INVALID_ACCOUNT_NUMBER);
@@ -46,44 +46,44 @@ public class HFStatementServiceImpl implements StatementService {
 
 		try {
 			if (errors.size() == 0) {
-				bean.setStatementData(dao.getStatement(accountNumber,
+				statement.setStatementData(dao.getStatement(accountNumber,
 						convertStringToDate(startDate),
 						convertStringToDate(endDate)));
-				bean.setSuccess(true);
+				statement.setSuccess(true);
 			}
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			statement.setErrors(errors);
 			try {
 			} catch (Exception e) {
 			}
 		}
-		return bean;
+		return statement;
 	}
 
 	public StatementModel getStatementSinceLastPoll(String accountNumber,
-			int sessionToken) {
+			String authToken) {
 
 		ArrayList<String> errors = new ArrayList<String>();
-		StatementModel bean = new StatementModel();
+		StatementModel statement = new StatementModel();
 		if (!Validators.validateAccountNumber(accountNumber))
 			errors.add(Constants.INVALID_ACCOUNT_NUMBER);
 
 		try {
 			if (errors.size() == 0) {
 				long timeStamp = dao.getLastPollTime(accountNumber);
-				bean.setStatementData(dao.getTransactionsSinceLastPoll(
+				statement.setStatementData(dao.getTransactionsSinceLastPoll(
 						accountNumber, timeStamp));
 				dao.updateLastPollTime(accountNumber);
-				bean.setSuccess(true);
+				statement.setSuccess(true);
 			}
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			statement.setErrors(errors);
 		}
-		return bean;
+		return statement;
 	}
 
 	Date convertStringToDate(String dateString) {

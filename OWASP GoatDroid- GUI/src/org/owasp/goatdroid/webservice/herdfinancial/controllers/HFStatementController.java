@@ -15,16 +15,17 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.owasp.goatdroid.webservice.herdfinancial.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
+import org.owasp.goatdroid.webservice.herdfinancial.services.HFStatementServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.owasp.goatdroid.webservice.herdfinancial.Constants;
-import org.owasp.goatdroid.webservice.herdfinancial.model.StatementModel;
-import org.owasp.goatdroid.webservice.herdfinancial.services.HFStatementServiceImpl;
 
 @Controller
 @RequestMapping(value = "herdfinancial/api/v1/priv/statements", produces = "application/json")
@@ -35,33 +36,36 @@ public class HFStatementController {
 
 	@RequestMapping(value = "get-statement/{accountNumber}/{startDate}/{endDate}", method = RequestMethod.GET)
 	@ResponseBody
-	public StatementModel getStatement(
+	public BaseModel getStatement(
 			@PathVariable("accountNumber") String accountNumber,
 			@PathVariable("startDate") String startDate,
-			@PathVariable("endDate") String endDate,
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {
+			@PathVariable("endDate") String endDate, HttpServletRequest request) {
 		try {
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
 			return statementService.getStatement(accountNumber, startDate,
-					endDate, sessionToken);
+					endDate, authHeader.getAuthToken());
 		} catch (NullPointerException e) {
-			StatementModel bean = new StatementModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new BaseModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 
 	@RequestMapping(value = "poll-statement-updates/{accountNumber}", method = RequestMethod.GET)
 	@ResponseBody
-	public StatementModel getStatementSinceLastPoll(
+	public BaseModel getStatementSinceLastPoll(
 			@PathVariable("accountNumber") String accountNumber,
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) int sessionToken) {
+			HttpServletRequest request) {
 		try {
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
 			return statementService.getStatementSinceLastPoll(accountNumber,
-					sessionToken);
+					authHeader.getAuthToken());
 		} catch (NullPointerException e) {
-			StatementModel bean = new StatementModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new BaseModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 }
