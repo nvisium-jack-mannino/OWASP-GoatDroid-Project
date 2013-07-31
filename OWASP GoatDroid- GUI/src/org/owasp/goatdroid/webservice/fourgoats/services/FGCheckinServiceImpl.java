@@ -36,7 +36,7 @@ public class FGCheckinServiceImpl implements CheckinService {
 	public CheckinModel doCheckin(String sessionToken, String latitude,
 			String longitude) {
 
-		CheckinModel bean = new CheckinModel();
+		CheckinModel checkin = new CheckinModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -69,17 +69,17 @@ public class FGCheckinServiceImpl implements CheckinService {
 							// reward
 							if (!dao.doesUserHaveReward(userID, rewardID)) {
 								dao.addReward(userID, rewardID);
-								bean.setRewardEarned(dao.getRewardInfo(
+								checkin.setRewardEarned(dao.getRewardInfo(
 										rewardID, venueID));
 							}
 						}
 					}
-					bean.setCheckinID(checkinID);
-					bean.setDateTime(dateTime);
-					bean.setVenueName(dao.getVenueName(venueID));
-					bean.setLatitude(latitude);
-					bean.setLongitude(longitude);
-					bean.setSuccess(true);
+					checkin.setCheckinID(checkinID);
+					checkin.setDateTime(dateTime);
+					checkin.setVenueName(dao.getVenueName(venueID));
+					checkin.setLatitude(latitude);
+					checkin.setLongitude(longitude);
+					checkin.setSuccess(true);
 				} else {
 					errors.add(Constants.VENUE_DOESNT_EXIST);
 				}
@@ -87,8 +87,8 @@ public class FGCheckinServiceImpl implements CheckinService {
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			checkin.setErrors(errors);
 		}
-		return bean;
+		return checkin;
 	}
 }
