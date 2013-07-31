@@ -24,6 +24,7 @@ import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGVenueDaoImpl;
+import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
 import org.owasp.goatdroid.webservice.fourgoats.model.VenueModel;
 import org.owasp.goatdroid.webservice.fourgoats.model.VenueListModel;
 import org.springframework.stereotype.Service;
@@ -34,10 +35,10 @@ public class FGVenueServiceImpl implements VenueService {
 	@Resource
 	FGVenueDaoImpl dao;
 
-	public VenueModel addVenue(String sessionToken, String venueName,
+	public BaseModel addVenue(String sessionToken, String venueName,
 			String venueWebsite, String latitude, String longitude) {
 
-		VenueModel bean = new VenueModel();
+		BaseModel base = new BaseModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -50,31 +51,31 @@ public class FGVenueServiceImpl implements VenueService {
 							venueName, Salts.VENUE_ID_GENERATOR_SALT);
 					dao.insertNewVenue(venueID, venueName, venueWebsite,
 							latitude, longitude);
-					bean.setSuccess(true);
+					base.setSuccess(true);
 				} else
 					errors.add(Constants.VENUE_ALREADY_EXISTS);
 			}
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			base.setErrors(errors);
 		}
-		return bean;
+		return base;
 	}
 
 	public VenueListModel getAllVenues(String sessionToken) {
 
-		VenueListModel bean = new VenueListModel();
+		VenueListModel venueList = new VenueListModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			bean.setVenues(dao.getAllVenues());
-			bean.setSuccess(true);
+			venueList.setVenues(dao.getAllVenues());
+			venueList.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			venueList.setErrors(errors);
 		}
-		return bean;
+		return venueList;
 	}
 }

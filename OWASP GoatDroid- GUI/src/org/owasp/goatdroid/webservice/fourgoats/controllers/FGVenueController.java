@@ -15,14 +15,22 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
+import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.CommentModel;
 import org.owasp.goatdroid.webservice.fourgoats.model.VenueModel;
 import org.owasp.goatdroid.webservice.fourgoats.model.VenueListModel;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGVenueServiceImpl;
@@ -36,32 +44,32 @@ public class FGVenueController {
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@ResponseBody
-	public VenueModel addVenue(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
-			@RequestParam(value = "venueName", required = true) String venueName,
-			@RequestParam(value = "venueWebsite", required = true) String venueWebsite,
-			@RequestParam(value = "latitude", required = true) String latitude,
-			@RequestParam(value = "longitude", required = true) String longitude) {
+	public BaseModel addVenue(HttpServletRequest request, Model model,
+			@ModelAttribute("venueModel") VenueModel venue, BindingResult result) {
 		try {
-			return venueService.addVenue(sessionToken, venueName, venueWebsite,
-					latitude, longitude);
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
+			return venueService.addVenue(authHeader.getAuthToken(),
+					venue.getVenueName(), venue.getVenueWebsite(),
+					venue.getLatitude(), venue.getLongitude());
 		} catch (NullPointerException e) {
-			VenueModel bean = new VenueModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new VenueModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	@ResponseBody
-	public VenueListModel getAllVenues(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
+	public BaseModel getAllVenues(HttpServletRequest request) {
 		try {
-			return venueService.getAllVenues(sessionToken);
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
+			return venueService.getAllVenues(authHeader.getAuthToken());
 		} catch (NullPointerException e) {
-			VenueListModel bean = new VenueListModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new BaseModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 }

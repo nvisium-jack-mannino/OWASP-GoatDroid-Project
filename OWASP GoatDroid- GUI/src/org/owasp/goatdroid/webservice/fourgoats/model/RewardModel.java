@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 public class RewardModel extends BaseModel {
 
 	public String rewardID;
-	ArrayList<_RewardModel> rewards;
+	ArrayList<RewardFieldModel> rewards;
 
 	public String getRewardID() {
 		return rewardID;
@@ -36,11 +36,11 @@ public class RewardModel extends BaseModel {
 		this.rewardID = rewardID;
 	}
 
-	public ArrayList<_RewardModel> getRewards() {
+	public ArrayList<RewardFieldModel> getRewards() {
 		return rewards;
 	}
 
-	public void setRewards(ArrayList<_RewardModel> rewards) {
+	public void setRewards(ArrayList<RewardFieldModel> rewards) {
 		this.rewards = rewards;
 	}
 }

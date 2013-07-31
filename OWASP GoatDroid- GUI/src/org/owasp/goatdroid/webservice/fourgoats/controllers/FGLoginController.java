@@ -39,8 +39,14 @@ public class FGLoginController {
 	public LoginModel authenticate(Model model,
 			@ModelAttribute("userPassModel") UserPassModel userPass,
 			BindingResult result) {
-		return loginService.validateCredentials(userPass.getUsername(),
-				userPass.getPassword());
+		try {
+			return loginService.validateCredentials(userPass.getUsername(),
+					userPass.getPassword());
+		} catch (NullPointerException e) {
+			LoginModel login = new LoginModel();
+			login.setSuccess(false);
+			return login;
+		}
 	}
 
 	@RequestMapping(value = "validate-api", method = RequestMethod.POST)

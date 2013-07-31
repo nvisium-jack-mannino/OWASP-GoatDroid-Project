@@ -16,10 +16,12 @@
 package org.owasp.goatdroid.webservice.fourgoats.dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.sql.DataSource;
 
+import org.owasp.goatdroid.webservice.fourgoats.model.VenueModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -57,19 +59,20 @@ public class FGVenueDaoImpl extends BaseDaoImpl implements VenueDao {
 						longitude });
 	}
 
-	public HashMap<String, String> getAllVenues() throws SQLException {
+	public ArrayList<VenueModel> getAllVenues() throws SQLException {
 
 		String sql = "SELECT venueID, venueName, venueWebsite, latitude, longitude FROM app.fg_venues";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql);
-		HashMap<String, String> venues = new HashMap<String, String>();
-		int count = 0;
+
+		ArrayList<VenueModel> venues = new ArrayList<VenueModel>();
 		while (rs.next()) {
-			venues.put("venueID" + count, rs.getString("venueID"));
-			venues.put("venueName" + count, rs.getString("venueName"));
-			venues.put("venueWebsite" + count, rs.getString("venueWebsite"));
-			venues.put("latitude" + count, rs.getString("latitude"));
-			venues.put("longitude" + count, rs.getString("longitude"));
-			count++;
+			VenueModel venue = new VenueModel();
+			venue.setVenueID(rs.getString("venueID"));
+			venue.setVenueName(rs.getString("venueName"));
+			venue.setVenueWebsite(rs.getString("venueWebsite"));
+			venue.setLatitude(rs.getString("latitude"));
+			venue.setLongitude(rs.getString("longitude"));
+			venues.add(venue);
 		}
 		return venues;
 	}

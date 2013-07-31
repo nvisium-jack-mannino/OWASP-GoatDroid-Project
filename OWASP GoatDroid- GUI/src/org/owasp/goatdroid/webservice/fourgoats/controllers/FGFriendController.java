@@ -15,21 +15,19 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
-import org.springframework.web.bind.annotation.RequestParam;
+import javax.servlet.http.HttpServletRequest;
+
+import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.CheckinModel;
+import org.owasp.goatdroid.webservice.fourgoats.services.FGFriendServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.model.FriendModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.FriendListModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.FriendProfileModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.PendingFriendRequestsModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.PublicUsersModel;
-import org.owasp.goatdroid.webservice.fourgoats.services.FGFriendServiceImpl;
 
 @Controller
 @RequestMapping(value = "fourgoats/api/v1/priv/friends", produces = "application/json")
@@ -38,78 +36,131 @@ public class FGFriendController {
 	@Autowired
 	FGFriendServiceImpl friendService;
 
-	@RequestMapping(value = "list_friends", method = RequestMethod.GET)
+	@RequestMapping(value = "list-friends", method = RequestMethod.GET)
 	@ResponseBody
-	public FriendListModel getFriends(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
+	public BaseModel getFriends(HttpServletRequest request) {
 
-		return friendService.getFriends(sessionToken);
+		AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+				.getAttribute("authHeader");
+		try {
+			return friendService.getFriends(authHeader.getAuthToken());
+		} catch (NullPointerException e) {
+			BaseModel base = new CheckinModel();
+			base.setSuccess(false);
+			return base;
+		}
 	}
 
-	@RequestMapping(value = "request_friend", method = RequestMethod.POST)
+	@RequestMapping(value = "request-friend", method = RequestMethod.POST)
 	@ResponseBody
-	public FriendModel requestFriend(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
+	public BaseModel requestFriend(HttpServletRequest request,
 			@RequestParam(value = "userName", required = true) String userName) {
 
-		return friendService.requestFriend(sessionToken, userName);
+		AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+				.getAttribute("authHeader");
+		try {
+			return friendService.requestFriend(authHeader.getAuthToken(),
+					userName);
+		} catch (NullPointerException e) {
+			BaseModel base = new CheckinModel();
+			base.setSuccess(false);
+			return base;
+		}
 
 	}
 
-	@RequestMapping(value = "accept_friend_request", method = RequestMethod.POST)
+	@RequestMapping(value = "accept-friend-request", method = RequestMethod.POST)
 	@ResponseBody
-	public FriendModel acceptFriendRequest(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
+	public BaseModel acceptFriendRequest(HttpServletRequest request,
 			@RequestParam(value = "userName", required = true) String userName) {
-
-		return friendService.acceptOrDenyFriendRequest("accept", sessionToken,
-				userName);
+		AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+				.getAttribute("authHeader");
+		try {
+			return friendService.acceptOrDenyFriendRequest("accept",
+					authHeader.getAuthToken(), userName);
+		} catch (NullPointerException e) {
+			BaseModel base = new CheckinModel();
+			base.setSuccess(false);
+			return base;
+		}
 
 	}
 
-	@RequestMapping(value = "deny_friend_request", method = RequestMethod.POST)
+	@RequestMapping(value = "deny-friend-request", method = RequestMethod.POST)
 	@ResponseBody
-	public FriendModel denyFriendRequest(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
+	public BaseModel denyFriendRequest(HttpServletRequest request,
 			@RequestParam(value = "userName", required = true) String userName) {
-
-		return friendService.acceptOrDenyFriendRequest("deny", sessionToken,
-				userName);
+		AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+				.getAttribute("authHeader");
+		try {
+			return friendService.acceptOrDenyFriendRequest("deny",
+					authHeader.getAuthToken(), userName);
+		} catch (NullPointerException e) {
+			BaseModel base = new CheckinModel();
+			base.setSuccess(false);
+			return base;
+		}
 
 	}
 
-	@RequestMapping(value = "remove_friend", method = RequestMethod.POST)
+	@RequestMapping(value = "remove-friend", method = RequestMethod.POST)
 	@ResponseBody
-	public FriendModel removeFriend(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
+	public BaseModel removeFriend(HttpServletRequest request,
 			@RequestParam(value = "userName", required = true) String userName) {
-
-		return friendService.removeFriend(sessionToken, userName);
+		AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+				.getAttribute("authHeader");
+		try {
+			return friendService.removeFriend(authHeader.getAuthToken(),
+					userName);
+		} catch (NullPointerException e) {
+			BaseModel base = new CheckinModel();
+			base.setSuccess(false);
+			return base;
+		}
 	}
 
-	@RequestMapping(value = "get_pending_requests", method = RequestMethod.GET)
+	@RequestMapping(value = "get-pending-requests", method = RequestMethod.GET)
 	@ResponseBody
-	public PendingFriendRequestsModel getPendingFriendRequests(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
-
-		return friendService.getPendingFriendRequests(sessionToken);
+	public BaseModel getPendingFriendRequests(HttpServletRequest request) {
+		AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+				.getAttribute("authHeader");
+		try {
+			return friendService.getPendingFriendRequests(authHeader
+					.getAuthToken());
+		} catch (NullPointerException e) {
+			BaseModel base = new CheckinModel();
+			base.setSuccess(false);
+			return base;
+		}
 	}
 
-	@RequestMapping(value = "search_users", method = RequestMethod.GET)
+	@RequestMapping(value = "search-users", method = RequestMethod.GET)
 	@ResponseBody
-	public PublicUsersModel getPublicUsers(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
-
-		return friendService.getPublicUsers(sessionToken);
+	public BaseModel getPublicUsers(HttpServletRequest request) {
+		AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+				.getAttribute("authHeader");
+		try {
+			return friendService.getPublicUsers(authHeader.getAuthToken());
+		} catch (NullPointerException e) {
+			BaseModel base = new CheckinModel();
+			base.setSuccess(false);
+			return base;
+		}
 	}
 
-	@RequestMapping(value = "view_profile/{userName}", method = RequestMethod.GET)
+	@RequestMapping(value = "view-profile/{userName}", method = RequestMethod.GET)
 	@ResponseBody
-	public FriendProfileModel getProfile(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
+	public BaseModel getProfile(HttpServletRequest request,
 			@PathVariable(value = "userName") String userName) {
-
-		return friendService.getProfile(sessionToken, userName);
+		AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+				.getAttribute("authHeader");
+		try {
+			return friendService
+					.getProfile(authHeader.getAuthToken(), userName);
+		} catch (NullPointerException e) {
+			BaseModel base = new CheckinModel();
+			base.setSuccess(false);
+			return base;
+		}
 	}
-
 }

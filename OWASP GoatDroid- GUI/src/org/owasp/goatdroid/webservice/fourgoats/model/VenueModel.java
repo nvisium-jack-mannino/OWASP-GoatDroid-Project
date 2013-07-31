@@ -23,4 +23,49 @@ import javax.xml.bind.annotation.XmlAccessorType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class VenueModel extends BaseModel {
 
+	String venueID;
+	String venueName;
+	String venueWebsite;
+	String latitude;
+	String longitude;
+
+	public String getVenueID() {
+		return venueID;
+	}
+
+	public void setVenueID(String venueID) {
+		this.venueID = venueID;
+	}
+
+	public String getVenueName() {
+		return venueName;
+	}
+
+	public void setVenueName(String venueName) {
+		this.venueName = venueName;
+	}
+
+	public String getVenueWebsite() {
+		return venueWebsite;
+	}
+
+	public void setVenueWebsite(String venueWebsite) {
+		this.venueWebsite = venueWebsite;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
 }

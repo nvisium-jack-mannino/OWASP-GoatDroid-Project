@@ -15,23 +15,23 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.model;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+
 import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class VenueListModel extends BaseModel {
 
-	HashMap<String, String> venues;
-	public boolean success;
+	ArrayList<VenueModel> venues;
 
-	public HashMap<String, String> getVenues() {
+	public ArrayList<VenueModel> getVenues() {
 		return venues;
 	}
 
-	public void setVenues(HashMap<String, String> venues) {
+	public void setVenues(ArrayList<VenueModel> venues) {
 		this.venues = venues;
 	}
 }

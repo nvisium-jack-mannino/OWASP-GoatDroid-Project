@@ -15,17 +15,21 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
-import org.springframework.web.bind.annotation.RequestParam;
+import javax.servlet.http.HttpServletRequest;
+
+import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.GetPreferencesModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.PreferencesModel;
+import org.owasp.goatdroid.webservice.fourgoats.services.FGEditPreferencesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.model.EditPreferencesModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.GetPreferencesModel;
-import org.owasp.goatdroid.webservice.fourgoats.services.FGEditPreferencesServiceImpl;
 
 @Controller
 @RequestMapping(value = "fourgoats/api/v1/priv/preferences", produces = "application/json")
@@ -34,33 +38,40 @@ public class FGEditPreferencesController {
 	@Autowired
 	FGEditPreferencesServiceImpl editPreferencesService;
 
-	@RequestMapping(value = "modify_preferences", method = RequestMethod.POST)
+	@RequestMapping(value = "modify-preferences", method = RequestMethod.POST)
 	@ResponseBody
-	public EditPreferencesModel modifyPreferences(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
-			@RequestParam(value = "autoCheckin", required = true) boolean autoCheckin,
-			@RequestParam(value = "isPublic", required = true) boolean isPublic) {
+	public BaseModel modifyPreferences(
+			HttpServletRequest request,
+			Model model,
+			@ModelAttribute("editPreferencesModel") PreferencesModel editPreferencesModel,
+			BindingResult result) {
 
 		try {
-			return editPreferencesService.modifyPreferences(sessionToken,
-					autoCheckin, isPublic);
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
+			return editPreferencesService.modifyPreferences(
+					authHeader.getAuthToken(),
+					editPreferencesModel.isAutoCheckin(),
+					editPreferencesModel.isPublic());
 		} catch (NullPointerException e) {
-			EditPreferencesModel bean = new EditPreferencesModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new PreferencesModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 
-	@RequestMapping(value = "get_preferences", method = RequestMethod.GET)
+	@RequestMapping(value = "get-preferences", method = RequestMethod.GET)
 	@ResponseBody
-	public GetPreferencesModel getPreferences(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
+	public BaseModel getPreferences(HttpServletRequest request) {
 		try {
-			return editPreferencesService.getPreferences(sessionToken);
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
+			return editPreferencesService.getPreferences(authHeader
+					.getAuthToken());
 		} catch (NullPointerException e) {
-			GetPreferencesModel bean = new GetPreferencesModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new GetPreferencesModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 }

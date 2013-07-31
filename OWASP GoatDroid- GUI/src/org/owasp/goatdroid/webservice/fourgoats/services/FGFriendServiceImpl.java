@@ -35,38 +35,38 @@ public class FGFriendServiceImpl implements FriendService {
 	@Resource
 	FGFriendDaoImpl dao;
 
-	public FriendListModel getFriends(String sessionToken) {
+	public FriendListModel getFriends(String authToken) {
 
-		FriendListModel bean = new FriendListModel();
+		FriendListModel friendList = new FriendListModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			String userID = dao.getUserID(sessionToken);
+			String userID = dao.getUserID(authToken);
 			String userName = dao.getUserName(userID);
-			bean.setFriends(dao.getFriends(userID, userName));
-			bean.setSuccess(true);
+			friendList.setFriends(dao.getFriends(userID, userName));
+			friendList.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			friendList.setErrors(errors);
 		}
-		return bean;
+		return friendList;
 	}
 
-	public FriendModel requestFriend(String sessionToken, String friendUserName) {
+	public FriendModel requestFriend(String authToken, String friendUserName) {
 
-		FriendModel bean = new FriendModel();
+		FriendModel friend = new FriendModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			String userID = dao.getUserID(sessionToken);
+			String userID = dao.getUserID(authToken);
 			String friendUserID = dao.getUserIDByName(friendUserName);
 
 			if (!dao.isFriend(userID, friendUserID)) {
 				if (!dao.wasFriendRequestSent(friendUserID, userID)) {
 					if (!userID.equals(friendUserID)) {
 						dao.requestFriend(userID, friendUserID);
-						bean.setSuccess(true);
+						friend.setSuccess(true);
 					} else {
 						errors.add(Constants.CANNOT_DO_TO_YOURSELF);
 					}
@@ -79,15 +79,15 @@ public class FGFriendServiceImpl implements FriendService {
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			friend.setErrors(errors);
 		}
-		return bean;
+		return friend;
 	}
 
 	public FriendModel acceptOrDenyFriendRequest(String action,
-			String sessionToken, String userName) {
+			String authToken, String userName) {
 
-		FriendModel bean = new FriendModel();
+		FriendModel friend = new FriendModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -95,7 +95,7 @@ public class FGFriendServiceImpl implements FriendService {
 				errors.add(Constants.UNEXPECTED_ERROR);
 
 			if (errors.size() == 0) {
-				String userID = dao.getUserID(sessionToken);
+				String userID = dao.getUserID(authToken);
 				String friendRequestID = dao.getFriendRequestID(userName,
 						userID);
 
@@ -111,7 +111,7 @@ public class FGFriendServiceImpl implements FriendService {
 					} else {
 						dao.removePendingFriendRequest(friendRequestID);
 					}
-					bean.setSuccess(true);
+					friend.setSuccess(true);
 				} else {
 					errors.add(Constants.NOT_AUTHORIZED);
 				}
@@ -119,24 +119,24 @@ public class FGFriendServiceImpl implements FriendService {
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			friend.setErrors(errors);
 		}
-		return bean;
+		return friend;
 	}
 
-	public FriendModel removeFriend(String sessionToken, String friendUserName) {
+	public FriendModel removeFriend(String authToken, String friendUserName) {
 
-		FriendModel bean = new FriendModel();
+		FriendModel friend = new FriendModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			String userID = dao.getUserID(sessionToken);
+			String userID = dao.getUserID(authToken);
 			String friendUserID = dao.getUserIDByName(friendUserName);
 
 			if (!userID.equals(friendUserID)) {
 				if (dao.isFriend(userID, friendUserID)) {
 					dao.removeFriend(userID, friendUserID);
-					bean.setSuccess(true);
+					friend.setSuccess(true);
 				} else {
 					errors.add(Constants.NOT_AUTHORIZED);
 				}
@@ -146,15 +146,15 @@ public class FGFriendServiceImpl implements FriendService {
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			friend.setErrors(errors);
 		}
-		return bean;
+		return friend;
 	}
 
-	public FriendProfileModel getProfile(String sessionToken,
+	public FriendProfileModel getProfile(String authToken,
 			String friendUserName) {
 
-		FriendProfileModel bean = new FriendProfileModel();
+		FriendProfileModel friendProfile = new FriendProfileModel();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
 			String friendUserID = dao.getUserIDByName(friendUserName);
@@ -164,46 +164,47 @@ public class FGFriendServiceImpl implements FriendService {
 			 * dao.isProfilePublic(friendUserID) || userID.equals(friendUserID))
 			 * {
 			 */
-			bean.setProfile(dao.getProfile(friendUserID));
-			bean.setSuccess(true);
+			friendProfile.setProfile(dao.getProfile(friendUserID));
+			friendProfile.setSuccess(true);
+			// }
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			friendProfile.setErrors(errors);
 		}
-		return bean;
+		return friendProfile;
 	}
 
 	public PendingFriendRequestsModel getPendingFriendRequests(
-			String sessionToken) {
+			String authToken) {
 
-		PendingFriendRequestsModel bean = new PendingFriendRequestsModel();
+		PendingFriendRequestsModel pendingRequests = new PendingFriendRequestsModel();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
-			String userID = dao.getUserID(sessionToken);
-			bean.setPendingFriendRequests(dao.getPendingFriendRequests(userID));
-			bean.setSuccess(true);
+			String userID = dao.getUserID(authToken);
+			pendingRequests.setPendingFriendRequests(dao.getPendingFriendRequests(userID));
+			pendingRequests.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			pendingRequests.setErrors(errors);
 		}
-		return bean;
+		return pendingRequests;
 	}
 
-	public PublicUsersModel getPublicUsers(String sessionToken) {
+	public PublicUsersModel getPublicUsers(String authToken) {
 
-		PublicUsersModel bean = new PublicUsersModel();
+		PublicUsersModel publicUsers = new PublicUsersModel();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
-			String userName = dao.getUserNameByAuthToken(sessionToken);
-			bean.setUsers(dao.getPublicUsers(userName));
-			bean.setSuccess(true);
+			String userName = dao.getUserNameByAuthToken(authToken);
+			publicUsers.setUsers(dao.getPublicUsers(userName));
+			publicUsers.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			publicUsers.setErrors(errors);
 		}
-		return bean;
+		return publicUsers;
 	}
 }

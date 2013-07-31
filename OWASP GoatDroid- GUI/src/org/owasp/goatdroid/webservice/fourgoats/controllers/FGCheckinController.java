@@ -18,6 +18,7 @@ package org.owasp.goatdroid.webservice.fourgoats.controllers;
 import javax.servlet.http.HttpServletRequest;
 
 import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
 import org.owasp.goatdroid.webservice.fourgoats.model.CheckinModel;
 import org.owasp.goatdroid.webservice.fourgoats.model.LatLongModel;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGCheckinServiceImpl;
@@ -39,7 +40,7 @@ public class FGCheckinController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public CheckinModel doCheckin(HttpServletRequest request, Model model,
+	public BaseModel doCheckin(HttpServletRequest request, Model model,
 			@ModelAttribute("latLongModel") LatLongModel latLongModel,
 			BindingResult result) {
 		try {
@@ -48,9 +49,9 @@ public class FGCheckinController {
 			return checkinService.doCheckin(authHeader.getAuthToken(),
 					latLongModel.getLatitude(), latLongModel.getLongitude());
 		} catch (NullPointerException e) {
-			CheckinModel bean = new CheckinModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new CheckinModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 }

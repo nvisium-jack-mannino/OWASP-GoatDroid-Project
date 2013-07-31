@@ -16,70 +16,41 @@
 package org.owasp.goatdroid.webservice.fourgoats.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CommentListModel extends BaseModel {
 
-	public ArrayList<CommentFields> comments;
+	ArrayList<CommentFieldModel> comments;
+	String venueName;
+	String venueWebsite;
 
-	public ArrayList<CommentFields> getComments() {
+	public ArrayList<CommentFieldModel> getComments() {
 		return comments;
 	}
 
-	public void setComments(ArrayList<CommentFields> comments) {
+	public void setComments(ArrayList<CommentFieldModel> comments) {
 		this.comments = comments;
 	}
 
-	class CommentFields {
-		String dateTime;
-		String commentID;
-		String userID;
-		String firstName;
-		String lastName;
-
-		public String getDateTime() {
-			return dateTime;
-		}
-
-		public void setDateTime(String dateTime) {
-			this.dateTime = dateTime;
-		}
-
-		public String getCommentID() {
-			return commentID;
-		}
-
-		public void setCommentID(String commentID) {
-			this.commentID = commentID;
-		}
-
-		public String getUserID() {
-			return userID;
-		}
-
-		public void setUserID(String userID) {
-			this.userID = userID;
-		}
-
-		public String getFirstName() {
-			return firstName;
-		}
-
-		public void setFirstName(String firstName) {
-			this.firstName = firstName;
-		}
-
-		public String getLastName() {
-			return lastName;
-		}
-
-		public void setLastName(String lastName) {
-			this.lastName = lastName;
-		}
+	public String getVenueName() {
+		return venueName;
 	}
+
+	public void setVenueName(String venueName) {
+		this.venueName = venueName;
+	}
+
+	public String getVenueWebsite() {
+		return venueWebsite;
+	}
+
+	public void setVenueWebsite(String venueWebsite) {
+		this.venueWebsite = venueWebsite;
+	}
+
 }

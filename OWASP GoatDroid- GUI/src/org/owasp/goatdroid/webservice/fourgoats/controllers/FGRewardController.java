@@ -15,16 +15,21 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
-import org.springframework.web.bind.annotation.RequestParam;
+import javax.servlet.http.HttpServletRequest;
+
+import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.RewardFieldModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.RewardModel;
+import org.owasp.goatdroid.webservice.fourgoats.services.FGRewardServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.model.RewardModel;
-import org.owasp.goatdroid.webservice.fourgoats.services.FGRewardServiceImpl;
 
 @Controller
 @RequestMapping(value = "fourgoats/api/v1/priv/rewards", produces = "application/json")
@@ -33,48 +38,50 @@ public class FGRewardController {
 	@Autowired
 	FGRewardServiceImpl rewardService;
 
-	@RequestMapping(value = "all_rewards", method = RequestMethod.GET)
+	@RequestMapping(value = "all-rewards", method = RequestMethod.GET)
 	@ResponseBody
-	public RewardModel getRewards(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
+	public BaseModel getRewards(HttpServletRequest request) {
 		try {
-			return rewardService.getAllRewards(sessionToken);
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
+			return rewardService.getAllRewards(authHeader.getAuthToken());
 		} catch (NullPointerException e) {
-			RewardModel bean = new RewardModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new RewardModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 
-	@RequestMapping(value = "my_rewards", method = RequestMethod.GET)
+	@RequestMapping(value = "my-rewards", method = RequestMethod.GET)
 	@ResponseBody
-	public RewardModel getMyEarnedRewards(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken) {
+	public BaseModel getMyEarnedRewards(HttpServletRequest request) {
 		try {
-			return rewardService.getMyEarnedRewards(sessionToken);
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
+			return rewardService.getMyEarnedRewards(authHeader.getAuthToken());
 		} catch (NullPointerException e) {
-			RewardModel bean = new RewardModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new BaseModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@ResponseBody
-	public RewardModel addNewReward(
-			@RequestHeader(Constants.AUTH_TOKEN_HEADER) String sessionToken,
-			@RequestParam(value = "rewardName", required = true) String rewardName,
-			@RequestParam(value = "rewardDescription", required = true) String rewardDescription,
-			@RequestParam(value = "venueID", required = true) String venueID,
-			@RequestParam(value = "checkinsRequired", required = true) int checkinsRequired) {
+	public BaseModel addNewReward(HttpServletRequest request, Model model,
+			@ModelAttribute("rewardFieldModel") RewardFieldModel reward,
+			BindingResult result) {
 
 		try {
-			return rewardService.addNewReward(sessionToken, rewardName,
-					rewardDescription, venueID, checkinsRequired);
+			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+					.getAttribute("authHeader");
+			return rewardService.addNewReward(authHeader.getAuthToken(),
+					reward.getRewardName(), reward.getRewardDescription(),
+					reward.getVenueID(), reward.getCheckinsRequired());
 		} catch (NullPointerException e) {
-			RewardModel bean = new RewardModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new RewardModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 }

@@ -16,11 +16,29 @@
 package org.owasp.goatdroid.webservice.fourgoats.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class EditPreferencesModel extends BaseModel {
+public class PreferencesModel extends BaseModel {
 
+	boolean autoCheckin;
+	boolean isPublic;
+
+	public boolean isAutoCheckin() {
+		return autoCheckin;
+	}
+
+	public void setAutoCheckin(boolean autoCheckin) {
+		this.autoCheckin = autoCheckin;
+	}
+
+	public boolean isPublic() {
+		return isPublic;
+	}
+
+	public void setPublic(boolean isPublic) {
+		this.isPublic = isPublic;
+	}
 }

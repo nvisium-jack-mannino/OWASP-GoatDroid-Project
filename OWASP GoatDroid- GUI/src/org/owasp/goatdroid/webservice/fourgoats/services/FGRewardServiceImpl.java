@@ -35,35 +35,35 @@ public class FGRewardServiceImpl implements RewardService {
 
 	public RewardModel getAllRewards(String sessionToken) {
 
-		RewardModel bean = new RewardModel();
+		RewardModel reward = new RewardModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			bean.setRewards(dao.getAllRewards());
-			bean.setSuccess(true);
+			reward.setRewards(dao.getAllRewards());
+			reward.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			reward.setErrors(errors);
 		}
-		return bean;
+		return reward;
 	}
 
 	public RewardModel getMyEarnedRewards(String sessionToken) {
 
-		RewardModel bean = new RewardModel();
+		RewardModel reward = new RewardModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
 			String userID = dao.getUserID(sessionToken);
-			bean.setRewards(dao.getEarnedRewards(userID));
-			bean.setSuccess(true);
+			reward.setRewards(dao.getEarnedRewards(userID));
+			reward.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			reward.setErrors(errors);
 		}
-		return bean;
+		return reward;
 	}
 
 	/*
@@ -72,7 +72,7 @@ public class FGRewardServiceImpl implements RewardService {
 	public RewardModel addNewReward(String sessionToken, String rewardName,
 			String rewardDescription, String venueID, int checkinsRequired) {
 
-		RewardModel bean = new RewardModel();
+		RewardModel reward = new RewardModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -93,8 +93,8 @@ public class FGRewardServiceImpl implements RewardService {
 								Salts.REWARD_ID_GENERATOR_SALT);
 						dao.addNewReward(rewardID, rewardName,
 								rewardDescription, venueID, checkinsRequired);
-						bean.setRewardID(rewardID);
-						bean.setSuccess(true);
+						reward.setRewardID(rewardID);
+						reward.setSuccess(true);
 					} else {
 						errors.add(Constants.VENUE_DOESNT_EXIST);
 					}
@@ -105,8 +105,8 @@ public class FGRewardServiceImpl implements RewardService {
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			reward.setErrors(errors);
 		}
-		return bean;
+		return reward;
 	}
 }

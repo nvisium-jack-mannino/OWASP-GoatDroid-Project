@@ -16,13 +16,14 @@
 package org.owasp.goatdroid.webservice.fourgoats.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.annotation.Resource;
 
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGEditPreferencesDaoImpl;
-import org.owasp.goatdroid.webservice.fourgoats.model.EditPreferencesModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.GetPreferencesModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.PreferencesModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,40 +32,42 @@ public class FGEditPreferencesServiceImpl implements EditPreferencesService {
 	@Resource
 	FGEditPreferencesDaoImpl dao;
 
-	public EditPreferencesModel modifyPreferences(String sessionToken,
+	public BaseModel modifyPreferences(String sessionToken,
 			boolean autoCheckin, boolean isPublic) {
 
-		EditPreferencesModel bean = new EditPreferencesModel();
+		PreferencesModel preferences = new PreferencesModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
 			String userID = dao.getUserID(sessionToken);
 			dao.updatePreferences(autoCheckin, isPublic, userID);
-			bean.setSuccess(true);
-			return bean;
+			preferences.setSuccess(true);
+			return preferences;
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			preferences.setErrors(errors);
 		}
-		return bean;
+		return preferences;
 	}
 
-	public GetPreferencesModel getPreferences(String sessionToken) {
+	public BaseModel getPreferences(String sessionToken) {
 
-		GetPreferencesModel bean = new GetPreferencesModel();
+		PreferencesModel preferences = new PreferencesModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
 			String userID = dao.getUserID(sessionToken);
-			bean.setPreferences(dao.getPreferences(userID));
-			bean.setSuccess(true);
-			return bean;
+			HashMap<String, Boolean> preferenceMap = dao.getPreferences(userID);
+			preferences.setAutoCheckin(preferenceMap.get("autoCheckin"));
+			preferences.setPublic(preferenceMap.get("isPublic"));
+			preferences.setSuccess(true);
+			return preferences;
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
 		} finally {
-			bean.setErrors(errors);
+			preferences.setErrors(errors);
 		}
-		return bean;
+		return preferences;
 	}
 }

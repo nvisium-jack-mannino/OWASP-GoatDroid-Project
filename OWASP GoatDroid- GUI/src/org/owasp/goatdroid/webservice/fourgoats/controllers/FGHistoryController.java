@@ -18,6 +18,7 @@ package org.owasp.goatdroid.webservice.fourgoats.controllers;
 import javax.servlet.http.HttpServletRequest;
 
 import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
 import org.owasp.goatdroid.webservice.fourgoats.model.HistoryModel;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGHistoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,28 +37,28 @@ public class FGHistoryController {
 
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	@ResponseBody
-	public HistoryModel getHistory(HttpServletRequest request) {
+	public BaseModel getHistory(HttpServletRequest request) {
 		try {
 			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
 					.getAttribute("authHeader");
 			return historyService.getHistory(authHeader.getAuthToken());
 		} catch (NullPointerException e) {
-			HistoryModel bean = new HistoryModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new HistoryModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 
 	@RequestMapping(value = "get-user-history/{userName}", method = RequestMethod.GET)
 	@ResponseBody
-	public HistoryModel getHistory(HttpServletRequest request,
+	public BaseModel getHistory(HttpServletRequest request,
 			@PathVariable(value = "userName") String userName) {
 		try {
 			return historyService.getUserHistory(userName);
 		} catch (NullPointerException e) {
-			HistoryModel bean = new HistoryModel();
-			bean.setSuccess(false);
-			return bean;
+			BaseModel base = new HistoryModel();
+			base.setSuccess(false);
+			return base;
 		}
 	}
 }

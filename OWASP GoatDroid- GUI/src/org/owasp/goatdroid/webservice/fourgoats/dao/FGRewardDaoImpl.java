@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import org.owasp.goatdroid.webservice.fourgoats.model._RewardModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.RewardFieldModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -33,21 +33,20 @@ public class FGRewardDaoImpl extends BaseDaoImpl implements RewardDao {
 		setDataSource(dataSource);
 	}
 
-	public ArrayList<_RewardModel> getAllRewards() throws SQLException {
+	public ArrayList<RewardFieldModel> getAllRewards() throws SQLException {
 
 		String sql = "SELECT app.fg_rewards.rewardName, app.fg_rewards.rewardDescription, "
 				+ "app.fg_venues.venueName, app.fg_rewards.checkinsRequired, app.fg_venues.latitude, "
 				+ "app.fg_venues.longitude FROM app.fg_rewards INNER JOIN app.fg_venues ON app.fg_rewards.venueID = "
 				+ "app.fg_venues.venueID";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql);
-		ArrayList<_RewardModel> rewards = new ArrayList<_RewardModel>();
+		ArrayList<RewardFieldModel> rewards = new ArrayList<RewardFieldModel>();
 		while (rs.next()) {
-			_RewardModel reward = new _RewardModel();
+			RewardFieldModel reward = new RewardFieldModel();
 			reward.setRewardName(rs.getString("rewardName"));
 			reward.setRewardDescription(rs.getString("rewardDescription"));
-			reward.setVenueName(rs.getString("venueName"));
-			reward.setCheckinsRequired(Integer.toString(rs
-					.getInt("checkinsRequired")));
+			reward.setVenueID(rs.getString("venueName"));
+			reward.setCheckinsRequired(rs.getInt("checkinsRequired"));
 			reward.setLatitude(rs.getString("latitude"));
 			reward.setLongitude(rs.getString("longitude"));
 			rewards.add(reward);
@@ -55,17 +54,17 @@ public class FGRewardDaoImpl extends BaseDaoImpl implements RewardDao {
 		return rewards;
 	}
 
-	public ArrayList<_RewardModel> getEarnedRewards(String userID)
+	public ArrayList<RewardFieldModel> getEarnedRewards(String userID)
 			throws SQLException {
 
 		String sql = "SLEECT app.fg_rewards.rewardName, app.fg_rewards.rewardDescription, app.fg_earned_rewards.timeEarned "
 				+ "FROM app.fg_earned_rewards INNER JOIN app.fg_rewards ON app.fg_rewards.rewardID = app.fg_earned_rewards.rewardID "
 				+ "WHERE app.fg_earned_rewards.userID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
-		ArrayList<_RewardModel> rewards = new ArrayList<_RewardModel>();
+		ArrayList<RewardFieldModel> rewards = new ArrayList<RewardFieldModel>();
 
 		while (rs.next()) {
-			_RewardModel reward = new _RewardModel();
+			RewardFieldModel reward = new RewardFieldModel();
 			reward.setRewardName(rs.getString("rewardName"));
 			reward.setRewardDescription(rs.getString("rewardDescription"));
 			reward.setTimeEarned(rs.getString("timeEarned"));

@@ -15,12 +15,12 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.model;
 
-public class _RewardModel {
+public class RewardFieldModel {
 
 	String rewardName;
 	String rewardDescription;
-	String venueName;
-	String checkinsRequired;
+	String venueID;
+	int checkinsRequired;
 	String latitude;
 	String longitude;
 	String timeEarned;
@@ -41,19 +41,19 @@ public class _RewardModel {
 		this.rewardDescription = rewardDescription;
 	}
 
-	public String getVenueName() {
-		return venueName;
+	public String getVenueID() {
+		return venueID;
 	}
 
-	public void setVenueName(String venueName) {
-		this.venueName = venueName;
+	public void setVenueID(String venueID) {
+		this.venueID = venueID;
 	}
 
-	public String getCheckinsRequired() {
+	public int getCheckinsRequired() {
 		return checkinsRequired;
 	}
 
-	public void setCheckinsRequired(String checkinsRequired) {
+	public void setCheckinsRequired(int checkinsRequired) {
 		this.checkinsRequired = checkinsRequired;
 	}
 
