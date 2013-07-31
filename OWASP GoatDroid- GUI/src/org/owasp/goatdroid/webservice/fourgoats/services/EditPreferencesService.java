@@ -4,8 +4,8 @@ import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
 
 public interface EditPreferencesService {
 
-	public BaseModel modifyPreferences(String sessionToken,
+	public BaseModel modifyPreferences(String authToken,
 			boolean autoCheckin, boolean isPublic);
 
-	public BaseModel getPreferences(String sessionToken);
+	public BaseModel getPreferences(String authToken);
 }

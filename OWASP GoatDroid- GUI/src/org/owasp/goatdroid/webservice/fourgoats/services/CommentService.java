@@ -5,10 +5,10 @@ import org.owasp.goatdroid.webservice.fourgoats.model.CommentListModel;
 
 public interface CommentService {
 
-	public CommentModel addComment(String sessionToken, String comment,
+	public CommentModel addComment(String authToken, String comment,
 			String checkinID);
 
-	public CommentModel removeComment(String sessionToken, String commentID);
+	public CommentModel removeComment(String authToken, String commentID);
 
-	public CommentListModel getComments(String sessionToken, String checkinID);
+	public CommentListModel getComments(String authToken, String checkinID);
 }

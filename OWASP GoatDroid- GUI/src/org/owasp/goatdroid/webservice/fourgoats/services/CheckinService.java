@@ -4,6 +4,6 @@ import org.owasp.goatdroid.webservice.fourgoats.model.CheckinModel;
 
 public interface CheckinService {
 
-	public CheckinModel doCheckin(String sessionToken, String latitude,
+	public CheckinModel doCheckin(String authToken, String latitude,
 			String longitude);
 }

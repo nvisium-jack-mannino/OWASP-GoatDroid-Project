@@ -23,12 +23,7 @@ public class Constants {
 	public static final String DB_CONNECTION_STRING = "jdbc:derby:"
 			+ Utils.getCurrentPath() + "dbs/fourgoats";
 
-	public static final long SESSION_LIFETIME = 2419200000L; // 2,419,200,000
-																// =
-																// milliseconds
-																// per 28 days
 	public static final String AUTH_TOKEN_HEADER = "Authorization";
-	public static final String INVALID_SESSION = "Invalid session";
 	public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	public static final String FIRST_NAME_INVALID = "First name can only contain letters and must be less than 20 characters";
 	public static final String LAST_NAME_INVALID = "Last name can only contain letters and must be less than 20 characters";

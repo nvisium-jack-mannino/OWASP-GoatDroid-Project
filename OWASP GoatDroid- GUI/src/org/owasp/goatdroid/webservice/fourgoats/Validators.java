@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 
 public class Validators {
 
-	public static final String SESSION_TOKEN_FORMAT = "^[a-zA-Z0-9]{128}$";
+	public static final String AUTH_TOKEN_FORMAT = "^[a-zA-Z0-9]{128}$";
 	public static final String ID_FORMAT = "^[a-zA-Z0-9]{64}$";
 	public static final String LAT_LONG_FORMAT = "\\d{1,3}.\\d{5,20}";
 	public static final String LAT_LONG_FORMAT_WITH_NEGATIVE = "-\\d{1,3}.\\d{5,20}";
@@ -38,8 +38,8 @@ public class Validators {
 		return matcher.matches();
 	}
 
-	static public boolean validateSessionTokenFormat(String sessionToken) {
-		return isFormatValid(sessionToken, SESSION_TOKEN_FORMAT);
+	static public boolean validateauthTokenFormat(String authToken) {
+		return isFormatValid(authToken, AUTH_TOKEN_FORMAT);
 	}
 
 	static public boolean validateIDFormat(String id) {

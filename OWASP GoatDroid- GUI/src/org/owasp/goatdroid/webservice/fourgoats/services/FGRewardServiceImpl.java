@@ -33,7 +33,7 @@ public class FGRewardServiceImpl implements RewardService {
 	@Resource
 	FGRewardDaoImpl dao;
 
-	public RewardModel getAllRewards(String sessionToken) {
+	public RewardModel getAllRewards(String authToken) {
 
 		RewardModel reward = new RewardModel();
 		ArrayList<String> errors = new ArrayList<String>();
@@ -49,13 +49,13 @@ public class FGRewardServiceImpl implements RewardService {
 		return reward;
 	}
 
-	public RewardModel getMyEarnedRewards(String sessionToken) {
+	public RewardModel getMyEarnedRewards(String authToken) {
 
 		RewardModel reward = new RewardModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			String userID = dao.getUserID(sessionToken);
+			String userID = dao.getUserID(authToken);
 			reward.setRewards(dao.getEarnedRewards(userID));
 			reward.setSuccess(true);
 		} catch (Exception e) {
@@ -69,7 +69,7 @@ public class FGRewardServiceImpl implements RewardService {
 	/*
 	 * This feature is only available to administrative users
 	 */
-	public RewardModel addNewReward(String sessionToken, String rewardName,
+	public RewardModel addNewReward(String authToken, String rewardName,
 			String rewardDescription, String venueID, int checkinsRequired) {
 
 		RewardModel reward = new RewardModel();
@@ -83,12 +83,12 @@ public class FGRewardServiceImpl implements RewardService {
 				errors.add(Constants.UNEXPECTED_ERROR);
 
 			if (errors.size() == 0) {
-				String userID = dao.getUserID(sessionToken);
+				String userID = dao.getUserID(authToken);
 				// check for admin rights
 				if (dao.isAdmin(userID)) {
 					if (dao.doesVenueExist(venueID)) {
 						String rewardID = LoginUtils.generateSaltedSHA256Hash(
-								venueID + rewardName + sessionToken
+								venueID + rewardName + authToken
 										+ LoginUtils.getTimeMilliseconds(),
 								Salts.REWARD_ID_GENERATOR_SALT);
 						dao.addNewReward(rewardID, rewardName,

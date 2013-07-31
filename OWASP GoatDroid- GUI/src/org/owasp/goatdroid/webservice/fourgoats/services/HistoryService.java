@@ -5,7 +5,7 @@ import org.owasp.goatdroid.webservice.fourgoats.model.HistoryCheckinModel;
 
 public interface HistoryService {
 
-	public HistoryModel getHistory(String sessionToken);
+	public HistoryModel getHistory(String authToken);
 
 	public HistoryModel getUserHistory(String userName);
 }

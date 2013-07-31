@@ -32,14 +32,14 @@ public class FGEditPreferencesServiceImpl implements EditPreferencesService {
 	@Resource
 	FGEditPreferencesDaoImpl dao;
 
-	public BaseModel modifyPreferences(String sessionToken,
+	public BaseModel modifyPreferences(String authToken,
 			boolean autoCheckin, boolean isPublic) {
 
 		PreferencesModel preferences = new PreferencesModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			String userID = dao.getUserID(sessionToken);
+			String userID = dao.getUserID(authToken);
 			dao.updatePreferences(autoCheckin, isPublic, userID);
 			preferences.setSuccess(true);
 			return preferences;
@@ -51,13 +51,13 @@ public class FGEditPreferencesServiceImpl implements EditPreferencesService {
 		return preferences;
 	}
 
-	public BaseModel getPreferences(String sessionToken) {
+	public BaseModel getPreferences(String authToken) {
 
 		PreferencesModel preferences = new PreferencesModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			String userID = dao.getUserID(sessionToken);
+			String userID = dao.getUserID(authToken);
 			HashMap<String, Boolean> preferenceMap = dao.getPreferences(userID);
 			preferences.setAutoCheckin(preferenceMap.get("autoCheckin"));
 			preferences.setPublic(preferenceMap.get("isPublic"));

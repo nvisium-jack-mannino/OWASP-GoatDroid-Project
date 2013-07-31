@@ -50,12 +50,10 @@ public class FGLoginDaoImpl extends BaseDaoImpl implements LoginDao {
 		}
 	}
 
-	public void updateAuthInformation(String userName, String authToken,
-			long sessionStartTime) {
+	public void updateAuthInformation(String userName, String authToken) {
 
-		String sql = "UPDATE app.fg_users SET authToken = ?, sessionStartTime = ? WHERE userName = ?";
-		getJdbcTemplate().update(sql,
-				new Object[] { authToken, sessionStartTime, userName });
+		String sql = "UPDATE app.fg_users SET authToken = ? WHERE userName = ?";
+		getJdbcTemplate().update(sql, new Object[] { authToken, userName });
 	}
 
 	public HashMap<String, Boolean> getPreferences(String userName) {

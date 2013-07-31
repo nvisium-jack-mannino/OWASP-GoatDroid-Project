@@ -48,8 +48,8 @@ public class FGLoginServiceImpl implements LoginService {
 							+ LoginUtils.getCurrentDateTime();
 
 					String authToken = LoginUtils.generateSaltedSHA512Hash(
-							userNameAndTime, Salts.SESSION_TOKEN_SALT);
-					dao.updateAuthInformation(userName, authToken, 0);
+							userNameAndTime, Salts.AUTH_TOKEN_SALT);
+					dao.updateAuthInformation(userName, authToken);
 					login.setPreferences(dao.getPreferences(userName));
 					login.setUsername(userName);
 					login.setAuthToken(authToken);
@@ -84,10 +84,10 @@ public class FGLoginServiceImpl implements LoginService {
 					if (dao.getAuthToken(userName).isEmpty()) {
 						String userNameAndTime = userName
 								+ LoginUtils.getCurrentDateTime();
-						String sessionToken = LoginUtils
+						String authToken = LoginUtils
 								.generateSaltedSHA512Hash(userNameAndTime,
-										Salts.SESSION_TOKEN_SALT);
-						login.setAuthToken(sessionToken);
+										Salts.AUTH_TOKEN_SALT);
+						login.setAuthToken(authToken);
 					} else
 						login.setAuthToken(dao.getAuthToken(userName));
 					login.setSuccess(true);

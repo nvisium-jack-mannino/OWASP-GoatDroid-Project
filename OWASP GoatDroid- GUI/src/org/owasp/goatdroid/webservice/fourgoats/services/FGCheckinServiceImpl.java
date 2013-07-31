@@ -33,7 +33,7 @@ public class FGCheckinServiceImpl implements CheckinService {
 	@Resource
 	FGCheckinDaoImpl dao;
 
-	public CheckinModel doCheckin(String sessionToken, String latitude,
+	public CheckinModel doCheckin(String authToken, String latitude,
 			String longitude) {
 
 		CheckinModel checkin = new CheckinModel();
@@ -46,7 +46,7 @@ public class FGCheckinServiceImpl implements CheckinService {
 
 			if (errors.size() == 0) {
 				if (dao.doesVenueExist(latitude, longitude)) {
-					String userID = dao.getUserID(sessionToken);
+					String userID = dao.getUserID(authToken);
 					// this creates a unique checkin identifier
 					String checkinID = LoginUtils
 							.generateSaltedSHA256Hash(

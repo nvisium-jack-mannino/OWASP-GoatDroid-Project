@@ -8,22 +8,22 @@ import org.owasp.goatdroid.webservice.fourgoats.model.PublicUsersModel;
 
 public interface FriendService {
 
-	public FriendListModel getFriends(String sessionToken);
+	public FriendListModel getFriends(String authToken);
 
-	public FriendModel requestFriend(String sessionToken,
+	public FriendModel requestFriend(String authToken,
 				String friendUserName);
 
 	public FriendModel acceptOrDenyFriendRequest(String action,
-				String sessionToken, String userName);
+				String authToken, String userName);
 
-	public FriendModel removeFriend(String sessionToken,
+	public FriendModel removeFriend(String authToken,
 				String friendUserName);
 
-	public FriendProfileModel getProfile(String sessionToken,
+	public FriendProfileModel getProfile(String authToken,
 				String friendUserName);
 
 	public PendingFriendRequestsModel getPendingFriendRequests(
-				String sessionToken);
+				String authToken);
 
-	public PublicUsersModel getPublicUsers(String sessionToken);
+	public PublicUsersModel getPublicUsers(String authToken);
 }

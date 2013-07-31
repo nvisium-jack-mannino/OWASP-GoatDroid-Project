@@ -23,7 +23,7 @@ public class Salts {
 	public static final String REWARD_ID_GENERATOR_SALT = "bikm8H#8ghy6w6@uuyaty7fastgoijrgja*($8hJackManninoRulesiNMfR8x0@808f24F";
 	public static final String COMMENT_ID_GENERATOR_SALT = "e8$#9glD0RoE0inmweoifmeifj987ehfu9N$(UN(U$#NFU(RNiubfnvuybsyufbWYb";
 	public static final String PASSWORD_HASH_SALT = "ofmioermfir8h89h#*HnbudgijAYUBkgoi(*H(&hubjasg8GAgg3r8hUEFununQUEFuib";
-	public static final String SESSION_TOKEN_SALT = "ei393in4inoirnfojernfijenrgi*HF(HNU$#hWYgo;JU(89jnuhubGUNJ,lo9837398k";
+	public static final String AUTH_TOKEN_SALT = "ei393in4inoirnfojernfijenrgi*HF(HNU$#hWYgo;JU(89jnuhubGUNJ,lo9837398k";
 	public static final String FRIEND_REQUEST_ID_GENERATOR_SALT = "wi3ienionginoiFDFWqGengiuerantgiunargej#*#Jfhjaiugoiiofmfoifgm";
 
 }

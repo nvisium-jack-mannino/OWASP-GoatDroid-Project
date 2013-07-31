@@ -33,7 +33,7 @@ public class FGAdminServiceImpl implements AdminService {
 	@Resource
 	FGAdminDaoImpl dao;
 
-	public BaseModel deleteUser(String sessionToken, String userName) {
+	public BaseModel deleteUser(String authToken, String userName) {
 
 		BaseModel base = new BaseModel();
 		ArrayList<String> errors = new ArrayList<String>();
@@ -42,7 +42,7 @@ public class FGAdminServiceImpl implements AdminService {
 			/*
 			 * If the user has the admin role then we proceed
 			 */
-			if (dao.isAdmin(sessionToken)) {
+			if (dao.isAdmin(authToken)) {
 				dao.deleteUser(userName);
 				base.setSuccess(true);
 			} else
@@ -55,7 +55,7 @@ public class FGAdminServiceImpl implements AdminService {
 		return base;
 	}
 
-	public BaseModel resetPassword(String sessionToken, String userName,
+	public BaseModel resetPassword(String authToken, String userName,
 			String newPassword) {
 
 		BaseModel base = new BaseModel();
@@ -66,7 +66,7 @@ public class FGAdminServiceImpl implements AdminService {
 			/*
 			 * If the user has the admin role then we proceed
 			 */
-			if (dao.isAdmin(sessionToken)) {
+			if (dao.isAdmin(authToken)) {
 				dao.updatePassword(userName, newPassword);
 				base.setSuccess(true);
 			} else
@@ -79,7 +79,7 @@ public class FGAdminServiceImpl implements AdminService {
 		return base;
 	}
 
-	public GetUsersAdminModel getUsers(String sessionToken) {
+	public GetUsersAdminModel getUsers(String authToken) {
 
 		GetUsersAdminModel model = new GetUsersAdminModel();
 		ArrayList<String> errors = new ArrayList<String>();
@@ -87,7 +87,7 @@ public class FGAdminServiceImpl implements AdminService {
 			/*
 			 * If the user has the admin role then we proceed
 			 */
-			if (dao.isAdmin(sessionToken)) {
+			if (dao.isAdmin(authToken)) {
 				model.setUsers(dao.getUsers());
 				model.setSuccess(true);
 			} else
@@ -100,13 +100,13 @@ public class FGAdminServiceImpl implements AdminService {
 		return model;
 	}
 
-	public BaseModel signOut(String sessionToken) {
+	public BaseModel signOut(String authToken) {
 
 		BaseModel base = new BaseModel();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			dao.terminateAuth(sessionToken);
+			dao.terminateAuth(authToken);
 			base.setSuccess(true);
 		} catch (Exception e) {
 			errors.add(Constants.UNEXPECTED_ERROR);
