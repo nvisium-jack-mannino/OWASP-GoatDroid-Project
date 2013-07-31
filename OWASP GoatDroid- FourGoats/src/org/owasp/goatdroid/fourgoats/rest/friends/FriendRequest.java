@@ -39,7 +39,7 @@ public class FriendRequest {
 			String userName) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/friends/request_friend",
+				+ destinationInfo + "/fourgoats/api/v1/priv/friends/request-friend",
 				sessionToken);
 		client.AddParam("userName", userName);
 		client.Execute(RequestMethod.POST, context);
@@ -51,7 +51,7 @@ public class FriendRequest {
 			String userName) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/friends/view_profile/"
+				+ destinationInfo + "/fourgoats/api/v1/priv/friends/view_profile/"
 				+ userName, sessionToken);
 		client.Execute(RequestMethod.GET, context);
 
@@ -63,7 +63,7 @@ public class FriendRequest {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
-				+ "/fourgoats/api/v1/friends/get_pending_requests",
+				+ "/fourgoats/api/v1/priv/friends/get-pending-requests",
 				sessionToken);
 		client.Execute(RequestMethod.GET, context);
 
@@ -76,7 +76,7 @@ public class FriendRequest {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
-				+ "/fourgoats/api/v1/friends/accept_friend_request",
+				+ "/fourgoats/api/v1/priv/friends/accept-friend-request",
 				sessionToken);
 		client.AddParam("userName", userName);
 		client.Execute(RequestMethod.POST, context);
@@ -89,7 +89,7 @@ public class FriendRequest {
 			String userName) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/friends/remove_friend",
+				+ destinationInfo + "/fourgoats/api/v1/priv/friends/remove-friend",
 				sessionToken);
 		client.AddParam("userName", userName);
 		client.Execute(RequestMethod.POST, context);
@@ -103,7 +103,7 @@ public class FriendRequest {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
-				+ "/fourgoats/api/v1/friends/deny_friend_request", sessionToken);
+				+ "/fourgoats/api/v1/priv/friends/deny-friend-request", sessionToken);
 		client.AddParam("userName", userName);
 		client.Execute(RequestMethod.POST, context);
 
@@ -115,7 +115,7 @@ public class FriendRequest {
 			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/friends/list_friends",
+				+ destinationInfo + "/fourgoats/api/v1/priv/friends/list-friends",
 				sessionToken);
 		client.Execute(RequestMethod.GET, context);
 

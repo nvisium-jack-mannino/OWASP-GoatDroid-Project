@@ -37,7 +37,7 @@ public class LoginRequest {
 	public boolean isSessionValid(String sessionToken) throws Exception {
 
 		RestClient client = new RestClient("https://" + destinationInfo
-				+ "/fourgoats/api/v1/login/check_session");
+				+ "/fourgoats/api/v1/pub/login/check-session");
 		client.AddHeader("Cookie", "SESS=" + sessionToken);
 		client.Execute(RequestMethod.GET, context);
 		return LoginResponse.isSuccess(client.getResponse());
@@ -47,7 +47,7 @@ public class LoginRequest {
 			String password) throws Exception {
 
 		RestClient client = new RestClient("https://" + destinationInfo
-				+ "/fourgoats/api/v1/login/authenticate");
+				+ "/fourgoats/api/v1/pub/login/authenticate");
 		client.AddParam("username", userName);
 		client.AddParam("password", password);
 		client.Execute(RequestMethod.POST, context);
@@ -59,7 +59,7 @@ public class LoginRequest {
 			String password) throws Exception {
 
 		RestClient client = new RestClient("https://" + destinationInfo
-				+ "/fourgoats/api/v1/login/validate_api");
+				+ "/fourgoats/api/v1/pub/login/validate-api");
 		client.AddParam("username", userName);
 		client.AddParam("password", password);
 		client.Execute(RequestMethod.POST, context);
@@ -70,7 +70,7 @@ public class LoginRequest {
 	public HashMap<String, String> logOut(String sessionToken) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/login/sign_out",
+				+ destinationInfo + "/fourgoats/api/v1/pub/login/sign-out",
 				sessionToken);
 		client.Execute(RequestMethod.POST, context);
 

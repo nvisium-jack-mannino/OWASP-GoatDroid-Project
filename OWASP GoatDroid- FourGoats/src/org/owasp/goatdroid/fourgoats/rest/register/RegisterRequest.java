@@ -37,7 +37,7 @@ public class RegisterRequest {
 			String lastName, String userName, String password) throws Exception {
 
 		RestClient client = new RestClient("https://" + destinationInfo
-				+ "/fourgoats/api/v1/register");
+				+ "/fourgoats/api/v1/pub/register");
 		client.AddParam("firstName", firstName);
 		client.AddParam("lastName", lastName);
 		client.AddParam("userName", userName);

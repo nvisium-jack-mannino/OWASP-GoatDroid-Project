@@ -37,7 +37,7 @@ public class CommentsRequest {
 			String checkinID) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/comments/get",
+				+ destinationInfo + "/fourgoats/api/v1/priv/comments/get",
 				sessionToken);
 		client.AddParam("checkinID", checkinID);
 		client.Execute(RequestMethod.GET, context);
@@ -49,7 +49,7 @@ public class CommentsRequest {
 			String comment, String checkinID) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/comments/add",
+				+ destinationInfo + "/fourgoats/api/v1/priv/comments/add",
 				sessionToken);
 		client.AddParam("comment", comment);
 		client.AddParam("checkinID", checkinID);
@@ -62,7 +62,7 @@ public class CommentsRequest {
 			String commentID) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/comments/remove",
+				+ destinationInfo + "/fourgoats/api/v1/priv/comments/remove",
 				sessionToken);
 		client.AddParam("commentID", commentID);
 		client.Execute(RequestMethod.POST, context);

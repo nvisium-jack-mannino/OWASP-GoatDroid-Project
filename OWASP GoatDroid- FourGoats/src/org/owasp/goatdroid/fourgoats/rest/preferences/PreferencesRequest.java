@@ -38,7 +38,7 @@ public class PreferencesRequest {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
-				+ "/fourgoats/api/v1/preferences/modify_preferences",
+				+ "/fourgoats/api/v1/priv/preferences/modify-preferences",
 				sessionToken);
 
 		client.AddParam("isPublic", isPublic);

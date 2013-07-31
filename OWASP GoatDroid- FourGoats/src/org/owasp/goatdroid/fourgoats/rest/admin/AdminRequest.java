@@ -38,7 +38,7 @@ public class AdminRequest {
 			String userName) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/admin/delete_user",
+				+ destinationInfo + "/fourgoats/api/v1/priv/admin/delete_user",
 				sessionToken);
 		client.AddParam("userName", userName);
 		client.Execute(RequestMethod.POST, context);
@@ -50,8 +50,8 @@ public class AdminRequest {
 			String userName, String newPassword) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/admin/reset_password",
-				sessionToken);
+				+ destinationInfo
+				+ "/fourgoats/api/v1/priv/admin/reset-password", sessionToken);
 		client.AddParam("userName", userName);
 		client.AddParam("newPassword", newPassword);
 		client.Execute(RequestMethod.POST, context);
@@ -63,7 +63,7 @@ public class AdminRequest {
 			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/admin/get_users",
+				+ destinationInfo + "/fourgoats/api/v1/priv/admin/get_users",
 				sessionToken);
 		client.Execute(RequestMethod.GET, context);
 

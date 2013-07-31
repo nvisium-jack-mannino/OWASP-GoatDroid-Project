@@ -38,7 +38,7 @@ public class ViewCheckinRequest {
 			String checkinID) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/comments/get/"
+				+ destinationInfo + "/fourgoats/api/v1/priv/comments/get/"
 				+ checkinID, sessionToken);
 		// client.AddParam("checkinID", checkinID);
 		client.Execute(RequestMethod.GET, context);
