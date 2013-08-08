@@ -17,10 +17,10 @@ package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeader;
 import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.GetPreferencesModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.PreferencesModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.GetPreferences;
+import org.owasp.goatdroid.webservice.fourgoats.model.Preferences;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGEditPreferencesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,18 +43,18 @@ public class FGEditPreferencesController {
 	public BaseModel modifyPreferences(
 			HttpServletRequest request,
 			Model model,
-			@ModelAttribute("editPreferencesModel") PreferencesModel editPreferencesModel,
+			@ModelAttribute("editPreferencesModel") Preferences editPreferencesModel,
 			BindingResult result) {
 
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return editPreferencesService.modifyPreferences(
 					authHeader.getAuthToken(),
 					editPreferencesModel.isAutoCheckin(),
 					editPreferencesModel.isPublic());
 		} catch (NullPointerException e) {
-			BaseModel base = new PreferencesModel();
+			BaseModel base = new Preferences();
 			base.setSuccess(false);
 			return base;
 		}
@@ -64,12 +64,12 @@ public class FGEditPreferencesController {
 	@ResponseBody
 	public BaseModel getPreferences(HttpServletRequest request) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return editPreferencesService.getPreferences(authHeader
 					.getAuthToken());
 		} catch (NullPointerException e) {
-			BaseModel base = new GetPreferencesModel();
+			BaseModel base = new GetPreferences();
 			base.setSuccess(false);
 			return base;
 		}

@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
-import org.owasp.goatdroid.webservice.fourgoats.model.UserModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -61,13 +61,13 @@ public class FGAdminDaoImpl extends BaseDaoImpl implements AdminDao {
 								Salts.PASSWORD_HASH_SALT), userName });
 	}
 
-	public ArrayList<UserModel> getUsers() throws Exception {
+	public ArrayList<User> getUsers() throws Exception {
 
 		String sql = "SELECT userName, firstName, lastName FROM app.fg_users";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql);
-		ArrayList<UserModel> users = new ArrayList<UserModel>();
+		ArrayList<User> users = new ArrayList<User>();
 		while (rs.next()) {
-			UserModel user = new UserModel();
+			User user = new User();
 			user.setUserName(rs.getString("userName"));
 			user.setFirstName(rs.getString("firstName"));
 			user.setLastName(rs.getString("lastName"));

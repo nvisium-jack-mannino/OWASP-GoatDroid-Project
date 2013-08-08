@@ -1,11 +1,11 @@
 package org.owasp.goatdroid.webservice.fourgoats.services;
 
-import org.owasp.goatdroid.webservice.fourgoats.model.HistoryModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.HistoryCheckinModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.History;
+import org.owasp.goatdroid.webservice.fourgoats.model.HistoryCheckin;
 
 public interface HistoryService {
 
-	public HistoryModel getHistory(String authToken);
+	public History getHistory(String authToken);
 
-	public HistoryModel getUserHistory(String userName);
+	public History getUserHistory(String userName);
 }

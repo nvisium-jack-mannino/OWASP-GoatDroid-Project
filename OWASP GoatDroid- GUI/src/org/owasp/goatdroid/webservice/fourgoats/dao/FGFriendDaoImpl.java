@@ -23,8 +23,8 @@ import javax.sql.DataSource;
 
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
-import org.owasp.goatdroid.webservice.fourgoats.model.FriendRequestModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.UserModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.FriendRequest;
+import org.owasp.goatdroid.webservice.fourgoats.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -37,7 +37,7 @@ public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
 		setDataSource(dataSource);
 	}
 
-	public ArrayList<UserModel> getFriends(String userID, String userName)
+	public ArrayList<User> getFriends(String userID, String userName)
 			throws SQLException {
 
 		String sql = "SELECT app.fg_friends.userID, app.fg_users.userName, app.fg_friends.friendUserID, app.fg_users.firstName, "
@@ -45,14 +45,14 @@ public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
 				+ "app.fg_users.userID = app.fg_friends.friendUserID WHERE app.fg_friends.friendUserId = ? OR app.fg_friends.userID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql,
 				new Object[] { userID, userID });
-		ArrayList<UserModel> friends = new ArrayList<UserModel>();
+		ArrayList<User> friends = new ArrayList<User>();
 		while (rs.next()) {
 			/*
 			 * we check to make sure that we aren't referring to ourselves as
 			 * friends if the retrieved ID doesn't match the target account
 			 */
 			if (!rs.getString("userName").equals(userName)) {
-				UserModel friend = new UserModel();
+				User friend = new User();
 				friend.setUserID(rs.getString("userID"));
 				friend.setUserName(rs.getString("userName"));
 				friend.setFirstName(rs.getString("firstName"));
@@ -108,7 +108,7 @@ public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
 
 	}
 
-	public ArrayList<FriendRequestModel> getPendingFriendRequests(String userID)
+	public ArrayList<FriendRequest> getPendingFriendRequests(String userID)
 			throws SQLException {
 
 		String sql = "SELECT app.fg_friendrequests.requestID, app.fg_users.userName, "
@@ -116,9 +116,9 @@ public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
 				+ "app.fg_friendrequests INNER JOIN app.fg_users ON app.fg_users.userID = app.fg_friendrequests.fromUserID "
 				+ "WHERE app.fg_friendrequests.toUserID = ? ";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
-		ArrayList<FriendRequestModel> requests = new ArrayList<FriendRequestModel>();
+		ArrayList<FriendRequest> requests = new ArrayList<FriendRequest>();
 		while (rs.next()) {
-			FriendRequestModel request = new FriendRequestModel();
+			FriendRequest request = new FriendRequest();
 			request.setRequestID(rs.getString("requestID"));
 			request.setUserName(rs.getString("userName"));
 			request.setFirstName(rs.getString("firstName"));
@@ -128,16 +128,16 @@ public class FGFriendDaoImpl extends BaseDaoImpl implements FriendDao {
 		return requests;
 	}
 
-	public ArrayList<UserModel> getPublicUsers(String userName)
+	public ArrayList<User> getPublicUsers(String userName)
 			throws SQLException {
 
 		String sql = "SELECT userID, userName, firstName, lastName fFROM app.fg_users WHERE isPublic = true";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql);
-		ArrayList<UserModel> users = new ArrayList<UserModel>();
+		ArrayList<User> users = new ArrayList<User>();
 		while (rs.next()) {
 			// checks to make sure we aren't returning ourselves
 			if (!(rs.getString("userName").equals(userName))) {
-				UserModel user = new UserModel();
+				User user = new User();
 				user.setUserID(rs.getString("userID"));
 				user.setUserName(rs.getString("userName"));
 				user.setFirstName(rs.getString("firstName"));

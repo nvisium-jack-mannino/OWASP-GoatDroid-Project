@@ -1,7 +1,7 @@
 package org.owasp.goatdroid.webservice.fourgoats.services;
 
 import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.GetUsersAdminModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.GetUsersAdmin;
 
 public interface AdminService {
 
@@ -10,7 +10,7 @@ public interface AdminService {
 	public BaseModel resetPassword(String authToken, String userName,
 			String newPassword);
 
-	public GetUsersAdminModel getUsers(String authToken);
+	public GetUsersAdmin getUsers(String authToken);
 
 	public BaseModel signOut(String authToken);
 }

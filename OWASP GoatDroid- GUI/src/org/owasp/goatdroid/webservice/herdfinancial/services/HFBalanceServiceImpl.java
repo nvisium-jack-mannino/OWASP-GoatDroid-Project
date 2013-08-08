@@ -23,7 +23,7 @@ import javax.annotation.Resource;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFBalanceDaoImpl;
-import org.owasp.goatdroid.webservice.herdfinancial.model.BalanceModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.Balance;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,9 +35,9 @@ public class HFBalanceServiceImpl implements BalanceService {
 	/*
 	 * It would suck if we could see everyone's balances.....
 	 */
-	public BalanceModel getBalances(String accountNumber, String authToken) {
+	public Balance getBalances(String accountNumber, String authToken) {
 
-		BalanceModel balance = new BalanceModel();
+		Balance balance = new Balance();
 		ArrayList<String> errors = new ArrayList<String>();
 		if (!Validators.validateAccountNumber(accountNumber))
 			errors.add(Constants.INVALID_ACCOUNT_NUMBER);

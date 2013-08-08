@@ -17,7 +17,7 @@ package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.owasp.goatdroid.webservice.herdfinancial.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.AuthorizationHeader;
 import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFSecretQuestionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class HFSecretQuestionController {
 			@RequestParam(value = "answer2", required = true) String answer2,
 			@RequestParam(value = "answer3", required = true) String answer3) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return secretQuestionService.setSecretQuestions(
 					authHeader.getAuthToken(), answer1, answer2, answer3);

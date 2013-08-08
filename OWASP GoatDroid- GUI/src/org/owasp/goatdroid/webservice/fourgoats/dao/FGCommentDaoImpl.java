@@ -21,7 +21,7 @@ import java.util.HashMap;
 
 import javax.sql.DataSource;
 
-import org.owasp.goatdroid.webservice.fourgoats.model.CommentFieldModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.CommentField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -51,15 +51,15 @@ public class FGCommentDaoImpl extends BaseDaoImpl implements CommentDao {
 		getJdbcTemplate().update(sql, commentID);
 	}
 
-	public ArrayList<CommentFieldModel> selectComments(String checkinID) {
+	public ArrayList<CommentField> selectComments(String checkinID) {
 
 		String sql = "SELECT app.fg_comments.dateTime, app.fg_comments.commentID, app.fg_comments.userID, app.fg_users.firstName, "
 				+ "app.fg_users.lastName, app.fg_comments.comment FROM app.fg_comments INNER JOIN app.fg_users ON "
 				+ "app.fg_comments.userID = app.fg_users.userID WHERE app.fg_comments.checkinID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, checkinID);
-		ArrayList<CommentFieldModel> commentList = new ArrayList<CommentFieldModel>();
+		ArrayList<CommentField> commentList = new ArrayList<CommentField>();
 		while (rs.next()) {
-			CommentFieldModel comment = new CommentFieldModel();
+			CommentField comment = new CommentField();
 			comment.setDateTime(rs.getString("dateTime"));
 			comment.setCommentID(rs.getString("commentID"));
 			comment.setUserID(rs.getString("userID"));

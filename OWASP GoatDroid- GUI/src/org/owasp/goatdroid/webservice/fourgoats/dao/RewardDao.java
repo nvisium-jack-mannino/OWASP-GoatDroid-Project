@@ -3,13 +3,13 @@ package org.owasp.goatdroid.webservice.fourgoats.dao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.owasp.goatdroid.webservice.fourgoats.model.RewardFieldModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.RewardField;
 
 public interface RewardDao {
 
-	public ArrayList<RewardFieldModel> getAllRewards() throws SQLException;
+	public ArrayList<RewardField> getAllRewards() throws SQLException;
 
-	public ArrayList<RewardFieldModel> getEarnedRewards(String userID)
+	public ArrayList<RewardField> getEarnedRewards(String userID)
 			throws SQLException;
 
 	public void addNewReward(String rewardID, String rewardName,

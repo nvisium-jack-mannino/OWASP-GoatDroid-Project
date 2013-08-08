@@ -17,10 +17,10 @@ package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeader;
 import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.RewardFieldModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.RewardModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.RewardField;
+import org.owasp.goatdroid.webservice.fourgoats.model.Reward;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGRewardServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,11 +42,11 @@ public class FGRewardController {
 	@ResponseBody
 	public BaseModel getRewards(HttpServletRequest request) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return rewardService.getAllRewards(authHeader.getAuthToken());
 		} catch (NullPointerException e) {
-			BaseModel base = new RewardModel();
+			BaseModel base = new Reward();
 			base.setSuccess(false);
 			return base;
 		}
@@ -56,7 +56,7 @@ public class FGRewardController {
 	@ResponseBody
 	public BaseModel getMyEarnedRewards(HttpServletRequest request) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return rewardService.getMyEarnedRewards(authHeader.getAuthToken());
 		} catch (NullPointerException e) {
@@ -69,17 +69,17 @@ public class FGRewardController {
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@ResponseBody
 	public BaseModel addNewReward(HttpServletRequest request, Model model,
-			@ModelAttribute("rewardFieldModel") RewardFieldModel reward,
+			@ModelAttribute("rewardFieldModel") RewardField reward,
 			BindingResult result) {
 
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return rewardService.addNewReward(authHeader.getAuthToken(),
 					reward.getRewardName(), reward.getRewardDescription(),
 					reward.getVenueID(), reward.getCheckinsRequired());
 		} catch (NullPointerException e) {
-			BaseModel base = new RewardModel();
+			BaseModel base = new Reward();
 			base.setSuccess(false);
 			return base;
 		}

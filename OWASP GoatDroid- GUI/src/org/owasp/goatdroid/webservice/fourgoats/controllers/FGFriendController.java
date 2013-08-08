@@ -17,9 +17,9 @@ package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeader;
 import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.CheckinModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.Checkin;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGFriendServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,12 +40,12 @@ public class FGFriendController {
 	@ResponseBody
 	public BaseModel getFriends(HttpServletRequest request) {
 
-		AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+		AuthorizationHeader authHeader = (AuthorizationHeader) request
 				.getAttribute("authHeader");
 		try {
 			return friendService.getFriends(authHeader.getAuthToken());
 		} catch (NullPointerException e) {
-			BaseModel base = new CheckinModel();
+			BaseModel base = new Checkin();
 			base.setSuccess(false);
 			return base;
 		}
@@ -56,13 +56,13 @@ public class FGFriendController {
 	public BaseModel requestFriend(HttpServletRequest request,
 			@RequestParam(value = "userName", required = true) String userName) {
 
-		AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+		AuthorizationHeader authHeader = (AuthorizationHeader) request
 				.getAttribute("authHeader");
 		try {
 			return friendService.requestFriend(authHeader.getAuthToken(),
 					userName);
 		} catch (NullPointerException e) {
-			BaseModel base = new CheckinModel();
+			BaseModel base = new Checkin();
 			base.setSuccess(false);
 			return base;
 		}
@@ -73,13 +73,13 @@ public class FGFriendController {
 	@ResponseBody
 	public BaseModel acceptFriendRequest(HttpServletRequest request,
 			@RequestParam(value = "userName", required = true) String userName) {
-		AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+		AuthorizationHeader authHeader = (AuthorizationHeader) request
 				.getAttribute("authHeader");
 		try {
 			return friendService.acceptOrDenyFriendRequest("accept",
 					authHeader.getAuthToken(), userName);
 		} catch (NullPointerException e) {
-			BaseModel base = new CheckinModel();
+			BaseModel base = new Checkin();
 			base.setSuccess(false);
 			return base;
 		}
@@ -90,13 +90,13 @@ public class FGFriendController {
 	@ResponseBody
 	public BaseModel denyFriendRequest(HttpServletRequest request,
 			@RequestParam(value = "userName", required = true) String userName) {
-		AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+		AuthorizationHeader authHeader = (AuthorizationHeader) request
 				.getAttribute("authHeader");
 		try {
 			return friendService.acceptOrDenyFriendRequest("deny",
 					authHeader.getAuthToken(), userName);
 		} catch (NullPointerException e) {
-			BaseModel base = new CheckinModel();
+			BaseModel base = new Checkin();
 			base.setSuccess(false);
 			return base;
 		}
@@ -107,13 +107,13 @@ public class FGFriendController {
 	@ResponseBody
 	public BaseModel removeFriend(HttpServletRequest request,
 			@RequestParam(value = "userName", required = true) String userName) {
-		AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+		AuthorizationHeader authHeader = (AuthorizationHeader) request
 				.getAttribute("authHeader");
 		try {
 			return friendService.removeFriend(authHeader.getAuthToken(),
 					userName);
 		} catch (NullPointerException e) {
-			BaseModel base = new CheckinModel();
+			BaseModel base = new Checkin();
 			base.setSuccess(false);
 			return base;
 		}
@@ -122,13 +122,13 @@ public class FGFriendController {
 	@RequestMapping(value = "get-pending-requests", method = RequestMethod.GET)
 	@ResponseBody
 	public BaseModel getPendingFriendRequests(HttpServletRequest request) {
-		AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+		AuthorizationHeader authHeader = (AuthorizationHeader) request
 				.getAttribute("authHeader");
 		try {
 			return friendService.getPendingFriendRequests(authHeader
 					.getAuthToken());
 		} catch (NullPointerException e) {
-			BaseModel base = new CheckinModel();
+			BaseModel base = new Checkin();
 			base.setSuccess(false);
 			return base;
 		}
@@ -137,12 +137,12 @@ public class FGFriendController {
 	@RequestMapping(value = "search-users", method = RequestMethod.GET)
 	@ResponseBody
 	public BaseModel getPublicUsers(HttpServletRequest request) {
-		AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+		AuthorizationHeader authHeader = (AuthorizationHeader) request
 				.getAttribute("authHeader");
 		try {
 			return friendService.getPublicUsers(authHeader.getAuthToken());
 		} catch (NullPointerException e) {
-			BaseModel base = new CheckinModel();
+			BaseModel base = new Checkin();
 			base.setSuccess(false);
 			return base;
 		}
@@ -152,13 +152,13 @@ public class FGFriendController {
 	@ResponseBody
 	public BaseModel getProfile(HttpServletRequest request,
 			@PathVariable(value = "userName") String userName) {
-		AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+		AuthorizationHeader authHeader = (AuthorizationHeader) request
 				.getAttribute("authHeader");
 		try {
 			return friendService
 					.getProfile(authHeader.getAuthToken(), userName);
 		} catch (NullPointerException e) {
-			BaseModel base = new CheckinModel();
+			BaseModel base = new Checkin();
 			base.setSuccess(false);
 			return base;
 		}

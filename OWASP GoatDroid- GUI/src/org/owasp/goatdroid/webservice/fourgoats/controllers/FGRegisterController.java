@@ -16,7 +16,7 @@
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
 import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.RegisterModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.Register;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGRegisterServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +37,7 @@ public class FGRegisterController {
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
 	public BaseModel doRegistration(Model model,
-			@ModelAttribute("registerModel") RegisterModel register,
+			@ModelAttribute("registerModel") Register register,
 			BindingResult result) {
 		try {
 			return registerService.registerUser(register.getFirstname(),

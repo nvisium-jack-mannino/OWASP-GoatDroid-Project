@@ -1,14 +1,14 @@
 package org.owasp.goatdroid.webservice.fourgoats.services;
 
-import org.owasp.goatdroid.webservice.fourgoats.model.CommentModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.CommentListModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.Comment;
+import org.owasp.goatdroid.webservice.fourgoats.model.CommentList;
 
 public interface CommentService {
 
-	public CommentModel addComment(String authToken, String comment,
+	public Comment addComment(String authToken, String comment,
 			String checkinID);
 
-	public CommentModel removeComment(String authToken, String commentID);
+	public Comment removeComment(String authToken, String commentID);
 
-	public CommentListModel getComments(String authToken, String checkinID);
+	public CommentList getComments(String authToken, String checkinID);
 }

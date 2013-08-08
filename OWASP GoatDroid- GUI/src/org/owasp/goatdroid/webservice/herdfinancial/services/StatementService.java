@@ -1,12 +1,12 @@
 package org.owasp.goatdroid.webservice.herdfinancial.services;
 
-import org.owasp.goatdroid.webservice.herdfinancial.model.StatementModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.Statement;
 
 public interface StatementService {
 
-	public StatementModel getStatement(String accountNumber, String startDate,
+	public Statement getStatement(String accountNumber, String startDate,
 			String endDate, String authToken);
 
-	public StatementModel getStatementSinceLastPoll(String accountNumber,
+	public Statement getStatementSinceLastPoll(String accountNumber,
 			String authToken);
 }

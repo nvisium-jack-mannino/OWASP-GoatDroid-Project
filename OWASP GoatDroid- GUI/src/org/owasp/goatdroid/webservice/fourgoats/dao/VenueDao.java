@@ -3,7 +3,7 @@ package org.owasp.goatdroid.webservice.fourgoats.dao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.owasp.goatdroid.webservice.fourgoats.model.VenueModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.Venue;
 
 public interface VenueDao {
 
@@ -14,5 +14,5 @@ public interface VenueDao {
 			String venueWebsite, String latitude, String longitude)
 			throws SQLException;
 
-	public ArrayList<VenueModel> getAllVenues() throws SQLException;
+	public ArrayList<Venue> getAllVenues() throws SQLException;
 }

@@ -23,7 +23,7 @@ import javax.annotation.Resource;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGEditPreferencesDaoImpl;
 import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.PreferencesModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.Preferences;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,7 +35,7 @@ public class FGEditPreferencesServiceImpl implements EditPreferencesService {
 	public BaseModel modifyPreferences(String authToken,
 			boolean autoCheckin, boolean isPublic) {
 
-		PreferencesModel preferences = new PreferencesModel();
+		Preferences preferences = new Preferences();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -53,7 +53,7 @@ public class FGEditPreferencesServiceImpl implements EditPreferencesService {
 
 	public BaseModel getPreferences(String authToken) {
 
-		PreferencesModel preferences = new PreferencesModel();
+		Preferences preferences = new Preferences();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {

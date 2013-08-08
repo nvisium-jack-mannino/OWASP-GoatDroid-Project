@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.derby.client.am.Utils;
 import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.exception.Base64Exception;
-import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeader;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGLoginServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.codec.Base64;
@@ -41,7 +41,7 @@ public class FGAuthenticationInterceptor implements HandlerInterceptor {
 			HttpServletResponse httpServletResponse, Object arg2) {
 
 		try {
-			AuthorizationHeaderModel authHeader = LoginUtils
+			AuthorizationHeader authHeader = LoginUtils
 					.decodeAuthorizationHeader(httpServletRequest
 							.getHeader("Authorization"));
 			boolean isAuthValid = loginService.validateAuthToken(

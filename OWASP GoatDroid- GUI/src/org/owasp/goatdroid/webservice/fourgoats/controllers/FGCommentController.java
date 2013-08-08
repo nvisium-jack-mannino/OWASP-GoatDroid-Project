@@ -17,9 +17,9 @@ package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeader;
 import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.CommentModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.Comment;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGCommentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,10 +40,10 @@ public class FGCommentController {
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@ResponseBody
 	public BaseModel addComment(HttpServletRequest request, Model model,
-			@ModelAttribute("commentModel") CommentModel commentModel,
+			@ModelAttribute("commentModel") Comment commentModel,
 			BindingResult result) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return commentService.addComment(authHeader.getAuthToken(),
 					commentModel.getComment(), commentModel.getCheckinID());
@@ -57,10 +57,10 @@ public class FGCommentController {
 	@RequestMapping(value = "remove", method = RequestMethod.POST)
 	@ResponseBody
 	public BaseModel removeComment(HttpServletRequest request, Model model,
-			@ModelAttribute("commentModel") CommentModel commentModel,
+			@ModelAttribute("commentModel") Comment commentModel,
 			BindingResult result) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return commentService.removeComment(authHeader.getAuthToken(),
 					commentModel.getCommentID());
@@ -74,10 +74,10 @@ public class FGCommentController {
 	@RequestMapping(value = "get/{checkinID}", method = RequestMethod.GET)
 	@ResponseBody
 	public BaseModel getComments(HttpServletRequest request, Model model,
-			@ModelAttribute("commentModel") CommentModel commentModel,
+			@ModelAttribute("commentModel") Comment commentModel,
 			BindingResult result) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return commentService.getComments(authHeader.getAuthToken(),
 					commentModel.getCheckinID());

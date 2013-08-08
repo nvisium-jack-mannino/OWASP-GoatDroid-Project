@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import org.owasp.goatdroid.webservice.fourgoats.exception.Base64Exception;
-import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeader;
 import org.springframework.security.crypto.codec.Base64;
 
 public class LoginUtils {
@@ -71,7 +71,7 @@ public class LoginUtils {
 		return sb.toString();
 	}
 
-	static public AuthorizationHeaderModel decodeAuthorizationHeader(
+	static public AuthorizationHeader decodeAuthorizationHeader(
 			String encodedAuthorizationString) throws Base64Exception {
 		/*
 		 * First we check to ensure that the string is real Base64 and not
@@ -96,7 +96,7 @@ public class LoginUtils {
 				else
 					authToken += ch;
 			}
-			AuthorizationHeaderModel authHeader = new AuthorizationHeaderModel();
+			AuthorizationHeader authHeader = new AuthorizationHeader();
 			authHeader.setUsername(username);
 			authHeader.setAuthToken(authToken);
 			/*

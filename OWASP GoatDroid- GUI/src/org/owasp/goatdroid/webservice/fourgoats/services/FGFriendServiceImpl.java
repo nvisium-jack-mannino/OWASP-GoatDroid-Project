@@ -22,11 +22,11 @@ import javax.annotation.Resource;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGFriendDaoImpl;
-import org.owasp.goatdroid.webservice.fourgoats.model.FriendModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.FriendListModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.FriendProfileModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.PendingFriendRequestsModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.PublicUsersModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.Friend;
+import org.owasp.goatdroid.webservice.fourgoats.model.FriendList;
+import org.owasp.goatdroid.webservice.fourgoats.model.FriendProfile;
+import org.owasp.goatdroid.webservice.fourgoats.model.PendingFriendRequests;
+import org.owasp.goatdroid.webservice.fourgoats.model.PublicUsers;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,9 +35,9 @@ public class FGFriendServiceImpl implements FriendService {
 	@Resource
 	FGFriendDaoImpl dao;
 
-	public FriendListModel getFriends(String authToken) {
+	public FriendList getFriends(String authToken) {
 
-		FriendListModel friendList = new FriendListModel();
+		FriendList friendList = new FriendList();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -53,9 +53,9 @@ public class FGFriendServiceImpl implements FriendService {
 		return friendList;
 	}
 
-	public FriendModel requestFriend(String authToken, String friendUserName) {
+	public Friend requestFriend(String authToken, String friendUserName) {
 
-		FriendModel friend = new FriendModel();
+		Friend friend = new Friend();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -84,10 +84,10 @@ public class FGFriendServiceImpl implements FriendService {
 		return friend;
 	}
 
-	public FriendModel acceptOrDenyFriendRequest(String action,
+	public Friend acceptOrDenyFriendRequest(String action,
 			String authToken, String userName) {
 
-		FriendModel friend = new FriendModel();
+		Friend friend = new Friend();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -124,9 +124,9 @@ public class FGFriendServiceImpl implements FriendService {
 		return friend;
 	}
 
-	public FriendModel removeFriend(String authToken, String friendUserName) {
+	public Friend removeFriend(String authToken, String friendUserName) {
 
-		FriendModel friend = new FriendModel();
+		Friend friend = new Friend();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -151,10 +151,10 @@ public class FGFriendServiceImpl implements FriendService {
 		return friend;
 	}
 
-	public FriendProfileModel getProfile(String authToken,
+	public FriendProfile getProfile(String authToken,
 			String friendUserName) {
 
-		FriendProfileModel friendProfile = new FriendProfileModel();
+		FriendProfile friendProfile = new FriendProfile();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
 			String friendUserID = dao.getUserIDByName(friendUserName);
@@ -175,10 +175,10 @@ public class FGFriendServiceImpl implements FriendService {
 		return friendProfile;
 	}
 
-	public PendingFriendRequestsModel getPendingFriendRequests(
+	public PendingFriendRequests getPendingFriendRequests(
 			String authToken) {
 
-		PendingFriendRequestsModel pendingRequests = new PendingFriendRequestsModel();
+		PendingFriendRequests pendingRequests = new PendingFriendRequests();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
 			String userID = dao.getUserID(authToken);
@@ -192,9 +192,9 @@ public class FGFriendServiceImpl implements FriendService {
 		return pendingRequests;
 	}
 
-	public PublicUsersModel getPublicUsers(String authToken) {
+	public PublicUsers getPublicUsers(String authToken) {
 
-		PublicUsersModel publicUsers = new PublicUsersModel();
+		PublicUsers publicUsers = new PublicUsers();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
 			String userName = dao.getUserNameByAuthToken(authToken);

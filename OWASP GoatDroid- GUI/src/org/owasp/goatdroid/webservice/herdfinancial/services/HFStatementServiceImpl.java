@@ -23,7 +23,7 @@ import javax.annotation.Resource;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFStatementDaoImpl;
-import org.owasp.goatdroid.webservice.herdfinancial.model.StatementModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.Statement;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,11 +32,11 @@ public class HFStatementServiceImpl implements StatementService {
 	@Resource
 	HFStatementDaoImpl dao;
 
-	public StatementModel getStatement(String accountNumber, String startDate,
+	public Statement getStatement(String accountNumber, String startDate,
 			String endDate, String authToken) {
 
 		ArrayList<String> errors = new ArrayList<String>();
-		StatementModel statement = new StatementModel();
+		Statement statement = new Statement();
 		if (!Validators.validateDateTimeFormat(startDate)
 				|| !Validators.validateDateTimeFormat(endDate))
 			errors.add(Constants.INVALID_ACCOUNT_NUMBER);
@@ -62,11 +62,11 @@ public class HFStatementServiceImpl implements StatementService {
 		return statement;
 	}
 
-	public StatementModel getStatementSinceLastPoll(String accountNumber,
+	public Statement getStatementSinceLastPoll(String accountNumber,
 			String authToken) {
 
 		ArrayList<String> errors = new ArrayList<String>();
-		StatementModel statement = new StatementModel();
+		Statement statement = new Statement();
 		if (!Validators.validateAccountNumber(accountNumber))
 			errors.add(Constants.INVALID_ACCOUNT_NUMBER);
 

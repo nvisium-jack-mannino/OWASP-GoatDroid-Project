@@ -28,11 +28,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
-import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeader;
 import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.CommentModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.VenueModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.VenueListModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.Comment;
+import org.owasp.goatdroid.webservice.fourgoats.model.Venue;
+import org.owasp.goatdroid.webservice.fourgoats.model.VenueList;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGVenueServiceImpl;
 
 @Controller
@@ -45,15 +45,15 @@ public class FGVenueController {
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@ResponseBody
 	public BaseModel addVenue(HttpServletRequest request, Model model,
-			@ModelAttribute("venueModel") VenueModel venue, BindingResult result) {
+			@ModelAttribute("venueModel") Venue venue, BindingResult result) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return venueService.addVenue(authHeader.getAuthToken(),
 					venue.getVenueName(), venue.getVenueWebsite(),
 					venue.getLatitude(), venue.getLongitude());
 		} catch (NullPointerException e) {
-			BaseModel base = new VenueModel();
+			BaseModel base = new Venue();
 			base.setSuccess(false);
 			return base;
 		}
@@ -63,7 +63,7 @@ public class FGVenueController {
 	@ResponseBody
 	public BaseModel getAllVenues(HttpServletRequest request) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return venueService.getAllVenues(authHeader.getAuthToken());
 		} catch (NullPointerException e) {

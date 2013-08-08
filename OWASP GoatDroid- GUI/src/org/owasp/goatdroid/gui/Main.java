@@ -15,7 +15,7 @@
  */
 package org.owasp.goatdroid.gui;
 
-import org.owasp.goatdroid.gui.webservice.WebServiceLauncher;
+import org.owasp.goatdroid.webservice.initializers.WebServiceLauncher;
 
 public class Main {
 

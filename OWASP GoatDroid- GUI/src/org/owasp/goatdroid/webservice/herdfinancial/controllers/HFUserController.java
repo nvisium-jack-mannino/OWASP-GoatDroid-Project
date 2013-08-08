@@ -2,7 +2,7 @@ package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.owasp.goatdroid.webservice.herdfinancial.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.AuthorizationHeader;
 import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class HFUserController {
 	@ResponseBody
 	public BaseModel signOut(HttpServletRequest request) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return userService.signOut(authHeader.getAuthToken());
 		} catch (NullPointerException e) {

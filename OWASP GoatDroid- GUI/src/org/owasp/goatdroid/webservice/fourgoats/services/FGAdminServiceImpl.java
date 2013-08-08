@@ -21,10 +21,10 @@ import javax.annotation.Resource;
 
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGAdminDaoImpl;
-import org.owasp.goatdroid.webservice.fourgoats.model.AdminModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.Admin;
 import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.GetUsersAdminModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.LoginModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.GetUsersAdmin;
+import org.owasp.goatdroid.webservice.fourgoats.model.Login;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -79,9 +79,9 @@ public class FGAdminServiceImpl implements AdminService {
 		return base;
 	}
 
-	public GetUsersAdminModel getUsers(String authToken) {
+	public GetUsersAdmin getUsers(String authToken) {
 
-		GetUsersAdminModel model = new GetUsersAdminModel();
+		GetUsersAdmin model = new GetUsersAdmin();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
 			/*

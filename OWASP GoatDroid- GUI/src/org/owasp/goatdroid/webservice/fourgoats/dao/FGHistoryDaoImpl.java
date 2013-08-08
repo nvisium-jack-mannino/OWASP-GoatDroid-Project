@@ -21,8 +21,8 @@ import java.util.HashMap;
 
 import javax.sql.DataSource;
 
-import org.owasp.goatdroid.webservice.fourgoats.model.HistoryEventModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.HistoryEventModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.HistoryEvent;
+import org.owasp.goatdroid.webservice.fourgoats.model.HistoryEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -36,18 +36,18 @@ public class FGHistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 		setDataSource(dataSource);
 	}
 
-	public ArrayList<HistoryEventModel> getCheckinHistory(String userID)
+	public ArrayList<HistoryEvent> getCheckinHistory(String userID)
 			throws SQLException {
 
 		String sql = "SELECT app.fg_checkins.dateTime, app.fg_checkins.checkinID, app.fg_checkins.latitude, app.fg_checkins.longitude, "
 				+ "app.fg_venues.venueName, app.fg_venues.venueWebsite FROM app.fg_checkins INNER JOIN app.fg_venues on "
 				+ "app.fg_checkins.venueID = app.fg_venues.venueID where app.fg_checkins.userID = ?";
 		SqlRowSet rs;
-		ArrayList<HistoryEventModel> checkins = new ArrayList<HistoryEventModel>();
+		ArrayList<HistoryEvent> checkins = new ArrayList<HistoryEvent>();
 		try {
 			rs = getJdbcTemplate().queryForRowSet(sql, userID);
 			while (rs.next()) {
-				HistoryEventModel checkin = new HistoryEventModel();
+				HistoryEvent checkin = new HistoryEvent();
 				checkin.setDateTime(rs.getString("dateTime"));
 				checkin.setCheckinID(rs.getString("checkinID"));
 				checkin.setLatitude(rs.getString("latitude"));
@@ -63,7 +63,7 @@ public class FGHistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 		return checkins;
 	}
 
-	public ArrayList<HistoryEventModel> getCheckinHistoryByUserName(
+	public ArrayList<HistoryEvent> getCheckinHistoryByUserName(
 			String userName) throws SQLException {
 
 		String sql = "SELECT app.fg_checkins.dateTime, app.fg_checkins.checkinID, app.fg_checkins.latitude, app.fg_checkins.longitude, "
@@ -71,9 +71,9 @@ public class FGHistoryDaoImpl extends BaseDaoImpl implements HistoryDao {
 				+ "app.fg_checkins.venueID = app.fg_venues.venueID INNER JOIN app.fg_users ON app.fg_checkins.userID = app.fg_users.userID WHERE "
 				+ "app.fg_users.userName = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userName);
-		ArrayList<HistoryEventModel> checkins = new ArrayList<HistoryEventModel>();
+		ArrayList<HistoryEvent> checkins = new ArrayList<HistoryEvent>();
 		while (rs.next()) {
-			HistoryEventModel checkin = new HistoryEventModel();
+			HistoryEvent checkin = new HistoryEvent();
 			checkin.setDateTime(rs.getString("dateTime"));
 			checkin.setCheckinID(rs.getString("checkinID"));
 			checkin.setLatitude(rs.getString("latitude"));

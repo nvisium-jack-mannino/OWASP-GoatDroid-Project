@@ -17,9 +17,9 @@ package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeader;
 import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.UserPassModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.UserPass;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGAdminServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,7 +43,7 @@ public class FGAdminController {
 	public BaseModel deleteUser(HttpServletRequest request,
 			@RequestParam(value = "username", required = true) String userName) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return adminService.deleteUser(authHeader.getAuthToken(), userName);
 		} catch (NullPointerException e) {
@@ -56,10 +56,10 @@ public class FGAdminController {
 	@RequestMapping(value = "reset-password", method = RequestMethod.POST)
 	@ResponseBody
 	public BaseModel resetPassword(HttpServletRequest request, Model model,
-			@ModelAttribute("userPassModel") UserPassModel userPass,
+			@ModelAttribute("userPassModel") UserPass userPass,
 			BindingResult result) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return adminService.resetPassword(authHeader.getAuthToken(),
 					userPass.getUsername(), userPass.getPassword());
@@ -74,7 +74,7 @@ public class FGAdminController {
 	@ResponseBody
 	public BaseModel getUsers(HttpServletRequest request) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return adminService.getUsers(authHeader.getAuthToken());
 		} catch (NullPointerException e) {
@@ -88,7 +88,7 @@ public class FGAdminController {
 	@ResponseBody
 	public BaseModel signOut(HttpServletRequest request) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return adminService.signOut(authHeader.getAuthToken());
 		} catch (NullPointerException e) {

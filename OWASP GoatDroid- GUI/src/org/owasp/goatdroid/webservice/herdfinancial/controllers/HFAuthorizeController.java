@@ -17,7 +17,7 @@ package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.owasp.goatdroid.webservice.herdfinancial.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.AuthorizationHeader;
 import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFAuthorizeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class HFAuthorizeController {
 			@RequestParam(value = "deviceID", required = true) String deviceID,
 			HttpServletRequest request) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return authorizeService.authorizeDevice(deviceID,
 					authHeader.getAuthToken());

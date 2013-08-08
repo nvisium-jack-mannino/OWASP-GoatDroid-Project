@@ -17,9 +17,9 @@ package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.owasp.goatdroid.webservice.herdfinancial.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.AuthorizationHeader;
 import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
-import org.owasp.goatdroid.webservice.herdfinancial.model.LoginModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.Login;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFLoginServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -68,7 +68,7 @@ public class HFLoginController {
 	public BaseModel checkDeviceRegistration(HttpServletRequest request,
 			@PathVariable("deviceID") String deviceID) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return loginService.isAuthValidOrDeviceAuthorized(
 					authHeader.getAuthToken(), deviceID);

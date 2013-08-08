@@ -23,7 +23,7 @@ import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Utils;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFLoginDaoImpl;
-import org.owasp.goatdroid.webservice.herdfinancial.model.LoginModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.Login;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -53,10 +53,10 @@ public class HFLoginServiceImpl implements LoginService {
 		return success;
 	}
 
-	public LoginModel isAuthValidOrDeviceAuthorized(String authToken,
+	public Login isAuthValidOrDeviceAuthorized(String authToken,
 			String deviceID) {
 
-		LoginModel login = new LoginModel();
+		Login login = new Login();
 		ArrayList<String> errors = new ArrayList<String>();
 		if (!Validators.validateDeviceID(deviceID))
 			errors.add(Constants.INVALID_DEVICE_ID);
@@ -85,9 +85,9 @@ public class HFLoginServiceImpl implements LoginService {
 		return login;
 	}
 
-	public LoginModel validateCredentials(String userName, String password) {
+	public Login validateCredentials(String userName, String password) {
 
-		LoginModel login = new LoginModel();
+		Login login = new Login();
 		ArrayList<String> errors = Validators.validateCredentials(userName,
 				password);
 
@@ -111,9 +111,9 @@ public class HFLoginServiceImpl implements LoginService {
 		return login;
 	}
 
-	public LoginModel isDevicePermanentlyAuthorized(String deviceID) {
+	public Login isDevicePermanentlyAuthorized(String deviceID) {
 
-		LoginModel login = new LoginModel();
+		Login login = new Login();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		if (!Validators.validateDeviceID(deviceID))

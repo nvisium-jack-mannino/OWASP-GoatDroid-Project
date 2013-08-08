@@ -1,9 +1,9 @@
 package org.owasp.goatdroid.webservice.fourgoats.services;
 
-import org.owasp.goatdroid.webservice.fourgoats.model.CheckinModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.Checkin;
 
 public interface CheckinService {
 
-	public CheckinModel doCheckin(String authToken, String latitude,
+	public Checkin doCheckin(String authToken, String latitude,
 			String longitude);
 }

@@ -23,7 +23,7 @@ import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;
 import org.owasp.goatdroid.webservice.herdfinancial.dao.HFSecretQuestionDaoImpl;
 import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
-import org.owasp.goatdroid.webservice.herdfinancial.model.SecretQuestionModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.SecretQuestion;
 import org.springframework.stereotype.Service;
 
 @Service

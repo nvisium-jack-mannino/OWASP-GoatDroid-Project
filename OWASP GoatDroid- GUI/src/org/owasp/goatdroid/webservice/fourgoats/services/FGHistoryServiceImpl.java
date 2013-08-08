@@ -21,7 +21,7 @@ import javax.annotation.Resource;
 
 import org.owasp.goatdroid.webservice.fourgoats.Constants;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGHistoryDaoImpl;
-import org.owasp.goatdroid.webservice.fourgoats.model.HistoryModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.History;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,9 +30,9 @@ public class FGHistoryServiceImpl implements HistoryService {
 	@Resource
 	FGHistoryDaoImpl dao;
 
-	public HistoryModel getHistory(String authToken) {
+	public History getHistory(String authToken) {
 
-		HistoryModel history = new HistoryModel();
+		History history = new History();
 		ArrayList<String> errors = new ArrayList<String>();
 		try {
 			history.setHistory(dao.getCheckinHistory(dao.getUserID(authToken)));
@@ -48,9 +48,9 @@ public class FGHistoryServiceImpl implements HistoryService {
 	/*
 	 * All we pass into this is the username...hmm
 	 */
-	public HistoryModel getUserHistory(String username) {
+	public History getUserHistory(String username) {
 
-		HistoryModel history = new HistoryModel();
+		History history = new History();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {

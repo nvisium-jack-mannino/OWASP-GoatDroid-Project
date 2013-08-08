@@ -24,7 +24,7 @@ import org.owasp.goatdroid.webservice.fourgoats.LoginUtils;
 import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGRewardDaoImpl;
-import org.owasp.goatdroid.webservice.fourgoats.model.RewardModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.Reward;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,9 +33,9 @@ public class FGRewardServiceImpl implements RewardService {
 	@Resource
 	FGRewardDaoImpl dao;
 
-	public RewardModel getAllRewards(String authToken) {
+	public Reward getAllRewards(String authToken) {
 
-		RewardModel reward = new RewardModel();
+		Reward reward = new Reward();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -49,9 +49,9 @@ public class FGRewardServiceImpl implements RewardService {
 		return reward;
 	}
 
-	public RewardModel getMyEarnedRewards(String authToken) {
+	public Reward getMyEarnedRewards(String authToken) {
 
-		RewardModel reward = new RewardModel();
+		Reward reward = new Reward();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
@@ -69,10 +69,10 @@ public class FGRewardServiceImpl implements RewardService {
 	/*
 	 * This feature is only available to administrative users
 	 */
-	public RewardModel addNewReward(String authToken, String rewardName,
+	public Reward addNewReward(String authToken, String rewardName,
 			String rewardDescription, String venueID, int checkinsRequired) {
 
-		RewardModel reward = new RewardModel();
+		Reward reward = new Reward();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {

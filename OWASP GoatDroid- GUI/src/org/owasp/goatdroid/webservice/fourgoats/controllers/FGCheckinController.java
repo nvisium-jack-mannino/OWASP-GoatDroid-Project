@@ -17,10 +17,10 @@ package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeader;
 import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.CheckinModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.LatLongModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.Checkin;
+import org.owasp.goatdroid.webservice.fourgoats.model.LatLong;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGCheckinServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,15 +41,15 @@ public class FGCheckinController {
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
 	public BaseModel doCheckin(HttpServletRequest request, Model model,
-			@ModelAttribute("latLongModel") LatLongModel latLongModel,
+			@ModelAttribute("latLongModel") LatLong latLongModel,
 			BindingResult result) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return checkinService.doCheckin(authHeader.getAuthToken(),
 					latLongModel.getLatitude(), latLongModel.getLongitude());
 		} catch (NullPointerException e) {
-			BaseModel base = new CheckinModel();
+			BaseModel base = new Checkin();
 			base.setSuccess(false);
 			return base;
 		}

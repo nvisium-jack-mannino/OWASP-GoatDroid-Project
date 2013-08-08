@@ -15,8 +15,8 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
-import org.owasp.goatdroid.webservice.fourgoats.model.LoginModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.UserPassModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.Login;
+import org.owasp.goatdroid.webservice.fourgoats.model.UserPass;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGLoginServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,14 +36,14 @@ public class FGLoginController {
 
 	@RequestMapping(value = "authenticate", method = RequestMethod.POST)
 	@ResponseBody
-	public LoginModel authenticate(Model model,
-			@ModelAttribute("userPassModel") UserPassModel userPass,
+	public Login authenticate(Model model,
+			@ModelAttribute("userPassModel") UserPass userPass,
 			BindingResult result) {
 		try {
 			return loginService.validateCredentials(userPass.getUsername(),
 					userPass.getPassword());
 		} catch (NullPointerException e) {
-			LoginModel login = new LoginModel();
+			Login login = new Login();
 			login.setSuccess(false);
 			return login;
 		}
@@ -51,14 +51,14 @@ public class FGLoginController {
 
 	@RequestMapping(value = "validate-api", method = RequestMethod.POST)
 	@ResponseBody
-	public LoginModel validateCredentialsAPI(Model model,
-			@ModelAttribute("userPassModel") UserPassModel userPass,
+	public Login validateCredentialsAPI(Model model,
+			@ModelAttribute("userPassModel") UserPass userPass,
 			BindingResult result) {
 		try {
 			return loginService.validateCredentialsAPI(userPass.getUsername(),
 					userPass.getPassword());
 		} catch (NullPointerException e) {
-			LoginModel login = new LoginModel();
+			Login login = new Login();
 			login.setSuccess(false);
 			return login;
 		}

@@ -25,7 +25,7 @@ import org.owasp.goatdroid.webservice.fourgoats.Salts;
 import org.owasp.goatdroid.webservice.fourgoats.Validators;
 import org.owasp.goatdroid.webservice.fourgoats.dao.FGVenueDaoImpl;
 import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.VenueListModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.VenueList;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -62,9 +62,9 @@ public class FGVenueServiceImpl implements VenueService {
 		return base;
 	}
 
-	public VenueListModel getAllVenues(String authToken) {
+	public VenueList getAllVenues(String authToken) {
 
-		VenueListModel venueList = new VenueListModel();
+		VenueList venueList = new VenueList();
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {

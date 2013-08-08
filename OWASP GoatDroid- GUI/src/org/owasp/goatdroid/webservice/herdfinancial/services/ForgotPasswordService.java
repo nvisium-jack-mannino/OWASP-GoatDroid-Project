@@ -1,7 +1,7 @@
 package org.owasp.goatdroid.webservice.herdfinancial.services;
 
 import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
-import org.owasp.goatdroid.webservice.herdfinancial.model.ForgotPasswordModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.ForgotPassword;
 
 public interface ForgotPasswordService {
 

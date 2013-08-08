@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import org.owasp.goatdroid.webservice.fourgoats.model.RewardFieldModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.RewardField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -33,16 +33,16 @@ public class FGRewardDaoImpl extends BaseDaoImpl implements RewardDao {
 		setDataSource(dataSource);
 	}
 
-	public ArrayList<RewardFieldModel> getAllRewards() throws SQLException {
+	public ArrayList<RewardField> getAllRewards() throws SQLException {
 
 		String sql = "SELECT app.fg_rewards.rewardName, app.fg_rewards.rewardDescription, "
 				+ "app.fg_venues.venueName, app.fg_rewards.checkinsRequired, app.fg_venues.latitude, "
 				+ "app.fg_venues.longitude FROM app.fg_rewards INNER JOIN app.fg_venues ON app.fg_rewards.venueID = "
 				+ "app.fg_venues.venueID";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql);
-		ArrayList<RewardFieldModel> rewards = new ArrayList<RewardFieldModel>();
+		ArrayList<RewardField> rewards = new ArrayList<RewardField>();
 		while (rs.next()) {
-			RewardFieldModel reward = new RewardFieldModel();
+			RewardField reward = new RewardField();
 			reward.setRewardName(rs.getString("rewardName"));
 			reward.setRewardDescription(rs.getString("rewardDescription"));
 			reward.setVenueID(rs.getString("venueName"));
@@ -54,17 +54,17 @@ public class FGRewardDaoImpl extends BaseDaoImpl implements RewardDao {
 		return rewards;
 	}
 
-	public ArrayList<RewardFieldModel> getEarnedRewards(String userID)
+	public ArrayList<RewardField> getEarnedRewards(String userID)
 			throws SQLException {
 
 		String sql = "SLEECT app.fg_rewards.rewardName, app.fg_rewards.rewardDescription, app.fg_earned_rewards.timeEarned "
 				+ "FROM app.fg_earned_rewards INNER JOIN app.fg_rewards ON app.fg_rewards.rewardID = app.fg_earned_rewards.rewardID "
 				+ "WHERE app.fg_earned_rewards.userID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, userID);
-		ArrayList<RewardFieldModel> rewards = new ArrayList<RewardFieldModel>();
+		ArrayList<RewardField> rewards = new ArrayList<RewardField>();
 
 		while (rs.next()) {
-			RewardFieldModel reward = new RewardFieldModel();
+			RewardField reward = new RewardField();
 			reward.setRewardName(rs.getString("rewardName"));
 			reward.setRewardDescription(rs.getString("rewardDescription"));
 			reward.setTimeEarned(rs.getString("timeEarned"));

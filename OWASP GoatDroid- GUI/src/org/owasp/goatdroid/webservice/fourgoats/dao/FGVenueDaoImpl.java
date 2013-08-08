@@ -21,7 +21,7 @@ import java.util.HashMap;
 
 import javax.sql.DataSource;
 
-import org.owasp.goatdroid.webservice.fourgoats.model.VenueModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.Venue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -59,14 +59,14 @@ public class FGVenueDaoImpl extends BaseDaoImpl implements VenueDao {
 						longitude });
 	}
 
-	public ArrayList<VenueModel> getAllVenues() throws SQLException {
+	public ArrayList<Venue> getAllVenues() throws SQLException {
 
 		String sql = "SELECT venueID, venueName, venueWebsite, latitude, longitude FROM app.fg_venues";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql);
 
-		ArrayList<VenueModel> venues = new ArrayList<VenueModel>();
+		ArrayList<Venue> venues = new ArrayList<Venue>();
 		while (rs.next()) {
-			VenueModel venue = new VenueModel();
+			Venue venue = new Venue();
 			venue.setVenueID(rs.getString("venueID"));
 			venue.setVenueName(rs.getString("venueName"));
 			venue.setVenueWebsite(rs.getString("venueWebsite"));

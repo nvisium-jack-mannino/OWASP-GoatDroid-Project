@@ -17,7 +17,7 @@ package org.owasp.goatdroid.webservice.herdfinancial.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.owasp.goatdroid.webservice.herdfinancial.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.herdfinancial.model.AuthorizationHeader;
 import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFStatementServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class HFStatementController {
 			@PathVariable("startDate") String startDate,
 			@PathVariable("endDate") String endDate, HttpServletRequest request) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return statementService.getStatement(accountNumber, startDate,
 					endDate, authHeader.getAuthToken());
@@ -58,7 +58,7 @@ public class HFStatementController {
 			@PathVariable("accountNumber") String accountNumber,
 			HttpServletRequest request) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return statementService.getStatementSinceLastPoll(accountNumber,
 					authHeader.getAuthToken());

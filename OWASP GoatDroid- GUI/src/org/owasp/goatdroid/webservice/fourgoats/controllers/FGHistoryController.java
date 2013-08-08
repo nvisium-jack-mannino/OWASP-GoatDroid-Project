@@ -17,9 +17,9 @@ package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeaderModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.AuthorizationHeader;
 import org.owasp.goatdroid.webservice.fourgoats.model.BaseModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.HistoryModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.History;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGHistoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,11 +39,11 @@ public class FGHistoryController {
 	@ResponseBody
 	public BaseModel getHistory(HttpServletRequest request) {
 		try {
-			AuthorizationHeaderModel authHeader = (AuthorizationHeaderModel) request
+			AuthorizationHeader authHeader = (AuthorizationHeader) request
 					.getAttribute("authHeader");
 			return historyService.getHistory(authHeader.getAuthToken());
 		} catch (NullPointerException e) {
-			BaseModel base = new HistoryModel();
+			BaseModel base = new History();
 			base.setSuccess(false);
 			return base;
 		}
@@ -56,7 +56,7 @@ public class FGHistoryController {
 		try {
 			return historyService.getUserHistory(userName);
 		} catch (NullPointerException e) {
-			BaseModel base = new HistoryModel();
+			BaseModel base = new History();
 			base.setSuccess(false);
 			return base;
 		}

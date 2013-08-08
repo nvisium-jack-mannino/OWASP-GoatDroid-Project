@@ -4,12 +4,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.owasp.goatdroid.webservice.fourgoats.model.FriendRequestModel;
-import org.owasp.goatdroid.webservice.fourgoats.model.UserModel;
+import org.owasp.goatdroid.webservice.fourgoats.model.FriendRequest;
+import org.owasp.goatdroid.webservice.fourgoats.model.User;
 
 public interface FriendDao {
 
-	public ArrayList<UserModel> getFriends(String userID, String userName)
+	public ArrayList<User> getFriends(String userID, String userName)
 			throws SQLException;
 
 	public void addFriend(String userID, String friendUserID)
@@ -24,10 +24,10 @@ public interface FriendDao {
 	public HashMap<String, String> getProfile(String userID)
 			throws SQLException;
 
-	public ArrayList<FriendRequestModel> getPendingFriendRequests(String userID)
+	public ArrayList<FriendRequest> getPendingFriendRequests(String userID)
 			throws SQLException;
 
-	public ArrayList<UserModel> getPublicUsers(String userName)
+	public ArrayList<User> getPublicUsers(String userName)
 			throws SQLException;
 
 	public void requestFriend(String userID, String friendUserID)
