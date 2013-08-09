@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.gui.config;
+package org.owasp.goatdroid.tools;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,9 +25,10 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import org.owasp.goatdroid.gui.Constants;
-import org.owasp.goatdroid.gui.Utils;
-import org.owasp.goatdroid.gui.exception.CorruptConfigException;
+
+import org.owasp.goatdroid.Constants;
+import org.owasp.goatdroid.Utils;
+import org.owasp.goatdroid.exception.CorruptConfigException;
 
 public class Config {
 

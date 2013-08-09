@@ -15,7 +15,7 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats;
 
-import org.owasp.goatdroid.gui.Utils;
+import org.owasp.goatdroid.Utils;
 
 public class Constants {
 

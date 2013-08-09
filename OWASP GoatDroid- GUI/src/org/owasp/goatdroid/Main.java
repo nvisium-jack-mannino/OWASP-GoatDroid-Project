@@ -13,16 +13,17 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.gui.exception;
+package org.owasp.goatdroid;
 
-public class CorruptConfigException extends Exception {
+import org.owasp.goatdroid.webservice.initializers.WebServiceLauncher;
+
+public class Main {
 
 	/**
-	 * 
+	 * @param args
 	 */
-	private static final long serialVersionUID = 1L;
+	public static void main(String[] args) throws Exception {
 
-	public CorruptConfigException(String message) {
-		super(message);
+		WebServiceLauncher.startService(true);
 	}
 }

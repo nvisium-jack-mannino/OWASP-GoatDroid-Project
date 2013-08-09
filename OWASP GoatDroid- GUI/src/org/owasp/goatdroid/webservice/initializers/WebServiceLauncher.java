@@ -22,7 +22,7 @@ import org.eclipse.jetty.server.ssl.SslSocketConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
-import org.owasp.goatdroid.gui.Utils;
+import org.owasp.goatdroid.Utils;
 import org.springframework.web.servlet.DispatcherServlet;
 
 public class WebServiceLauncher {

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 import javax.annotation.Resource;
 
-import org.owasp.goatdroid.gui.emulator.Emulator;
+import org.owasp.goatdroid.tools.Emulator;
 import org.owasp.goatdroid.webservice.herdfinancial.Constants;
 import org.owasp.goatdroid.webservice.herdfinancial.Utils;
 import org.owasp.goatdroid.webservice.herdfinancial.Validators;

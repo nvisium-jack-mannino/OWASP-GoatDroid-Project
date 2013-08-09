@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.gui;
+package org.owasp.goatdroid;
 
 public class Constants {
 
