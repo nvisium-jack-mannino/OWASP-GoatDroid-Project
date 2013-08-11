@@ -36,6 +36,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
@@ -131,7 +132,8 @@ public class AuthenticatedRestClient {
 			Context context) throws KeyManagementException,
 			NoSuchAlgorithmException {
 
-		HttpClient client = CustomSSLSocketFactory.getNewHttpClient();
+		// HttpClient client = CustomSSLSocketFactory.getNewHttpClient();
+		HttpClient client = new DefaultHttpClient();
 		HashMap<String, String> proxyInfo = Utils.getProxyMap(context);
 		String proxyHost = proxyInfo.get("proxyHost");
 		String proxyPort = proxyInfo.get("proxyPort");

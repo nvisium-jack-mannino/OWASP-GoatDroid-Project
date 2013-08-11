@@ -17,12 +17,14 @@
 package org.owasp.goatdroid.fourgoats.activities;
 
 import java.util.HashMap;
+
+import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.base.BaseUnauthenticatedActivity;
 import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.rest.login.LoginRequest;
-import org.owasp.goatdroid.fourgoats.R;
+
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -65,9 +67,11 @@ public class Login extends BaseUnauthenticatedActivity {
 			rememberMeCheckBox.setChecked(true);
 		else
 			rememberMeCheckBox.setChecked(false);
+
 	}
 
 	public void checkCredentials(View v) {
+
 		if (allFieldsCompleted(userNameEditText.getText().toString(),
 				passwordEditText.getText().toString())) {
 			ValidateCredsAsyncTask validate = new ValidateCredsAsyncTask(this);
@@ -75,6 +79,7 @@ public class Login extends BaseUnauthenticatedActivity {
 		} else
 			Utils.makeToast(context, Constants.ALL_FIELDS_REQUIRED,
 					Toast.LENGTH_LONG);
+
 	}
 
 	public void launchRegistration(View v) {
@@ -119,6 +124,7 @@ public class Login extends BaseUnauthenticatedActivity {
 
 		@Override
 		protected HashMap<String, String> doInBackground(Void... params) {
+
 			LoginRequest client = new LoginRequest(context);
 			String userName = userNameEditText.getText().toString();
 			String password = passwordEditText.getText().toString();
@@ -155,9 +161,11 @@ public class Login extends BaseUnauthenticatedActivity {
 			}
 
 			return userInfo;
+
 		}
 
 		protected void onPostExecute(HashMap<String, String> results) {
+
 			if (results.get("success").equals("true")) {
 				if (!previousActivity.isEmpty()) {
 					ComponentName toLaunch = new ComponentName(
@@ -179,5 +187,7 @@ public class Login extends BaseUnauthenticatedActivity {
 						Toast.LENGTH_LONG);
 			}
 		}
+
 	}
+
 }

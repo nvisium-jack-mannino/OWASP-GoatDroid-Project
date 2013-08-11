@@ -15,6 +15,8 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.owasp.goatdroid.webservice.fourgoats.model.Login;
 import org.owasp.goatdroid.webservice.fourgoats.model.UserPass;
 import org.owasp.goatdroid.webservice.fourgoats.services.FGLoginServiceImpl;
@@ -36,10 +38,11 @@ public class FGLoginController {
 
 	@RequestMapping(value = "authenticate", method = RequestMethod.POST)
 	@ResponseBody
-	public Login authenticate(Model model,
+	public Login authenticate(HttpServletRequest request, Model model,
 			@ModelAttribute("userPassModel") UserPass userPass,
 			BindingResult result) {
 		try {
+
 			return loginService.validateCredentials(userPass.getUsername(),
 					userPass.getPassword());
 		} catch (NullPointerException e) {

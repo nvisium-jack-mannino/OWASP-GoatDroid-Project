@@ -16,10 +16,11 @@
  */
 package org.owasp.goatdroid.fourgoats.activities;
 
-import org.owasp.goatdroid.fourgoats.activities.Login;
+import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.rest.login.LoginRequest;
-import org.owasp.goatdroid.fourgoats.R;
+import org.owasp.goatdroid.fourgoats.rest.login.SSLCertificateValidation;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -34,6 +35,7 @@ public class Main extends Activity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		//SSLCertificateValidation.disable();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.loader);
 		context = this.getApplicationContext();
