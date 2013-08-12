@@ -17,8 +17,8 @@
 package org.owasp.goatdroid.fourgoats.services;
 
 import org.owasp.goatdroid.fourgoats.db.CheckinDBHelper;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
+
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;

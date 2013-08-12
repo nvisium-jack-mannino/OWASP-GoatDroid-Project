@@ -16,47 +16,12 @@
  */
 package org.owasp.goatdroid.fourgoats.response;
 
-import java.util.HashMap;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.owasp.goatdroid.fourgoats.misc.Constants;
+import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
-public class AddVenueResponse {
+public class AddVenueResponse extends BaseResponse {
 
-	static public HashMap<String, String> parseAddVenueResponse(String response) {
+	static public ResponseObject parseAddVenueResponse(String response) {
 
-		JSONObject json;
-		HashMap<String, String> results = new HashMap<String, String>();
-		String errors = "";
-
-		try {
-			json = new JSONObject(response);
-			if (json.getString("success").equals("false")) {
-				results.put("success", "false");
-				try {
-					JSONArray errorArray = json.getJSONArray("errors");
-
-					for (int count = 0; count < errorArray.length(); count++)
-						errors += errorArray.getString(count).toString()
-								+ "\n\n";
-
-				} catch (JSONException e) {
-					errors += json.getString("errors");
-				}
-
-				results.put("errors", errors);
-				return results;
-
-			} else {
-				results.put("success", "true");
-				return results;
-			}
-
-		} catch (JSONException e) {
-			results.put("success", "false");
-			results.put("errors", Constants.WEIRD_ERROR);
-			return results;
-		}
+		return getSuccessAndErrors(response);
 	}
 }

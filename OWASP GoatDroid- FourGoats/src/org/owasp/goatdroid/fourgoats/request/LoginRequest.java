@@ -16,14 +16,13 @@
  */
 package org.owasp.goatdroid.fourgoats.request;
 
-import java.util.HashMap;
-
 import org.owasp.goatdroid.fourgoats.http.AuthenticatedRestClient;
 import org.owasp.goatdroid.fourgoats.http.RequestMethod;
 import org.owasp.goatdroid.fourgoats.http.RestClient;
-import org.owasp.goatdroid.fourgoats.jsonobjects.Login;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.response.LoginResponse;
+import org.owasp.goatdroid.fourgoats.responseobjects.Login;
+import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 import android.content.Context;
 
@@ -38,13 +37,12 @@ public class LoginRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public boolean isSessionValid(String sessionToken) throws Exception {
+	public Login isAuthTokenValid(String authToken) throws Exception {
 
-		RestClient client = new RestClient("https://" + destinationInfo
-				+ "/fourgoats/api/v1/pub/login/check-session");
-		client.AddHeader("Cookie", "SESS=" + sessionToken);
+		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
+				+ destinationInfo + "/fourgoats/api/v1/pub/login/check-session");
 		client.Execute(RequestMethod.GET, context);
-		return LoginResponse.isSuccess(client.getResponse());
+		return (Login) LoginResponse.isAuthTokenValid(client.getResponse());
 	}
 
 	public Login validateCredentials(String userName, String password)
@@ -59,8 +57,8 @@ public class LoginRequest {
 		return LoginResponse.parseLoginResponse(client.getResponse());
 	}
 
-	public HashMap<String, String> validateCredentialsAPI(String userName,
-			String password) throws Exception {
+	public Login validateCredentialsAPI(String userName, String password)
+			throws Exception {
 
 		RestClient client = new RestClient("https://" + destinationInfo
 				+ "/fourgoats/api/v1/pub/login/validate-api");
@@ -71,12 +69,12 @@ public class LoginRequest {
 		return LoginResponse.parseAPILoginResponse(client.getResponse());
 	}
 
-	public HashMap<String, String> logOut(String sessionToken) throws Exception {
+	public ResponseObject logOut(String sessionToken) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/fourgoats/api/v1/pub/login/sign-out");
 		client.Execute(RequestMethod.POST, context);
 
-		return LoginResponse.parseStatusAndErrors(client.getResponse());
+		return LoginResponse.isAuthTokenValid(client.getResponse());
 	}
 }

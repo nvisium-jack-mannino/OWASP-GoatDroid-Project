@@ -16,44 +16,20 @@
  */
 package org.owasp.goatdroid.fourgoats.response;
 
-import java.util.HashMap;
+import org.owasp.goatdroid.fourgoats.responseobjects.Login;
+import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.owasp.goatdroid.fourgoats.base.ResponseBase;
-import org.owasp.goatdroid.fourgoats.jsonobjects.Login;
+public class LoginResponse extends BaseResponse {
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-public class LoginResponse extends ResponseBase {
-
-	// static public HashMap<String, String> parseLoginResponse(String response)
-	// {
 	static public Login parseLoginResponse(String response) {
-		Gson gson = new GsonBuilder().create();
-		Login r = gson.fromJson(response, Login.class);
-		return r;
+		return (Login) parseJsonResponse(response, Login.class);
 	}
 
-	static public HashMap<String, String> parseAPILoginResponse(String response) {
-		JSONObject json;
-		HashMap<String, String> results = new HashMap<String, String>();
+	static public Login parseAPILoginResponse(String response) {
+		return (Login) parseJsonResponse(response, Login.class);
+	}
 
-		try {
-			json = new JSONObject(response);
-			if (json.getString("success").equals("false")) {
-				results.put("success", "false");
-				return results;
-			} else {
-				results.put("success", "true");
-				results.put("sessionToken", json.getString("sessionToken"));
-				return results;
-			}
-
-		} catch (JSONException e) {
-			results.put("success", "false");
-			return results;
-		}
+	static public ResponseObject isAuthTokenValid(String response) {
+		return getSuccessAndErrors(response);
 	}
 }

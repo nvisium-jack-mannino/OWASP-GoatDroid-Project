@@ -23,10 +23,10 @@ import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.activities.DoAdminDeleteUserActivity;
 import org.owasp.goatdroid.fourgoats.adapter.SearchForFriendsAdapter;
 import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
-import org.owasp.goatdroid.fourgoats.jsonobjects.Login;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.AdminRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.Login;
 
 import android.content.Context;
 import android.content.Intent;

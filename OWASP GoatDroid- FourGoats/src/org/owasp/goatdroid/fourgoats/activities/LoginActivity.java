@@ -18,11 +18,11 @@ package org.owasp.goatdroid.fourgoats.activities;
 
 import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.base.BaseUnauthenticatedActivity;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
-import org.owasp.goatdroid.fourgoats.jsonobjects.Login;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.LoginRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.Login;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -129,7 +129,7 @@ public class LoginActivity extends BaseUnauthenticatedActivity {
 
 		protected void onPostExecute(Login login) {
 
-			if (login.getSuccess()) {
+			if (login.isSuccess()) {
 				Utils.setInfo(context, login.getUsername(),
 						login.getAuthToken(), login.getPreferences());
 				if (Boolean.parseBoolean(login.getPreferences().get("isAdmin"))

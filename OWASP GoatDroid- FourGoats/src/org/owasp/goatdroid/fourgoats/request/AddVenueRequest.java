@@ -36,9 +36,9 @@ public class AddVenueRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public HashMap<String, String> doAddVenue(String sessionToken,
-			String venueName, String venueWebsite, String latitude,
-			String longitude) throws Exception {
+	public HashMap<String, String> doAddVenue(String venueName,
+			String venueWebsite, String latitude, String longitude)
+			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/fourgoats/api/v1/priv/venues/add");

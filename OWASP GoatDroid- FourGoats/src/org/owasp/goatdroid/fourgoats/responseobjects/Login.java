@@ -1,19 +1,13 @@
-package org.owasp.goatdroid.fourgoats.jsonobjects;
+package org.owasp.goatdroid.fourgoats.responseobjects;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Login {
+public class Login extends BaseResponseObject {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	String username;
 	String authToken;
-	boolean success;
+
 	public HashMap<String, String> preferences;
-	ArrayList<String> errors;
 
 	public Login() {
 
@@ -35,27 +29,11 @@ public class Login {
 		this.authToken = authToken;
 	}
 
-	public boolean getSuccess() {
-		return success;
-	}
-
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
-
 	public HashMap<String, String> getPreferences() {
 		return preferences;
 	}
 
 	public void setPreferences(HashMap<String, String> preferences) {
 		this.preferences = preferences;
-	}
-
-	public ArrayList<String> getErrors() {
-		return errors;
-	}
-
-	public void setErrors(ArrayList<String> errors) {
-		this.errors = errors;
 	}
 }
