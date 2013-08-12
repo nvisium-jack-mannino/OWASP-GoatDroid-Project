@@ -35,8 +35,8 @@ public class BalancesRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public HashMap<String, String> getMyBalance(String sessionToken,
-			String accountNumber) throws Exception {
+	public HashMap<String, String> getMyBalance(String accountNumber)
+			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/herdfinancial/api/v1/priv/balances/"

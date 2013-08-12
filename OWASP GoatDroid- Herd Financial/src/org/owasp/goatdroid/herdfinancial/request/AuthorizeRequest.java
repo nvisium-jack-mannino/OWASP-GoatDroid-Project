@@ -35,8 +35,8 @@ public class AuthorizeRequest {
 		this.context = context;
 	}
 
-	public HashMap<String, String> authorizeDevice(String sessionToken,
-			String accountNumber) throws Exception {
+	public HashMap<String, String> authorizeDevice(String accountNumber)
+			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/herdfinancial/api/v1/priv/authorize");

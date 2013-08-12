@@ -76,8 +76,8 @@ public class AuthorizeActivity extends BaseActivity {
 					authorizeData.put("errors", Constants.INVALID_SESSION);
 					authorizeData.put("success", "false");
 				} else {
-					authorizeData = rest.authorizeDevice(sessionToken,
-							Utils.getDeviceID(context));
+					authorizeData = rest.authorizeDevice(Utils
+							.getDeviceID(context));
 				}
 			} catch (Exception e) {
 				authorizeData.put("success", "false");

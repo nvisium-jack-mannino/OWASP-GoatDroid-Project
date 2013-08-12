@@ -54,8 +54,7 @@ public class MainActivity extends Activity {
 					sessionToken = "0000000";
 				String deviceID = Utils.getDeviceID(context);
 				HashMap<String, String> result = rest
-						.isDeviceAuthorizedOrSessionValid(sessionToken,
-								deviceID);
+						.isDeviceAuthorizedOrSessionValid(deviceID);
 				if (result.get("success").equals("true")) {
 					/*
 					 * If this is true but we get no token this implies that
@@ -65,7 +64,8 @@ public class MainActivity extends Activity {
 						Intent serviceIntent = new Intent(context,
 								StatementUpdateService.class);
 						startService(serviceIntent);
-						Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+						Intent intent = new Intent(MainActivity.this,
+								HomeActivity.class);
 						startActivity(intent);
 						return true;
 						/*
@@ -80,7 +80,8 @@ public class MainActivity extends Activity {
 						Intent serviceIntent = new Intent(context,
 								StatementUpdateService.class);
 						startService(serviceIntent);
-						Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+						Intent intent = new Intent(MainActivity.this,
+								HomeActivity.class);
 						startActivity(intent);
 						return true;
 					}
@@ -90,12 +91,14 @@ public class MainActivity extends Activity {
 					 * be granted authenticated status.
 					 */
 				} else {
-					Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+					Intent intent = new Intent(MainActivity.this,
+							LoginActivity.class);
 					startActivity(intent);
 					return false;
 				}
 			} catch (Exception e) {
-				Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+				Intent intent = new Intent(MainActivity.this,
+						LoginActivity.class);
 				startActivity(intent);
 				return false;
 			} finally {

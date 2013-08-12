@@ -37,12 +37,12 @@ public class LoginRequest {
 	}
 
 	public HashMap<String, String> isDeviceAuthorizedOrSessionValid(
-			String sessionToken, String deviceID) throws Exception {
+			String deviceID) throws Exception {
 
-		RestClient client = new RestClient("https://" + destinationInfo
+		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
+				+ destinationInfo
 				+ "/herdfinancial/api/v1/pub/login/device-or-session/"
 				+ deviceID);
-		client.AddHeader("Cookie", "AUTH=" + sessionToken);
 		client.Execute(RequestMethod.GET, context);
 		return LoginResponse.parseStatusAndToken(client.getResponse());
 	}
@@ -59,7 +59,7 @@ public class LoginRequest {
 		return LoginResponse.parseStatusAndToken(client.getResponse());
 	}
 
-	public HashMap<String, String> logOut(String sessionToken) throws Exception {
+	public HashMap<String, String> logOut() throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/herdfinancial/api/v1/priv/user/sign-out");

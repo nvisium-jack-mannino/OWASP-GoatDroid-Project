@@ -25,63 +25,63 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.Authorize"
+            android:name=".activities.AuthorizeActivity"
             android:label="@string/authorize" >
         </activity>
         <activity
-            android:name=".activities.Home"
+            android:name=".activities.HomeActivity"
             android:label="@string/home" >
         </activity>
         <activity
-            android:name=".activities.Login"
+            android:name=".activities.LoginActivity"
             android:label="@string/login" >
         </activity>
         <activity
-            android:name=".activities.Register"
+            android:name=".activities.RegisterActivity"
             android:label="@string/register" >
         </activity>
         <activity
-            android:name=".activities.SelectStatement"
+            android:name=".activities.SelectStatementActivity"
             android:label="@string/select_statement" >
         </activity>
         <activity
-            android:name=".activities.Transfer"
+            android:name=".activities.TransferActivity"
             android:label="@string/transfer" >
         </activity>
         <activity
-            android:name=".activities.ViewStatement"
+            android:name=".activities.ViewStatementActivity"
             android:label="@string/view_statement" >
         </activity>
         <activity
-            android:name=".activities.ForgotPassword"
+            android:name=".activities.ForgotPasswordActivity"
             android:label="@string/forgot_password" >
         </activity>
         <activity
-            android:name=".activities.SetSecretQuestion"
+            android:name=".activities.SetSecretQuestionActivity"
             android:label="@string/set_secret_question" >
         </activity>
         <activity
-            android:name=".activities.Preferences"
+            android:name=".activities.PreferencesActivity"
             android:label="@string/preferences" >
         </activity>
         <activity
-            android:name=".activities.About"
+            android:name=".activities.AboutActivity"
             android:label="@string/about" >
         </activity>
         <activity
-            android:name=".activities.DestinationInfo"
+            android:name=".activities.DestinationInfoActivity"
             android:label="@string/destination_info" >
         </activity>
         <activity
-            android:name=".activities.GetBalance"
+            android:name=".activities.GetBalanceActivity"
             android:label="@string/get_balance" >
         </activity>
         <activity
-            android:name=".activities.VerifyPasswordResetCode"
+            android:name=".activities.VerifyPasswordResetCodeActivity"
             android:label="@string/verify_password_reset_code" >
         </activity>
         <activity
-            android:name=".activities.ResetPassword"
+            android:name=".activities.ResetPasswordActivity"
             android:label="@string/reset_password" >
         </activity>
 

@@ -69,8 +69,7 @@ public class GetBalanceActivity extends BaseActivity {
 					balanceData.put("errors", Constants.INVALID_SESSION);
 					balanceData.put("success", "false");
 				} else {
-					balanceData = rest
-							.getMyBalance(sessionToken, accountNumber);
+					balanceData = rest.getMyBalance(accountNumber);
 				}
 			} catch (Exception e) {
 				balanceData.put("errors", e.getMessage());

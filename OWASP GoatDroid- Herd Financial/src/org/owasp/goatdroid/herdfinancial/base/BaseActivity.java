@@ -50,7 +50,8 @@ public class BaseActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.preferences:
-			Intent intent = new Intent(BaseActivity.this, PreferencesActivity.class);
+			Intent intent = new Intent(BaseActivity.this,
+					PreferencesActivity.class);
 			startActivity(intent);
 			return true;
 		case R.id.about:
@@ -81,9 +82,7 @@ public class BaseActivity extends Activity {
 			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
 
 			try {
-				String sessionToken = uidh.getSessionToken();
-				logoutInfo = rest.logOut(sessionToken);
-				uidh.clearSessionToken();
+				logoutInfo = rest.logOut();
 			} catch (Exception e) {
 				logoutInfo.put("errors", e.getMessage());
 				logoutInfo.put("success", "false");
