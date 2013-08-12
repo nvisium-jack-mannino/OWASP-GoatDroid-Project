@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.widget.Toast;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Utils {
 
@@ -89,6 +90,34 @@ public class Utils {
 		SharedPreferences.Editor editor = destinationInfo.edit();
 		editor.putString("proxyHost", host);
 		editor.putString("proxyPort", port);
+		editor.commit();
+	}
+
+	public void saveCredentials(Context context, String username,
+			String password) {
+
+		SharedPreferences credentials = context.getSharedPreferences(
+				"userinfo", Context.MODE_WORLD_READABLE);
+		SharedPreferences.Editor editor = credentials.edit();
+		editor.putString("username", username);
+		editor.putString("password", password);
+		editor.putBoolean("remember", true);
+		editor.commit();
+	}
+
+	static public void setInfo(Context context, String username,
+			String authToken, HashMap<String, String> preferences) {
+		SharedPreferences credentials = context.getSharedPreferences(
+				"userinfo", Context.MODE_WORLD_READABLE);
+		SharedPreferences.Editor editor = credentials.edit();
+		editor.putString("username", username);
+		editor.putString("authToken", authToken);
+		editor.putBoolean("isAdmin",
+				Boolean.parseBoolean(preferences.get("isAdmin")));
+		editor.putBoolean("autoCheckin",
+				Boolean.parseBoolean(preferences.get("autoCheckin")));
+		editor.putBoolean("isPublic",
+				Boolean.parseBoolean(preferences.get("isPublic")));
 		editor.commit();
 	}
 }

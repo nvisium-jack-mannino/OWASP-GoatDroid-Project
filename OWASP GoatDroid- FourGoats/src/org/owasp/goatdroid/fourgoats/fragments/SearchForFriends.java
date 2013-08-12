@@ -26,7 +26,7 @@ import org.owasp.goatdroid.fourgoats.adapter.SearchForFriendsAdapter;
 import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
-import org.owasp.goatdroid.fourgoats.rest.searchforfriends.SearchForFriendsRequest;
+import org.owasp.goatdroid.fourgoats.request.SearchForFriendsRequest;
 
 import android.content.Intent;
 import android.os.AsyncTask;

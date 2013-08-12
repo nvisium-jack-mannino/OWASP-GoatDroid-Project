@@ -19,7 +19,7 @@ package org.owasp.goatdroid.fourgoats.activities;
 import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.SSLCertificateValidation;
-import org.owasp.goatdroid.fourgoats.rest.login.LoginRequest;
+import org.owasp.goatdroid.fourgoats.request.LoginRequest;
 
 import android.app.Activity;
 import android.content.Context;

@@ -22,7 +22,7 @@ import java.util.HashMap;
 import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.activities.LoginActivity;
 import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
-import org.owasp.goatdroid.fourgoats.rest.rewards.RewardsRequest;
+import org.owasp.goatdroid.fourgoats.request.RewardsRequest;
 
 import android.content.Context;
 import android.content.Intent;

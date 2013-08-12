@@ -19,7 +19,7 @@ import java.util.HashMap;
 import org.owasp.goatdroid.fourgoats.base.BaseUnauthenticatedActivity;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
-import org.owasp.goatdroid.fourgoats.rest.register.RegisterRequest;
+import org.owasp.goatdroid.fourgoats.request.RegisterRequest;
 import org.owasp.goatdroid.fourgoats.R;
 import android.content.Context;
 import android.content.Intent;

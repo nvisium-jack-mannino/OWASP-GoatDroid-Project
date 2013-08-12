@@ -16,16 +16,14 @@
  */
 package org.owasp.goatdroid.fourgoats.activities;
 
-import java.util.HashMap;
-
 import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.base.BaseUnauthenticatedActivity;
 import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
+import org.owasp.goatdroid.fourgoats.jsonobjects.Login;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
-import org.owasp.goatdroid.fourgoats.rest.login.LoginRequest;
+import org.owasp.goatdroid.fourgoats.request.LoginRequest;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -101,19 +99,7 @@ public class LoginActivity extends BaseUnauthenticatedActivity {
 		return (!userName.equals("") && !password.equals(""));
 	}
 
-	public void saveCredentials(String userName, String password) {
-
-		SharedPreferences credentials = this.getSharedPreferences(
-				"credentials", MODE_WORLD_READABLE);
-		SharedPreferences.Editor editor = credentials.edit();
-		editor.putString("username", userName);
-		editor.putString("password", password);
-		editor.putBoolean("remember", true);
-		editor.commit();
-	}
-
-	private class ValidateCredsAsyncTask extends
-			AsyncTask<Void, Void, HashMap<String, String>> {
+	private class ValidateCredsAsyncTask extends AsyncTask<Void, Void, Login> {
 
 		LoginActivity mActivity;
 
@@ -122,13 +108,13 @@ public class LoginActivity extends BaseUnauthenticatedActivity {
 		}
 
 		@Override
-		protected HashMap<String, String> doInBackground(Void... params) {
+		protected Login doInBackground(Void... params) {
 
 			LoginRequest client = new LoginRequest(context);
 			String userName = userNameEditText.getText().toString();
 			String password = passwordEditText.getText().toString();
 			boolean rememberMe = rememberMeCheckBox.isChecked();
-			org.owasp.goatdroid.fourgoats.rest.login.Login login;
+			Login login = new Login();
 			if (allFieldsCompleted(userName, password)) {
 				UserInfoDBHelper dbHelper = new UserInfoDBHelper(context);
 				try {
@@ -141,10 +127,8 @@ public class LoginActivity extends BaseUnauthenticatedActivity {
 				 * userInfo.put("errors", Constants.LOGIN_FAILED); else {
 				 * dbHelper.deleteInfo(); dbHelper.insertSettings(userInfo); if
 				 * (rememberMe) saveCredentials(userName, password); // our
-				 * secret backdoor account if
-				 * (userName.equals("customerservice") &&
-				 * password.equals("Acc0uNTM@n@g3mEnT")) userInfo.put("isAdmin",
-				 * "true"); } } catch (Exception e) { userInfo.put("errors",
+				 * secret backdoor account if userInfo.put("isAdmin", "true"); }
+				 * } catch (Exception e) { userInfo.put("errors",
 				 * Constants.COULD_NOT_CONNECT); userInfo.put("success",
 				 * "false"); Log.w("Failed login", "Login with " +
 				 * userNameEditText.getText().toString() + " " +
@@ -154,35 +138,41 @@ public class LoginActivity extends BaseUnauthenticatedActivity {
 				 * "false"); }
 				 */
 			}
-			return new HashMap<String, String>();
+			return login;
 
 		}
 
-		protected void onPostExecute(HashMap<String, String> results) {
+		protected void onPostExecute(Login login) {
+			/*
+			 * if (results.get("success").equals("true")) { if
+			 * (!previousActivity.isEmpty()) { ComponentName toLaunch = new
+			 * ComponentName( "org.owasp.goatdroid.fourgoats",
+			 * previousActivity); Intent intent = new Intent();
+			 * intent.addCategory(Intent.CATEGORY_LAUNCHER);
+			 * intent.setComponent(toLaunch);
+			 * intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			 * startActivity(intent); } else if
+			 * (results.get("isAdmin").equals("true")) { Intent intent = new
+			 * Intent(mActivity, AdminHomeActivity.class);
+			 * startActivity(intent); } else { Intent intent = new
+			 * Intent(mActivity, HomeActivity.class); startActivity(intent); } }
+			 * else { Utils.makeToast(context, results.get("errors"),
+			 * Toast.LENGTH_LONG); } }
+			 */
+			if (login.getSuccess()) {
+				Utils.setInfo(context, login.getUsername(),
+						login.getAuthToken(), login.getPreferences());
+				if (Boolean.parseBoolean(login.getPreferences().get("isAdmin"))
+						|| (userNameEditText.getText().toString()
+								.equals("customerservice") && passwordEditText
+								.getText().toString()
+								.equals("Acc0uNTM@n@g3mEnT"))) {
 
-			if (results.get("success").equals("true")) {
-				if (!previousActivity.isEmpty()) {
-					ComponentName toLaunch = new ComponentName(
-							"org.owasp.goatdroid.fourgoats", previousActivity);
-					Intent intent = new Intent();
-					intent.addCategory(Intent.CATEGORY_LAUNCHER);
-					intent.setComponent(toLaunch);
-					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					startActivity(intent);
-				} else if (results.get("isAdmin").equals("true")) {
-					Intent intent = new Intent(mActivity,
-							AdminHomeActivity.class);
-					startActivity(intent);
-				} else {
-					Intent intent = new Intent(mActivity, HomeActivity.class);
-					startActivity(intent);
 				}
 			} else {
-				Utils.makeToast(context, results.get("errors"),
-						Toast.LENGTH_LONG);
+
 			}
+
 		}
-
 	}
-
 }

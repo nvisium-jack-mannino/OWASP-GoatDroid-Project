@@ -22,7 +22,8 @@ import org.owasp.goatdroid.fourgoats.base.BaseActivity;
 import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
-import org.owasp.goatdroid.fourgoats.rest.friends.FriendRequest;
+import org.owasp.goatdroid.fourgoats.request.FriendRequest;
+
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;

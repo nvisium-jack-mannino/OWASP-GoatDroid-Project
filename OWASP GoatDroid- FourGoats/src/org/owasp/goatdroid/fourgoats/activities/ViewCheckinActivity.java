@@ -24,7 +24,7 @@ import org.owasp.goatdroid.fourgoats.javascriptinterfaces.ViewCheckinJSInterface
 import org.owasp.goatdroid.fourgoats.javascriptinterfaces.WebViewJSInterface;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
-import org.owasp.goatdroid.fourgoats.rest.viewcheckin.ViewCheckinRequest;
+import org.owasp.goatdroid.fourgoats.request.ViewCheckinRequest;
 import org.owasp.goatdroid.fourgoats.R;
 import android.content.Context;
 import android.content.Intent;

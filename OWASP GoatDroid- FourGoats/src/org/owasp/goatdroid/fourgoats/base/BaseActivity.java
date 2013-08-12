@@ -28,7 +28,7 @@ import org.owasp.goatdroid.fourgoats.activities.ViewProfileActivity;
 import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
-import org.owasp.goatdroid.fourgoats.rest.login.LoginRequest;
+import org.owasp.goatdroid.fourgoats.request.LoginRequest;
 
 import android.content.Context;
 import android.content.Intent;
