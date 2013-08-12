@@ -16,26 +16,21 @@
  */
 package org.owasp.goatdroid.fourgoats.base;
 
-import java.util.HashMap;
-
 import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.activities.AboutActivity;
 import org.owasp.goatdroid.fourgoats.activities.AdminHomeActivity;
 import org.owasp.goatdroid.fourgoats.activities.HomeActivity;
-import org.owasp.goatdroid.fourgoats.activities.LoginActivity;
 import org.owasp.goatdroid.fourgoats.activities.PreferencesActivity;
 import org.owasp.goatdroid.fourgoats.activities.ViewProfileActivity;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
-import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.LoginRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -51,7 +46,8 @@ public class BaseActivity extends SherlockActivity {
 
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().setIcon(R.drawable.ic_main);
-		if (!(this instanceof HomeActivity) && !(this instanceof AdminHomeActivity)) {
+		if (!(this instanceof HomeActivity)
+				&& !(this instanceof AdminHomeActivity)) {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 				getActionBar().setHomeButtonEnabled(true);
 				getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -90,17 +86,15 @@ public class BaseActivity extends SherlockActivity {
 			finish();
 			return true;
 		} else if (itemId == R.id.preferences) {
-			Intent intent = new Intent(BaseActivity.this, PreferencesActivity.class);
+			Intent intent = new Intent(BaseActivity.this,
+					PreferencesActivity.class);
 			startActivity(intent);
 			return true;
 		} else if (itemId == R.id.viewMyProfile) {
 			Intent profileIntent = new Intent(BaseActivity.this,
 					ViewProfileActivity.class);
 			Bundle bundle = new Bundle();
-			UserInfoDBHelper profileUIDH = new UserInfoDBHelper(context);
-			String userName = profileUIDH.getUserName();
-			profileUIDH.close();
-			bundle.putString("userName", userName);
+			bundle.putString("userName", Utils.getUsername(context));
 			profileIntent.putExtras(bundle);
 			startActivity(profileIntent);
 			return true;
@@ -109,46 +103,23 @@ public class BaseActivity extends SherlockActivity {
 			task.execute(null, null);
 			return true;
 		} else if (itemId == R.id.about) {
-			Intent aboutIntent = new Intent(BaseActivity.this, AboutActivity.class);
+			Intent aboutIntent = new Intent(BaseActivity.this,
+					AboutActivity.class);
 			startActivity(aboutIntent);
 			return true;
 		}
 		return true;
 	}
 
-	public class LogOutAsyncTask extends
-			AsyncTask<Void, Void, HashMap<String, String>> {
-		protected HashMap<String, String> doInBackground(Void... params) {
+	public class LogOutAsyncTask extends AsyncTask<Void, Void, ResponseObject> {
+		protected ResponseObject doInBackground(Void... params) {
 
 			LoginRequest rest = new LoginRequest(context);
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
-			HashMap<String, String> logoutInfo = new HashMap<String, String>();
-
-			try {
-				logoutInfo = rest.logOut(uidh.getSessionToken());
-				uidh.deleteInfo();
-			} catch (Exception e) {
-				logoutInfo.put("errors", e.getMessage());
-				logoutInfo.put("success", "false");
-			} finally {
-				uidh.close();
-			}
-			return logoutInfo;
+			return rest.logOut();
 		}
 
-		public void onPostExecute(HashMap<String, String> results) {
-			if (results.get("success").equals("true")) {
-				Intent intent = new Intent(context, LoginActivity.class);
-				startActivity(intent);
-			} else if (results.get("errors").equals(Constants.INVALID_SESSION)) {
-				Utils.makeToast(context, Constants.INVALID_SESSION,
-						Toast.LENGTH_LONG);
-				Intent intent = new Intent(context, LoginActivity.class);
-				startActivity(intent);
-			} else {
-				Utils.makeToast(context, results.get("errors"),
-						Toast.LENGTH_LONG);
-			}
+		public void onPostExecute(ResponseObject response) {
+
 		}
 	}
 }

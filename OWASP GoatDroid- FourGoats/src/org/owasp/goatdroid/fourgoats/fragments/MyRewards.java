@@ -21,7 +21,6 @@ import java.util.HashMap;
 
 import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.activities.LoginActivity;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.request.RewardsRequest;
 
 import android.content.Context;
@@ -83,24 +82,16 @@ public class MyRewards extends SherlockFragment {
 		protected String[] doInBackground(Void... params) {
 
 			ArrayList<HashMap<String, String>> rewardData = new ArrayList<HashMap<String, String>>();
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
-			String sessionToken = uidh.getSessionToken();
-			uidh.close();
 			RewardsRequest rest = new RewardsRequest(context);
 			try {
-				if (sessionToken.equals("")) {
-					Intent intent = new Intent(getActivity(), LoginActivity.class);
-					startActivity(intent);
-					return new String[0];
 
-				} else {
-					rewardData = rest.getMyRewards(sessionToken);
-					if (rewardData.size() > 1)
-						return bindListView(rewardData);
-					else {
-						return new String[0];
-					}
+				rewardData = rest.getMyRewards();
+				if (rewardData.size() > 1)
+					return bindListView(rewardData);
+				else {
+					return new String[0];
 				}
+
 			} catch (Exception e) {
 				Intent intent = new Intent(getActivity(), LoginActivity.class);
 				startActivity(intent);

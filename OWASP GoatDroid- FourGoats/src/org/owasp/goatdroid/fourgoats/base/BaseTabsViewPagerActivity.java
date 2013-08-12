@@ -26,7 +26,6 @@ import org.owasp.goatdroid.fourgoats.activities.HomeActivity;
 import org.owasp.goatdroid.fourgoats.activities.LoginActivity;
 import org.owasp.goatdroid.fourgoats.activities.PreferencesActivity;
 import org.owasp.goatdroid.fourgoats.activities.ViewProfileActivity;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.LoginRequest;
@@ -192,10 +191,7 @@ public class BaseTabsViewPagerActivity extends SherlockFragmentActivity {
 			Intent profileIntent = new Intent(BaseTabsViewPagerActivity.this,
 					ViewProfileActivity.class);
 			Bundle bundle = new Bundle();
-			UserInfoDBHelper profileUIDH = new UserInfoDBHelper(context);
-			String userName = profileUIDH.getUserName();
-			profileUIDH.close();
-			bundle.putString("userName", userName);
+			bundle.putString("userName", Utils.getUsername(context));
 			profileIntent.putExtras(bundle);
 			startActivity(profileIntent);
 			return true;
@@ -217,19 +213,10 @@ public class BaseTabsViewPagerActivity extends SherlockFragmentActivity {
 		protected HashMap<String, String> doInBackground(Void... params) {
 
 			LoginRequest rest = new LoginRequest(context);
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
 			HashMap<String, String> logoutInfo = new HashMap<String, String>();
 
-			try {
-				logoutInfo = rest.logOut(uidh.getSessionToken());
-				uidh.deleteInfo();
-			} catch (Exception e) {
-				logoutInfo.put("errors", e.getMessage());
-				logoutInfo.put("success", "false");
-			} finally {
-				uidh.close();
-			}
-			return logoutInfo;
+			return rest.logOut();
+
 		}
 
 		public void onPostExecute(HashMap<String, String> results) {

@@ -17,9 +17,9 @@
 package org.owasp.goatdroid.fourgoats.activities;
 
 import java.util.HashMap;
+
 import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.base.BaseActivity;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.FriendRequest;
@@ -67,23 +67,14 @@ public class ViewFriendRequestActivity extends BaseActivity {
 		protected HashMap<String, String> doInBackground(Void... params) {
 
 			HashMap<String, String> responseInfo = new HashMap<String, String>();
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
 			FriendRequest rest = new FriendRequest(context);
 
 			try {
-				String sessionToken = uidh.getSessionToken();
-				if (sessionToken.equals("")) {
-					responseInfo.put("errors", Constants.INVALID_SESSION);
-					responseInfo.put("success", "false");
-				} else {
-					responseInfo = rest.acceptFriendRequest(sessionToken,
-							bundle.getString("userName"));
-				}
+				responseInfo = rest.acceptFriendRequest(bundle
+						.getString("userName"));
 			} catch (Exception e) {
 				responseInfo.put("errors", e.getMessage());
 				responseInfo.put("success", "false");
-			} finally {
-				uidh.close();
 			}
 			return responseInfo;
 		}
@@ -106,22 +97,16 @@ public class ViewFriendRequestActivity extends BaseActivity {
 		protected HashMap<String, String> doInBackground(Void... params) {
 
 			HashMap<String, String> responseInfo = new HashMap<String, String>();
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
 			FriendRequest rest = new FriendRequest(context);
 
 			try {
-				String sessionToken = uidh.getSessionToken();
-				if (sessionToken.equals("")) {
-					responseInfo.put("errors", Constants.INVALID_SESSION);
-				} else {
-					responseInfo = rest.denyFriendRequest(sessionToken,
-							bundle.getString("userName"));
-				}
+
+				responseInfo = rest.denyFriendRequest(bundle
+						.getString("userName"));
+
 			} catch (Exception e) {
 				responseInfo.put("errors", e.getMessage());
 				responseInfo.put("success", "false");
-			} finally {
-				uidh.close();
 			}
 			return responseInfo;
 		}

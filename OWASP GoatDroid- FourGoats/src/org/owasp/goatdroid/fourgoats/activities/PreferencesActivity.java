@@ -17,12 +17,13 @@
 package org.owasp.goatdroid.fourgoats.activities;
 
 import java.util.HashMap;
+
+import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.base.BaseActivity;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.PreferencesRequest;
-import org.owasp.goatdroid.fourgoats.R;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -58,24 +59,23 @@ public class PreferencesActivity extends BaseActivity {
 	public void launchHome(String isAdmin) {
 		Intent intent;
 		if (isAdmin.equals("true"))
-			intent = new Intent(PreferencesActivity.this, AdminHomeActivity.class);
+			intent = new Intent(PreferencesActivity.this,
+					AdminHomeActivity.class);
 		else
 			intent = new Intent(PreferencesActivity.this, HomeActivity.class);
 		startActivity(intent);
 	}
 
 	private class GetExistingPreferences extends
-			AsyncTask<Void, Void, HashMap<String, String>> {
-		protected HashMap<String, String> doInBackground(Void... params) {
+			AsyncTask<Void, Void, HashMap<String, Boolean>> {
+		protected HashMap<String, Boolean> doInBackground(Void... params) {
 
-			HashMap<String, String> preferencesData = new HashMap<String, String>();
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
-			String sessionToken = uidh.getSessionToken();
-			preferencesData = uidh.getPreferences();
-			uidh.close();
+			HashMap<String, Boolean> preferencesData = Utils
+					.getUserPreferences(context);
 
-			if (sessionToken.equals("")) {
-				Intent intent = new Intent(PreferencesActivity.this, LoginActivity.class);
+			if (Utils.getAuthToken(context).equals("")) {
+				Intent intent = new Intent(PreferencesActivity.this,
+						LoginActivity.class);
 				startActivity(intent);
 				return preferencesData;
 
@@ -106,24 +106,18 @@ public class PreferencesActivity extends BaseActivity {
 			AsyncTask<Void, Void, HashMap<String, String>> {
 		protected HashMap<String, String> doInBackground(Void... params) {
 
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
-			uidh.updatePreferences(Boolean.toString(isPublic.isChecked()),
-					Boolean.toString(autoCheckin.isChecked()));
 			PreferencesRequest rest = new PreferencesRequest(context);
 			HashMap<String, String> preferenceInfo = new HashMap<String, String>();
 
 			try {
-				String sessionToken = uidh.getSessionToken();
-				preferenceInfo = rest.updatePreferences(sessionToken,
+				Utils.setUserPreferences(context, autoCheckin.isChecked(),
+						isPublic.isChecked());
+				preferenceInfo = rest.updatePreferences(
 						Boolean.toString(isPublic.isChecked()),
 						Boolean.toString(autoCheckin.isChecked()));
-				preferenceInfo.put("isAdmin",
-						Boolean.toString(uidh.getIsAdmin()));
 			} catch (Exception e) {
 				preferenceInfo.put("errors", e.getMessage());
 				preferenceInfo.put("success", "false");
-			} finally {
-				uidh.close();
 			}
 			return preferenceInfo;
 		}

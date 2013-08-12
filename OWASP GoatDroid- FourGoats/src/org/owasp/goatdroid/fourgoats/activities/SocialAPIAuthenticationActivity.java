@@ -22,6 +22,7 @@ import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.LoginRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.Login;
 
 import android.app.Activity;
 import android.content.Context;
@@ -76,20 +77,13 @@ public class SocialAPIAuthenticationActivity extends Activity {
 			LoginRequest client = new LoginRequest(context);
 			String userName = userNameEditText.getText().toString();
 			String password = passwordEditText.getText().toString();
-			HashMap<String, String> userInfo = new HashMap<String, String>();
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
+			Login login = new Login();
 
 			try {
-				sessionToken = uidh.getSessionToken();
 
 				if (allFieldsCompleted(userName, password)) {
-					if (sessionToken.isEmpty() || sessionToken == null) {
-						userInfo.put("errors", Constants.INVALID_SESSION);
-						userInfo.put("success", "false");
-					} else {
-						userInfo = client.validateCredentialsAPI(userName,
-								password);
-					}
+
+					login = client.validateCredentialsAPI(userName, password);
 				} else {
 					if (sessionToken != null) {
 						isAuthenticated = true;

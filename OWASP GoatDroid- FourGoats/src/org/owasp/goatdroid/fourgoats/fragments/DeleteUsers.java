@@ -22,7 +22,6 @@ import java.util.HashMap;
 import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.activities.DoAdminDeleteUserActivity;
 import org.owasp.goatdroid.fourgoats.adapter.SearchForFriendsAdapter;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.AdminRequest;
@@ -103,27 +102,19 @@ public class DeleteUsers extends SherlockFragment {
 		protected String[] doInBackground(Void... params) {
 
 			ArrayList<HashMap<String, String>> userData = new ArrayList<HashMap<String, String>>();
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
-			String sessionToken = uidh.getSessionToken();
-			uidh.close();
 			AdminRequest rest = new AdminRequest(context);
 			try {
-				if (sessionToken.equals("")) {
-					Intent intent = new Intent(context, Login.class);
-					startActivity(intent);
-				} else {
-					userData = rest.getUsers(sessionToken);
-					if (userData.size() > 0) {
-						if (userData.get(0).get("success").equals("true")) {
-							return bindListView(userData);
-						} else
-							Utils.makeToast(context,
-									userData.get(1).get("errors"),
-									Toast.LENGTH_LONG);
-					} else {
-						Utils.makeToast(context, Constants.WEIRD_ERROR,
+
+				userData = rest.getUsers();
+				if (userData.size() > 0) {
+					if (userData.get(0).get("success").equals("true")) {
+						return bindListView(userData);
+					} else
+						Utils.makeToast(context, userData.get(1).get("errors"),
 								Toast.LENGTH_LONG);
-					}
+				} else {
+					Utils.makeToast(context, Constants.WEIRD_ERROR,
+							Toast.LENGTH_LONG);
 				}
 			} catch (Exception e) {
 				Intent intent = new Intent(context, Login.class);

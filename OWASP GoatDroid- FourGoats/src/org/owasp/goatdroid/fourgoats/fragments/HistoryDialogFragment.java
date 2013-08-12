@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.owasp.goatdroid.fourgoats.R;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.javascriptinterfaces.ViewCheckinJSInterface;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
@@ -135,26 +134,17 @@ public class HistoryDialogFragment extends SherlockDialogFragment {
 				Void... params) {
 
 			ArrayList<HashMap<String, String>> historyData = new ArrayList<HashMap<String, String>>();
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
-			String sessionToken = uidh.getSessionToken();
 			HistoryRequest rest = new HistoryRequest(context);
 			try {
-				if (sessionToken.equals("")) {
-					errors = Constants.INVALID_SESSION;
-				} else {
-					historyData = rest.getHistory(sessionToken);
-					if (historyData.get(0).get("success").equals("true")) {
-						htmlResponse = generateHistoryHTML(historyData);
-						success = true;
-					} else
-						errors = historyData.get(0).get("errors");
-				}
+				historyData = rest.getHistory();
+				if (historyData.get(0).get("success").equals("true")) {
+					htmlResponse = generateHistoryHTML(historyData);
+					success = true;
+				} else
+					errors = historyData.get(0).get("errors");
 			} catch (Exception e) {
 				errors = Constants.COULD_NOT_CONNECT;
-			} finally {
-				uidh.close();
 			}
-
 			return historyData;
 		}
 

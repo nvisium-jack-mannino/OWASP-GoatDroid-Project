@@ -22,7 +22,6 @@ import java.util.HashMap;
 import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.activities.LoginActivity;
 import org.owasp.goatdroid.fourgoats.activities.ViewFriendRequestActivity;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.FriendRequest;
@@ -103,34 +102,25 @@ public class PendingFriendRequests extends SherlockFragment {
 		protected String[] doInBackground(Void... params) {
 
 			ArrayList<HashMap<String, String>> pendingRequestsData = new ArrayList<HashMap<String, String>>();
-			UserInfoDBHelper uidh = new UserInfoDBHelper(getActivity());
-			String sessionToken = uidh.getSessionToken();
-			uidh.close();
 			FriendRequest rest = new FriendRequest(getActivity());
 			try {
-				if (sessionToken.equals("")) {
-					Intent intent = new Intent(getActivity(), LoginActivity.class);
-					startActivity(intent);
+
+				pendingRequestsData = rest.getPendingFriendRequests();
+				if (pendingRequestsData.size() > 0) {
+					if (pendingRequestsData.get(0).get("success")
+							.equals("true")) {
+						if (pendingRequestsData.size() > 1)
+							return bindListView(pendingRequestsData);
+						else
+							return new String[0];
+					} else {
+						Utils.makeToast(getActivity(), Constants.WEIRD_ERROR,
+								Toast.LENGTH_LONG);
+						return new String[0];
+					}
+				} else
 					return new String[0];
 
-				} else {
-					pendingRequestsData = rest
-							.getPendingFriendRequests(sessionToken);
-					if (pendingRequestsData.size() > 0) {
-						if (pendingRequestsData.get(0).get("success")
-								.equals("true")) {
-							if (pendingRequestsData.size() > 1)
-								return bindListView(pendingRequestsData);
-							else
-								return new String[0];
-						} else {
-							Utils.makeToast(getActivity(),
-									Constants.WEIRD_ERROR, Toast.LENGTH_LONG);
-							return new String[0];
-						}
-					} else
-						return new String[0];
-				}
 			} catch (Exception e) {
 				Intent intent = new Intent(getActivity(), LoginActivity.class);
 				startActivity(intent);

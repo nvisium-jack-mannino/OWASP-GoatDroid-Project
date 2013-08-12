@@ -17,14 +17,17 @@
 package org.owasp.goatdroid.fourgoats.activities;
 
 import java.util.HashMap;
+
+import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.base.BaseActivity;
 import org.owasp.goatdroid.fourgoats.db.CheckinDBHelper;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.AddVenueRequest;
 import org.owasp.goatdroid.fourgoats.request.CheckinRequest;
-import org.owasp.goatdroid.fourgoats.R;
+import org.owasp.goatdroid.fourgoats.responseobjects.BaseResponseObject;
+import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -85,59 +88,44 @@ public class AddVenueActivity extends BaseActivity {
 	}
 
 	private class AddVenueAsyncTask extends
-			AsyncTask<Void, Void, HashMap<String, String>> {
+			AsyncTask<Void, Void, ResponseObject> {
 
 		@Override
-		protected HashMap<String, String> doInBackground(Void... params) {
+		protected ResponseObject doInBackground(Void... params) {
 
-			UserInfoDBHelper dbHelper = new UserInfoDBHelper(context);
 			CheckinDBHelper checkinDBHelper = new CheckinDBHelper(context);
 			AddVenueRequest request = new AddVenueRequest(context);
-			HashMap<String, String> addVenueInfo = new HashMap<String, String>();
-			String sessionToken = "";
+			BaseResponseObject venue = new BaseResponseObject();
 
 			try {
-				sessionToken = dbHelper.getSessionToken();
-				if (sessionToken.equals(""))
-					addVenueInfo.put("errors", Constants.INVALID_SESSION);
-				else {
-					addVenueInfo = request.doAddVenue(sessionToken,
-							venueNameText.getText().toString(),
-							venueWebsiteText.getText().toString(),
-							bundle.getString("latitude"),
-							bundle.getString("longitude"));
-					if (addVenueInfo.get("success").equals("true")) {
-						CheckinRequest checkinRequest = new CheckinRequest(
-								context);
-						HashMap<String, String> checkinInfo = checkinRequest
-								.doCheckin(sessionToken,
-										bundle.getString("latitude"),
-										bundle.getString("longitude"));
 
-						if (checkinInfo.get("success").equals("true")) {
-							checkinInfo.put("latitude",
-									bundle.getString("latitude"));
-							checkinInfo.put("longitude",
+				venue = request.doAddVenue(venueNameText.getText().toString(),
+						venueWebsiteText.getText().toString(),
+						bundle.getString("latitude"),
+						bundle.getString("longitude"));
+				if (venue.isSuccess()) {
+					CheckinRequest checkinRequest = new CheckinRequest(context);
+					HashMap<String, String> checkinInfo = checkinRequest
+							.doCheckin(bundle.getString("latitude"),
 									bundle.getString("longitude"));
-							checkinDBHelper.insertCheckin(checkinInfo);
-							bundle.putString("checkinID",
-									checkinInfo.get("checkinID"));
-							bundle.putString("dateTime",
-									checkinInfo.get("dateTime"));
-						} else {
-							addVenueInfo.put("success", "false");
-							addVenueInfo.put("errors",
-									checkinInfo.get("errors"));
-						}
+
+					if (checkinInfo.get("success").equals("true")) {
+						checkinInfo.put("latitude",
+								bundle.getString("latitude"));
+						checkinInfo.put("longitude",
+								bundle.getString("longitude"));
+						checkinDBHelper.insertCheckin(checkinInfo);
+						bundle.putString("checkinID",
+								checkinInfo.get("checkinID"));
+						bundle.putString("dateTime",
+								checkinInfo.get("dateTime"));
 					}
 				}
-			} catch (Exception e) {
-				addVenueInfo.put("errors", e.getMessage());
+
 			} finally {
-				dbHelper.close();
 				checkinDBHelper.close();
 			}
-			return addVenueInfo;
+			return venue;
 		}
 
 		protected void onPostExecute(HashMap<String, String> results) {

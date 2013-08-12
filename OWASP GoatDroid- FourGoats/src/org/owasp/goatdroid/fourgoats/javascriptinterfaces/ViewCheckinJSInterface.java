@@ -17,9 +17,9 @@
 package org.owasp.goatdroid.fourgoats.javascriptinterfaces;
 
 import java.util.HashMap;
+
 import org.owasp.goatdroid.fourgoats.activities.DoCommentActivity;
 import org.owasp.goatdroid.fourgoats.activities.ViewCheckinActivity;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.CommentsRequest;
@@ -73,14 +73,10 @@ public class ViewCheckinJSInterface {
 			String venueWebsite, String dateTime, String latitude,
 			String longitude, String checkinID) {
 
-		UserInfoDBHelper uidh = new UserInfoDBHelper(mContext);
-		String sessionToken = uidh.getSessionToken();
-		uidh.close();
 		CommentsRequest rest = new CommentsRequest(mContext);
 
 		try {
-			HashMap<String, String> commentData = rest.removeComment(
-					sessionToken, commentID);
+			HashMap<String, String> commentData = rest.removeComment(commentID);
 			if (commentData.get("success").equals("true")) {
 				Utils.makeToast(mContext,
 						Constants.COMMENT_SUCCESSFULLY_REMOVED,

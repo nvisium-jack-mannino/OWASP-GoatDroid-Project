@@ -21,7 +21,6 @@ import java.util.HashMap;
 
 import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.activities.LoginActivity;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.javascriptinterfaces.ViewCheckinJSInterface;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
@@ -134,25 +133,17 @@ public class HistoryFragment extends SherlockFragment {
 				Void... params) {
 
 			ArrayList<HashMap<String, String>> historyData = new ArrayList<HashMap<String, String>>();
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
-			String sessionToken = uidh.getSessionToken();
 			HistoryRequest rest = new HistoryRequest(context);
 			try {
-				if (sessionToken.equals("")) {
-					errors = Constants.INVALID_SESSION;
-				} else {
-					historyData = rest.getHistory(sessionToken);
-					if (historyData.size() > 0) {
-						if (historyData.get(0).get("success").equals("true")) {
-							success = true;
-							htmlResponse = generateHistoryHTML(historyData);
-						}
+				historyData = rest.getHistory();
+				if (historyData.size() > 0) {
+					if (historyData.get(0).get("success").equals("true")) {
+						success = true;
+						htmlResponse = generateHistoryHTML(historyData);
 					}
 				}
 			} catch (Exception e) {
 				errors = Constants.COULD_NOT_CONNECT;
-			} finally {
-				uidh.close();
 			}
 
 			return historyData;

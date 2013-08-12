@@ -17,15 +17,16 @@
 package org.owasp.goatdroid.fourgoats.activities;
 
 import java.util.HashMap;
+
+import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.base.BaseActivity;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.javascriptinterfaces.SmsJSInterface;
 import org.owasp.goatdroid.fourgoats.javascriptinterfaces.ViewCheckinJSInterface;
 import org.owasp.goatdroid.fourgoats.javascriptinterfaces.WebViewJSInterface;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.ViewCheckinRequest;
-import org.owasp.goatdroid.fourgoats.R;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -160,13 +161,10 @@ public class ViewCheckinActivity extends BaseActivity {
 		protected HashMap<String, String> doInBackground(Void... params) {
 
 			HashMap<String, String> commentData = new HashMap<String, String>();
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
-			String sessionToken = uidh.getSessionToken();
 			ViewCheckinRequest rest = new ViewCheckinRequest(context);
 
 			try {
-				commentData = rest.getCheckin(sessionToken,
-						bundle.getString("checkinID"));
+				commentData = rest.getCheckin(bundle.getString("checkinID"));
 				if (commentData.get("success").equals("true")) {
 					commentData.put("htmlResponse",
 							generateViewCheckinHTML(commentData));
@@ -174,8 +172,6 @@ public class ViewCheckinActivity extends BaseActivity {
 			} catch (Exception e) {
 				commentData.put("errors", e.getMessage());
 				commentData.put("success", "false");
-			} finally {
-				uidh.close();
 			}
 			return commentData;
 		}

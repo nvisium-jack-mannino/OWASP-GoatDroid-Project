@@ -131,9 +131,49 @@ public class Utils {
 		return listString.toString();
 	}
 
+	static public String getUsername(Context context) {
+		return getPrefsString(context, "userinfo", "username");
+	}
+
+	static public String getAuthToken(Context context) {
+		return getPrefsString(context, "userinfo", "authToken");
+	}
+
+	static public boolean isAdmin(Context context) {
+		return getPrefsBoolean(context, "userinfo", "isAdmin");
+	}
+
 	static public boolean isAutoCheckin(Context context) {
+		return getPrefsBoolean(context, "userinfo", "autoCheckin");
+	}
+
+	static public boolean isPublic(Context context) {
+		return getPrefsBoolean(context, "userinfo", "isPublic");
+	}
+
+	static String getPrefsString(Context context, String file, String key) {
+		SharedPreferences info = context.getSharedPreferences(file,
+				Context.MODE_WORLD_READABLE);
+		return info.getString(key, "");
+	}
+
+	static boolean getPrefsBoolean(Context context, String file, String key) {
+		SharedPreferences info = context.getSharedPreferences(file,
+				Context.MODE_WORLD_READABLE);
+		return info.getBoolean(key, false);
+	}
+
+	static public void setUserPreferences(Context context, boolean autoCheckin,
+			boolean isPublic) {
+
+	}
+
+	static public HashMap<String, Boolean> getUserPreferences(Context context) {
+		HashMap<String, Boolean> preferences = new HashMap<String, Boolean>();
 		SharedPreferences info = context.getSharedPreferences("userinfo",
 				Context.MODE_WORLD_READABLE);
-		return info.getBoolean("autoCheckin", true);
+		preferences.put("isPublic", info.getBoolean("isPublic", true));
+		preferences.put("autoCheckin", info.getBoolean("autoCheckin", true));
+		return preferences;
 	}
 }

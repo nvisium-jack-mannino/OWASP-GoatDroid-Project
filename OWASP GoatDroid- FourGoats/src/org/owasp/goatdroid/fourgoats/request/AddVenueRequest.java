@@ -16,12 +16,12 @@
  */
 package org.owasp.goatdroid.fourgoats.request;
 
-import java.util.HashMap;
-
 import org.owasp.goatdroid.fourgoats.http.AuthenticatedRestClient;
 import org.owasp.goatdroid.fourgoats.http.RequestMethod;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.response.AddVenueResponse;
+import org.owasp.goatdroid.fourgoats.responseobjects.BaseResponseObject;
+import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 import android.content.Context;
 
@@ -36,9 +36,8 @@ public class AddVenueRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public HashMap<String, String> doAddVenue(String venueName,
-			String venueWebsite, String latitude, String longitude)
-			throws Exception {
+	public BaseResponseObject doAddVenue(String venueName, String venueWebsite,
+			String latitude, String longitude) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/fourgoats/api/v1/priv/venues/add");

@@ -37,7 +37,7 @@ public class LoginRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public Login isAuthTokenValid(String authToken) throws Exception {
+	public Login isAuthTokenValid() throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/fourgoats/api/v1/pub/login/check-session");
@@ -69,7 +69,7 @@ public class LoginRequest {
 		return LoginResponse.parseAPILoginResponse(client.getResponse());
 	}
 
-	public ResponseObject logOut(String sessionToken) throws Exception {
+	public ResponseObject logOut() throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/fourgoats/api/v1/pub/login/sign-out");

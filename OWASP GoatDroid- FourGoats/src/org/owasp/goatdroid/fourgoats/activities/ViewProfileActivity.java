@@ -70,29 +70,19 @@ public class ViewProfileActivity extends BaseActivity {
 		protected HashMap<String, String> doInBackground(Void... params) {
 
 			HashMap<String, String> profileInfo = new HashMap<String, String>();
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
-			String sessionToken = uidh.getSessionToken();
-			uidh.close();
 			FriendRequest rest = new FriendRequest(context);
 			try {
-				if (sessionToken.equals("")) {
-					profileInfo.put("errors", Constants.INVALID_SESSION);
-					profileInfo.put("success", "false");
-				} else {
-					profileInfo = rest.getProfile(sessionToken,
-							bundle.getString("userName"));
-					if (profileInfo.get("success").equals("true")) {
-						return profileInfo;
 
-					} else {
-						return profileInfo;
-					}
+				profileInfo = rest.getProfile(bundle.getString("userName"));
+				if (profileInfo.get("success").equals("true")) {
+					return profileInfo;
+
+				} else {
+					return profileInfo;
 				}
 			} catch (Exception e) {
 				profileInfo.put("errors", e.getMessage());
 				profileInfo.put("success", "false");
-			} finally {
-				uidh.close();
 			}
 			return profileInfo;
 		}
@@ -127,13 +117,10 @@ public class ViewProfileActivity extends BaseActivity {
 			HashMap<String, String> resultInfo = new HashMap<String, String>();
 
 			try {
-				resultInfo = rest.doFriendRequest(sessionToken,
-						bundle.getString("userName"));
+				resultInfo = rest.doFriendRequest(bundle.getString("userName"));
 			} catch (Exception e) {
 				resultInfo.put("errors", e.getMessage());
 				resultInfo.put("success", "false");
-			} finally {
-				uidh.close();
 			}
 			return resultInfo;
 		}

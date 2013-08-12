@@ -22,7 +22,6 @@ import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.activities.AddVenueActivity;
 import org.owasp.goatdroid.fourgoats.activities.ViewCheckinActivity;
 import org.owasp.goatdroid.fourgoats.db.CheckinDBHelper;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.CheckinRequest;
@@ -121,13 +120,11 @@ public class DoCheckin extends SherlockFragment {
 		@Override
 		protected HashMap<String, String> doInBackground(Void... params) {
 
-			UserInfoDBHelper dbHelper = new UserInfoDBHelper(context);
 			HashMap<String, String> checkinInfo = new HashMap<String, String>();
-			String sessionToken = dbHelper.getSessionToken();
 			CheckinRequest rest = new CheckinRequest(context);
 
 			try {
-				checkinInfo = rest.doCheckin(sessionToken, latitude, longitude);
+				checkinInfo = rest.doCheckin(latitude, longitude);
 
 				if (checkinInfo.get("success").equals("true")) {
 					CheckinDBHelper db = new CheckinDBHelper(context);
@@ -137,8 +134,6 @@ public class DoCheckin extends SherlockFragment {
 				}
 			} catch (Exception e) {
 				checkinInfo.put("errors", e.getMessage());
-			} finally {
-				dbHelper.close();
 			}
 			return checkinInfo;
 		}

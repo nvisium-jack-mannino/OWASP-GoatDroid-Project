@@ -16,8 +16,6 @@
  */
 package org.owasp.goatdroid.fourgoats.base;
 
-import java.util.HashMap;
-
 import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.activities.AboutActivity;
 import org.owasp.goatdroid.fourgoats.activities.AdminHomeActivity;
@@ -25,17 +23,15 @@ import org.owasp.goatdroid.fourgoats.activities.HomeActivity;
 import org.owasp.goatdroid.fourgoats.activities.LoginActivity;
 import org.owasp.goatdroid.fourgoats.activities.PreferencesActivity;
 import org.owasp.goatdroid.fourgoats.activities.ViewProfileActivity;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
-import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.LoginRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -84,18 +80,13 @@ public class BaseFragmentActivity extends SherlockFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int itemId = item.getItemId();
 		if (itemId == android.R.id.home) {
-			UserInfoDBHelper homeUIDH = new UserInfoDBHelper(context);
 			Intent homeIntent;
-			try {
-				if (homeUIDH.getIsAdmin())
-					homeIntent = new Intent(BaseFragmentActivity.this,
-							AdminHomeActivity.class);
-				else
-					homeIntent = new Intent(BaseFragmentActivity.this,
-							HomeActivity.class);
-			} finally {
-				homeUIDH.close();
-			}
+			if (Utils.isAdmin(context))
+				homeIntent = new Intent(BaseFragmentActivity.this,
+						AdminHomeActivity.class);
+			else
+				homeIntent = new Intent(BaseFragmentActivity.this,
+						HomeActivity.class);
 			startActivity(homeIntent);
 			return true;
 		} else if (itemId == R.id.preferences) {
@@ -107,10 +98,8 @@ public class BaseFragmentActivity extends SherlockFragmentActivity {
 			Intent profileIntent = new Intent(BaseFragmentActivity.this,
 					ViewProfileActivity.class);
 			Bundle bundle = new Bundle();
-			UserInfoDBHelper profileUIDH = new UserInfoDBHelper(context);
-			String userName = profileUIDH.getUserName();
-			profileUIDH.close();
-			bundle.putString("userName", userName);
+
+			bundle.putString("userName", Utils.getUsername(context));
 			profileIntent.putExtras(bundle);
 			startActivity(profileIntent);
 			return true;
@@ -127,39 +116,24 @@ public class BaseFragmentActivity extends SherlockFragmentActivity {
 		return true;
 	}
 
-	public class LogOutAsyncTask extends
-			AsyncTask<Void, Void, HashMap<String, String>> {
-		protected HashMap<String, String> doInBackground(Void... params) {
+	public class LogOutAsyncTask extends AsyncTask<Void, Void, ResponseObject> {
+		protected ResponseObject doInBackground(Void... params) {
 
 			LoginRequest rest = new LoginRequest(context);
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
-			HashMap<String, String> logoutInfo = new HashMap<String, String>();
-
-			try {
-				logoutInfo = rest.logOut(uidh.getSessionToken());
-				uidh.deleteInfo();
-			} catch (Exception e) {
-				logoutInfo.put("errors", e.getMessage());
-				logoutInfo.put("success", "false");
-			} finally {
-				uidh.close();
-			}
-			return logoutInfo;
+			return rest.logOut();
 		}
 
-		public void onPostExecute(HashMap<String, String> results) {
-			if (results.get("success").equals("true")) {
-				Intent intent = new Intent(context, LoginActivity.class);
-				startActivity(intent);
-			} else if (results.get("errors").equals(Constants.INVALID_SESSION)) {
-				Utils.makeToast(context, Constants.INVALID_SESSION,
-						Toast.LENGTH_LONG);
-				Intent intent = new Intent(context, LoginActivity.class);
-				startActivity(intent);
-			} else {
-				Utils.makeToast(context, results.get("errors"),
-						Toast.LENGTH_LONG);
-			}
+		public void onPostExecute(ResponseObject response) {
+			/*
+			 * if (results.get("success").equals("true")) { Intent intent = new
+			 * Intent(context, LoginActivity.class); startActivity(intent); }
+			 * else if (results.get("errors").equals(Constants.INVALID_SESSION))
+			 * { Utils.makeToast(context, Constants.INVALID_SESSION,
+			 * Toast.LENGTH_LONG); Intent intent = new Intent(context,
+			 * LoginActivity.class); startActivity(intent); } else {
+			 * Utils.makeToast(context, results.get("errors"),
+			 * Toast.LENGTH_LONG); }
+			 */
 		}
 	}
 }

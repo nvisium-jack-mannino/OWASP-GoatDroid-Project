@@ -17,12 +17,13 @@
 package org.owasp.goatdroid.fourgoats.activities;
 
 import java.util.HashMap;
+
+import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.base.BaseActivity;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.CommentsRequest;
-import org.owasp.goatdroid.fourgoats.R;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -72,16 +73,12 @@ public class DoCommentActivity extends BaseActivity {
 		protected HashMap<String, String> doInBackground(Void... params) {
 
 			HashMap<String, String> commentData = new HashMap<String, String>();
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
-			String sessionToken = uidh.getSessionToken();
 			CommentsRequest rest = new CommentsRequest(context);
 			try {
-				commentData = rest.addComment(sessionToken, commentEditText
-						.getText().toString(), bundle.getString("checkinID"));
+				commentData = rest.addComment(commentEditText.getText()
+						.toString(), bundle.getString("checkinID"));
 			} catch (Exception e) {
 				commentData.put("errors", e.getMessage());
-			} finally {
-				uidh.close();
 			}
 			return commentData;
 		}

@@ -17,9 +17,9 @@
 package org.owasp.goatdroid.fourgoats.activities;
 
 import java.util.HashMap;
+
 import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.base.BaseActivity;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.AdminRequest;
@@ -66,7 +66,8 @@ public class DoAdminPasswordResetActivity extends BaseActivity {
 	}
 
 	public void launchAdminHome(View v) {
-		Intent intent = new Intent(DoAdminPasswordResetActivity.this, AdminHomeActivity.class);
+		Intent intent = new Intent(DoAdminPasswordResetActivity.this,
+				AdminHomeActivity.class);
 		startActivity(intent);
 	}
 
@@ -85,24 +86,17 @@ public class DoAdminPasswordResetActivity extends BaseActivity {
 		protected HashMap<String, String> doInBackground(Void... params) {
 
 			HashMap<String, String> resultInfo = new HashMap<String, String>();
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
 
 			AdminRequest rest = new AdminRequest(context);
 			try {
-				String sessionToken = uidh.getSessionToken();
-				if (sessionToken.equals("")) {
-					resultInfo.put("errors", Constants.INVALID_SESSION);
-					resultInfo.put("success", "false");
-				} else
-					resultInfo = rest.resetUserPassword(sessionToken, bundle
-							.getString("userName"), passwordEditText.getText()
-							.toString());
+
+				resultInfo = rest.resetUserPassword(bundle
+						.getString("userName"), passwordEditText.getText()
+						.toString());
 
 			} catch (Exception e) {
 				resultInfo.put("errors", e.getMessage());
 				resultInfo.put("success", "false");
-			} finally {
-				uidh.close();
 			}
 			return resultInfo;
 		}

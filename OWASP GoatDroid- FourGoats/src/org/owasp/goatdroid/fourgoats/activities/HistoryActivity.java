@@ -18,13 +18,14 @@ package org.owasp.goatdroid.fourgoats.activities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.base.BaseActivity;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.javascriptinterfaces.ViewCheckinJSInterface;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.HistoryRequest;
-import org.owasp.goatdroid.fourgoats.R;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -123,28 +124,21 @@ public class HistoryActivity extends BaseActivity {
 				Void... params) {
 
 			ArrayList<HashMap<String, String>> historyData = new ArrayList<HashMap<String, String>>();
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
-
 			HistoryRequest rest = new HistoryRequest(context);
 			try {
-				String sessionToken = uidh.getSessionToken();
-				if (sessionToken.equals("")) {
-					errors = Constants.INVALID_SESSION;
-				} else {
-					historyData = rest.getUserHistory(sessionToken,
-							bundle.getString("userName"));
-					if (historyData.get(0).get("success").equals("true")) {
-						success = true;
-						htmlResponse = generateHistoryHTML(historyData);
-					} else
-						errors = historyData.get(0).get("errors");
-				}
-				if (uidh.getUserName().equals(bundle.getString("userName")))
+
+				historyData = rest.getUserHistory(bundle.getString("userName"));
+				if (historyData.get(0).get("success").equals("true")) {
+					success = true;
+					htmlResponse = generateHistoryHTML(historyData);
+				} else
+					errors = historyData.get(0).get("errors");
+
+				if (Utils.getUsername(context).equals(
+						bundle.getString("userName")))
 					isSelf = true;
 			} catch (Exception e) {
 				errors = Constants.COULD_NOT_CONNECT;
-			} finally {
-				uidh.close();
 			}
 			return historyData;
 		}

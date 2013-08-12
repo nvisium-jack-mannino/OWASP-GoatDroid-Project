@@ -17,9 +17,10 @@
 package org.owasp.goatdroid.fourgoats.activities;
 
 import org.owasp.goatdroid.fourgoats.R;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.SSLCertificateValidation;
+import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.LoginRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.Login;
 
 import android.app.Activity;
 import android.content.Context;
@@ -46,48 +47,45 @@ public class MainActivity extends Activity {
 		/*
 		 * Now, we make async calls
 		 */
-		CheckSessionToken check = new CheckSessionToken();
+		CheckAuthToken check = new CheckAuthToken();
 		check.execute(null, null);
 	}
 
-	private class CheckSessionToken extends AsyncTask<Void, Void, Boolean> {
+	private class CheckAuthToken extends AsyncTask<Void, Void, Boolean> {
 		protected Boolean doInBackground(Void... params) {
 
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
-			String sessionToken = uidh.getSessionToken();
-			if (sessionToken.equals("")) {
-				uidh.close();
-				Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+			String authToken = Utils.getAuthToken(context);
+			if (authToken.equals("")) {
+				Intent intent = new Intent(MainActivity.this,
+						LoginActivity.class);
 				startActivity(intent);
 				return false;
-
 			} else {
 				LoginRequest rest = new LoginRequest(context);
 				try {
-					if (rest.isSessionValid(sessionToken)) {
-						boolean isAdmin = uidh.getIsAdmin();
-						if (isAdmin) {
+					Login login = rest.isAuthTokenValid();
+					if (login.isSuccess()) {
+						if (Utils.isAdmin(context)) {
 							Intent intent = new Intent(MainActivity.this,
 									AdminHomeActivity.class);
 							startActivity(intent);
 						} else {
-							Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+							Intent intent = new Intent(MainActivity.this,
+									HomeActivity.class);
 							startActivity(intent);
 						}
 						return true;
 					} else {
-						uidh.deleteInfo();
-						Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+						Intent intent = new Intent(MainActivity.this,
+								LoginActivity.class);
 						startActivity(intent);
 						return false;
 					}
 				} catch (Exception e) {
-					uidh.close();
-					Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+					Intent intent = new Intent(MainActivity.this,
+							LoginActivity.class);
 					startActivity(intent);
 					return false;
-				} finally {
-					uidh.close();
 				}
 			}
 		}
