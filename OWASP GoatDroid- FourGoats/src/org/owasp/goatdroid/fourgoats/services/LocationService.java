@@ -47,10 +47,8 @@ public class LocationService extends Service {
 	public void onCreate() {
 
 		super.onCreate();
-		UserInfoDBHelper uidh = new UserInfoDBHelper(getApplicationContext());
-		String autoCheckin = uidh.getPreferences().get("autoCheckin");
 
-		if (autoCheckin.equals("true")) {
+		if (Utils.isAutoCheckin(getApplicationContext())) {
 			getLocation();
 			getLocationLoop();
 		} else

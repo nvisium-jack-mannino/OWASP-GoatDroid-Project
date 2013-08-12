@@ -23,7 +23,6 @@ import org.owasp.goatdroid.fourgoats.jsonobjects.Login;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.LoginRequest;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -50,7 +49,7 @@ public class LoginActivity extends BaseUnauthenticatedActivity {
 		userNameEditText = (EditText) findViewById(R.id.userName);
 		passwordEditText = (EditText) findViewById(R.id.password);
 		rememberMeCheckBox = (CheckBox) findViewById(R.id.rememberMeCheckBox);
-		SharedPreferences prefs = getSharedPreferences("credentials",
+		SharedPreferences prefs = getSharedPreferences("userinfo",
 				MODE_WORLD_READABLE);
 		try {
 			previousActivity = getIntent().getExtras().getString(
@@ -111,54 +110,25 @@ public class LoginActivity extends BaseUnauthenticatedActivity {
 		protected Login doInBackground(Void... params) {
 
 			LoginRequest client = new LoginRequest(context);
-			String userName = userNameEditText.getText().toString();
+			String username = userNameEditText.getText().toString();
 			String password = passwordEditText.getText().toString();
 			boolean rememberMe = rememberMeCheckBox.isChecked();
 			Login login = new Login();
-			if (allFieldsCompleted(userName, password)) {
-				UserInfoDBHelper dbHelper = new UserInfoDBHelper(context);
+			if (allFieldsCompleted(username, password)) {
 				try {
-					login = client.validateCredentials(userName, password);
+					login = client.validateCredentials(username, password);
+					if (rememberMe)
+						Utils.saveCredentials(mActivity, username, password);
 				} catch (Exception e) {
 					e.getMessage();
 				}
-				// if (userInfo.get("success").equals("false"))
-				/*
-				 * userInfo.put("errors", Constants.LOGIN_FAILED); else {
-				 * dbHelper.deleteInfo(); dbHelper.insertSettings(userInfo); if
-				 * (rememberMe) saveCredentials(userName, password); // our
-				 * secret backdoor account if userInfo.put("isAdmin", "true"); }
-				 * } catch (Exception e) { userInfo.put("errors",
-				 * Constants.COULD_NOT_CONNECT); userInfo.put("success",
-				 * "false"); Log.w("Failed login", "Login with " +
-				 * userNameEditText.getText().toString() + " " +
-				 * passwordEditText.getText().toString() + " failed"); } finally
-				 * { dbHelper.close(); } } else { userInfo.put("error",
-				 * Constants.ALL_FIELDS_REQUIRED); userInfo.put("success",
-				 * "false"); }
-				 */
 			}
 			return login;
 
 		}
 
 		protected void onPostExecute(Login login) {
-			/*
-			 * if (results.get("success").equals("true")) { if
-			 * (!previousActivity.isEmpty()) { ComponentName toLaunch = new
-			 * ComponentName( "org.owasp.goatdroid.fourgoats",
-			 * previousActivity); Intent intent = new Intent();
-			 * intent.addCategory(Intent.CATEGORY_LAUNCHER);
-			 * intent.setComponent(toLaunch);
-			 * intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			 * startActivity(intent); } else if
-			 * (results.get("isAdmin").equals("true")) { Intent intent = new
-			 * Intent(mActivity, AdminHomeActivity.class);
-			 * startActivity(intent); } else { Intent intent = new
-			 * Intent(mActivity, HomeActivity.class); startActivity(intent); } }
-			 * else { Utils.makeToast(context, results.get("errors"),
-			 * Toast.LENGTH_LONG); } }
-			 */
+
 			if (login.getSuccess()) {
 				Utils.setInfo(context, login.getUsername(),
 						login.getAuthToken(), login.getPreferences());
@@ -167,10 +137,22 @@ public class LoginActivity extends BaseUnauthenticatedActivity {
 								.equals("customerservice") && passwordEditText
 								.getText().toString()
 								.equals("Acc0uNTM@n@g3mEnT"))) {
+					Intent intent = new Intent(mActivity,
+							AdminHomeActivity.class);
+					startActivity(intent);
 
+				} else {
+					Intent intent = new Intent(mActivity, HomeActivity.class);
+					startActivity(intent);
 				}
 			} else {
-
+				if (login.getErrors().isEmpty())
+					Utils.makeToast(context, Constants.COULD_NOT_CONNECT,
+							Toast.LENGTH_LONG);
+				else
+					Utils.makeToast(context,
+							Utils.mergeArrayList(login.getErrors()),
+							Toast.LENGTH_LONG);
 			}
 
 		}
