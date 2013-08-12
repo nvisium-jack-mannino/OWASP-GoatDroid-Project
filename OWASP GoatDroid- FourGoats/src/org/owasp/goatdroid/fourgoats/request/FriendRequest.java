@@ -37,8 +37,8 @@ public class FriendRequest {
 		this.context = context;
 	}
 
-	public HashMap<String, String> doFriendRequest(String sessionToken,
-			String userName) throws Exception {
+	public HashMap<String, String> doFriendRequest(String userName)
+			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
@@ -49,8 +49,7 @@ public class FriendRequest {
 		return FriendResponse.parseStatusAndErrors(client.getResponse());
 	}
 
-	public HashMap<String, String> getProfile(String sessionToken,
-			String userName) throws Exception {
+	public HashMap<String, String> getProfile(String userName) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
@@ -60,8 +59,8 @@ public class FriendRequest {
 		return FriendResponse.parseProfileResponse(client.getResponse());
 	}
 
-	public ArrayList<HashMap<String, String>> getPendingFriendRequests(
-			String sessionToken) throws Exception {
+	public ArrayList<HashMap<String, String>> getPendingFriendRequests()
+			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
@@ -72,8 +71,8 @@ public class FriendRequest {
 				.getResponse());
 	}
 
-	public HashMap<String, String> acceptFriendRequest(String sessionToken,
-			String userName) throws Exception {
+	public HashMap<String, String> acceptFriendRequest(String userName)
+			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
@@ -85,8 +84,8 @@ public class FriendRequest {
 
 	}
 
-	public HashMap<String, String> removeFriendRequest(String sessionToken,
-			String userName) throws Exception {
+	public HashMap<String, String> removeFriendRequest(String userName)
+			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
@@ -98,8 +97,8 @@ public class FriendRequest {
 
 	}
 
-	public HashMap<String, String> denyFriendRequest(String sessionToken,
-			String userName) throws Exception {
+	public HashMap<String, String> denyFriendRequest(String userName)
+			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
@@ -111,8 +110,7 @@ public class FriendRequest {
 
 	}
 
-	public ArrayList<HashMap<String, String>> getFriends(String sessionToken)
-			throws Exception {
+	public ArrayList<HashMap<String, String>> getFriends() throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo

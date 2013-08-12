@@ -36,8 +36,8 @@ public class ViewCheckinRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public HashMap<String, String> getCheckin(String sessionToken,
-			String checkinID) throws Exception {
+	public HashMap<String, String> getCheckin(String checkinID)
+			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/fourgoats/api/v1/priv/comments/get/"

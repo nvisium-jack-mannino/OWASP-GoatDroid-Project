@@ -36,8 +36,8 @@ public class CheckinRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public HashMap<String, String> doCheckin(String sessionToken,
-			String latitude, String longitude) throws Exception {
+	public HashMap<String, String> doCheckin(String latitude, String longitude)
+			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/fourgoats/api/v1/priv/checkin");

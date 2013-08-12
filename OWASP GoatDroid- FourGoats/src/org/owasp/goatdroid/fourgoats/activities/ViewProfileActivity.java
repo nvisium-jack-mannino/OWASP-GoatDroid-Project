@@ -17,12 +17,13 @@
 package org.owasp.goatdroid.fourgoats.activities;
 
 import java.util.HashMap;
+
+import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.base.BaseActivity;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.FriendRequest;
-import org.owasp.goatdroid.fourgoats.R;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -124,10 +125,8 @@ public class ViewProfileActivity extends BaseActivity {
 
 			FriendRequest rest = new FriendRequest(context);
 			HashMap<String, String> resultInfo = new HashMap<String, String>();
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
 
 			try {
-				String sessionToken = uidh.getSessionToken();
 				resultInfo = rest.doFriendRequest(sessionToken,
 						bundle.getString("userName"));
 			} catch (Exception e) {

@@ -36,8 +36,8 @@ public class PreferencesRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public HashMap<String, String> updatePreferences(String sessionToken,
-			String isPublic, String autoCheckin) throws Exception {
+	public HashMap<String, String> updatePreferences(String isPublic,
+			String autoCheckin) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo

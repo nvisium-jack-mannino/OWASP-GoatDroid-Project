@@ -37,8 +37,7 @@ public class SearchForFriendsRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public ArrayList<HashMap<String, String>> getUsers(String sessionToken)
-			throws Exception {
+	public ArrayList<HashMap<String, String>> getUsers() throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo

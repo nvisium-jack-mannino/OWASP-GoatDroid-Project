@@ -37,8 +37,7 @@ public class AdminRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public HashMap<String, String> deleteUser(String sessionToken,
-			String userName) throws Exception {
+	public HashMap<String, String> deleteUser(String userName) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/fourgoats/api/v1/priv/admin/delete_user");
@@ -48,8 +47,8 @@ public class AdminRequest {
 		return AdminResponse.parseStatusAndErrors(client.getResponse());
 	}
 
-	public HashMap<String, String> resetUserPassword(String sessionToken,
-			String userName, String newPassword) throws Exception {
+	public HashMap<String, String> resetUserPassword(String userName,
+			String newPassword) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
@@ -61,8 +60,7 @@ public class AdminRequest {
 		return AdminResponse.parseStatusAndErrors(client.getResponse());
 	}
 
-	public ArrayList<HashMap<String, String>> getUsers(String sessionToken)
-			throws Exception {
+	public ArrayList<HashMap<String, String>> getUsers() throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/fourgoats/api/v1/priv/admin/get_users");

@@ -36,8 +36,8 @@ public class CommentsRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public HashMap<String, String> getComments(String sessionToken,
-			String checkinID) throws Exception {
+	public HashMap<String, String> getComments(String checkinID)
+			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/fourgoats/api/v1/priv/comments/get");
@@ -47,8 +47,8 @@ public class CommentsRequest {
 		return CommentsResponse.parseGetCommentsResponse(client.getResponse());
 	}
 
-	public HashMap<String, String> addComment(String sessionToken,
-			String comment, String checkinID) throws Exception {
+	public HashMap<String, String> addComment(String comment, String checkinID)
+			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/fourgoats/api/v1/priv/comments/add");
@@ -59,8 +59,8 @@ public class CommentsRequest {
 		return CommentsResponse.parseStatusAndErrors(client.getResponse());
 	}
 
-	public HashMap<String, String> removeComment(String sessionToken,
-			String commentID) throws Exception {
+	public HashMap<String, String> removeComment(String commentID)
+			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/fourgoats/api/v1/priv/comments/remove");

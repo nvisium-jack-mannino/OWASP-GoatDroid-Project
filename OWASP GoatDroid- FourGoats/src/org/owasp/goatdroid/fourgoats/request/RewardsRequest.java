@@ -37,8 +37,7 @@ public class RewardsRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public ArrayList<HashMap<String, String>> getMyRewards(String sessionToken)
-			throws Exception {
+	public ArrayList<HashMap<String, String>> getMyRewards() throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/fourgoats/api/v1/priv/rewards/my-rewards");
@@ -48,8 +47,7 @@ public class RewardsRequest {
 		return RewardsResponse.parseRewardsResponse(client.getResponse());
 	}
 
-	public ArrayList<HashMap<String, String>> getAllRewards(String sessionToken)
-			throws Exception {
+	public ArrayList<HashMap<String, String>> getAllRewards() throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
