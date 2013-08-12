@@ -25,8 +25,7 @@ import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.AddVenueRequest;
 import org.owasp.goatdroid.fourgoats.request.CheckinRequest;
-import org.owasp.goatdroid.fourgoats.responseobjects.BaseResponseObject;
-import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
+import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
 
 import android.content.Context;
 import android.content.Intent;
@@ -88,14 +87,14 @@ public class AddVenueActivity extends BaseActivity {
 	}
 
 	private class AddVenueAsyncTask extends
-			AsyncTask<Void, Void, ResponseObject> {
+			AsyncTask<Void, Void, GenericResponseObject> {
 
 		@Override
-		protected ResponseObject doInBackground(Void... params) {
+		protected GenericResponseObject doInBackground(Void... params) {
 
 			CheckinDBHelper checkinDBHelper = new CheckinDBHelper(context);
 			AddVenueRequest request = new AddVenueRequest(context);
-			ResponseObject venue = new BaseResponseObject();
+			GenericResponseObject venue = new GenericResponseObject();
 
 			try {
 
@@ -103,7 +102,7 @@ public class AddVenueActivity extends BaseActivity {
 						venueWebsiteText.getText().toString(),
 						bundle.getString("latitude"),
 						bundle.getString("longitude"));
-				if (((BaseResponseObject) venue).isSuccess()) {
+				if (venue.isSuccess()) {
 					CheckinRequest checkinRequest = new CheckinRequest(context);
 					HashMap<String, String> checkinInfo = checkinRequest
 							.doCheckin(bundle.getString("latitude"),
@@ -130,21 +129,18 @@ public class AddVenueActivity extends BaseActivity {
 			return venue;
 		}
 
-		protected void onPostExecute(HashMap<String, String> results) {
-			if (results.get("success").equals("true")) {
-				bundle.putString("venueName", venueNameText.getText()
-						.toString());
-				bundle.putString("venueWebsite", venueWebsiteText.getText()
-						.toString());
-				launchViewCheckin();
-			} else if (results.get("errors").equals(Constants.INVALID_SESSION)) {
-				Utils.makeToast(context, Constants.INVALID_SESSION,
-						Toast.LENGTH_LONG);
-				launchLogin();
-			} else {
-				Utils.makeToast(context, results.get("errors"),
-						Toast.LENGTH_LONG);
-			}
+		protected void onPostExecute(GenericResponseObject response) {
+			/*
+			 * if (results.get("success").equals("true")) {
+			 * bundle.putString("venueName", venueNameText.getText()
+			 * .toString()); bundle.putString("venueWebsite",
+			 * venueWebsiteText.getText() .toString()); launchViewCheckin(); }
+			 * else if (results.get("errors").equals(Constants.INVALID_SESSION))
+			 * { Utils.makeToast(context, Constants.INVALID_SESSION,
+			 * Toast.LENGTH_LONG); launchLogin(); } else {
+			 * Utils.makeToast(context, results.get("errors"),
+			 * Toast.LENGTH_LONG); } }
+			 */
 		}
 	}
 }

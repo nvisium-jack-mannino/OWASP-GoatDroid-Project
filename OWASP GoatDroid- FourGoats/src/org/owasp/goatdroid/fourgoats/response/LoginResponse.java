@@ -16,8 +16,8 @@
  */
 package org.owasp.goatdroid.fourgoats.response;
 
+import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
 import org.owasp.goatdroid.fourgoats.responseobjects.Login;
-import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 public class LoginResponse extends BaseResponse {
 
@@ -29,7 +29,7 @@ public class LoginResponse extends BaseResponse {
 		return (Login) parseJsonResponse(response, Login.class);
 	}
 
-	static public ResponseObject isAuthTokenValid(String response) {
+	static public GenericResponseObject isAuthTokenValid(String response) {
 		return getSuccessAndErrors(response);
 	}
 }

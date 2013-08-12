@@ -16,11 +16,12 @@
  */
 package org.owasp.goatdroid.fourgoats.response;
 
+import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
 import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 public class AddVenueResponse extends BaseResponse {
 
-	static public ResponseObject parseAddVenueResponse(String response) {
+	static public GenericResponseObject parseAddVenueResponse(String response) {
 
 		return getSuccessAndErrors(response);
 	}

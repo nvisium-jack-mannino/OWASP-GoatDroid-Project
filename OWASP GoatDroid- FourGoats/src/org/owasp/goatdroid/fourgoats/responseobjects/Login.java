@@ -2,7 +2,7 @@ package org.owasp.goatdroid.fourgoats.responseobjects;
 
 import java.util.HashMap;
 
-public class Login extends BaseResponseObject {
+public class Login extends GenericResponseObject {
 
 	String username;
 	String authToken;

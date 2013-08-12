@@ -25,7 +25,7 @@ import org.owasp.goatdroid.fourgoats.activities.PreferencesActivity;
 import org.owasp.goatdroid.fourgoats.activities.ViewProfileActivity;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.LoginRequest;
-import org.owasp.goatdroid.fourgoats.responseobjects.BaseResponseObject;
+import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
 import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 import android.content.Context;
@@ -117,8 +117,8 @@ public class BaseFragmentActivity extends SherlockFragmentActivity {
 		return true;
 	}
 
-	public class LogOutAsyncTask extends AsyncTask<Void, Void, ResponseObject> {
-		protected ResponseObject doInBackground(Void... params) {
+	public class LogOutAsyncTask extends AsyncTask<Void, Void, GenericResponseObject> {
+		protected GenericResponseObject doInBackground(Void... params) {
 
 			LoginRequest rest = new LoginRequest(context);
 
@@ -128,7 +128,7 @@ public class BaseFragmentActivity extends SherlockFragmentActivity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return new BaseResponseObject();
+			return new GenericResponseObject();
 		}
 
 		public void onPostExecute(ResponseObject response) {
