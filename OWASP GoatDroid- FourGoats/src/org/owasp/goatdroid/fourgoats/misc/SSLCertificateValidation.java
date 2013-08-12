@@ -1,4 +1,4 @@
-package org.owasp.goatdroid.fourgoats.rest.login;
+package org.owasp.goatdroid.fourgoats.misc;
 
 import javax.net.ssl.*;
 import java.security.cert.CertificateException;

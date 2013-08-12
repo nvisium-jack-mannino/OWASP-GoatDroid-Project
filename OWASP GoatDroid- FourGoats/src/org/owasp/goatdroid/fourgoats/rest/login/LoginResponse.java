@@ -17,25 +17,23 @@
 package org.owasp.goatdroid.fourgoats.rest.login;
 
 import java.util.HashMap;
-import org.json.JSONArray;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.owasp.goatdroid.fourgoats.base.ResponseBase;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class LoginResponse extends ResponseBase {
 
 	// static public HashMap<String, String> parseLoginResponse(String response)
 	// {
 	static public Login parseLoginResponse(String response) {
+		Gson gson = new GsonBuilder().create();
+		Login r = gson.fromJson(response, Login.class);
+		return r;
 
-		ObjectMapper objectMapper = new ObjectMapper();
-		Login login =  objectMapper.convertValue(response, Login.class);
-		return login;
 		/*
 		 * JSONObject json; HashMap<String, String> results = new
 		 * HashMap<String, String>();

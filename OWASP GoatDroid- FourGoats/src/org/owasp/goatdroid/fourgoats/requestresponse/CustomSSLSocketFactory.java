@@ -18,16 +18,17 @@ package org.owasp.goatdroid.fourgoats.requestresponse;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.net.URI;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
+
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.PlainSocketFactory;
@@ -38,12 +39,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.client.ClientHttpRequest;
-import org.springframework.http.client.ClientHttpRequestFactory;
 
 //Inspired from here: http://stackoverflow.com/questions/2642777/trusting-all-certificates-using-httpclient-over-https
-public class CustomSSLSocketFactory extends SSLSocketFactory implements ClientHttpRequestFactory {
+public class CustomSSLSocketFactory extends SSLSocketFactory  {
 	SSLContext sslContext = SSLContext.getInstance("TLS");
 
 	public CustomSSLSocketFactory(KeyStore truststore)
@@ -110,10 +108,5 @@ public class CustomSSLSocketFactory extends SSLSocketFactory implements ClientHt
 		}
 	}
 
-	@Override
-	public ClientHttpRequest createRequest(URI arg0, HttpMethod arg1)
-			throws IOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 }

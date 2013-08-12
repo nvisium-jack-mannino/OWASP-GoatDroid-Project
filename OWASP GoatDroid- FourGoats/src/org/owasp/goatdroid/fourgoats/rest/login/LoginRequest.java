@@ -16,37 +16,14 @@
  */
 package org.owasp.goatdroid.fourgoats.rest.login;
 
-import java.net.Proxy;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
 
-import javax.net.SocketFactory;
-import javax.net.ssl.HttpsURLConnection;
-
-import org.apache.http.HttpHost;
-import org.apache.http.client.HttpClient;
-import org.apache.http.conn.params.ConnRoutePNames;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.requestresponse.AuthenticatedRestClient;
 import org.owasp.goatdroid.fourgoats.requestresponse.RequestMethod;
 import org.owasp.goatdroid.fourgoats.requestresponse.RestClient;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.ClientHttpRequestFactory;
-import org.springframework.http.client.CommonsClientHttpRequestFactory;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
 import android.content.Context;
-import android.net.SSLCertificateSocketFactory;
 
 public class LoginRequest {
 
@@ -99,49 +76,5 @@ public class LoginRequest {
 		client.Execute(RequestMethod.POST, context);
 
 		return LoginResponse.parseStatusAndErrors(client.getResponse());
-	}
-
-	public void testLogin() {
-		HttpHeaders requestHeaders = new HttpHeaders();
-		requestHeaders.setAccept(Collections.singletonList(new MediaType(
-				"application", "json")));
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("username", "goatdroid");
-		map.put("password", "goatdroid");
-		HttpEntity<?> requestEntity = new HttpEntity<Object>(map,
-				requestHeaders);
-		// Create a new RestTemplate instance
-		RestTemplate restTemplate = new RestTemplate();
-
-		// Add the Jackson message converter
-		restTemplate.getMessageConverters().add(
-				new MappingJackson2HttpMessageConverter());
-
-		/*
-		 * KeyStore trustStore; try { trustStore =
-		 * KeyStore.getInstance(KeyStore.getDefaultType());
-		 * trustStore.load(null, null); restTemplate.setRequestFactory(new
-		 * CustomSSLSocketFactory( trustStore)); } catch (KeyStoreException e1)
-		 * { // TODO Auto-generated catch block e1.printStackTrace(); } catch
-		 * (KeyManagementException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); } catch (UnrecoverableKeyException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); } catch
-		 * (NoSuchAlgorithmException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); } catch (java.security.cert.CertificateException
-		 * e) { // TODO Auto-generated catch block e.printStackTrace(); } catch
-		 * (IOException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); }
-		 */
-
-		/*try {
-			ResponseEntity<Login[]> responseEntity = restTemplate
-					.exchange(
-							"http://192.168.1.123:10000/fourgoats/api/v1/pub/login/authenticate",
-							HttpMethod.POST, requestEntity, Login[].class);
-			Login[] login = responseEntity.getBody();
-			login.getClass();
-		} catch (RestClientException e) {
-			e.getMessage();
-		}*/
 	}
 }

@@ -1,5 +1,6 @@
 package org.owasp.goatdroid.fourgoats.rest.login;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Login {
@@ -12,7 +13,7 @@ public class Login {
 	String authToken;
 	boolean success;
 	public HashMap<String, String> preferences;
-	String errors;
+	ArrayList<String> errors;
 
 	public Login() {
 
@@ -50,11 +51,11 @@ public class Login {
 		this.preferences = preferences;
 	}
 
-	public String getErrors() {
+	public ArrayList<String> getErrors() {
 		return errors;
 	}
 
-	public void setErrors(String errors) {
+	public void setErrors(ArrayList<String> errors) {
 		this.errors = errors;
 	}
 }
