@@ -17,8 +17,8 @@
 package org.owasp.goatdroid.fourgoats.activities;
 
 import java.util.HashMap;
+
 import org.owasp.goatdroid.fourgoats.R;
-import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.LoginRequest;
@@ -29,7 +29,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -68,40 +67,25 @@ public class SocialAPIAuthenticationActivity extends Activity {
 		startActivity(intent);
 	}
 
-	private class AuthenticateAsyncTask extends
-			AsyncTask<Void, Void, HashMap<String, String>> {
+	private class AuthenticateAsyncTask extends AsyncTask<Void, Void, Login> {
 
 		@Override
-		protected HashMap<String, String> doInBackground(Void... params) {
+		protected Login doInBackground(Void... params) {
 
 			LoginRequest client = new LoginRequest(context);
 			String userName = userNameEditText.getText().toString();
 			String password = passwordEditText.getText().toString();
 			Login login = new Login();
 
-			try {
-
-				if (allFieldsCompleted(userName, password)) {
-
+			if (allFieldsCompleted(userName, password))
+				try {
 					login = client.validateCredentialsAPI(userName, password);
-				} else {
-					if (sessionToken != null) {
-						isAuthenticated = true;
-						userInfo.put("success", "true");
-					} else {
-						userInfo.put("success", "false");
-						userInfo.put("errors", Constants.INVALID_SESSION);
-					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-			} catch (Exception e) {
-				userInfo.put("errors", e.getMessage());
-				userInfo.put("success", "false");
-				Log.w("Failed login", "Login with " + userName + " " + password
-						+ " failed");
-			} finally {
-				uidh.close();
-			}
-			return userInfo;
+
+			return login;
 		}
 
 		protected void onPostExecute(HashMap<String, String> results) {

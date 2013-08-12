@@ -95,7 +95,7 @@ public class AddVenueActivity extends BaseActivity {
 
 			CheckinDBHelper checkinDBHelper = new CheckinDBHelper(context);
 			AddVenueRequest request = new AddVenueRequest(context);
-			BaseResponseObject venue = new BaseResponseObject();
+			ResponseObject venue = new BaseResponseObject();
 
 			try {
 
@@ -103,7 +103,7 @@ public class AddVenueActivity extends BaseActivity {
 						venueWebsiteText.getText().toString(),
 						bundle.getString("latitude"),
 						bundle.getString("longitude"));
-				if (venue.isSuccess()) {
+				if (((BaseResponseObject) venue).isSuccess()) {
 					CheckinRequest checkinRequest = new CheckinRequest(context);
 					HashMap<String, String> checkinInfo = checkinRequest
 							.doCheckin(bundle.getString("latitude"),
@@ -121,6 +121,8 @@ public class AddVenueActivity extends BaseActivity {
 								checkinInfo.get("dateTime"));
 					}
 				}
+
+			} catch (Exception e) {
 
 			} finally {
 				checkinDBHelper.close();

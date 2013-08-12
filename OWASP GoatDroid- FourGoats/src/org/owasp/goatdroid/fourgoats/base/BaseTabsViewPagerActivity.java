@@ -29,6 +29,8 @@ import org.owasp.goatdroid.fourgoats.activities.ViewProfileActivity;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.LoginRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.BaseResponseObject;
+import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 import android.content.Context;
 import android.content.Intent;
@@ -168,18 +170,15 @@ public class BaseTabsViewPagerActivity extends SherlockFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int itemId = item.getItemId();
 		if (itemId == android.R.id.home) {
-			UserInfoDBHelper homeUIDH = new UserInfoDBHelper(context);
 			Intent homeIntent;
-			try {
-				if (homeUIDH.getIsAdmin())
-					homeIntent = new Intent(BaseTabsViewPagerActivity.this,
-							AdminHomeActivity.class);
-				else
-					homeIntent = new Intent(BaseTabsViewPagerActivity.this,
-							HomeActivity.class);
-			} finally {
-				homeUIDH.close();
-			}
+
+			if (Utils.isAdmin(context))
+				homeIntent = new Intent(BaseTabsViewPagerActivity.this,
+						AdminHomeActivity.class);
+			else
+				homeIntent = new Intent(BaseTabsViewPagerActivity.this,
+						HomeActivity.class);
+
 			startActivity(homeIntent);
 			return true;
 		} else if (itemId == R.id.preferences) {
@@ -208,14 +207,18 @@ public class BaseTabsViewPagerActivity extends SherlockFragmentActivity {
 		return true;
 	}
 
-	public class LogOutAsyncTask extends
-			AsyncTask<Void, Void, HashMap<String, String>> {
-		protected HashMap<String, String> doInBackground(Void... params) {
+	public class LogOutAsyncTask extends AsyncTask<Void, Void, ResponseObject> {
+		protected ResponseObject doInBackground(Void... params) {
 
 			LoginRequest rest = new LoginRequest(context);
-			HashMap<String, String> logoutInfo = new HashMap<String, String>();
 
-			return rest.logOut();
+			try {
+				return rest.logOut();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return new BaseResponseObject();
 
 		}
 

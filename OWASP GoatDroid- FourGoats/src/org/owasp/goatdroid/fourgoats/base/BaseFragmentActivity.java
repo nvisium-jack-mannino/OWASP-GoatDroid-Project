@@ -25,6 +25,7 @@ import org.owasp.goatdroid.fourgoats.activities.PreferencesActivity;
 import org.owasp.goatdroid.fourgoats.activities.ViewProfileActivity;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.LoginRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.BaseResponseObject;
 import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 import android.content.Context;
@@ -120,7 +121,14 @@ public class BaseFragmentActivity extends SherlockFragmentActivity {
 		protected ResponseObject doInBackground(Void... params) {
 
 			LoginRequest rest = new LoginRequest(context);
-			return rest.logOut();
+
+			try {
+				return rest.logOut();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return new BaseResponseObject();
 		}
 
 		public void onPostExecute(ResponseObject response) {

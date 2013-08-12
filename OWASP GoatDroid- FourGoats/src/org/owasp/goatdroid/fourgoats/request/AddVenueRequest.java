@@ -20,7 +20,6 @@ import org.owasp.goatdroid.fourgoats.http.AuthenticatedRestClient;
 import org.owasp.goatdroid.fourgoats.http.RequestMethod;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.response.AddVenueResponse;
-import org.owasp.goatdroid.fourgoats.responseobjects.BaseResponseObject;
 import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 import android.content.Context;
@@ -36,7 +35,7 @@ public class AddVenueRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public BaseResponseObject doAddVenue(String venueName, String venueWebsite,
+	public ResponseObject doAddVenue(String venueName, String venueWebsite,
 			String latitude, String longitude) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
