@@ -30,7 +30,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ViewFriendRequest extends BaseActivity {
+public class ViewFriendRequestActivity extends BaseActivity {
 
 	Context context;
 	Bundle bundle;

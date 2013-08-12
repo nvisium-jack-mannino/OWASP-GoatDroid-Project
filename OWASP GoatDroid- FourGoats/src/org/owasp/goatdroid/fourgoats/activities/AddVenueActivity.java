@@ -33,7 +33,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class AddVenue extends BaseActivity {
+public class AddVenueActivity extends BaseActivity {
 
 	Context context;
 	Bundle bundle;
@@ -68,19 +68,19 @@ public class AddVenue extends BaseActivity {
 	}
 
 	public void launchViewCheckin() {
-		Intent intent = new Intent(context, ViewCheckin.class);
+		Intent intent = new Intent(context, ViewCheckinActivity.class);
 		intent.putExtras(bundle);
 		startActivity(intent);
 	}
 
 	public void launchAddVenue() {
-		Intent intent = new Intent(context, AddVenue.class);
+		Intent intent = new Intent(context, AddVenueActivity.class);
 		intent.putExtras(bundle);
 		startActivity(intent);
 	}
 
 	public void launchLogin() {
-		Intent intent = new Intent(context, Login.class);
+		Intent intent = new Intent(context, LoginActivity.class);
 		startActivity(intent);
 	}
 

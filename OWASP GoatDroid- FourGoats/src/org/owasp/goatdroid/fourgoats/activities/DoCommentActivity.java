@@ -31,7 +31,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class DoComment extends BaseActivity {
+public class DoCommentActivity extends BaseActivity {
 
 	Context context;
 	Bundle bundle;
@@ -98,7 +98,7 @@ public class DoComment extends BaseActivity {
 		}
 
 		public void launchViewCheckin(Bundle bundle) {
-			Intent intent = new Intent(context, ViewCheckin.class);
+			Intent intent = new Intent(context, ViewCheckinActivity.class);
 			intent.putExtras(bundle);
 			startActivity(intent);
 		}

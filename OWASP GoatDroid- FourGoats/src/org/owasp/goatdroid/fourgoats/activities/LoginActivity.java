@@ -31,13 +31,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class Login extends BaseUnauthenticatedActivity {
+public class LoginActivity extends BaseUnauthenticatedActivity {
 
 	Context context;
 	EditText userNameEditText;
@@ -83,17 +82,17 @@ public class Login extends BaseUnauthenticatedActivity {
 	}
 
 	public void launchRegistration(View v) {
-		Intent intent = new Intent(Login.this, Register.class);
+		Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
 		startActivity(intent);
 	}
 
 	public void launchHome() {
-		Intent intent = new Intent(Login.this, Home.class);
+		Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
 		startActivity(intent);
 	}
 
 	public void launchAdminHome() {
-		Intent intent = new Intent(Login.this, AdminHome.class);
+		Intent intent = new Intent(LoginActivity.this, AdminHomeActivity.class);
 		startActivity(intent);
 	}
 
@@ -116,9 +115,9 @@ public class Login extends BaseUnauthenticatedActivity {
 	private class ValidateCredsAsyncTask extends
 			AsyncTask<Void, Void, HashMap<String, String>> {
 
-		Login mActivity;
+		LoginActivity mActivity;
 
-		public ValidateCredsAsyncTask(Login activity) {
+		public ValidateCredsAsyncTask(LoginActivity activity) {
 			mActivity = activity;
 		}
 
@@ -129,38 +128,33 @@ public class Login extends BaseUnauthenticatedActivity {
 			String userName = userNameEditText.getText().toString();
 			String password = passwordEditText.getText().toString();
 			boolean rememberMe = rememberMeCheckBox.isChecked();
-			HashMap<String, String> userInfo = new HashMap<String, String>();
+			org.owasp.goatdroid.fourgoats.rest.login.Login login;
 			if (allFieldsCompleted(userName, password)) {
 				UserInfoDBHelper dbHelper = new UserInfoDBHelper(context);
 				try {
-					userInfo = client.validateCredentials(userName, password);
-					if (userInfo.get("success").equals("false"))
-						userInfo.put("errors", Constants.LOGIN_FAILED);
-					else {
-						dbHelper.deleteInfo();
-						dbHelper.insertSettings(userInfo);
-						if (rememberMe)
-							saveCredentials(userName, password);
-						// our secret backdoor account
-						if (userName.equals("customerservice")
-								&& password.equals("Acc0uNTM@n@g3mEnT"))
-							userInfo.put("isAdmin", "true");
-					}
+					login = client.validateCredentials(userName, password);
 				} catch (Exception e) {
-					userInfo.put("errors", Constants.COULD_NOT_CONNECT);
-					userInfo.put("success", "false");
-					Log.w("Failed login", "Login with "
-							+ userNameEditText.getText().toString() + " "
-							+ passwordEditText.getText().toString() + " failed");
-				} finally {
-					dbHelper.close();
+					e.getMessage();
 				}
-			} else {
-				userInfo.put("error", Constants.ALL_FIELDS_REQUIRED);
-				userInfo.put("success", "false");
+				// if (userInfo.get("success").equals("false"))
+				/*
+				 * userInfo.put("errors", Constants.LOGIN_FAILED); else {
+				 * dbHelper.deleteInfo(); dbHelper.insertSettings(userInfo); if
+				 * (rememberMe) saveCredentials(userName, password); // our
+				 * secret backdoor account if
+				 * (userName.equals("customerservice") &&
+				 * password.equals("Acc0uNTM@n@g3mEnT")) userInfo.put("isAdmin",
+				 * "true"); } } catch (Exception e) { userInfo.put("errors",
+				 * Constants.COULD_NOT_CONNECT); userInfo.put("success",
+				 * "false"); Log.w("Failed login", "Login with " +
+				 * userNameEditText.getText().toString() + " " +
+				 * passwordEditText.getText().toString() + " failed"); } finally
+				 * { dbHelper.close(); } } else { userInfo.put("error",
+				 * Constants.ALL_FIELDS_REQUIRED); userInfo.put("success",
+				 * "false"); }
+				 */
 			}
-
-			return userInfo;
+			return new HashMap<String, String>();
 
 		}
 
@@ -176,10 +170,11 @@ public class Login extends BaseUnauthenticatedActivity {
 					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					startActivity(intent);
 				} else if (results.get("isAdmin").equals("true")) {
-					Intent intent = new Intent(mActivity, AdminHome.class);
+					Intent intent = new Intent(mActivity,
+							AdminHomeActivity.class);
 					startActivity(intent);
 				} else {
-					Intent intent = new Intent(mActivity, Home.class);
+					Intent intent = new Intent(mActivity, HomeActivity.class);
 					startActivity(intent);
 				}
 			} else {

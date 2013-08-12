@@ -24,7 +24,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
-public class AdminHome extends BaseActivity {
+public class AdminHomeActivity extends BaseActivity {
 
 	ListView listview;
 
@@ -37,28 +37,28 @@ public class AdminHome extends BaseActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
 		setContentView(R.layout.admin_home);
-		Intent locationServiceIntent = new Intent(AdminHome.this,
+		Intent locationServiceIntent = new Intent(AdminHomeActivity.this,
 				LocationService.class);
 		startService(locationServiceIntent);
 	}
 
 	public void launchCheckins(View v) {
-		Intent intent = new Intent(AdminHome.this, Checkins.class);
+		Intent intent = new Intent(AdminHomeActivity.this, CheckinsActivity.class);
 		startActivity(intent);
 	}
 
 	public void launchFriends(View v) {
-		Intent intent = new Intent(AdminHome.this, Friends.class);
+		Intent intent = new Intent(AdminHomeActivity.this, FriendsActivity.class);
 		startActivity(intent);
 	}
 
 	public void launchRewards(View v) {
-		Intent intent = new Intent(AdminHome.this, Rewards.class);
+		Intent intent = new Intent(AdminHomeActivity.this, RewardsActivity.class);
 		startActivity(intent);
 	}
 
 	public void launchManageUsers(View v) {
-		Intent intent = new Intent(AdminHome.this, AdminOptions.class);
+		Intent intent = new Intent(AdminHomeActivity.this, AdminOptionsActivity.class);
 		startActivity(intent);
 	}
 }

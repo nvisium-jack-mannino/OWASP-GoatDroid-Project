@@ -32,7 +32,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class SocialAPIAuthentication extends Activity {
+public class SocialAPIAuthenticationActivity extends Activity {
 
 	EditText userNameEditText;
 	EditText passwordEditText;
@@ -62,7 +62,7 @@ public class SocialAPIAuthentication extends Activity {
 	}
 
 	public void launchLogin() {
-		Intent intent = new Intent(context, Login.class);
+		Intent intent = new Intent(context, LoginActivity.class);
 		startActivity(intent);
 	}
 

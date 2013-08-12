@@ -17,15 +17,17 @@
 package org.owasp.goatdroid.fourgoats.base;
 
 import org.owasp.goatdroid.fourgoats.R;
-import org.owasp.goatdroid.fourgoats.activities.DestinationInfo;
-import org.owasp.goatdroid.fourgoats.activities.Login;
+import org.owasp.goatdroid.fourgoats.activities.DestinationInfoActivity;
+import org.owasp.goatdroid.fourgoats.activities.LoginActivity;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 
 public class BaseUnauthenticatedActivity extends SherlockActivity {
 
@@ -51,13 +53,13 @@ public class BaseUnauthenticatedActivity extends SherlockActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		Intent intent = new Intent(BaseUnauthenticatedActivity.this,
-				DestinationInfo.class);
+				DestinationInfoActivity.class);
 		startActivity(intent);
 		return true;
 	}
 
 	public void launchLogin() {
-		Intent intent = new Intent(context, Login.class);
+		Intent intent = new Intent(context, LoginActivity.class);
 		startActivity(intent);
 	}
 

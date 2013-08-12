@@ -31,7 +31,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
-public class Preferences extends BaseActivity {
+public class PreferencesActivity extends BaseActivity {
 
 	Context context;
 	CheckBox isPublic;
@@ -58,9 +58,9 @@ public class Preferences extends BaseActivity {
 	public void launchHome(String isAdmin) {
 		Intent intent;
 		if (isAdmin.equals("true"))
-			intent = new Intent(Preferences.this, AdminHome.class);
+			intent = new Intent(PreferencesActivity.this, AdminHomeActivity.class);
 		else
-			intent = new Intent(Preferences.this, Home.class);
+			intent = new Intent(PreferencesActivity.this, HomeActivity.class);
 		startActivity(intent);
 	}
 
@@ -75,7 +75,7 @@ public class Preferences extends BaseActivity {
 			uidh.close();
 
 			if (sessionToken.equals("")) {
-				Intent intent = new Intent(Preferences.this, Login.class);
+				Intent intent = new Intent(PreferencesActivity.this, LoginActivity.class);
 				startActivity(intent);
 				return preferencesData;
 

@@ -17,7 +17,6 @@
 package org.owasp.goatdroid.fourgoats.activities;
 
 import java.util.HashMap;
-
 import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.base.BaseActivity;
 import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
@@ -29,68 +28,74 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
-public class DoAdminDeleteUser extends BaseActivity {
+public class DoAdminPasswordResetActivity extends BaseActivity {
 
-	Context context;
 	Bundle bundle;
-	TextView userNameTextView;
+	Context context;
+	EditText userNameEditText;
+	EditText passwordEditText;
+	EditText passwordConfirmEditText;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.do_delete_user);
-		context = this.getApplicationContext();
+		setContentView(R.layout.do_password_reset);
+		context = getApplicationContext();
+		userNameEditText = (EditText) findViewById(R.id.userNameEditText);
+		passwordEditText = (EditText) findViewById(R.id.passwordEditText);
+		passwordConfirmEditText = (EditText) findViewById(R.id.passwordConfirmEditText);
 		bundle = getIntent().getExtras();
-		userNameTextView = (TextView) findViewById(R.id.userNameTextView);
-		userNameTextView.setText(bundle.getString("userName"));
+		userNameEditText.setText(bundle.getString("userName"));
 	}
 
-	public void doDeleteUser(View v) {
+	public void doPasswordReset(View v) {
+		if (passwordEditText.getText().toString()
+				.equals(passwordConfirmEditText.getText().toString())) {
 
-		DeleteUserAsyncTask task = new DeleteUserAsyncTask();
-		task.execute(null, null);
-	}
+			ResetPasswordAsyncTask task = new ResetPasswordAsyncTask();
+			task.execute(null, null);
 
-	public void launchAdminHome() {
-		Intent intent = new Intent(DoAdminDeleteUser.this, AdminHome.class);
-		startActivity(intent);
+		} else
+			Utils.makeToast(context, Constants.PASSWORDS_DONT_MATCH,
+					Toast.LENGTH_LONG);
 	}
 
 	public void launchAdminHome(View v) {
-		Intent intent = new Intent(DoAdminDeleteUser.this, AdminHome.class);
+		Intent intent = new Intent(DoAdminPasswordResetActivity.this, AdminHomeActivity.class);
 		startActivity(intent);
 	}
 
 	public void launchHome() {
-		Intent intent = new Intent(context, AdminHome.class);
+		Intent intent = new Intent(context, AdminHomeActivity.class);
 		startActivity(intent);
 	}
 
 	public void launchLogin() {
-		Intent intent = new Intent(context, Login.class);
+		Intent intent = new Intent(context, LoginActivity.class);
 		startActivity(intent);
 	}
 
-	private class DeleteUserAsyncTask extends
+	private class ResetPasswordAsyncTask extends
 			AsyncTask<Void, Void, HashMap<String, String>> {
 		protected HashMap<String, String> doInBackground(Void... params) {
 
 			HashMap<String, String> resultInfo = new HashMap<String, String>();
 			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
-			AdminRequest rest = new AdminRequest(context);
 
+			AdminRequest rest = new AdminRequest(context);
 			try {
 				String sessionToken = uidh.getSessionToken();
 				if (sessionToken.equals("")) {
 					resultInfo.put("errors", Constants.INVALID_SESSION);
 					resultInfo.put("success", "false");
 				} else
-					resultInfo = rest.deleteUser(sessionToken,
-							bundle.getString("userName"));
+					resultInfo = rest.resetUserPassword(sessionToken, bundle
+							.getString("userName"), passwordEditText.getText()
+							.toString());
 
 			} catch (Exception e) {
 				resultInfo.put("errors", e.getMessage());
@@ -103,9 +108,9 @@ public class DoAdminDeleteUser extends BaseActivity {
 
 		public void onPostExecute(HashMap<String, String> results) {
 			if (results.get("success").equals("true")) {
-				Utils.makeToast(context, Constants.DELETION_SUCCESS,
+				Utils.makeToast(context, Constants.PASSWORD_RESET_SUCCESS,
 						Toast.LENGTH_LONG);
-				launchAdminHome();
+				launchHome();
 			} else if (results.get("errors").equals(Constants.INVALID_SESSION)) {
 				Utils.makeToast(context, Constants.INVALID_SESSION,
 						Toast.LENGTH_LONG);
@@ -116,5 +121,4 @@ public class DoAdminDeleteUser extends BaseActivity {
 			}
 		}
 	}
-
 }

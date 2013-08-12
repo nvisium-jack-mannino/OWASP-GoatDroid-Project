@@ -17,6 +17,7 @@
 package org.owasp.goatdroid.fourgoats.activities;
 
 import java.util.HashMap;
+
 import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.base.BaseActivity;
 import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
@@ -28,74 +29,68 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class DoAdminPasswordReset extends BaseActivity {
+public class DoAdminDeleteUserActivity extends BaseActivity {
 
-	Bundle bundle;
 	Context context;
-	EditText userNameEditText;
-	EditText passwordEditText;
-	EditText passwordConfirmEditText;
+	Bundle bundle;
+	TextView userNameTextView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.do_password_reset);
-		context = getApplicationContext();
-		userNameEditText = (EditText) findViewById(R.id.userNameEditText);
-		passwordEditText = (EditText) findViewById(R.id.passwordEditText);
-		passwordConfirmEditText = (EditText) findViewById(R.id.passwordConfirmEditText);
+		setContentView(R.layout.do_delete_user);
+		context = this.getApplicationContext();
 		bundle = getIntent().getExtras();
-		userNameEditText.setText(bundle.getString("userName"));
+		userNameTextView = (TextView) findViewById(R.id.userNameTextView);
+		userNameTextView.setText(bundle.getString("userName"));
 	}
 
-	public void doPasswordReset(View v) {
-		if (passwordEditText.getText().toString()
-				.equals(passwordConfirmEditText.getText().toString())) {
+	public void doDeleteUser(View v) {
 
-			ResetPasswordAsyncTask task = new ResetPasswordAsyncTask();
-			task.execute(null, null);
+		DeleteUserAsyncTask task = new DeleteUserAsyncTask();
+		task.execute(null, null);
+	}
 
-		} else
-			Utils.makeToast(context, Constants.PASSWORDS_DONT_MATCH,
-					Toast.LENGTH_LONG);
+	public void launchAdminHome() {
+		Intent intent = new Intent(DoAdminDeleteUserActivity.this, AdminHomeActivity.class);
+		startActivity(intent);
 	}
 
 	public void launchAdminHome(View v) {
-		Intent intent = new Intent(DoAdminPasswordReset.this, AdminHome.class);
+		Intent intent = new Intent(DoAdminDeleteUserActivity.this, AdminHomeActivity.class);
 		startActivity(intent);
 	}
 
 	public void launchHome() {
-		Intent intent = new Intent(context, AdminHome.class);
+		Intent intent = new Intent(context, AdminHomeActivity.class);
 		startActivity(intent);
 	}
 
 	public void launchLogin() {
-		Intent intent = new Intent(context, Login.class);
+		Intent intent = new Intent(context, LoginActivity.class);
 		startActivity(intent);
 	}
 
-	private class ResetPasswordAsyncTask extends
+	private class DeleteUserAsyncTask extends
 			AsyncTask<Void, Void, HashMap<String, String>> {
 		protected HashMap<String, String> doInBackground(Void... params) {
 
 			HashMap<String, String> resultInfo = new HashMap<String, String>();
 			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
-
 			AdminRequest rest = new AdminRequest(context);
+
 			try {
 				String sessionToken = uidh.getSessionToken();
 				if (sessionToken.equals("")) {
 					resultInfo.put("errors", Constants.INVALID_SESSION);
 					resultInfo.put("success", "false");
 				} else
-					resultInfo = rest.resetUserPassword(sessionToken, bundle
-							.getString("userName"), passwordEditText.getText()
-							.toString());
+					resultInfo = rest.deleteUser(sessionToken,
+							bundle.getString("userName"));
 
 			} catch (Exception e) {
 				resultInfo.put("errors", e.getMessage());
@@ -108,9 +103,9 @@ public class DoAdminPasswordReset extends BaseActivity {
 
 		public void onPostExecute(HashMap<String, String> results) {
 			if (results.get("success").equals("true")) {
-				Utils.makeToast(context, Constants.PASSWORD_RESET_SUCCESS,
+				Utils.makeToast(context, Constants.DELETION_SUCCESS,
 						Toast.LENGTH_LONG);
-				launchHome();
+				launchAdminHome();
 			} else if (results.get("errors").equals(Constants.INVALID_SESSION)) {
 				Utils.makeToast(context, Constants.INVALID_SESSION,
 						Toast.LENGTH_LONG);
@@ -121,4 +116,5 @@ public class DoAdminPasswordReset extends BaseActivity {
 			}
 		}
 	}
+
 }

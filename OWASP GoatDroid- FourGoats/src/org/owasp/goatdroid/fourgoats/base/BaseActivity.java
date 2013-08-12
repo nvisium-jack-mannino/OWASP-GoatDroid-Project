@@ -19,22 +19,24 @@ package org.owasp.goatdroid.fourgoats.base;
 import java.util.HashMap;
 
 import org.owasp.goatdroid.fourgoats.R;
-import org.owasp.goatdroid.fourgoats.activities.About;
-import org.owasp.goatdroid.fourgoats.activities.AdminHome;
-import org.owasp.goatdroid.fourgoats.activities.Home;
-import org.owasp.goatdroid.fourgoats.activities.Login;
-import org.owasp.goatdroid.fourgoats.activities.Preferences;
-import org.owasp.goatdroid.fourgoats.activities.ViewProfile;
+import org.owasp.goatdroid.fourgoats.activities.AboutActivity;
+import org.owasp.goatdroid.fourgoats.activities.AdminHomeActivity;
+import org.owasp.goatdroid.fourgoats.activities.HomeActivity;
+import org.owasp.goatdroid.fourgoats.activities.LoginActivity;
+import org.owasp.goatdroid.fourgoats.activities.PreferencesActivity;
+import org.owasp.goatdroid.fourgoats.activities.ViewProfileActivity;
 import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.rest.login.LoginRequest;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
+
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -49,7 +51,7 @@ public class BaseActivity extends SherlockActivity {
 
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().setIcon(R.drawable.ic_main);
-		if (!(this instanceof Home) && !(this instanceof AdminHome)) {
+		if (!(this instanceof HomeActivity) && !(this instanceof AdminHomeActivity)) {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 				getActionBar().setHomeButtonEnabled(true);
 				getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -88,12 +90,12 @@ public class BaseActivity extends SherlockActivity {
 			finish();
 			return true;
 		} else if (itemId == R.id.preferences) {
-			Intent intent = new Intent(BaseActivity.this, Preferences.class);
+			Intent intent = new Intent(BaseActivity.this, PreferencesActivity.class);
 			startActivity(intent);
 			return true;
 		} else if (itemId == R.id.viewMyProfile) {
 			Intent profileIntent = new Intent(BaseActivity.this,
-					ViewProfile.class);
+					ViewProfileActivity.class);
 			Bundle bundle = new Bundle();
 			UserInfoDBHelper profileUIDH = new UserInfoDBHelper(context);
 			String userName = profileUIDH.getUserName();
@@ -107,7 +109,7 @@ public class BaseActivity extends SherlockActivity {
 			task.execute(null, null);
 			return true;
 		} else if (itemId == R.id.about) {
-			Intent aboutIntent = new Intent(BaseActivity.this, About.class);
+			Intent aboutIntent = new Intent(BaseActivity.this, AboutActivity.class);
 			startActivity(aboutIntent);
 			return true;
 		}
@@ -136,12 +138,12 @@ public class BaseActivity extends SherlockActivity {
 
 		public void onPostExecute(HashMap<String, String> results) {
 			if (results.get("success").equals("true")) {
-				Intent intent = new Intent(context, Login.class);
+				Intent intent = new Intent(context, LoginActivity.class);
 				startActivity(intent);
 			} else if (results.get("errors").equals(Constants.INVALID_SESSION)) {
 				Utils.makeToast(context, Constants.INVALID_SESSION,
 						Toast.LENGTH_LONG);
-				Intent intent = new Intent(context, Login.class);
+				Intent intent = new Intent(context, LoginActivity.class);
 				startActivity(intent);
 			} else {
 				Utils.makeToast(context, results.get("errors"),

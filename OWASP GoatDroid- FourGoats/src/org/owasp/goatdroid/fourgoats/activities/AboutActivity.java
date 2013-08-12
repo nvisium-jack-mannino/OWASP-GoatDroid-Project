@@ -17,43 +17,15 @@
 package org.owasp.goatdroid.fourgoats.activities;
 
 import org.owasp.goatdroid.fourgoats.base.BaseActivity;
-import org.owasp.goatdroid.fourgoats.services.LocationService;
 import org.owasp.goatdroid.fourgoats.R;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ListView;
 
-public class Home extends BaseActivity {
-
-	ListView listview;
+public class AboutActivity extends BaseActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-
-		getSupportActionBar().setTitle("Home");
-		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
-		setContentView(R.layout.home);
-		Intent locationServiceIntent = new Intent(Home.this,
-				LocationService.class);
-		startService(locationServiceIntent);
-	}
-
-	public void launchCheckins(View v) {
-		Intent intent = new Intent(Home.this, Checkins.class);
-		startActivity(intent);
-	}
-
-	public void launchFriends(View v) {
-		Intent intent = new Intent(Home.this, Friends.class);
-		startActivity(intent);
-	}
-
-	public void launchRewards(View v) {
-		Intent intent = new Intent(Home.this, Rewards.class);
-		startActivity(intent);
+		setContentView(R.layout.about);
 	}
 }

@@ -34,7 +34,7 @@ import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class History extends BaseActivity {
+public class HistoryActivity extends BaseActivity {
 
 	Context context;
 	WebView webview;
@@ -107,7 +107,7 @@ public class History extends BaseActivity {
 	}
 
 	public void launchLogin() {
-		Intent intent = new Intent(context, Login.class);
+		Intent intent = new Intent(context, LoginActivity.class);
 		startActivity(intent);
 	}
 

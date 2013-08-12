@@ -18,13 +18,15 @@ package org.owasp.goatdroid.fourgoats.fragments;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import org.owasp.goatdroid.fourgoats.R;
-import org.owasp.goatdroid.fourgoats.activities.Login;
-import org.owasp.goatdroid.fourgoats.activities.ViewFriendRequest;
+import org.owasp.goatdroid.fourgoats.activities.LoginActivity;
+import org.owasp.goatdroid.fourgoats.activities.ViewFriendRequestActivity;
 import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.rest.friends.FriendRequest;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,6 +39,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.actionbarsherlock.app.SherlockFragment;
 
 public class PendingFriendRequests extends SherlockFragment {
@@ -62,7 +65,7 @@ public class PendingFriendRequests extends SherlockFragment {
 						.getItemAtPosition(myItemInt));
 				String[] splitList = selectedFromList.split("\n");
 				Intent intent = new Intent(getActivity(),
-						ViewFriendRequest.class);
+						ViewFriendRequestActivity.class);
 				Bundle profileBundle = new Bundle();
 				profileBundle.putString("userName", splitList[0]);
 				profileBundle.putString("fullName", splitList[1]);
@@ -106,7 +109,7 @@ public class PendingFriendRequests extends SherlockFragment {
 			FriendRequest rest = new FriendRequest(getActivity());
 			try {
 				if (sessionToken.equals("")) {
-					Intent intent = new Intent(getActivity(), Login.class);
+					Intent intent = new Intent(getActivity(), LoginActivity.class);
 					startActivity(intent);
 					return new String[0];
 
@@ -129,7 +132,7 @@ public class PendingFriendRequests extends SherlockFragment {
 						return new String[0];
 				}
 			} catch (Exception e) {
-				Intent intent = new Intent(getActivity(), Login.class);
+				Intent intent = new Intent(getActivity(), LoginActivity.class);
 				startActivity(intent);
 				return new String[0];
 			}

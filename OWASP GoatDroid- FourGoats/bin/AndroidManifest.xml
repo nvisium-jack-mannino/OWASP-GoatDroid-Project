@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.Sherlock" >
         <activity
-            android:name=".activities.Main"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,129 +23,129 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.Login"
+            android:name=".activities.LoginActivity"
             android:label="@string/login" >
         </activity>
         <activity
-            android:name=".activities.Register"
+            android:name=".activities.RegisterActivity"
             android:label="@string/register" >
         </activity>
         <activity
-            android:name=".activities.Home"
+            android:name=".activities.HomeActivity"
             android:label="@string/home" >
         </activity>
         <activity
-            android:name=".fragments.DoCheckin"
+            android:name=".fragments.DoCheckinActivity"
             android:label="@string/checkin" >
         </activity>
         <activity
-            android:name=".activities.Checkins"
+            android:name=".activities.CheckinsActivity"
             android:label="@string/checkins" >
         </activity>
         <activity
-            android:name=".activities.Friends"
+            android:name=".activities.FriendsActivity"
             android:label="@string/friends" >
         </activity>
         <activity
-            android:name=".fragments.HistoryFragment"
+            android:name=".fragments.HistoryFragmentActivity"
             android:label="@string/history" >
         </activity>
         <activity
-            android:name=".activities.History"
+            android:name=".activities.HistoryActivity"
             android:label="@string/history" >
         </activity>
         <activity
-            android:name=".activities.Rewards"
+            android:name=".activities.RewardsActivity"
             android:label="@string/rewards" >
         </activity>
         <activity
-            android:name=".activities.AddVenue"
+            android:name=".activities.AddVenueActivity"
             android:label="@string/add_venue" >
         </activity>
         <activity
-            android:name=".activities.ViewCheckin"
+            android:name=".activities.ViewCheckinActivity"
             android:exported="true"
             android:label="@string/view_checkin" >
         </activity>
         <activity
-            android:name=".fragments.MyFriends"
+            android:name=".fragments.MyFriendsActivity"
             android:label="@string/my_friends" >
         </activity>
         <activity
-            android:name=".fragments.SearchForFriends"
+            android:name=".fragments.SearchForFriendsActivity"
             android:label="@string/search_for_friends" >
         </activity>
         <activity
-            android:name=".activities.ViewProfile"
+            android:name=".activities.ViewProfileActivity"
             android:exported="true"
             android:label="@string/profile" >
         </activity>
         <activity
-            android:name=".fragments.PendingFriendRequests"
+            android:name=".fragments.PendingFriendRequestsActivity"
             android:label="@string/pending_friend_requests" >
         </activity>
         <activity
-            android:name=".activities.ViewFriendRequest"
+            android:name=".activities.ViewFriendRequestActivity"
             android:label="@string/friend_request" >
         </activity>
         <activity
-            android:name=".fragments.MyRewards"
+            android:name=".fragments.MyRewardsActivity"
             android:label="@string/my_rewards" >
         </activity>
         <activity
-            android:name=".fragments.AvailableRewards"
+            android:name=".fragments.AvailableRewardsActivity"
             android:label="@string/available_rewards" >
         </activity>
         <activity
-            android:name=".activities.Preferences"
+            android:name=".activities.PreferencesActivity"
             android:label="@string/preferences" >
         </activity>
         <activity
-            android:name=".activities.About"
+            android:name=".activities.AboutActivity"
             android:label="@string/about" >
         </activity>
         <activity
-            android:name=".activities.SendSMS"
+            android:name=".activities.SendSMSActivity"
             android:label="@string/send_sms" >
         </activity>
         <activity
-            android:name=".activities.DoComment"
+            android:name=".activities.DoCommentActivity"
             android:label="@string/comment" >
         </activity>
         <activity
-            android:name=".activities.UserHistory"
+            android:name=".activities.UserHistoryActivity"
             android:label="@string/history" >
         </activity>
         <activity
-            android:name=".activities.DestinationInfo"
+            android:name=".activities.DestinationInfoActivity"
             android:label="@string/destination_info" >
         </activity>
         <activity
-            android:name=".activities.AdminHome"
+            android:name=".activities.AdminHomeActivity"
             android:label="@string/admin_home" >
         </activity>
         <activity
-            android:name=".activities.AdminOptions"
+            android:name=".activities.AdminOptionsActivity"
             android:label="@string/admin_options" >
         </activity>
         <activity
-            android:name=".fragments.ResetUserPasswords"
+            android:name=".fragments.ResetUserPasswordsActivity"
             android:label="@string/reset_user_passwords" >
         </activity>
         <activity
-            android:name=".fragments.DeleteUsers"
+            android:name=".fragments.DeleteUsersActivity"
             android:label="@string/delete_users" >
         </activity>
         <activity
-            android:name=".activities.DoAdminPasswordReset"
+            android:name=".activities.DoAdminPasswordResetActivity"
             android:label="@string/reset_user_password" >
         </activity>
         <activity
-            android:name=".activities.DoAdminDeleteUser"
+            android:name=".activities.DoAdminDeleteUserActivity"
             android:label="@string/delete_users" >
         </activity>
         <activity
-            android:name=".activities.SocialAPIAuthentication"
+            android:name=".activities.SocialAPIAuthenticationActivity"
             android:exported="true"
             android:label="@string/authenticate" >
         </activity>

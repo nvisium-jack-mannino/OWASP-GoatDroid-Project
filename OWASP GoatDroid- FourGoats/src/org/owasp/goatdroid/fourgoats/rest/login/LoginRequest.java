@@ -68,7 +68,7 @@ public class LoginRequest {
 		return LoginResponse.isSuccess(client.getResponse());
 	}
 
-	public HashMap<String, String> validateCredentials(String userName,
+	public Login validateCredentials(String userName,
 			String password) throws Exception {
 
 		RestClient client = new RestClient("https://" + destinationInfo

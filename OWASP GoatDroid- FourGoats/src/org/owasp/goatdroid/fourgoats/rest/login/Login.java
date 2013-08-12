@@ -1,9 +1,8 @@
 package org.owasp.goatdroid.fourgoats.rest.login;
 
-import java.io.Serializable;
 import java.util.HashMap;
 
-public class Login implements Serializable {
+public class Login {
 
 	/**
 	 * 
@@ -12,7 +11,12 @@ public class Login implements Serializable {
 	String username;
 	String authToken;
 	boolean success;
-	public HashMap<String, Boolean> preferences;
+	public HashMap<String, String> preferences;
+	String errors;
+
+	public Login() {
+
+	}
 
 	public String getUsername() {
 		return username;
@@ -38,11 +42,19 @@ public class Login implements Serializable {
 		this.success = success;
 	}
 
-	public HashMap<String, Boolean> getPreferences() {
+	public HashMap<String, String> getPreferences() {
 		return preferences;
 	}
 
-	public void setPreferences(HashMap<String, Boolean> preferences) {
+	public void setPreferences(HashMap<String, String> preferences) {
 		this.preferences = preferences;
+	}
+
+	public String getErrors() {
+		return errors;
+	}
+
+	public void setErrors(String errors) {
+		this.errors = errors;
 	}
 }

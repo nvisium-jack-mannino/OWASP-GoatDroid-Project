@@ -31,7 +31,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ViewProfile extends BaseActivity {
+public class ViewProfileActivity extends BaseActivity {
 
 	private Context context;
 	private Bundle bundle;
@@ -59,7 +59,7 @@ public class ViewProfile extends BaseActivity {
 	}
 
 	public void viewUserCheckinHistory(View v) {
-		Intent intent = new Intent(context, History.class);
+		Intent intent = new Intent(context, HistoryActivity.class);
 		intent.putExtras(bundle);
 		startActivity(intent);
 	}

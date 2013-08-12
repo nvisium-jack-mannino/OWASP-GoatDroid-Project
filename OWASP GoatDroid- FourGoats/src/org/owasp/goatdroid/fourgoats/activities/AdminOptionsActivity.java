@@ -16,16 +16,25 @@
  */
 package org.owasp.goatdroid.fourgoats.activities;
 
-import org.owasp.goatdroid.fourgoats.base.BaseActivity;
 import org.owasp.goatdroid.fourgoats.R;
+import org.owasp.goatdroid.fourgoats.base.BaseTabsViewPagerActivity;
+import org.owasp.goatdroid.fourgoats.fragments.DeleteUsers;
+import org.owasp.goatdroid.fourgoats.fragments.ResetUserPasswords;
+import com.actionbarsherlock.app.ActionBar;
 import android.os.Bundle;
 
-public class About extends BaseActivity {
+public class AdminOptionsActivity extends BaseTabsViewPagerActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.about);
+		ActionBar bar = getSupportActionBar();
+		mTabsAdapter.addTab(
+				bar.newTab().setText(R.string.reset_user_passwords),
+				ResetUserPasswords.class, null);
+		mTabsAdapter.addTab(bar.newTab().setText(R.string.delete_users),
+				DeleteUsers.class, null);
 	}
+
 }

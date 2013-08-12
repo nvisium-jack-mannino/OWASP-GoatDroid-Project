@@ -33,7 +33,7 @@ import android.os.Bundle;
 import android.webkit.WebView;
 import android.widget.Toast;
 
-public class ViewCheckin extends BaseActivity {
+public class ViewCheckinActivity extends BaseActivity {
 
 	Context context;
 	Bundle bundle;
@@ -151,7 +151,7 @@ public class ViewCheckin extends BaseActivity {
 	}
 
 	public void launchLogin() {
-		Intent intent = new Intent(context, Login.class);
+		Intent intent = new Intent(context, LoginActivity.class);
 		startActivity(intent);
 	}
 

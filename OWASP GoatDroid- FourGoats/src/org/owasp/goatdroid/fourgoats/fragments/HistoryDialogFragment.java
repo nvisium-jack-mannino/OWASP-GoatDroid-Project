@@ -18,14 +18,15 @@ package org.owasp.goatdroid.fourgoats.fragments;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.owasp.goatdroid.fourgoats.activities.Login;
+
+import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.javascriptinterfaces.ViewCheckinJSInterface;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.rest.history.HistoryRequest;
-import org.owasp.goatdroid.fourgoats.R;
-import com.actionbarsherlock.app.SherlockDialogFragment;
+import org.owasp.goatdroid.fourgoats.rest.login.Login;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -37,6 +38,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.actionbarsherlock.app.SherlockDialogFragment;
 
 public class HistoryDialogFragment extends SherlockDialogFragment {
 

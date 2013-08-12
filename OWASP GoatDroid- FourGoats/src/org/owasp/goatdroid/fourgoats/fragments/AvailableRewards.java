@@ -18,13 +18,15 @@ package org.owasp.goatdroid.fourgoats.fragments;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import org.owasp.goatdroid.fourgoats.R;
-import org.owasp.goatdroid.fourgoats.activities.Login;
+import org.owasp.goatdroid.fourgoats.activities.LoginActivity;
 import org.owasp.goatdroid.fourgoats.adapter.AvailableRewardsAdapter;
 import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.rest.rewards.RewardsRequest;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -34,6 +36,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.actionbarsherlock.app.SherlockFragment;
 
 public class AvailableRewards extends SherlockFragment {
@@ -94,7 +97,7 @@ public class AvailableRewards extends SherlockFragment {
 			RewardsRequest rest = new RewardsRequest(context);
 			try {
 				if (sessionToken.equals("")) {
-					Intent intent = new Intent(getActivity(), Login.class);
+					Intent intent = new Intent(getActivity(), LoginActivity.class);
 					startActivity(intent);
 					return new String[0];
 
@@ -110,7 +113,7 @@ public class AvailableRewards extends SherlockFragment {
 					}
 				}
 			} catch (Exception e) {
-				Intent intent = new Intent(getActivity(), Login.class);
+				Intent intent = new Intent(getActivity(), LoginActivity.class);
 				startActivity(intent);
 				return new String[0];
 			}

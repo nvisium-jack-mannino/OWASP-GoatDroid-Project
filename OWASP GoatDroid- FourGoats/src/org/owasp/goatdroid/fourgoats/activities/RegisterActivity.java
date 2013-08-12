@@ -29,7 +29,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class Register extends BaseUnauthenticatedActivity {
+public class RegisterActivity extends BaseUnauthenticatedActivity {
 
 	Context context;
 
@@ -48,7 +48,7 @@ public class Register extends BaseUnauthenticatedActivity {
 	}
 
 	public void launchLogin() {
-		Intent intent = new Intent(Register.this, Login.class);
+		Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
 		startActivity(intent);
 	}
 
@@ -62,9 +62,9 @@ public class Register extends BaseUnauthenticatedActivity {
 	private class RegisterAsyncTask extends
 			AsyncTask<Void, Void, HashMap<String, String>> {
 
-		Register mActivity;
+		RegisterActivity mActivity;
 
-		public RegisterAsyncTask(Register activity) {
+		public RegisterAsyncTask(RegisterActivity activity) {
 			mActivity = activity;
 		}
 

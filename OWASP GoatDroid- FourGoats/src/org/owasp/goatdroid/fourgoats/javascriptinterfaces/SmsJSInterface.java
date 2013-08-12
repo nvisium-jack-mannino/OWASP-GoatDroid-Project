@@ -16,7 +16,7 @@
  */
 package org.owasp.goatdroid.fourgoats.javascriptinterfaces;
 
-import org.owasp.goatdroid.fourgoats.activities.SendSMS;
+import org.owasp.goatdroid.fourgoats.activities.SendSMSActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,7 +33,7 @@ public class SmsJSInterface implements Cloneable {
 
 	public void launchSendSMSActivity(String venueName, String dateTime) {
 
-		Intent intent = new Intent(mContext, SendSMS.class);
+		Intent intent = new Intent(mContext, SendSMSActivity.class);
 		Bundle bundle = new Bundle();
 		bundle.putString("venueName", venueName);
 		bundle.putString("dateTime", dateTime);

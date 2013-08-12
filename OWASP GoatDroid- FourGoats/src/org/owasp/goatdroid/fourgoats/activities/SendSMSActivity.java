@@ -27,7 +27,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class SendSMS extends BaseActivity {
+public class SendSMSActivity extends BaseActivity {
 
 	Context context;
 	Bundle bundle;

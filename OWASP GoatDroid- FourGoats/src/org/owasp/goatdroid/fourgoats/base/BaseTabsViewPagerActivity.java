@@ -18,17 +18,19 @@ package org.owasp.goatdroid.fourgoats.base;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import org.owasp.goatdroid.fourgoats.R;
-import org.owasp.goatdroid.fourgoats.activities.About;
-import org.owasp.goatdroid.fourgoats.activities.AdminHome;
-import org.owasp.goatdroid.fourgoats.activities.Home;
-import org.owasp.goatdroid.fourgoats.activities.Login;
-import org.owasp.goatdroid.fourgoats.activities.Preferences;
-import org.owasp.goatdroid.fourgoats.activities.ViewProfile;
+import org.owasp.goatdroid.fourgoats.activities.AboutActivity;
+import org.owasp.goatdroid.fourgoats.activities.AdminHomeActivity;
+import org.owasp.goatdroid.fourgoats.activities.HomeActivity;
+import org.owasp.goatdroid.fourgoats.activities.LoginActivity;
+import org.owasp.goatdroid.fourgoats.activities.PreferencesActivity;
+import org.owasp.goatdroid.fourgoats.activities.ViewProfileActivity;
 import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.rest.login.LoginRequest;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -40,9 +42,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.ActionBar.Tab;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -171,10 +174,10 @@ public class BaseTabsViewPagerActivity extends SherlockFragmentActivity {
 			try {
 				if (homeUIDH.getIsAdmin())
 					homeIntent = new Intent(BaseTabsViewPagerActivity.this,
-							AdminHome.class);
+							AdminHomeActivity.class);
 				else
 					homeIntent = new Intent(BaseTabsViewPagerActivity.this,
-							Home.class);
+							HomeActivity.class);
 			} finally {
 				homeUIDH.close();
 			}
@@ -182,12 +185,12 @@ public class BaseTabsViewPagerActivity extends SherlockFragmentActivity {
 			return true;
 		} else if (itemId == R.id.preferences) {
 			Intent intent = new Intent(BaseTabsViewPagerActivity.this,
-					Preferences.class);
+					PreferencesActivity.class);
 			startActivity(intent);
 			return true;
 		} else if (itemId == R.id.viewMyProfile) {
 			Intent profileIntent = new Intent(BaseTabsViewPagerActivity.this,
-					ViewProfile.class);
+					ViewProfileActivity.class);
 			Bundle bundle = new Bundle();
 			UserInfoDBHelper profileUIDH = new UserInfoDBHelper(context);
 			String userName = profileUIDH.getUserName();
@@ -202,7 +205,7 @@ public class BaseTabsViewPagerActivity extends SherlockFragmentActivity {
 			return true;
 		} else if (itemId == R.id.about) {
 			Intent aboutIntent = new Intent(BaseTabsViewPagerActivity.this,
-					About.class);
+					AboutActivity.class);
 			startActivity(aboutIntent);
 			return true;
 		}
@@ -231,12 +234,12 @@ public class BaseTabsViewPagerActivity extends SherlockFragmentActivity {
 
 		public void onPostExecute(HashMap<String, String> results) {
 			if (results.get("success").equals("true")) {
-				Intent intent = new Intent(context, Login.class);
+				Intent intent = new Intent(context, LoginActivity.class);
 				startActivity(intent);
 			} else if (results.get("errors").equals(Constants.INVALID_SESSION)) {
 				Utils.makeToast(context, Constants.INVALID_SESSION,
 						Toast.LENGTH_LONG);
-				Intent intent = new Intent(context, Login.class);
+				Intent intent = new Intent(context, LoginActivity.class);
 				startActivity(intent);
 			} else {
 				Utils.makeToast(context, results.get("errors"),

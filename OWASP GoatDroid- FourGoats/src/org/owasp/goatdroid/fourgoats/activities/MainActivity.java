@@ -29,16 +29,23 @@ import android.os.Bundle;
 
 //Extends regular activity
 //We don't want an options menu here
-public class Main extends Activity {
+public class MainActivity extends Activity {
 
 	Context context;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		//SSLCertificateValidation.disable();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.loader);
 		context = this.getApplicationContext();
+		/*
+		 * This makes it easy to make SSL work because it makes the errors go
+		 * away.
+		 */
+		SSLCertificateValidation.disable();
+		/*
+		 * Now, we make async calls
+		 */
 		CheckSessionToken check = new CheckSessionToken();
 		check.execute(null, null);
 	}
@@ -50,7 +57,7 @@ public class Main extends Activity {
 			String sessionToken = uidh.getSessionToken();
 			if (sessionToken.equals("")) {
 				uidh.close();
-				Intent intent = new Intent(Main.this, Login.class);
+				Intent intent = new Intent(MainActivity.this, LoginActivity.class);
 				startActivity(intent);
 				return false;
 
@@ -60,23 +67,23 @@ public class Main extends Activity {
 					if (rest.isSessionValid(sessionToken)) {
 						boolean isAdmin = uidh.getIsAdmin();
 						if (isAdmin) {
-							Intent intent = new Intent(Main.this,
-									AdminHome.class);
+							Intent intent = new Intent(MainActivity.this,
+									AdminHomeActivity.class);
 							startActivity(intent);
 						} else {
-							Intent intent = new Intent(Main.this, Home.class);
+							Intent intent = new Intent(MainActivity.this, HomeActivity.class);
 							startActivity(intent);
 						}
 						return true;
 					} else {
 						uidh.deleteInfo();
-						Intent intent = new Intent(Main.this, Login.class);
+						Intent intent = new Intent(MainActivity.this, LoginActivity.class);
 						startActivity(intent);
 						return false;
 					}
 				} catch (Exception e) {
 					uidh.close();
-					Intent intent = new Intent(Main.this, Login.class);
+					Intent intent = new Intent(MainActivity.this, LoginActivity.class);
 					startActivity(intent);
 					return false;
 				} finally {

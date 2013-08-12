@@ -22,37 +22,39 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.owasp.goatdroid.fourgoats.base.ResponseBase;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class LoginResponse extends ResponseBase {
 
-	static public HashMap<String, String> parseLoginResponse(String response) {
-		JSONObject json;
-		HashMap<String, String> results = new HashMap<String, String>();
+	// static public HashMap<String, String> parseLoginResponse(String response)
+	// {
+	static public Login parseLoginResponse(String response) {
 
-		try {
-			json = new JSONObject(response);
-			if (json.getString("success").equals("false")) {
-				results.put("success", "false");
-				return results;
-			} else {
-				results.put("success", "true");
-				results.put("sessionToken", json.getString("sessionToken"));
-				results.put("userName", json.getString("userName"));
-
-				JSONObject preferencesObject = json
-						.getJSONObject("preferences");
-				JSONArray entry = preferencesObject.getJSONArray("entry");
-				for (int count = 0; count < entry.length(); count++) {
-					results.put(entry.getJSONObject(count).getString("key"),
-							entry.getJSONObject(count).getString("value"));
-				}
-				return results;
-			}
-
-		} catch (JSONException e) {
-			results.put("errors", e.getMessage());
-			results.put("success", "false");
-			return results;
-		}
+		ObjectMapper objectMapper = new ObjectMapper();
+		Login login =  objectMapper.convertValue(response, Login.class);
+		return login;
+		/*
+		 * JSONObject json; HashMap<String, String> results = new
+		 * HashMap<String, String>();
+		 * 
+		 * try { json = new JSONObject(response); if
+		 * (json.getString("success").equals("false")) { results.put("success",
+		 * "false"); return results; } else { results.put("success", "true");
+		 * results.put("sessionToken", json.getString("sessionToken"));
+		 * results.put("userName", json.getString("userName"));
+		 * 
+		 * JSONObject preferencesObject = json .getJSONObject("preferences");
+		 * JSONArray entry = preferencesObject.getJSONArray("entry"); for (int
+		 * count = 0; count < entry.length(); count++) {
+		 * results.put(entry.getJSONObject(count).getString("key"),
+		 * entry.getJSONObject(count).getString("value")); } return results; }
+		 * 
+		 * } catch (JSONException e) { results.put("errors", e.getMessage());
+		 * results.put("success", "false"); return results; }
+		 */
 	}
 
 	static public HashMap<String, String> parseAPILoginResponse(String response) {

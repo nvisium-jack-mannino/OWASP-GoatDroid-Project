@@ -18,14 +18,16 @@ package org.owasp.goatdroid.fourgoats.fragments;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import org.owasp.goatdroid.fourgoats.R;
-import org.owasp.goatdroid.fourgoats.activities.Login;
-import org.owasp.goatdroid.fourgoats.activities.ViewProfile;
+import org.owasp.goatdroid.fourgoats.activities.LoginActivity;
+import org.owasp.goatdroid.fourgoats.activities.ViewProfileActivity;
 import org.owasp.goatdroid.fourgoats.adapter.SearchForFriendsAdapter;
 import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.rest.searchforfriends.SearchForFriendsRequest;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,6 +38,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.actionbarsherlock.app.SherlockFragment;
 
 public class SearchForFriends extends SherlockFragment {
@@ -57,7 +60,7 @@ public class SearchForFriends extends SherlockFragment {
 						.getItemAtPosition(myItemInt));
 				String[] splitList = selectedFromList.split("\n");
 				String userName = splitList[1];
-				Intent intent = new Intent(getActivity(), ViewProfile.class);
+				Intent intent = new Intent(getActivity(), ViewProfileActivity.class);
 				Bundle profileBundle = new Bundle();
 				profileBundle.putString("userName", userName);
 				intent.putExtras(profileBundle);
@@ -99,7 +102,7 @@ public class SearchForFriends extends SherlockFragment {
 					getActivity());
 			try {
 				if (sessionToken.equals("")) {
-					Intent intent = new Intent(getActivity(), Login.class);
+					Intent intent = new Intent(getActivity(), LoginActivity.class);
 					startActivity(intent);
 					return new String[0];
 
@@ -118,7 +121,7 @@ public class SearchForFriends extends SherlockFragment {
 						return new String[0];
 				}
 			} catch (Exception e) {
-				Intent intent = new Intent(getActivity(), Login.class);
+				Intent intent = new Intent(getActivity(), LoginActivity.class);
 				startActivity(intent);
 				return new String[0];
 			}

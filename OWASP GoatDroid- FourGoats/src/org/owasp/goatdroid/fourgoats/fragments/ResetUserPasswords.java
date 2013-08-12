@@ -18,16 +18,16 @@ package org.owasp.goatdroid.fourgoats.fragments;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import org.owasp.goatdroid.fourgoats.R;
-import org.owasp.goatdroid.fourgoats.activities.DoAdminPasswordReset;
-import org.owasp.goatdroid.fourgoats.activities.Login;
+import org.owasp.goatdroid.fourgoats.activities.DoAdminPasswordResetActivity;
+import org.owasp.goatdroid.fourgoats.activities.LoginActivity;
 import org.owasp.goatdroid.fourgoats.adapter.SearchForFriendsAdapter;
 import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.rest.admin.AdminRequest;
-
-import com.actionbarsherlock.app.SherlockFragment;
+import org.owasp.goatdroid.fourgoats.rest.login.Login;
 
 import android.content.Context;
 import android.content.Intent;
@@ -37,9 +37,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
+
+import com.actionbarsherlock.app.SherlockFragment;
 
 public class ResetUserPasswords extends SherlockFragment {
 
@@ -70,7 +72,7 @@ public class ResetUserPasswords extends SherlockFragment {
 				String[] splitList = selectedFromList.split("\n");
 				String userName = splitList[1];
 				Intent intent = new Intent(getActivity(),
-						DoAdminPasswordReset.class);
+						DoAdminPasswordResetActivity.class);
 				Bundle userNameBundle = new Bundle();
 				userNameBundle.putString("userName", userName);
 				intent.putExtras(userNameBundle);
@@ -110,7 +112,7 @@ public class ResetUserPasswords extends SherlockFragment {
 			AdminRequest rest = new AdminRequest(context);
 			try {
 				if (sessionToken.equals("")) {
-					Intent intent = new Intent(getActivity(), Login.class);
+					Intent intent = new Intent(getActivity(), LoginActivity.class);
 					startActivity(intent);
 				} else {
 					userData = rest.getUsers(sessionToken);

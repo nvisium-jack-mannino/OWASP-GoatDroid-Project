@@ -17,8 +17,8 @@
 package org.owasp.goatdroid.fourgoats.javascriptinterfaces;
 
 import java.util.HashMap;
-import org.owasp.goatdroid.fourgoats.activities.DoComment;
-import org.owasp.goatdroid.fourgoats.activities.ViewCheckin;
+import org.owasp.goatdroid.fourgoats.activities.DoCommentActivity;
+import org.owasp.goatdroid.fourgoats.activities.ViewCheckinActivity;
 import org.owasp.goatdroid.fourgoats.db.UserInfoDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
@@ -41,7 +41,7 @@ public class ViewCheckinJSInterface {
 			String venueWebsite, String dateTime, String latitude,
 			String longitude, String checkinID) {
 
-		Intent intent = new Intent(mContext, ViewCheckin.class);
+		Intent intent = new Intent(mContext, ViewCheckinActivity.class);
 		Bundle bundle = new Bundle();
 		bundle.putString("venueName", venueName);
 		bundle.putString("venueWebsite", venueWebsite);
@@ -56,7 +56,7 @@ public class ViewCheckinJSInterface {
 	public void launchDoCommentActivity(String venueName, String venueWebsite,
 			String dateTime, String latitude, String longitude, String checkinID) {
 
-		Intent intent = new Intent(mContext, DoComment.class);
+		Intent intent = new Intent(mContext, DoCommentActivity.class);
 		Bundle bundle = new Bundle();
 		bundle.putString("venueName", venueName);
 		bundle.putString("venueWebsite", venueWebsite);
@@ -84,7 +84,7 @@ public class ViewCheckinJSInterface {
 				Utils.makeToast(mContext,
 						Constants.COMMENT_SUCCESSFULLY_REMOVED,
 						Toast.LENGTH_LONG);
-				Intent intent = new Intent(mContext, ViewCheckin.class);
+				Intent intent = new Intent(mContext, ViewCheckinActivity.class);
 				Bundle bundle = new Bundle();
 				bundle.putString("venueName", venueName);
 				bundle.putString("venueWebsite", venueWebsite);
