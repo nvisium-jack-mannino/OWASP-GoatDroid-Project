@@ -17,14 +17,16 @@ package org.owasp.goatdroid.herdfinancial.activities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import org.owasp.goatdroid.herdfinancial.R;
 import org.owasp.goatdroid.herdfinancial.base.BaseActivity;
 import org.owasp.goatdroid.herdfinancial.db.StatementDBHelper;
 import org.owasp.goatdroid.herdfinancial.db.UserInfoDBHelper;
 import org.owasp.goatdroid.herdfinancial.misc.Constants;
 import org.owasp.goatdroid.herdfinancial.misc.Utils;
-import org.owasp.goatdroid.herdfinancial.rest.statements.StatementsRequest;
-import org.owasp.goatdroid.herdfinancial.rest.transfer.TransferRequest;
+import org.owasp.goatdroid.herdfinancial.request.StatementsRequest;
+import org.owasp.goatdroid.herdfinancial.request.TransferRequest;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;

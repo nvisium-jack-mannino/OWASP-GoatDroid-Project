@@ -16,12 +16,14 @@
 package org.owasp.goatdroid.herdfinancial.activities;
 
 import java.util.HashMap;
+
 import org.owasp.goatdroid.herdfinancial.R;
 import org.owasp.goatdroid.herdfinancial.base.BaseUnauthenticatedActivity;
 import org.owasp.goatdroid.herdfinancial.db.UserInfoDBHelper;
 import org.owasp.goatdroid.herdfinancial.misc.Constants;
 import org.owasp.goatdroid.herdfinancial.misc.Utils;
-import org.owasp.goatdroid.herdfinancial.rest.forgotpassword.ForgotPasswordRequest;
+import org.owasp.goatdroid.herdfinancial.request.ForgotPasswordRequest;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;

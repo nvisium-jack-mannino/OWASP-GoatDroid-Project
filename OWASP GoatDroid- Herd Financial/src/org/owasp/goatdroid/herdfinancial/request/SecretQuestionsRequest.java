@@ -13,12 +13,15 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.herdfinancial.rest.secretquestions;
+package org.owasp.goatdroid.herdfinancial.request;
 
 import java.util.HashMap;
+
+import org.owasp.goatdroid.herdfinancial.http.AuthenticatedRestClient;
+import org.owasp.goatdroid.herdfinancial.http.RequestMethod;
 import org.owasp.goatdroid.herdfinancial.misc.Utils;
-import org.owasp.goatdroid.herdfinancial.requestresponse.AuthenticatedRestClient;
-import org.owasp.goatdroid.herdfinancial.requestresponse.RequestMethod;
+import org.owasp.goatdroid.herdfinancial.response.SecretQuestionsResponse;
+
 import android.content.Context;
 
 public class SecretQuestionsRequest {

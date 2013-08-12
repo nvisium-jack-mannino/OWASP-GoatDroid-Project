@@ -13,10 +13,10 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.herdfinancial.rest.transfer;
+package org.owasp.goatdroid.herdfinancial.response;
 
 import org.owasp.goatdroid.herdfinancial.base.ResponseBase;
 
-public class TransferResponse extends ResponseBase {
+public class RegisterResponse extends ResponseBase {
 
 }

@@ -16,8 +16,9 @@
 package org.owasp.goatdroid.herdfinancial.activities;
 
 import java.util.HashMap;
+
 import org.owasp.goatdroid.herdfinancial.db.UserInfoDBHelper;
-import org.owasp.goatdroid.herdfinancial.rest.login.LoginRequest;
+import org.owasp.goatdroid.herdfinancial.request.LoginRequest;
 import org.owasp.goatdroid.herdfinancial.services.StatementUpdateService;
 import org.owasp.goatdroid.herdfinancial.misc.Constants;
 import org.owasp.goatdroid.herdfinancial.misc.Utils;

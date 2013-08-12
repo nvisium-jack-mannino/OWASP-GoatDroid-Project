@@ -13,7 +13,7 @@
  * @author Jack Mannino (Jack.Mannino@owasp.org https://www.owasp.org/index.php/User:Jack_Mannino)
  * @created 2012
  */
-package org.owasp.goatdroid.herdfinancial.rest.statements;
+package org.owasp.goatdroid.herdfinancial.response;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -2,9 +2,11 @@ package org.owasp.goatdroid.herdfinancial.services;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import org.owasp.goatdroid.herdfinancial.db.StatementDBHelper;
 import org.owasp.goatdroid.herdfinancial.db.UserInfoDBHelper;
-import org.owasp.goatdroid.herdfinancial.rest.statements.StatementsRequest;
+import org.owasp.goatdroid.herdfinancial.request.StatementsRequest;
+
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;

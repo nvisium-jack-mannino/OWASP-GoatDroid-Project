@@ -16,12 +16,14 @@
 package org.owasp.goatdroid.herdfinancial.activities;
 
 import java.util.HashMap;
+
 import org.owasp.goatdroid.herdfinancial.R;
 import org.owasp.goatdroid.herdfinancial.base.BaseActivity;
 import org.owasp.goatdroid.herdfinancial.db.UserInfoDBHelper;
 import org.owasp.goatdroid.herdfinancial.misc.Constants;
 import org.owasp.goatdroid.herdfinancial.misc.Utils;
-import org.owasp.goatdroid.herdfinancial.rest.balances.BalancesRequest;
+import org.owasp.goatdroid.herdfinancial.request.BalancesRequest;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
