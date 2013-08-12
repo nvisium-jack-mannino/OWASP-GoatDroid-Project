@@ -22,7 +22,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 
-public class SelectStatement extends BaseActivity {
+public class SelectStatementActivity extends BaseActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class SelectStatement extends BaseActivity {
 		Bundle bundle = new Bundle();
 		bundle.putString("selection", "date between date('" + startDate
 				+ "') and date('" + endDate + "')");
-		Intent intent = new Intent(this, ViewStatement.class);
+		Intent intent = new Intent(this, ViewStatementActivity.class);
 		intent.putExtras(bundle);
 		startActivity(intent);
 	}

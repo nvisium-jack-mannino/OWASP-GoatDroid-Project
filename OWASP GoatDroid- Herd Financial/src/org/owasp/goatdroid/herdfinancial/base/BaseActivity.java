@@ -18,9 +18,9 @@ package org.owasp.goatdroid.herdfinancial.base;
 import java.util.HashMap;
 
 import org.owasp.goatdroid.herdfinancial.R;
-import org.owasp.goatdroid.herdfinancial.activities.About;
-import org.owasp.goatdroid.herdfinancial.activities.Login;
-import org.owasp.goatdroid.herdfinancial.activities.Preferences;
+import org.owasp.goatdroid.herdfinancial.activities.AboutActivity;
+import org.owasp.goatdroid.herdfinancial.activities.LoginActivity;
+import org.owasp.goatdroid.herdfinancial.activities.PreferencesActivity;
 import org.owasp.goatdroid.herdfinancial.db.UserInfoDBHelper;
 import org.owasp.goatdroid.herdfinancial.misc.Utils;
 import org.owasp.goatdroid.herdfinancial.request.LoginRequest;
@@ -50,11 +50,11 @@ public class BaseActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.preferences:
-			Intent intent = new Intent(BaseActivity.this, Preferences.class);
+			Intent intent = new Intent(BaseActivity.this, PreferencesActivity.class);
 			startActivity(intent);
 			return true;
 		case R.id.about:
-			Intent intent2 = new Intent(BaseActivity.this, About.class);
+			Intent intent2 = new Intent(BaseActivity.this, AboutActivity.class);
 			startActivity(intent2);
 			return true;
 		case R.id.logOut:
@@ -66,7 +66,7 @@ public class BaseActivity extends Activity {
 	}
 
 	public void launchLogin() {
-		Intent intent = new Intent(context, Login.class);
+		Intent intent = new Intent(context, LoginActivity.class);
 		startActivity(intent);
 	}
 

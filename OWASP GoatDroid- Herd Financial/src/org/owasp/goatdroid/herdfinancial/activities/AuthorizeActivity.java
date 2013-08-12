@@ -31,7 +31,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-public class Authorize extends BaseActivity {
+public class AuthorizeActivity extends BaseActivity {
 
 	Context context;
 
@@ -50,12 +50,12 @@ public class Authorize extends BaseActivity {
 
 	public void dontAuthorizeDevice(View v) {
 
-		Intent intent = new Intent(Authorize.this, Home.class);
+		Intent intent = new Intent(AuthorizeActivity.this, HomeActivity.class);
 		startActivity(intent);
 	}
 
 	public void launchHome() {
-		Intent intent = new Intent(context, Home.class);
+		Intent intent = new Intent(context, HomeActivity.class);
 		startActivity(intent);
 	}
 

@@ -36,7 +36,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class ForgotPassword extends BaseUnauthenticatedActivity {
+public class ForgotPasswordActivity extends BaseUnauthenticatedActivity {
 
 	int selectedPosition = 0;
 	String dbAnswer;
@@ -71,8 +71,8 @@ public class ForgotPassword extends BaseUnauthenticatedActivity {
 
 	public void verifyPasswordResetCode(View v) {
 
-		Intent intent = new Intent(ForgotPassword.this,
-				VerifyPasswordResetCode.class);
+		Intent intent = new Intent(ForgotPasswordActivity.this,
+				VerifyPasswordResetCodeActivity.class);
 		startActivity(intent);
 	}
 
@@ -132,7 +132,7 @@ public class ForgotPassword extends BaseUnauthenticatedActivity {
 			if (results.get("success").equals("true")) {
 				Utils.makeToast(context, Constants.SECRET_QUESTION_SUCCESS,
 						Toast.LENGTH_LONG);
-				Intent intent = new Intent(ForgotPassword.this, Login.class);
+				Intent intent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
 				startActivity(intent);
 			} else
 				Utils.makeToast(context, results.get("errors"),

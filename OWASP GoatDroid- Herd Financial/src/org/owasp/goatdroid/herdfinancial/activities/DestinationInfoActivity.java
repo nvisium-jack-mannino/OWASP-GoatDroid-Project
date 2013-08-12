@@ -16,8 +16,8 @@
 package org.owasp.goatdroid.herdfinancial.activities;
 
 import java.util.HashMap;
-import org.owasp.goatdroid.herdfinancial.activities.DestinationInfo;
-import org.owasp.goatdroid.herdfinancial.activities.Login;
+import org.owasp.goatdroid.herdfinancial.activities.DestinationInfoActivity;
+import org.owasp.goatdroid.herdfinancial.activities.LoginActivity;
 import org.owasp.goatdroid.herdfinancial.R;
 import org.owasp.goatdroid.herdfinancial.base.BaseUnauthenticatedActivity;
 import org.owasp.goatdroid.herdfinancial.misc.Constants;
@@ -30,7 +30,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class DestinationInfo extends BaseUnauthenticatedActivity {
+public class DestinationInfoActivity extends BaseUnauthenticatedActivity {
 
 	Context context;
 	CheckBox isPublic;
@@ -72,7 +72,7 @@ public class DestinationInfo extends BaseUnauthenticatedActivity {
 					.toString(), proxyPortEditText.getText().toString());
 			Utils.makeToast(context, Constants.DESTINATION_INFORMATION_SUCCESS,
 					Toast.LENGTH_LONG);
-			Intent intent = new Intent(DestinationInfo.this, Login.class);
+			Intent intent = new Intent(DestinationInfoActivity.this, LoginActivity.class);
 			startActivity(intent);
 		}
 	}

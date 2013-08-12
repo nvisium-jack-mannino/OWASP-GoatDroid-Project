@@ -24,7 +24,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class Home extends BaseActivity {
+public class HomeActivity extends BaseActivity {
 	ListView listview;
 
 	@Override
@@ -40,13 +40,13 @@ public class Home extends BaseActivity {
 						.getItemAtPosition(myItemInt));
 
 				if (selectedFromList.equals("Check Balance")) {
-					Intent intent = new Intent(Home.this, GetBalance.class);
+					Intent intent = new Intent(HomeActivity.this, GetBalanceActivity.class);
 					startActivity(intent);
 				} else if (selectedFromList.equals("Transfer Funds")) {
-					Intent intent = new Intent(Home.this, Transfer.class);
+					Intent intent = new Intent(HomeActivity.this, TransferActivity.class);
 					startActivity(intent);
 				} else {
-					Intent intent = new Intent(Home.this, SelectStatement.class);
+					Intent intent = new Intent(HomeActivity.this, SelectStatementActivity.class);
 					startActivity(intent);
 				}
 			}

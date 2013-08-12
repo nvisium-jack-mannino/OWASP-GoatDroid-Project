@@ -32,7 +32,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class SetSecretQuestion extends BaseActivity {
+public class SetSecretQuestionActivity extends BaseActivity {
 
 	Context context;
 	String answer1;
@@ -65,12 +65,12 @@ public class SetSecretQuestion extends BaseActivity {
 	}
 
 	public void launchHome() {
-		Intent intent = new Intent(context, Home.class);
+		Intent intent = new Intent(context, HomeActivity.class);
 		startActivity(intent);
 	}
 
 	public void launchLogin() {
-		Intent intent = new Intent(context, Login.class);
+		Intent intent = new Intent(context, LoginActivity.class);
 		startActivity(intent);
 	}
 

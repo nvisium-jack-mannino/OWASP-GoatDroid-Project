@@ -34,7 +34,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class Transfer extends BaseActivity {
+public class TransferActivity extends BaseActivity {
 
 	String toAccount;
 	String fromAccount;
@@ -74,7 +74,7 @@ public class Transfer extends BaseActivity {
 					Utils.makeToast(context, Constants.TRANSFER_SUCCESS,
 							Toast.LENGTH_LONG);
 					pollStatements();
-					Intent intent = new Intent(Transfer.this, Home.class);
+					Intent intent = new Intent(TransferActivity.this, HomeActivity.class);
 					startActivity(intent);
 				} else
 					Utils.makeToast(context, transferInfo.get("errors"),

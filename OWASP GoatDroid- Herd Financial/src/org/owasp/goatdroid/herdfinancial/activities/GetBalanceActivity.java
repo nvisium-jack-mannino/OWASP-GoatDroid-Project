@@ -31,7 +31,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class GetBalance extends BaseActivity {
+public class GetBalanceActivity extends BaseActivity {
 
 	Context context;
 	TextView checkingBalanceTextView;
@@ -50,7 +50,7 @@ public class GetBalance extends BaseActivity {
 	}
 
 	public void launchLogin() {
-		Intent intent = new Intent(context, Login.class);
+		Intent intent = new Intent(context, LoginActivity.class);
 		startActivity(intent);
 	}
 

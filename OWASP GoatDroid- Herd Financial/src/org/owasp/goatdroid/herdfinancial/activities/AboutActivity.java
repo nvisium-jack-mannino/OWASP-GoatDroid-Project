@@ -19,7 +19,7 @@ import org.owasp.goatdroid.herdfinancial.R;
 import org.owasp.goatdroid.herdfinancial.base.BaseActivity;
 import android.os.Bundle;
 
-public class About extends BaseActivity {
+public class AboutActivity extends BaseActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

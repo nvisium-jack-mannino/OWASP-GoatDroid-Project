@@ -31,7 +31,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class VerifyPasswordResetCode extends BaseActivity {
+public class VerifyPasswordResetCodeActivity extends BaseActivity {
 
 	Context context;
 
@@ -57,8 +57,8 @@ public class VerifyPasswordResetCode extends BaseActivity {
 				Bundle bundle = new Bundle();
 				bundle.putString("userName", userName);
 				bundle.putString("passwordResetCode", passwordResetCode);
-				Intent intent = new Intent(VerifyPasswordResetCode.this,
-						ResetPassword.class);
+				Intent intent = new Intent(VerifyPasswordResetCodeActivity.this,
+						ResetPasswordActivity.class);
 				intent.putExtras(bundle);
 				startActivity(intent);
 			} else

@@ -31,7 +31,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class ResetPassword extends BaseActivity {
+public class ResetPasswordActivity extends BaseActivity {
 
 	Context context;
 	Bundle bundle;
@@ -71,7 +71,7 @@ public class ResetPassword extends BaseActivity {
 	}
 
 	public void launchLogin() {
-		Intent intent = new Intent(context, Login.class);
+		Intent intent = new Intent(context, LoginActivity.class);
 		startActivity(intent);
 	}
 

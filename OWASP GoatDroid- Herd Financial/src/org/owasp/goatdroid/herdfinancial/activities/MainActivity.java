@@ -28,7 +28,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-public class Main extends Activity {
+public class MainActivity extends Activity {
 
 	Context context;
 
@@ -65,7 +65,7 @@ public class Main extends Activity {
 						Intent serviceIntent = new Intent(context,
 								StatementUpdateService.class);
 						startService(serviceIntent);
-						Intent intent = new Intent(Main.this, Home.class);
+						Intent intent = new Intent(MainActivity.this, HomeActivity.class);
 						startActivity(intent);
 						return true;
 						/*
@@ -80,7 +80,7 @@ public class Main extends Activity {
 						Intent serviceIntent = new Intent(context,
 								StatementUpdateService.class);
 						startService(serviceIntent);
-						Intent intent = new Intent(Main.this, Home.class);
+						Intent intent = new Intent(MainActivity.this, HomeActivity.class);
 						startActivity(intent);
 						return true;
 					}
@@ -90,12 +90,12 @@ public class Main extends Activity {
 					 * be granted authenticated status.
 					 */
 				} else {
-					Intent intent = new Intent(Main.this, Login.class);
+					Intent intent = new Intent(MainActivity.this, LoginActivity.class);
 					startActivity(intent);
 					return false;
 				}
 			} catch (Exception e) {
-				Intent intent = new Intent(Main.this, Login.class);
+				Intent intent = new Intent(MainActivity.this, LoginActivity.class);
 				startActivity(intent);
 				return false;
 			} finally {

@@ -35,7 +35,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ViewStatement extends BaseActivity {
+public class ViewStatementActivity extends BaseActivity {
 
 	Context context;
 	ListView listView;
@@ -74,7 +74,7 @@ public class ViewStatement extends BaseActivity {
 	}
 
 	public void launchLogin() {
-		Intent intent = new Intent(context, Login.class);
+		Intent intent = new Intent(context, LoginActivity.class);
 		startActivity(intent);
 	}
 
@@ -101,7 +101,7 @@ public class ViewStatement extends BaseActivity {
 				emptyStatement.setVisibility(1);
 			} else {
 				listView.setAdapter(new ArrayAdapter<String>(
-						ViewStatement.this,
+						ViewStatementActivity.this,
 						android.R.layout.simple_list_item_1, statement));
 			}
 		}

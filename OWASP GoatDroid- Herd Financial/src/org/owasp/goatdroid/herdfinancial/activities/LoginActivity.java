@@ -33,7 +33,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class Login extends BaseUnauthenticatedActivity {
+public class LoginActivity extends BaseUnauthenticatedActivity {
 
 	EditText userNameEditText;
 	EditText passwordEditText;
@@ -65,13 +65,13 @@ public class Login extends BaseUnauthenticatedActivity {
 
 	public void launchRegisterActivity(View v) {
 
-		Intent intent = new Intent(Login.this, Register.class);
+		Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
 		startActivity(intent);
 	}
 
 	public void launchForgotPasswordActivity(View v) {
 
-		Intent intent = new Intent(Login.this, ForgotPassword.class);
+		Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
 		startActivity(intent);
 	}
 
@@ -81,7 +81,7 @@ public class Login extends BaseUnauthenticatedActivity {
 	}
 
 	public void launchHome() {
-		Intent intent = new Intent(context, Home.class);
+		Intent intent = new Intent(context, HomeActivity.class);
 		startActivity(intent);
 	}
 

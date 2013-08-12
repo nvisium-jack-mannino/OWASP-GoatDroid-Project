@@ -16,8 +16,8 @@
 package org.owasp.goatdroid.herdfinancial.base;
 
 import org.owasp.goatdroid.herdfinancial.R;
-import org.owasp.goatdroid.herdfinancial.activities.DestinationInfo;
-import org.owasp.goatdroid.herdfinancial.activities.Login;
+import org.owasp.goatdroid.herdfinancial.activities.DestinationInfoActivity;
+import org.owasp.goatdroid.herdfinancial.activities.LoginActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -40,13 +40,13 @@ public class BaseUnauthenticatedActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-		Intent intent = new Intent(context, DestinationInfo.class);
+		Intent intent = new Intent(context, DestinationInfoActivity.class);
 		startActivity(intent);
 		return true;
 	}
 
 	public void launchLogin() {
-		Intent intent = new Intent(context, Login.class);
+		Intent intent = new Intent(context, LoginActivity.class);
 		startActivity(intent);
 	}
 }

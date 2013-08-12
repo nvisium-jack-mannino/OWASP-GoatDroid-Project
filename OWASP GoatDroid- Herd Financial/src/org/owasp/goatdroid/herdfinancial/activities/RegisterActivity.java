@@ -30,7 +30,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class Register extends BaseUnauthenticatedActivity {
+public class RegisterActivity extends BaseUnauthenticatedActivity {
 
 	Context context;
 	String firstName;
@@ -86,7 +86,7 @@ public class Register extends BaseUnauthenticatedActivity {
 	}
 
 	public void launchLogin() {
-		Intent intent = new Intent(context, Login.class);
+		Intent intent = new Intent(context, LoginActivity.class);
 		startActivity(intent);
 	}
 

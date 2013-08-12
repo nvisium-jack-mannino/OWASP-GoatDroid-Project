@@ -25,7 +25,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
-public class Preferences extends BaseActivity {
+public class PreferencesActivity extends BaseActivity {
 
 	Context context;
 
@@ -37,12 +37,12 @@ public class Preferences extends BaseActivity {
 	}
 
 	public void launchSecretQuestionActivity(View v) {
-		Intent intent = new Intent(Preferences.this, SetSecretQuestion.class);
+		Intent intent = new Intent(PreferencesActivity.this, SetSecretQuestionActivity.class);
 		startActivity(intent);
 	}
 
 	public void launchAuthorizeDeviceActivity(View v) {
-		Intent intent = new Intent(Preferences.this, Authorize.class);
+		Intent intent = new Intent(PreferencesActivity.this, AuthorizeActivity.class);
 		startActivity(intent);
 	}
 
