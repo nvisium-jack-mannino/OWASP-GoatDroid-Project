@@ -31,7 +31,6 @@ public class PreferencesRequest {
 	String destinationInfo;
 
 	public PreferencesRequest(Context context) {
-
 		this.context = context;
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
