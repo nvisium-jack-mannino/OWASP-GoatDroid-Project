@@ -88,7 +88,6 @@ public class DoAdminPasswordResetActivity extends BaseActivity {
 
 			GenericResponseObject response = new GenericResponseObject();
 			AdminRequest rest = new AdminRequest(context);
-			
 
 			try {
 				response = rest.resetUserPassword(bundle.getString("userName"),
@@ -100,19 +99,17 @@ public class DoAdminPasswordResetActivity extends BaseActivity {
 			return response;
 		}
 
-		public void onPostExecute(HashMap<String, String> results) {
-			/*if (results.get("success").equals("true")) {
-				Utils.makeToast(context, Constants.PASSWORD_RESET_SUCCESS,
-						Toast.LENGTH_LONG);
-				launchHome();
-			} else if (results.get("errors").equals(Constants.INVALID_SESSION)) {
-				Utils.makeToast(context, Constants.INVALID_SESSION,
-						Toast.LENGTH_LONG);
-				launchLogin();
-			} else {
-				Utils.makeToast(context, results.get("errors"),
-						Toast.LENGTH_LONG);
-			}
-		}*/
+		public void onPostExecute(GenericResponseObject results) {
+			/*
+			 * if (results.get("success").equals("true")) {
+			 * Utils.makeToast(context, Constants.PASSWORD_RESET_SUCCESS,
+			 * Toast.LENGTH_LONG); launchHome(); } else if
+			 * (results.get("errors").equals(Constants.INVALID_SESSION)) {
+			 * Utils.makeToast(context, Constants.INVALID_SESSION,
+			 * Toast.LENGTH_LONG); launchLogin(); } else {
+			 * Utils.makeToast(context, results.get("errors"),
+			 * Toast.LENGTH_LONG); } }
+			 */
+		}
 	}
 }

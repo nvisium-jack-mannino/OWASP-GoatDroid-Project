@@ -23,6 +23,7 @@ import org.owasp.goatdroid.fourgoats.base.BaseActivity;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.AdminRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
 
 import android.content.Context;
 import android.content.Intent;
@@ -78,36 +79,33 @@ public class DoAdminDeleteUserActivity extends BaseActivity {
 	}
 
 	private class DeleteUserAsyncTask extends
-			AsyncTask<Void, Void, HashMap<String, String>> {
-		protected HashMap<String, String> doInBackground(Void... params) {
+			AsyncTask<Void, Void, GenericResponseObject> {
+		protected GenericResponseObject doInBackground(Void... params) {
 
-			HashMap<String, String> resultInfo = new HashMap<String, String>();
+			GenericResponseObject response = new GenericResponseObject();
 			AdminRequest rest = new AdminRequest(context);
 
 			try {
-
-				resultInfo = rest.deleteUser(bundle.getString("userName"));
-
+				response = rest.deleteUser(bundle.getString("userName"));
 			} catch (Exception e) {
-				resultInfo.put("errors", e.getMessage());
-				resultInfo.put("success", "false");
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			return resultInfo;
+			return response;
+
 		}
 
-		public void onPostExecute(HashMap<String, String> results) {
-			if (results.get("success").equals("true")) {
-				Utils.makeToast(context, Constants.DELETION_SUCCESS,
-						Toast.LENGTH_LONG);
-				launchAdminHome();
-			} else if (results.get("errors").equals(Constants.INVALID_SESSION)) {
-				Utils.makeToast(context, Constants.INVALID_SESSION,
-						Toast.LENGTH_LONG);
-				launchLogin();
-			} else {
-				Utils.makeToast(context, results.get("errors"),
-						Toast.LENGTH_LONG);
-			}
+		public void onPostExecute(GenericResponseObject results) {
+			/*
+			 * if (results.get("success").equals("true")) {
+			 * Utils.makeToast(context, Constants.DELETION_SUCCESS,
+			 * Toast.LENGTH_LONG); launchAdminHome(); } else if
+			 * (results.get("errors").equals(Constants.INVALID_SESSION)) {
+			 * Utils.makeToast(context, Constants.INVALID_SESSION,
+			 * Toast.LENGTH_LONG); launchLogin(); } else {
+			 * Utils.makeToast(context, results.get("errors"),
+			 * Toast.LENGTH_LONG); }
+			 */
 		}
 	}
 
