@@ -23,6 +23,7 @@ import org.owasp.goatdroid.fourgoats.base.BaseActivity;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.AdminRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
 
 import android.content.Context;
 import android.content.Intent;
@@ -82,27 +83,25 @@ public class DoAdminPasswordResetActivity extends BaseActivity {
 	}
 
 	private class ResetPasswordAsyncTask extends
-			AsyncTask<Void, Void, HashMap<String, String>> {
-		protected HashMap<String, String> doInBackground(Void... params) {
+			AsyncTask<Void, Void, GenericResponseObject> {
+		protected GenericResponseObject doInBackground(Void... params) {
 
-			HashMap<String, String> resultInfo = new HashMap<String, String>();
-
+			GenericResponseObject response = new GenericResponseObject();
 			AdminRequest rest = new AdminRequest(context);
+			
+
 			try {
-
-				resultInfo = rest.resetUserPassword(bundle
-						.getString("userName"), passwordEditText.getText()
-						.toString());
-
+				response = rest.resetUserPassword(bundle.getString("userName"),
+						passwordEditText.getText().toString());
 			} catch (Exception e) {
-				resultInfo.put("errors", e.getMessage());
-				resultInfo.put("success", "false");
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			return resultInfo;
+			return response;
 		}
 
 		public void onPostExecute(HashMap<String, String> results) {
-			if (results.get("success").equals("true")) {
+			/*if (results.get("success").equals("true")) {
 				Utils.makeToast(context, Constants.PASSWORD_RESET_SUCCESS,
 						Toast.LENGTH_LONG);
 				launchHome();
@@ -114,6 +113,6 @@ public class DoAdminPasswordResetActivity extends BaseActivity {
 				Utils.makeToast(context, results.get("errors"),
 						Toast.LENGTH_LONG);
 			}
-		}
+		}*/
 	}
 }

@@ -21,7 +21,6 @@ import org.owasp.goatdroid.fourgoats.http.RequestMethod;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.response.AddVenueResponse;
 import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
-import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 import android.content.Context;
 

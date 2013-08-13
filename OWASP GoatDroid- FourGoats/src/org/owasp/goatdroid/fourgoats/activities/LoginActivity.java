@@ -1,5 +1,5 @@
 /**
- * OWASP GoatDroid Project
+e * OWASP GoatDroid Project
  * 
  * This file is part of the Open Web Application Security Project (OWASP)
  * GoatDroid project. For details, please see
