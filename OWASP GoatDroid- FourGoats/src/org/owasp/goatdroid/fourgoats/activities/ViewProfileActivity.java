@@ -16,13 +16,13 @@
  */
 package org.owasp.goatdroid.fourgoats.activities;
 
-import java.util.HashMap;
-
 import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.base.BaseActivity;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.FriendRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.Friend;
+import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
 
 import android.content.Context;
 import android.content.Intent;
@@ -65,42 +65,37 @@ public class ViewProfileActivity extends BaseActivity {
 		startActivity(intent);
 	}
 
-	private class GetProfileInfo extends
-			AsyncTask<Void, Void, HashMap<String, String>> {
-		protected HashMap<String, String> doInBackground(Void... params) {
+	private class GetProfileInfo extends AsyncTask<Void, Void, Friend> {
+		protected Friend doInBackground(Void... params) {
 
-			HashMap<String, String> profileInfo = new HashMap<String, String>();
+			Friend friend = new Friend();
 			FriendRequest rest = new FriendRequest(context);
+
 			try {
-
-				profileInfo = rest.getProfile(bundle.getString("userName"));
-				if (profileInfo.get("success").equals("true")) {
-					return profileInfo;
-
-				} else {
-					return profileInfo;
-				}
+				friend = rest.getProfile(bundle.getString("userName"));
 			} catch (Exception e) {
-				profileInfo.put("errors", e.getMessage());
-				profileInfo.put("success", "false");
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			return profileInfo;
+			return friend;
 		}
 
-		public void onPostExecute(HashMap<String, String> users) {
+		public void onPostExecute(Friend result) {
 
-			if (users.get("success").equals("true")) {
+			if (result.isSuccess()) {
 				userNameTextView.setText(bundle.getString("userName"));
-				nameTextView.setText(users.get("firstName") + " "
-						+ users.get("lastName"));
-				if (users.get("lastCheckinTime").equals(""))
+				nameTextView.setText(result.getProfile() + " "
+						+ result.getProfile().get("userName"));
+				if (result.getProfile().get("lastCheckinTime").equals(""))
 					lastCheckinTextView.setText("User has never checked in");
 				else {
-					String[] dateTime = users.get("lastCheckinTime").split(" ");
+					String[] dateTime = result.getProfile()
+							.get("lastCheckinTime").split(" ");
 					lastCheckinTextView.setText("Date: " + dateTime[0]
 							+ "\nTime: " + dateTime[1] + "\nLatitude: "
-							+ users.get("lastLatitude") + "\nLongitude: "
-							+ users.get("lastLongitude"));
+							+ result.getProfile().get("lastLatitude")
+							+ "\nLongitude: "
+							+ result.getProfile().get("lastLongitude"));
 				}
 			} else {
 				Utils.makeToast(context, Constants.WEIRD_ERROR,
@@ -110,28 +105,30 @@ public class ViewProfileActivity extends BaseActivity {
 	}
 
 	private class RequestFriendAsyncTask extends
-			AsyncTask<Void, Void, HashMap<String, String>> {
-		protected HashMap<String, String> doInBackground(Void... params) {
+			AsyncTask<Void, Void, GenericResponseObject> {
+		protected GenericResponseObject doInBackground(Void... params) {
 
 			FriendRequest rest = new FriendRequest(context);
-			HashMap<String, String> resultInfo = new HashMap<String, String>();
+			GenericResponseObject response = new GenericResponseObject();
 
 			try {
-				resultInfo = rest.doFriendRequest(bundle.getString("userName"));
+				response = rest.doFriendRequest(bundle.getString("userName"));
 			} catch (Exception e) {
-				resultInfo.put("errors", e.getMessage());
-				resultInfo.put("success", "false");
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			return resultInfo;
+
+			return response;
 		}
 
-		public void onPostExecute(HashMap<String, String> results) {
+		public void onPostExecute(GenericResponseObject response) {
 
-			if (results.get("success").equals("true")) {
+			if (response.isSuccess()) {
 				Utils.makeToast(context, Constants.FRIEND_REQUEST_SENT,
 						Toast.LENGTH_LONG);
 			} else {
-				Utils.makeToast(context, results.get("errors"),
+				Utils.makeToast(context,
+						Utils.mergeArrayList(response.getErrors()),
 						Toast.LENGTH_LONG);
 			}
 		}
