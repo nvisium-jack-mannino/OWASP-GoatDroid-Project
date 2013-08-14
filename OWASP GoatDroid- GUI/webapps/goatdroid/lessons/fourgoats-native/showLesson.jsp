@@ -19,7 +19,15 @@
 			     if (lesson.equals("insecureDataStorage")) { %>
 			    	<jsp:include page="insecure-data-storage.html" />;
 			    	
-			    <% }
+			    <% } else if (lesson.equals("insufficientTLP")) { %>
+			    	<jsp:include page="insufficient-transport-layer-protection.html" />;
+			   <% } else if (lesson.equals("XSS")) { %>
+					<jsp:include page="cross-site-scripting.html" />;
+				<% } else if (lesson.equals("exposedCP")) { %>
+					<jsp:include page="exposed-content-provider.html" />;
+					
+				<%
+				}
 				%>	
 				
 			</div>
