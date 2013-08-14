@@ -16,13 +16,12 @@
  */
 package org.owasp.goatdroid.fourgoats.activities;
 
-import java.util.HashMap;
-
 import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.base.BaseActivity;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.CommentsRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
 
 import android.content.Context;
 import android.content.Intent;
@@ -67,29 +66,31 @@ public class DoCommentActivity extends BaseActivity {
 	}
 
 	private class DoCommentAsyncTask extends
-			AsyncTask<Void, Void, HashMap<String, String>> {
+			AsyncTask<Void, Void, GenericResponseObject> {
 
 		@Override
-		protected HashMap<String, String> doInBackground(Void... params) {
+		protected GenericResponseObject doInBackground(Void... params) {
 
-			HashMap<String, String> commentData = new HashMap<String, String>();
+			GenericResponseObject response = new GenericResponseObject();
 			CommentsRequest rest = new CommentsRequest(context);
 			try {
-				commentData = rest.addComment(commentEditText.getText()
-						.toString(), bundle.getString("checkinID"));
+				response = rest.addComment(
+						commentEditText.getText().toString(),
+						bundle.getString("checkinID"));
 			} catch (Exception e) {
-				commentData.put("errors", e.getMessage());
+				e.getMessage();
 			}
-			return commentData;
+			return response;
 		}
 
-		protected void onPostExecute(HashMap<String, String> results) {
-			if (results.get("success").equals("true")) {
+		protected void onPostExecute(GenericResponseObject response) {
+			if (response.isSuccess()) {
 				Utils.makeToast(context, Constants.COMMENT_SUCCESS,
 						Toast.LENGTH_LONG);
 				launchViewCheckin(bundle);
 			} else {
-				Utils.makeToast(context, results.get("errors"),
+				Utils.makeToast(context,
+						Utils.mergeArrayList(response.getErrors()),
 						Toast.LENGTH_LONG);
 			}
 		}

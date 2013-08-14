@@ -16,13 +16,12 @@
  */
 package org.owasp.goatdroid.fourgoats.javascriptinterfaces;
 
-import java.util.HashMap;
-
 import org.owasp.goatdroid.fourgoats.activities.DoCommentActivity;
 import org.owasp.goatdroid.fourgoats.activities.ViewCheckinActivity;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.CommentsRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
 
 import android.content.Context;
 import android.content.Intent;
@@ -76,8 +75,8 @@ public class ViewCheckinJSInterface {
 		CommentsRequest rest = new CommentsRequest(mContext);
 
 		try {
-			HashMap<String, String> commentData = rest.removeComment(commentID);
-			if (commentData.get("success").equals("true")) {
+			GenericResponseObject response = rest.removeComment(commentID);
+			if (response.isSuccess()) {
 				Utils.makeToast(mContext,
 						Constants.COMMENT_SUCCESSFULLY_REMOVED,
 						Toast.LENGTH_LONG);
@@ -92,11 +91,11 @@ public class ViewCheckinJSInterface {
 				intent.putExtras(bundle);
 				mContext.startActivity(intent);
 			} else
-				Utils.makeToast(mContext, commentData.get("errors"),
+				Utils.makeToast(mContext,
+						Utils.mergeArrayList(response.getErrors()),
 						Toast.LENGTH_LONG);
 		} catch (Exception e) {
 			Utils.makeToast(mContext, Constants.WEIRD_ERROR, Toast.LENGTH_LONG);
 		}
-
 	}
 }
