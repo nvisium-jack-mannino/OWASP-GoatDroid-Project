@@ -22,6 +22,7 @@ import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.CommentsRequest;
 import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
+import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 import android.content.Context;
 import android.content.Intent;
@@ -75,7 +76,7 @@ public class ViewCheckinJSInterface {
 		CommentsRequest rest = new CommentsRequest(mContext);
 
 		try {
-			GenericResponseObject response = rest.removeComment(commentID);
+			GenericResponseObject response = (GenericResponseObject) rest.removeComment(commentID);
 			if (response.isSuccess()) {
 				Utils.makeToast(mContext,
 						Constants.COMMENT_SUCCESSFULLY_REMOVED,

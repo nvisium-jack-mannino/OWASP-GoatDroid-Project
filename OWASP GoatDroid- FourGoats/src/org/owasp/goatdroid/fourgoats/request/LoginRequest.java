@@ -21,7 +21,6 @@ import org.owasp.goatdroid.fourgoats.http.RequestMethod;
 import org.owasp.goatdroid.fourgoats.http.RestClient;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.response.LoginResponse;
-import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
 import org.owasp.goatdroid.fourgoats.responseobjects.Login;
 import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
@@ -70,7 +69,7 @@ public class LoginRequest {
 		return LoginResponse.parseAPILoginResponse(client.getResponse());
 	}
 
-	public GenericResponseObject logOut() throws Exception {
+	public ResponseObject logOut() throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/fourgoats/api/v1/pub/login/sign-out");

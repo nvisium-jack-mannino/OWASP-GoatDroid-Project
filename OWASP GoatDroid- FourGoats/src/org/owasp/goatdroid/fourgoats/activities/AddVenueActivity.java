@@ -25,6 +25,7 @@ import org.owasp.goatdroid.fourgoats.request.AddVenueRequest;
 import org.owasp.goatdroid.fourgoats.request.CheckinRequest;
 import org.owasp.goatdroid.fourgoats.responseobjects.Checkin;
 import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
+import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 import android.content.Context;
 import android.content.Intent;
@@ -86,10 +87,10 @@ public class AddVenueActivity extends BaseActivity {
 	}
 
 	private class AddVenueAsyncTask extends
-			AsyncTask<Void, Void, GenericResponseObject> {
+			AsyncTask<Void, Void, ResponseObject> {
 
 		@Override
-		protected GenericResponseObject doInBackground(Void... params) {
+		protected ResponseObject doInBackground(Void... params) {
 
 			CheckinDBHelper checkinDBHelper = new CheckinDBHelper(context);
 			AddVenueRequest request = new AddVenueRequest(context);

@@ -22,6 +22,7 @@ import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.response.AdminResponse;
 import org.owasp.goatdroid.fourgoats.responseobjects.Admin;
 import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
+import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 import android.content.Context;
 

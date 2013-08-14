@@ -16,8 +16,6 @@
  */
 package org.owasp.goatdroid.fourgoats.fragments;
 
-import java.util.HashMap;
-
 import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.activities.AddVenueActivity;
 import org.owasp.goatdroid.fourgoats.activities.ViewCheckinActivity;
@@ -26,7 +24,6 @@ import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.CheckinRequest;
 import org.owasp.goatdroid.fourgoats.responseobjects.Checkin;
-import org.owasp.goatdroid.fourgoats.responseobjects.Login;
 
 import android.content.Context;
 import android.content.Intent;

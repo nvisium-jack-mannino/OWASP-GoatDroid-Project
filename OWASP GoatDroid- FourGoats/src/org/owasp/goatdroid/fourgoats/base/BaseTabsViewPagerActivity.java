@@ -30,6 +30,7 @@ import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.LoginRequest;
 import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
+import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 import android.content.Context;
 import android.content.Intent;
@@ -206,9 +207,8 @@ public class BaseTabsViewPagerActivity extends SherlockFragmentActivity {
 		return true;
 	}
 
-	public class LogOutAsyncTask extends
-			AsyncTask<Void, Void, GenericResponseObject> {
-		protected GenericResponseObject doInBackground(Void... params) {
+	public class LogOutAsyncTask extends AsyncTask<Void, Void, ResponseObject> {
+		protected ResponseObject doInBackground(Void... params) {
 
 			LoginRequest rest = new LoginRequest(context);
 
