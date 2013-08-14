@@ -18,147 +18,44 @@ package org.owasp.goatdroid.fourgoats.response;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.owasp.goatdroid.fourgoats.base.ResponseBase;
-import org.owasp.goatdroid.fourgoats.misc.Constants;
+import org.owasp.goatdroid.fourgoats.responseobjects.Friend;
+import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
+import org.owasp.goatdroid.fourgoats.responseobjects.PendingFriendRequest;
 
-public class FriendResponse extends ResponseBase {
+public class FriendResponse extends BaseResponse {
 
-	static public HashMap<String, String> parseProfileResponse(String response) {
-
-		JSONObject json;
-		HashMap<String, String> results = new HashMap<String, String>();
-		String errors = "";
-
-		try {
-			json = new JSONObject(response);
-			if (json.getString("success").equals("false")) {
-				results.put("success", "false");
-				try {
-					JSONArray errorArray = json.getJSONArray("errors");
-
-					for (int count = 0; count < errorArray.length(); count++)
-						errors += errorArray.getString(count).toString()
-								+ "\n\n";
-
-				} catch (JSONException e) {
-					errors += json.getString("errors");
-				}
-
-				results.put("errors", errors);
-				return results;
-
-			} else {
-				results.put("success", "true");
-
-				JSONObject checkinObject = json.getJSONObject("profile");
-				JSONArray entry = checkinObject.getJSONArray("entry");
-				for (int count = 0; count < entry.length(); count++) {
-					results.put(entry.getJSONObject(count).getString("key"),
-							entry.getJSONObject(count).getString("value"));
-				}
-
-				return results;
-			}
-
-		} catch (JSONException e) {
-			results.put("success", "false");
-			results.put("errors", Constants.WEIRD_ERROR);
-			return results;
-		}
+	static public Friend parseProfileResponse(String response) {
+		return (Friend) parseJsonResponse(response, Friend.class);
 	}
 
-	static public ArrayList<HashMap<String, String>> parsePendingFriendRequestsResponse(
+	static public PendingFriendRequest parsePendingFriendRequestsResponse(
 			String response) {
+		return (PendingFriendRequest) parseJsonResponse(response,
+				PendingFriendRequest.class);
+	}
 
-		JSONObject json;
-		ArrayList<HashMap<String, String>> results = new ArrayList<HashMap<String, String>>();
-		String errors = "";
+	static public GenericResponseObject parseDoFriendRequestResponse(
+			String response) {
+		return parseJsonResponse(response, GenericResponseObject.class);
+	}
 
-		try {
-			json = new JSONObject(response);
-			if (json.getString("success").equals("true")) {
-				JSONArray requestArray = json
-						.getJSONArray("pendingFriendRequests");
-				for (int count = 0; count < requestArray.length(); count++) {
-					HashMap<String, String> resultsMap = new HashMap<String, String>();
-					resultsMap.put("success", "true");
-					HashMap<String, String> request = new HashMap<String, String>();
+	static public GenericResponseObject parseAcceptFriendRequestResponse(
+			String response) {
+		return parseJsonResponse(response, GenericResponseObject.class);
+	}
 
-					if (requestArray.getJSONObject(count).has("requestId"))
-						request.put("requestId", (String) requestArray
-								.getJSONObject(count).get("requestId"));
-					if (requestArray.getJSONObject(count).has("userName"))
-						request.put("userName", (String) requestArray
-								.getJSONObject(count).get("userName"));
-					if (requestArray.getJSONObject(count).has("firstName"))
-						request.put("firstName", (String) requestArray
-								.getJSONObject(count).get("firstName"));
-					if (requestArray.getJSONObject(count).has("lastName"))
-						request.put("lastName", (String) requestArray
-								.getJSONObject(count).get("lastName"));
-					results.add(resultsMap);
-					if (request.size() > 0)
-						results.add(request);
-				}
-			} else {
-				HashMap<String, String> resultsMap = new HashMap<String, String>();
-				resultsMap.put("success", "false");
-				try {
-					JSONArray errorArray = json.getJSONArray("errors");
+	static public GenericResponseObject parseRemoveFriendRequestResponse(
+			String response) {
+		return parseJsonResponse(response, GenericResponseObject.class);
+	}
 
-					for (int count = 0; count < errorArray.length(); count++)
-						errors += errorArray.getString(count).toString()
-								+ "\n\n";
-
-				} catch (JSONException e) {
-					errors += json.getString("errors");
-				}
-				resultsMap.put("errors", errors);
-				results.add(resultsMap);
-			}
-		} catch (JSONException e) {
-			try {
-				json = new JSONObject(response);
-				HashMap<String, String> resultsMap = new HashMap<String, String>();
-				resultsMap.put("success", "true");
-				results.add(resultsMap);
-				HashMap<String, String> request = new HashMap<String, String>();
-				if (json.getJSONObject("pendingFriendRequests")
-						.has("requestID"))
-					request.put("requestID",
-							(String) json
-									.getJSONObject("pendingFriendRequests")
-									.get("requestID"));
-				if (json.getJSONObject("pendingFriendRequests").has("userName"))
-					request.put("userName",
-							(String) json
-									.getJSONObject("pendingFriendRequests")
-									.get("userName"));
-				if (json.getJSONObject("pendingFriendRequests")
-						.has("firstName"))
-					request.put("firstName",
-							(String) json
-									.getJSONObject("pendingFriendRequests")
-									.get("firstName"));
-				if (json.getJSONObject("pendingFriendRequests").has("lastName"))
-					request.put("lastName",
-							(String) json
-									.getJSONObject("pendingFriendRequests")
-									.get("lastName"));
-				if (request.size() > 0)
-					results.add(request);
-
-			} catch (JSONException e1) {
-				/*
-				 * We don't care if it falls through here.
-				 */
-				e1.getMessage();
-			}
-		}
-		return results;
+	static public GenericResponseObject parseDenyFriendRequestResponse(
+			String response) {
+		return parseJsonResponse(response, GenericResponseObject.class);
 	}
 
 	static public ArrayList<HashMap<String, String>> parseListFriendsResponse(

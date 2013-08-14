@@ -20,11 +20,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.owasp.goatdroid.fourgoats.R;
-import org.owasp.goatdroid.fourgoats.activities.LoginActivity;
 import org.owasp.goatdroid.fourgoats.activities.ViewFriendRequestActivity;
-import org.owasp.goatdroid.fourgoats.misc.Constants;
-import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.FriendRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.PendingFriendRequest;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -37,7 +35,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
@@ -78,12 +75,12 @@ public class PendingFriendRequests extends SherlockFragment {
 		return v;
 	}
 
-	public String[] bindListView(
-			ArrayList<HashMap<String, String>> friendRequestData) {
+	public String[] bindListView(PendingFriendRequest request) {
 
 		// userName, firstName, lastName
 		ArrayList<String> userArray = new ArrayList<String>();
-		for (HashMap<String, String> friendRequest : friendRequestData) {
+		for (HashMap<String, String> friendRequest : request
+				.getPendingFriendRequests()) {
 			if ((friendRequest.get("userName") != null)
 					&& (friendRequest.get("firstName") != null)
 					&& (friendRequest.get("lastName") != null))
@@ -101,31 +98,22 @@ public class PendingFriendRequests extends SherlockFragment {
 			AsyncTask<Void, Void, String[]> {
 		protected String[] doInBackground(Void... params) {
 
-			ArrayList<HashMap<String, String>> pendingRequestsData = new ArrayList<HashMap<String, String>>();
+			PendingFriendRequest pendingRequests = new PendingFriendRequest();
 			FriendRequest rest = new FriendRequest(getActivity());
-			try {
 
-				pendingRequestsData = rest.getPendingFriendRequests();
-				if (pendingRequestsData.size() > 0) {
-					if (pendingRequestsData.get(0).get("success")
-							.equals("true")) {
-						if (pendingRequestsData.size() > 1)
-							return bindListView(pendingRequestsData);
-						else
-							return new String[0];
-					} else {
-						Utils.makeToast(getActivity(), Constants.WEIRD_ERROR,
-								Toast.LENGTH_LONG);
-						return new String[0];
-					}
+			try {
+				pendingRequests = rest.getPendingFriendRequests();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (pendingRequests.getPendingFriendRequests().size() > 0) {
+				if (pendingRequests.isSuccess()) {
+					return bindListView(pendingRequests);
 				} else
 					return new String[0];
-
-			} catch (Exception e) {
-				Intent intent = new Intent(getActivity(), LoginActivity.class);
-				startActivity(intent);
+			} else
 				return new String[0];
-			}
 		}
 
 		public void onPostExecute(String[] requests) {

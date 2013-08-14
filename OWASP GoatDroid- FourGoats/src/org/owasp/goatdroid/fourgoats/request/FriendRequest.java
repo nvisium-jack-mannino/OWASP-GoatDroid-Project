@@ -23,6 +23,9 @@ import org.owasp.goatdroid.fourgoats.http.AuthenticatedRestClient;
 import org.owasp.goatdroid.fourgoats.http.RequestMethod;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.response.FriendResponse;
+import org.owasp.goatdroid.fourgoats.responseobjects.Friend;
+import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
+import org.owasp.goatdroid.fourgoats.responseobjects.PendingFriendRequest;
 
 import android.content.Context;
 
@@ -37,7 +40,7 @@ public class FriendRequest {
 		this.context = context;
 	}
 
-	public HashMap<String, String> doFriendRequest(String userName)
+	public GenericResponseObject doFriendRequest(String userName)
 			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
@@ -46,10 +49,11 @@ public class FriendRequest {
 		client.AddParam("userName", userName);
 		client.Execute(RequestMethod.POST, context);
 
-		return FriendResponse.parseStatusAndErrors(client.getResponse());
+		return FriendResponse
+				.parseDoFriendRequestResponse(client.getResponse());
 	}
 
-	public HashMap<String, String> getProfile(String userName) throws Exception {
+	public Friend getProfile(String userName) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
@@ -59,8 +63,7 @@ public class FriendRequest {
 		return FriendResponse.parseProfileResponse(client.getResponse());
 	}
 
-	public ArrayList<HashMap<String, String>> getPendingFriendRequests()
-			throws Exception {
+	public PendingFriendRequest getPendingFriendRequests() throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
@@ -71,7 +74,7 @@ public class FriendRequest {
 				.getResponse());
 	}
 
-	public HashMap<String, String> acceptFriendRequest(String userName)
+	public GenericResponseObject acceptFriendRequest(String userName)
 			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
@@ -80,11 +83,12 @@ public class FriendRequest {
 		client.AddParam("userName", userName);
 		client.Execute(RequestMethod.POST, context);
 
-		return FriendResponse.parseStatusAndErrors(client.getResponse());
+		return FriendResponse.parseAcceptFriendRequestResponse(client
+				.getResponse());
 
 	}
 
-	public HashMap<String, String> removeFriendRequest(String userName)
+	public GenericResponseObject removeFriendRequest(String userName)
 			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
@@ -93,11 +97,12 @@ public class FriendRequest {
 		client.AddParam("userName", userName);
 		client.Execute(RequestMethod.POST, context);
 
-		return FriendResponse.parseStatusAndErrors(client.getResponse());
+		return FriendResponse.parseRemoveFriendRequestResponse(client
+				.getResponse());
 
 	}
 
-	public HashMap<String, String> denyFriendRequest(String userName)
+	public GenericResponseObject denyFriendRequest(String userName)
 			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
@@ -106,7 +111,8 @@ public class FriendRequest {
 		client.AddParam("userName", userName);
 		client.Execute(RequestMethod.POST, context);
 
-		return FriendResponse.parseStatusAndErrors(client.getResponse());
+		return FriendResponse.parseDenyFriendRequestResponse(client
+				.getResponse());
 
 	}
 
