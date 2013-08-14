@@ -23,6 +23,7 @@ import org.owasp.goatdroid.fourgoats.base.BaseActivity;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.FriendRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -63,52 +64,50 @@ public class ViewFriendRequestActivity extends BaseActivity {
 	}
 
 	private class AcceptRequestAsyncTask extends
-			AsyncTask<Void, Void, HashMap<String, String>> {
-		protected HashMap<String, String> doInBackground(Void... params) {
+			AsyncTask<Void, Void, GenericResponseObject> {
+		protected GenericResponseObject doInBackground(Void... params) {
 
-			HashMap<String, String> responseInfo = new HashMap<String, String>();
+			GenericResponseObject response = new GenericResponseObject();
 			FriendRequest rest = new FriendRequest(context);
 
 			try {
-				responseInfo = rest.acceptFriendRequest(bundle
+				response = rest.acceptFriendRequest(bundle
 						.getString("userName"));
 			} catch (Exception e) {
-				responseInfo.put("errors", e.getMessage());
-				responseInfo.put("success", "false");
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			return responseInfo;
+
+			return response;
 		}
 
-		public void onPostExecute(HashMap<String, String> results) {
+		public void onPostExecute(GenericResponseObject response) {
 
-			if (results.get("success").equals("true")) {
+			if (response.isSuccess()) {
 				Utils.makeToast(context,
 						Constants.FRIEND_REQUEST_ACCEPTED_SENT,
 						Toast.LENGTH_LONG);
 			} else {
-				Utils.makeToast(context, results.get("errors"),
+				Utils.makeToast(context,
+						Utils.mergeArrayList(response.getErrors()),
 						Toast.LENGTH_LONG);
 			}
 		}
 	}
 
 	private class DenyRequestAsyncTask extends
-			AsyncTask<Void, Void, HashMap<String, String>> {
-		protected HashMap<String, String> doInBackground(Void... params) {
+			AsyncTask<Void, Void, GenericResponseObject> {
+		protected GenericResponseObject doInBackground(Void... params) {
 
-			HashMap<String, String> responseInfo = new HashMap<String, String>();
+			GenericResponseObject response = new GenericResponseObject();
 			FriendRequest rest = new FriendRequest(context);
-
 			try {
-
-				responseInfo = rest.denyFriendRequest(bundle
-						.getString("userName"));
-
+				response = rest.denyFriendRequest(bundle.getString("userName"));
 			} catch (Exception e) {
-				responseInfo.put("errors", e.getMessage());
-				responseInfo.put("success", "false");
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			return responseInfo;
+			return response;
 		}
 
 		public void onPostExecute(HashMap<String, String> results) {
