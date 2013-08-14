@@ -16,8 +16,6 @@
  */
 package org.owasp.goatdroid.fourgoats.activities;
 
-import java.util.HashMap;
-
 import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.base.BaseActivity;
 import org.owasp.goatdroid.fourgoats.db.CheckinDBHelper;
@@ -25,6 +23,7 @@ import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.AddVenueRequest;
 import org.owasp.goatdroid.fourgoats.request.CheckinRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.Checkin;
 import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
 
 import android.content.Context;
@@ -104,20 +103,17 @@ public class AddVenueActivity extends BaseActivity {
 						bundle.getString("longitude"));
 				if (venue.isSuccess()) {
 					CheckinRequest checkinRequest = new CheckinRequest(context);
-					HashMap<String, String> checkinInfo = checkinRequest
-							.doCheckin(bundle.getString("latitude"),
-									bundle.getString("longitude"));
+					Checkin checkin = checkinRequest.doCheckin(
+							bundle.getString("latitude"),
+							bundle.getString("longitude"));
 
-					if (checkinInfo.get("success").equals("true")) {
-						checkinInfo.put("latitude",
-								bundle.getString("latitude"));
-						checkinInfo.put("longitude",
-								bundle.getString("longitude"));
-						checkinDBHelper.insertCheckin(checkinInfo);
-						bundle.putString("checkinID",
-								checkinInfo.get("checkinID"));
-						bundle.putString("dateTime",
-								checkinInfo.get("dateTime"));
+					if (checkin.isSuccess()) {
+						checkin.setLatitude(bundle.getString("latitude"));
+						checkin.setLongitude(bundle.getString("longitude"));
+						if (Utils.isAutoCheckin(context))
+							checkinDBHelper.insertCheckin(checkin);
+						bundle.putString("checkinID", checkin.getCheckinID());
+						bundle.putString("dateTime", checkin.getDateTime());
 					}
 				}
 

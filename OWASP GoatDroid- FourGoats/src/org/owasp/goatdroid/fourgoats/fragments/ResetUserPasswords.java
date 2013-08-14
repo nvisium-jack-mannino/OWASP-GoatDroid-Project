@@ -22,9 +22,8 @@ import java.util.HashMap;
 import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.activities.DoAdminPasswordResetActivity;
 import org.owasp.goatdroid.fourgoats.adapter.SearchForFriendsAdapter;
-import org.owasp.goatdroid.fourgoats.misc.Constants;
-import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.AdminRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.Admin;
 import org.owasp.goatdroid.fourgoats.responseobjects.Login;
 
 import android.content.Context;
@@ -37,7 +36,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
@@ -83,11 +81,11 @@ public class ResetUserPasswords extends SherlockFragment {
 		return v;
 	}
 
-	public String[] bindListView(ArrayList<HashMap<String, String>> userData) {
+	public String[] bindListView(Admin userData) {
 
 		// userName, firstName, lastName
 		ArrayList<String> userArray = new ArrayList<String>();
-		for (HashMap<String, String> user : userData) {
+		for (HashMap<String, String> user : userData.getUsers()) {
 			if ((user.get("firstName") != null)
 					&& (user.get("lastName") != null)
 					&& (user.get("userName") != null))
@@ -103,23 +101,16 @@ public class ResetUserPasswords extends SherlockFragment {
 	private class SearchForUsers extends AsyncTask<Void, Void, String[]> {
 		protected String[] doInBackground(Void... params) {
 
-			ArrayList<HashMap<String, String>> userData = new ArrayList<HashMap<String, String>>();
+			Admin admin = new Admin();
 			AdminRequest rest = new AdminRequest(context);
 			try {
 
-				userData = rest.getUsers();
-				if (userData.size() > 0) {
-					if (userData.get(0).get("success").equals("true")) {
-						return bindListView(userData);
-					} else
-						Utils.makeToast(context, userData.get(1).get("errors"),
-								Toast.LENGTH_LONG);
-				} else {
-					Utils.makeToast(context, Constants.WEIRD_ERROR,
-							Toast.LENGTH_LONG);
+				admin = rest.getUsers();
+				if (!admin.getUsers().isEmpty()) {
+					return bindListView(admin);
 				}
 			} catch (Exception e) {
-				Intent intent = new Intent(getActivity(), Login.class);
+				Intent intent = new Intent(context, Login.class);
 				startActivity(intent);
 			}
 			return new String[0];

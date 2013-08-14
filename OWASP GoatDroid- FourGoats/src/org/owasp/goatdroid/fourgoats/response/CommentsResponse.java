@@ -16,52 +16,20 @@
  */
 package org.owasp.goatdroid.fourgoats.response;
 
-import java.util.HashMap;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.owasp.goatdroid.fourgoats.base.ResponseBase;
-import org.owasp.goatdroid.fourgoats.misc.Constants;
+import org.owasp.goatdroid.fourgoats.responseobjects.Comment;
+import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
 
-public class CommentsResponse extends ResponseBase {
+public class CommentsResponse extends BaseResponse {
 
-	static public HashMap<String, String> parseGetCommentsResponse(
-			String response) {
+	static public Comment parseGetCommentsResponse(String response) {
+		return (Comment) parseJsonResponse(response, Comment.class);
+	}
 
-		JSONObject json;
-		HashMap<String, String> results = new HashMap<String, String>();
-		String errors = "";
+	static public GenericResponseObject parseAddComment(String response) {
+		return parseJsonResponse(response, GenericResponseObject.class);
+	}
 
-		try {
-			json = new JSONObject(response);
-			if (json.getString("success").equals("false")) {
-				results.put("success", "false");
-				try {
-					JSONArray errorArray = json.getJSONArray("errors");
-
-					for (int count = 0; count < errorArray.length(); count++)
-						errors += errorArray.getString(count).toString()
-								+ "\n\n";
-
-				} catch (JSONException e) {
-					errors += json.getString("errors");
-				}
-
-				results.put("errors", errors);
-				return results;
-
-			} else {
-				results.put("success", "true");
-				results.put("checkinID", json.getString("checkinID"));
-				results.put("venueName", json.getString("venueName"));
-				results.put("dateTime", json.getString("dateTime"));
-				return results;
-			}
-
-		} catch (JSONException e) {
-			results.put("success", "false");
-			results.put("errors", Constants.WEIRD_ERROR);
-			return results;
-		}
+	static public GenericResponseObject parseRemoveComment(String response) {
+		return parseJsonResponse(response, GenericResponseObject.class);
 	}
 }

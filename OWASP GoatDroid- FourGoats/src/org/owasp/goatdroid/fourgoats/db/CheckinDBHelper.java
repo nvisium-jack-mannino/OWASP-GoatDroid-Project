@@ -18,6 +18,9 @@ package org.owasp.goatdroid.fourgoats.db;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import org.owasp.goatdroid.fourgoats.responseobjects.Checkin;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -82,12 +85,12 @@ public class CheckinDBHelper {
 		return checkins;
 	}
 
-	public void insertCheckin(HashMap<String, String> checkin) {
-		this.insertStmt.bindString(1, checkin.get("checkinID"));
-		this.insertStmt.bindString(2, checkin.get("venueName"));
-		this.insertStmt.bindString(3, checkin.get("dateTime"));
-		this.insertStmt.bindString(4, checkin.get("latitude"));
-		this.insertStmt.bindString(5, checkin.get("longitude"));
+	public void insertCheckin(Checkin checkin) {
+		this.insertStmt.bindString(1, checkin.getCheckinID());
+		this.insertStmt.bindString(2, checkin.getVenueName());
+		this.insertStmt.bindString(3, checkin.getDateTime());
+		this.insertStmt.bindString(4, checkin.getLatitude());
+		this.insertStmt.bindString(5, checkin.getLongitude());
 		this.insertStmt.executeInsert();
 	}
 

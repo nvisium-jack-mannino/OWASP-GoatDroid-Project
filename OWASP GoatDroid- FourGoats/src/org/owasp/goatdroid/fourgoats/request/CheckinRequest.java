@@ -16,12 +16,11 @@
  */
 package org.owasp.goatdroid.fourgoats.request;
 
-import java.util.HashMap;
-
 import org.owasp.goatdroid.fourgoats.http.AuthenticatedRestClient;
 import org.owasp.goatdroid.fourgoats.http.RequestMethod;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.response.CheckinResponse;
+import org.owasp.goatdroid.fourgoats.responseobjects.Checkin;
 
 import android.content.Context;
 
@@ -36,7 +35,7 @@ public class CheckinRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public HashMap<String, String> doCheckin(String latitude, String longitude)
+	public Checkin doCheckin(String latitude, String longitude)
 			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"

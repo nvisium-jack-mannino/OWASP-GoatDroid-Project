@@ -16,12 +16,12 @@
  */
 package org.owasp.goatdroid.fourgoats.request;
 
-import java.util.HashMap;
-
 import org.owasp.goatdroid.fourgoats.http.AuthenticatedRestClient;
 import org.owasp.goatdroid.fourgoats.http.RequestMethod;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.response.CommentsResponse;
+import org.owasp.goatdroid.fourgoats.responseobjects.Comment;
+import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
 
 import android.content.Context;
 
@@ -36,8 +36,7 @@ public class CommentsRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public HashMap<String, String> getComments(String checkinID)
-			throws Exception {
+	public Comment getComments(String checkinID) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/fourgoats/api/v1/priv/comments/get");
@@ -47,7 +46,7 @@ public class CommentsRequest {
 		return CommentsResponse.parseGetCommentsResponse(client.getResponse());
 	}
 
-	public HashMap<String, String> addComment(String comment, String checkinID)
+	public GenericResponseObject addComment(String comment, String checkinID)
 			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
@@ -56,10 +55,10 @@ public class CommentsRequest {
 		client.AddParam("checkinID", checkinID);
 		client.Execute(RequestMethod.POST, context);
 
-		return CommentsResponse.parseStatusAndErrors(client.getResponse());
+		return CommentsResponse.parseAddComment(client.getResponse());
 	}
 
-	public HashMap<String, String> removeComment(String commentID)
+	public GenericResponseObject removeComment(String commentID)
 			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
@@ -67,6 +66,6 @@ public class CommentsRequest {
 		client.AddParam("commentID", commentID);
 		client.Execute(RequestMethod.POST, context);
 
-		return CommentsResponse.parseStatusAndErrors(client.getResponse());
+		return CommentsResponse.parseAddComment(client.getResponse());
 	}
 }

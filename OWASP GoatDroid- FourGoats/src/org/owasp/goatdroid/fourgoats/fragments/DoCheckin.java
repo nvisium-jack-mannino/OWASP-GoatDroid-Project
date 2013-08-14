@@ -25,6 +25,7 @@ import org.owasp.goatdroid.fourgoats.db.CheckinDBHelper;
 import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.CheckinRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.Checkin;
 import org.owasp.goatdroid.fourgoats.responseobjects.Login;
 
 import android.content.Context;
@@ -114,70 +115,61 @@ public class DoCheckin extends SherlockFragment {
 		}
 	}
 
-	private class DoCheckinAsyncTask extends
-			AsyncTask<Void, Void, HashMap<String, String>> {
+	private class DoCheckinAsyncTask extends AsyncTask<Void, Void, Checkin> {
 
 		@Override
-		protected HashMap<String, String> doInBackground(Void... params) {
+		protected Checkin doInBackground(Void... params) {
 
-			HashMap<String, String> checkinInfo = new HashMap<String, String>();
+			Checkin checkin = new Checkin();
 			CheckinRequest rest = new CheckinRequest(context);
 
 			try {
-				checkinInfo = rest.doCheckin(latitude, longitude);
-
-				if (checkinInfo.get("success").equals("true")) {
-					CheckinDBHelper db = new CheckinDBHelper(context);
-					checkinInfo.put("latitude", latitude);
-					checkinInfo.put("longitude", longitude);
-					db.insertCheckin(checkinInfo);
-				}
+				checkin = rest.doCheckin(latitude, longitude);
 			} catch (Exception e) {
-				checkinInfo.put("errors", e.getMessage());
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			return checkinInfo;
+
+			if (checkin.isSuccess()) {
+				CheckinDBHelper db = new CheckinDBHelper(context);
+				checkin.setLatitude(latitude);
+				checkin.setLongitude(longitude);
+				db.insertCheckin(checkin);
+			}
+
+			return checkin;
 		}
 
-		protected void onPostExecute(HashMap<String, String> results) {
-			if (results.get("success").equals("true")) {
-				if (results.size() == 4)
-					Utils.makeToast(context, Constants.CHECKIN_GREAT_SUCCESS,
-							Toast.LENGTH_LONG);
-				else {
-					String reward = Constants.REWARD_EARNED + " "
-							+ results.get("rewardName");
-					Utils.makeToast(context, reward, Toast.LENGTH_LONG);
-				}
-
-				Bundle bundle = new Bundle();
-				bundle.putString("checkinID", results.get("checkinID"));
-				bundle.putString("venueName", results.get("venueName"));
-				bundle.putString("venueWebsite", results.get("venueWebsite"));
-				bundle.putString("dateTime", results.get("dateTime"));
-				bundle.putString("latitude", latitude);
-				bundle.putString("longitude", longitude);
-				launchViewCheckin(bundle);
-				CheckinDBHelper db = new CheckinDBHelper(context);
-				results.put("latitude", latitude);
-				results.put("longitude", longitude);
-				db.insertCheckin(results);
-			} else if (results.get("errors").equals(
-					Constants.VENUE_DOESNT_EXIST)) {
-				Utils.makeToast(context, Constants.VENUE_DOESNT_EXIST,
-						Toast.LENGTH_LONG);
-				Bundle bundle = new Bundle();
-				bundle.putString("latitude", latitude);
-				bundle.putString("longitude", longitude);
-				launchAddVenue(bundle);
-			} else if (results.get("errors").equals(Constants.INVALID_SESSION)) {
-				Utils.makeToast(context, Constants.INVALID_SESSION,
-						Toast.LENGTH_LONG);
-				Intent intent = new Intent(context, Login.class);
-				startActivity(intent);
-			} else {
-				Utils.makeToast(context, results.get("errors"),
-						Toast.LENGTH_LONG);
-			}
+		protected void onPostExecute(Checkin checkin) {
+			/*
+			 * if (results.get("success").equals("true")) { if (results.size()
+			 * == 4) Utils.makeToast(context, Constants.CHECKIN_GREAT_SUCCESS,
+			 * Toast.LENGTH_LONG); else { String reward =
+			 * Constants.REWARD_EARNED + " " + results.get("rewardName");
+			 * Utils.makeToast(context, reward, Toast.LENGTH_LONG); }
+			 * 
+			 * Bundle bundle = new Bundle(); bundle.putString("checkinID",
+			 * results.get("checkinID")); bundle.putString("venueName",
+			 * results.get("venueName")); bundle.putString("venueWebsite",
+			 * results.get("venueWebsite")); bundle.putString("dateTime",
+			 * results.get("dateTime")); bundle.putString("latitude", latitude);
+			 * bundle.putString("longitude", longitude);
+			 * launchViewCheckin(bundle); CheckinDBHelper db = new
+			 * CheckinDBHelper(context); results.put("latitude", latitude);
+			 * results.put("longitude", longitude); db.insertCheckin(results); }
+			 * else if (results.get("errors").equals(
+			 * Constants.VENUE_DOESNT_EXIST)) { Utils.makeToast(context,
+			 * Constants.VENUE_DOESNT_EXIST, Toast.LENGTH_LONG); Bundle bundle =
+			 * new Bundle(); bundle.putString("latitude", latitude);
+			 * bundle.putString("longitude", longitude); launchAddVenue(bundle);
+			 * } else if
+			 * (results.get("errors").equals(Constants.INVALID_SESSION)) {
+			 * Utils.makeToast(context, Constants.INVALID_SESSION,
+			 * Toast.LENGTH_LONG); Intent intent = new Intent(context,
+			 * Login.class); startActivity(intent); } else {
+			 * Utils.makeToast(context, results.get("errors"),
+			 * Toast.LENGTH_LONG); }
+			 */
 		}
 
 		public void launchViewCheckin(Bundle bundle) {
