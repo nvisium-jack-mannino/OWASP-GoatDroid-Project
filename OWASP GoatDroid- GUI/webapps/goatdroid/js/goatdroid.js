@@ -19,7 +19,7 @@ function loadNewContent(app) {
 	 * 
 	 */
 	if ($.url("file") != "index.jsp") {
-		window.location.href = "index.jsp?app=" + app;
+		window.location.href = "/index.jsp?app=" + app;
 	} else {
 		loadLesson(app);
 		loadSidebar(app);
