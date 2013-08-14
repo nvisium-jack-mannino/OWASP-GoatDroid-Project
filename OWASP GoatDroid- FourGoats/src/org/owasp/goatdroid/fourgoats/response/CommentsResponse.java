@@ -18,6 +18,7 @@ package org.owasp.goatdroid.fourgoats.response;
 
 import org.owasp.goatdroid.fourgoats.responseobjects.Comment;
 import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
+import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 public class CommentsResponse extends BaseResponse {
 
@@ -29,7 +30,7 @@ public class CommentsResponse extends BaseResponse {
 		return parseJsonResponse(response, GenericResponseObject.class);
 	}
 
-	static public GenericResponseObject parseRemoveComment(String response) {
+	static public ResponseObject parseRemoveComment(String response) {
 		return parseJsonResponse(response, GenericResponseObject.class);
 	}
 }

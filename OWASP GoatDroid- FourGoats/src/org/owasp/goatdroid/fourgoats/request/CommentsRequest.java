@@ -22,6 +22,7 @@ import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.response.CommentsResponse;
 import org.owasp.goatdroid.fourgoats.responseobjects.Comment;
 import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
+import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 import android.content.Context;
 
@@ -58,7 +59,7 @@ public class CommentsRequest {
 		return CommentsResponse.parseAddComment(client.getResponse());
 	}
 
-	public GenericResponseObject removeComment(String commentID)
+	public ResponseObject removeComment(String commentID)
 			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"

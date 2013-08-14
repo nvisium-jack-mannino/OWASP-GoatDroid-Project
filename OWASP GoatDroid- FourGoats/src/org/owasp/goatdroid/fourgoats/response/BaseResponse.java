@@ -1,6 +1,7 @@
 package org.owasp.goatdroid.fourgoats.response;
 
 import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
+import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

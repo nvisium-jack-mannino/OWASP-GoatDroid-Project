@@ -25,6 +25,7 @@ import org.json.JSONObject;
 import org.owasp.goatdroid.fourgoats.responseobjects.Friend;
 import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
 import org.owasp.goatdroid.fourgoats.responseobjects.PendingFriendRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 public class FriendResponse extends BaseResponse {
 
@@ -38,8 +39,7 @@ public class FriendResponse extends BaseResponse {
 				PendingFriendRequest.class);
 	}
 
-	static public GenericResponseObject parseDoFriendRequestResponse(
-			String response) {
+	static public GenericResponseObject parseDoFriendRequestResponse(String response) {
 		return parseJsonResponse(response, GenericResponseObject.class);
 	}
 
@@ -48,13 +48,12 @@ public class FriendResponse extends BaseResponse {
 		return parseJsonResponse(response, GenericResponseObject.class);
 	}
 
-	static public GenericResponseObject parseRemoveFriendRequestResponse(
+	static public ResponseObject parseRemoveFriendRequestResponse(
 			String response) {
 		return parseJsonResponse(response, GenericResponseObject.class);
 	}
 
-	static public GenericResponseObject parseDenyFriendRequestResponse(
-			String response) {
+	static public GenericResponseObject parseDenyFriendRequestResponse(String response) {
 		return parseJsonResponse(response, GenericResponseObject.class);
 	}
 

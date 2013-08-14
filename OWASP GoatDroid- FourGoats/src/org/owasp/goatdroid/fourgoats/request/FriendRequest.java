@@ -26,6 +26,7 @@ import org.owasp.goatdroid.fourgoats.response.FriendResponse;
 import org.owasp.goatdroid.fourgoats.responseobjects.Friend;
 import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
 import org.owasp.goatdroid.fourgoats.responseobjects.PendingFriendRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 import android.content.Context;
 
@@ -88,7 +89,7 @@ public class FriendRequest {
 
 	}
 
-	public GenericResponseObject removeFriendRequest(String userName)
+	public ResponseObject removeFriendRequest(String userName)
 			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"

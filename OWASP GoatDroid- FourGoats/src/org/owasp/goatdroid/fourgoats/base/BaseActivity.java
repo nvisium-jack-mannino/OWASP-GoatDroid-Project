@@ -50,8 +50,8 @@ public class BaseActivity extends SherlockActivity {
 		if (!(this instanceof HomeActivity)
 				&& !(this instanceof AdminHomeActivity)) {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-				getActionBar().setHomeButtonEnabled(true);
-				getActionBar().setDisplayHomeAsUpEnabled(true);
+				getSupportActionBar().setHomeButtonEnabled(true);
+				getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 			} else {
 				getSupportActionBar().setHomeButtonEnabled(true);
 				getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -113,7 +113,7 @@ public class BaseActivity extends SherlockActivity {
 	}
 
 	public class LogOutAsyncTask extends AsyncTask<Void, Void, ResponseObject> {
-		protected GenericResponseObject doInBackground(Void... params) {
+		protected ResponseObject doInBackground(Void... params) {
 
 			LoginRequest rest = new LoginRequest(context);
 

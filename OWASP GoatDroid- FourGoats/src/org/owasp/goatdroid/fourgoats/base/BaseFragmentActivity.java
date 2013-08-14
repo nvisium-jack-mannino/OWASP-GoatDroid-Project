@@ -117,8 +117,8 @@ public class BaseFragmentActivity extends SherlockFragmentActivity {
 		return true;
 	}
 
-	public class LogOutAsyncTask extends AsyncTask<Void, Void, GenericResponseObject> {
-		protected GenericResponseObject doInBackground(Void... params) {
+	public class LogOutAsyncTask extends AsyncTask<Void, Void, ResponseObject> {
+		protected ResponseObject doInBackground(Void... params) {
 
 			LoginRequest rest = new LoginRequest(context);
 
