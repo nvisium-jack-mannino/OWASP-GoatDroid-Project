@@ -40,10 +40,6 @@ import org.owasp.goatdroid.fourgoats.misc.Utils;
 
 import android.content.Context;
 
-/* credit goes to: 
- * http://lukencode.com/2010/04/27/calling-web-services-in-android-using-httpclient/
- * for this clean to implement and handy class
- */
 public class RestClient {
 
 	private ArrayList<NameValuePair> params;

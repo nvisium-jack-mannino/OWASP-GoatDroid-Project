@@ -42,11 +42,6 @@ import org.apache.http.protocol.HTTP;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import android.content.Context;
 
-/* credit goes to: 
- * http://lukencode.com/2010/04/27/calling-web-services-in-android-using-httpclient/
- * for this clean to implement and handy class
- * Made some modifications, but much of it is intact.
- */
 public class AuthenticatedRestClient {
 
 	private ArrayList<NameValuePair> params;
