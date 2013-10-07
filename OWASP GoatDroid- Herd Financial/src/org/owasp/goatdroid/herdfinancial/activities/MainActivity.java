@@ -37,72 +37,79 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		context = this.getApplicationContext();
-		CheckSessionToken check = new CheckSessionToken();
+		CheckSessionTokenAndSettings check = new CheckSessionTokenAndSettings();
 		check.execute(null, null);
 	}
 
-	private class CheckSessionToken extends AsyncTask<Void, Void, Boolean> {
+	private class CheckSessionTokenAndSettings extends
+			AsyncTask<Void, Void, Boolean> {
 		protected Boolean doInBackground(Void... params) {
 
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
+			if (Utils.isDestinationInfoEmpty(context)) {
+				startActivity(new Intent(context, DestinationInfoActivity.class));
+				return false;
+			} else {
+				UserInfoDBHelper uidh = new UserInfoDBHelper(context);
 
-			LoginRequest rest = new LoginRequest(context);
+				LoginRequest rest = new LoginRequest(context);
 
-			try {
-				String sessionToken = uidh.getSessionToken();
-				if (sessionToken.isEmpty())
-					sessionToken = "0000000";
-				String deviceID = Utils.getDeviceID(context);
-				HashMap<String, String> result = rest
-						.isDeviceAuthorizedOrSessionValid(deviceID);
-				if (result.get("success").equals("true")) {
-					/*
-					 * If this is true but we get no token this implies that
-					 * existing session was valid
-					 */
-					if (result.get("sessionToken").equals("")) {
-						Intent serviceIntent = new Intent(context,
-								StatementUpdateService.class);
-						startService(serviceIntent);
-						Intent intent = new Intent(MainActivity.this,
-								HomeActivity.class);
-						startActivity(intent);
-						return true;
+				try {
+					String sessionToken = uidh.getSessionToken();
+					if (sessionToken.isEmpty())
+						sessionToken = "0000000";
+					String deviceID = Utils.getDeviceID(context);
+					HashMap<String, String> result = rest
+							.isDeviceAuthorizedOrSessionValid(deviceID);
+					if (result.get("success").equals("true")) {
 						/*
-						 * If we receive a session token back then the device
-						 * was authorized and the session token was invalid
+						 * If this is true but we get no token this implies that
+						 * existing session was valid
+						 */
+						if (result.get("sessionToken").equals("")) {
+							Intent serviceIntent = new Intent(context,
+									StatementUpdateService.class);
+							startService(serviceIntent);
+							Intent intent = new Intent(MainActivity.this,
+									HomeActivity.class);
+							startActivity(intent);
+							return true;
+							/*
+							 * If we receive a session token back then the
+							 * device was authorized and the session token was
+							 * invalid
+							 */
+						} else {
+							if (!result.get("sessionToken").equals("0")) {
+								uidh.deleteInfo();
+								uidh.insertSettings(result);
+							}
+							Intent serviceIntent = new Intent(context,
+									StatementUpdateService.class);
+							startService(serviceIntent);
+							Intent intent = new Intent(MainActivity.this,
+									HomeActivity.class);
+							startActivity(intent);
+							return true;
+						}
+						/*
+						 * False indicates that neither the session nor device
+						 * ID were valid, and we need to enter our
+						 * username/password to be granted authenticated status.
 						 */
 					} else {
-						if (!result.get("sessionToken").equals("0")) {
-							uidh.deleteInfo();
-							uidh.insertSettings(result);
-						}
-						Intent serviceIntent = new Intent(context,
-								StatementUpdateService.class);
-						startService(serviceIntent);
 						Intent intent = new Intent(MainActivity.this,
-								HomeActivity.class);
+								LoginActivity.class);
 						startActivity(intent);
-						return true;
+						return false;
 					}
-					/*
-					 * False indicates that neither the session nor device ID
-					 * were valid, and we need to enter our username/password to
-					 * be granted authenticated status.
-					 */
-				} else {
+				} catch (Exception e) {
 					Intent intent = new Intent(MainActivity.this,
 							LoginActivity.class);
 					startActivity(intent);
 					return false;
+				} finally {
+					uidh.close();
 				}
-			} catch (Exception e) {
-				Intent intent = new Intent(MainActivity.this,
-						LoginActivity.class);
-				startActivity(intent);
-				return false;
-			} finally {
-				uidh.close();
 			}
 		}
 	}

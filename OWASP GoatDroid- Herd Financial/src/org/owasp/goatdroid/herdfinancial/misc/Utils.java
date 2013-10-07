@@ -104,4 +104,11 @@ public class Utils {
 		Calendar current = Calendar.getInstance();
 		return current.getTimeInMillis();
 	}
+
+	static public boolean isDestinationInfoEmpty(Context context) {
+		SharedPreferences prefs = context.getSharedPreferences(
+				"destination_info", Context.MODE_WORLD_READABLE);
+		return (prefs.getString("host", "").isEmpty() || prefs.getString(
+				"port", "").isEmpty());
+	}
 }
