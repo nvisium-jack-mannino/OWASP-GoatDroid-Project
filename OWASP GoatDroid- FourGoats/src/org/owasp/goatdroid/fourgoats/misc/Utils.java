@@ -17,31 +17,30 @@
 package org.owasp.goatdroid.fourgoats.misc;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-
 public class Utils {
 
-	static public void makeToast(Context context, String message, int duration) {
+	public static void makeToast(Context context, String message, int duration) {
 
 		Toast toast = Toast.makeText(context, message, duration);
 		toast.show();
 	}
 
-	static public String getCurrentDateTime() {
+	public static String getCurrentDateTime() {
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat df = new java.text.SimpleDateFormat(
 				Constants.DATE_FORMAT);
 		return df.format(cal.getTime());
 	}
 
-	static public String getDestinationInfo(Context context) {
+	public static String getDestinationInfo(Context context) {
 
 		String destinationInfo = "";
 		SharedPreferences prefs = context.getSharedPreferences(
@@ -52,7 +51,7 @@ public class Utils {
 		return destinationInfo;
 	}
 
-	static public HashMap<String, String> getDestinationInfoMap(Context context) {
+	public static HashMap<String, String> getDestinationInfoMap(Context context) {
 
 		HashMap<String, String> map = new HashMap<String, String>();
 		SharedPreferences prefs = context.getSharedPreferences(
@@ -63,7 +62,7 @@ public class Utils {
 
 	}
 
-	static public void writeDestinationInfo(Context context, String host,
+	public static void writeDestinationInfo(Context context, String host,
 			String port) {
 
 		SharedPreferences destinationInfo = context.getSharedPreferences(
@@ -74,7 +73,7 @@ public class Utils {
 		editor.commit();
 	}
 
-	static public HashMap<String, String> getProxyMap(Context context) {
+	public static HashMap<String, String> getProxyMap(Context context) {
 
 		HashMap<String, String> map = new HashMap<String, String>();
 		SharedPreferences prefs = context.getSharedPreferences("proxy_info",
@@ -85,7 +84,7 @@ public class Utils {
 
 	}
 
-	static public void writeProxyInfo(Context context, String host, String port) {
+	public static void writeProxyInfo(Context context, String host, String port) {
 
 		SharedPreferences destinationInfo = context.getSharedPreferences(
 				"proxy_info", Context.MODE_WORLD_READABLE);
@@ -95,7 +94,7 @@ public class Utils {
 		editor.commit();
 	}
 
-	static public void saveCredentials(Context context, String username,
+	public static void saveCredentials(Context context, String username,
 			String password) {
 
 		SharedPreferences credentials = context.getSharedPreferences(
@@ -107,7 +106,7 @@ public class Utils {
 		editor.commit();
 	}
 
-	static public void setInfo(Context context, String username,
+	public static void setInfo(Context context, String username,
 			String authToken, HashMap<String, String> preferences) {
 		SharedPreferences credentials = context.getSharedPreferences(
 				"userinfo", Context.MODE_WORLD_READABLE);
@@ -123,7 +122,7 @@ public class Utils {
 		editor.commit();
 	}
 
-	static public String mergeArrayList(ArrayList<String> list) {
+	public static String mergeArrayList(ArrayList<String> list) {
 		StringBuilder listString = new StringBuilder();
 
 		for (String s : list)
@@ -131,23 +130,23 @@ public class Utils {
 		return listString.toString();
 	}
 
-	static public String getUsername(Context context) {
+	public static String getUsername(Context context) {
 		return getPrefsString(context, "userinfo", "username");
 	}
 
-	static public String getAuthToken(Context context) {
+	public static String getAuthToken(Context context) {
 		return getPrefsString(context, "userinfo", "authToken");
 	}
 
-	static public boolean isAdmin(Context context) {
+	public static boolean isAdmin(Context context) {
 		return getPrefsBoolean(context, "userinfo", "isAdmin");
 	}
 
-	static public boolean isAutoCheckin(Context context) {
+	public static boolean isAutoCheckin(Context context) {
 		return getPrefsBoolean(context, "userinfo", "autoCheckin");
 	}
 
-	static public boolean isPublic(Context context) {
+	public boolean isPublic(Context context) {
 		return getPrefsBoolean(context, "userinfo", "isPublic");
 	}
 
@@ -175,5 +174,12 @@ public class Utils {
 		preferences.put("isPublic", info.getBoolean("isPublic", true));
 		preferences.put("autoCheckin", info.getBoolean("autoCheckin", true));
 		return preferences;
+	}
+
+	static public boolean isDestinationInfoEmpty(Context context) {
+		SharedPreferences prefs = context.getSharedPreferences(
+				"destination_info", Context.MODE_WORLD_READABLE);
+		return (prefs.getString("host", "").isEmpty() || prefs.getString(
+				"port", "").isEmpty());
 	}
 }

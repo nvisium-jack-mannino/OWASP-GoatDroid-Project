@@ -22,7 +22,6 @@ import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.LoginRequest;
 import org.owasp.goatdroid.fourgoats.responseobjects.Login;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -44,8 +43,8 @@ public class LoginActivity extends BaseUnauthenticatedActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.login);
 		context = this.getApplicationContext();
+		setContentView(R.layout.login);
 		userNameEditText = (EditText) findViewById(R.id.userName);
 		passwordEditText = (EditText) findViewById(R.id.password);
 		rememberMeCheckBox = (CheckBox) findViewById(R.id.rememberMeCheckBox);
@@ -63,7 +62,6 @@ public class LoginActivity extends BaseUnauthenticatedActivity {
 			rememberMeCheckBox.setChecked(true);
 		else
 			rememberMeCheckBox.setChecked(false);
-
 	}
 
 	public void checkCredentials(View v) {

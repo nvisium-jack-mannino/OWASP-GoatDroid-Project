@@ -47,15 +47,18 @@ public class MainActivity extends Activity {
 		/*
 		 * Now, we make async calls
 		 */
-		CheckAuthToken check = new CheckAuthToken();
+		CheckAuthAndSettings check = new CheckAuthAndSettings();
 		check.execute(null, null);
 	}
 
-	private class CheckAuthToken extends AsyncTask<Void, Void, Boolean> {
+	private class CheckAuthAndSettings extends AsyncTask<Void, Void, Boolean> {
 		protected Boolean doInBackground(Void... params) {
 
 			String authToken = Utils.getAuthToken(context);
-			if (authToken.equals("")) {
+			if (Utils.isDestinationInfoEmpty(context)) {
+				startActivity(new Intent(context, DestinationInfoActivity.class));
+				return false;
+			} else if (authToken.equals("")) {
 				Intent intent = new Intent(MainActivity.this,
 						LoginActivity.class);
 				startActivity(intent);
