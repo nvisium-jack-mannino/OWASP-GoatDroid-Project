@@ -15,13 +15,7 @@
  */
 package org.owasp.goatdroid.webservice.herdfinancial;
 
-import org.owasp.goatdroid.Utils;
-
 public class Constants {
-
-	// Modify this to change the DB creds or DB location
-	public static final String DB_CONNECTION_STRING = "jdbc:derby:"
-			+ Utils.getCurrentPath() + "dbs/herdfinancial";
 
 	public static final long MILLISECONDS_MONTH = 2419200000L; // 2,419,200,000
 																// =

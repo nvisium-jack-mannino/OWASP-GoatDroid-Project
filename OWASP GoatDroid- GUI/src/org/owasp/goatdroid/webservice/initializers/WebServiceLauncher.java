@@ -22,7 +22,6 @@ import org.eclipse.jetty.server.ssl.SslSocketConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
-import org.owasp.goatdroid.Utils;
 import org.springframework.web.servlet.DispatcherServlet;
 
 public class WebServiceLauncher {
@@ -30,12 +29,10 @@ public class WebServiceLauncher {
 	private static String serviceName;
 	static Server server;
 	static String keyStorePath;
-	private static String slash;
 
 	public WebServiceLauncher(String serviceName) {
 		// remove spaces to match web resource formats
 		WebServiceLauncher.serviceName = serviceName.replace(" ", "");
-		WebServiceLauncher.setSlash(Utils.getFileSeparator());
 		setKeyStore();
 	}
 
@@ -97,14 +94,6 @@ public class WebServiceLauncher {
 	private void setKeyStore() {
 
 		keyStorePath = "keystore/";
-	}
-
-	public static String getSlash() {
-		return slash;
-	}
-
-	public static void setSlash(String slash) {
-		WebServiceLauncher.slash = slash;
 	}
 
 	public static String getServiceName() {

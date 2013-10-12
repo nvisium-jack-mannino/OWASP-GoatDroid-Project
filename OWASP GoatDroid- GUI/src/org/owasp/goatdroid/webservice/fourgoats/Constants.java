@@ -15,13 +15,7 @@
  */
 package org.owasp.goatdroid.webservice.fourgoats;
 
-import org.owasp.goatdroid.Utils;
-
 public class Constants {
-
-	// Modify this to change the DB creds or DB location
-	public static final String DB_CONNECTION_STRING = "jdbc:derby:"
-			+ Utils.getCurrentPath() + "dbs/fourgoats";
 
 	public static final String AUTH_TOKEN_HEADER = "Authorization";
 	public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
