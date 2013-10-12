@@ -135,12 +135,10 @@ public class HistoryFragment extends SherlockFragment {
 			ArrayList<HashMap<String, String>> historyData = new ArrayList<HashMap<String, String>>();
 			HistoryRequest rest = new HistoryRequest(context);
 			try {
-				historyData = rest.getHistory();
+				historyData = rest.getHistory().getHistory();
 				if (historyData.size() > 0) {
-					if (historyData.get(0).get("success").equals("true")) {
 						success = true;
 						htmlResponse = generateHistoryHTML(historyData);
-					}
 				}
 			} catch (Exception e) {
 				errors = Constants.COULD_NOT_CONNECT;

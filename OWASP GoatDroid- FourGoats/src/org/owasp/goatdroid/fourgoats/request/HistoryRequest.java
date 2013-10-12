@@ -16,13 +16,11 @@
  */
 package org.owasp.goatdroid.fourgoats.request;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import org.owasp.goatdroid.fourgoats.http.AuthenticatedRestClient;
 import org.owasp.goatdroid.fourgoats.http.RequestMethod;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.response.HistoryResponse;
+import org.owasp.goatdroid.fourgoats.responseobjects.History;
 
 import android.content.Context;
 
@@ -37,7 +35,7 @@ public class HistoryRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public ArrayList<HashMap<String, String>> getHistory() throws Exception {
+	public History getHistory() throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/fourgoats/api/v1/priv/history/list",
@@ -47,8 +45,7 @@ public class HistoryRequest {
 		return HistoryResponse.parseHistoryResponse(client.getResponse());
 	}
 
-	public ArrayList<HashMap<String, String>> getUserHistory(String userName)
-			throws Exception {
+	public History getUserHistory(String userName) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient(
 				"https://" + destinationInfo

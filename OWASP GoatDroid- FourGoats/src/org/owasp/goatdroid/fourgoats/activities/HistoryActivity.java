@@ -127,7 +127,8 @@ public class HistoryActivity extends BaseActivity {
 			HistoryRequest rest = new HistoryRequest(context);
 			try {
 
-				historyData = rest.getUserHistory(bundle.getString("userName"));
+				historyData = rest.getUserHistory(bundle.getString("userName"))
+						.getHistory();
 				if (historyData.get(0).get("success").equals("true")) {
 					success = true;
 					htmlResponse = generateHistoryHTML(historyData);
