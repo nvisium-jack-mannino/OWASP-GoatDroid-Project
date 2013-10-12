@@ -25,6 +25,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -40,7 +41,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
+
 import android.content.Context;
+import android.util.Base64;
 
 public class AuthenticatedRestClient {
 
@@ -63,11 +66,14 @@ public class AuthenticatedRestClient {
 		return responseCode;
 	}
 
-	public AuthenticatedRestClient(String url) {
+	public AuthenticatedRestClient(String url, Context context) {
 		this.url = url;
 		params = new ArrayList<NameValuePair>();
 		headers = new ArrayList<NameValuePair>();
-		AddHeader("Authorization", "username:authtokenencoded");
+		String authString = Base64
+				.encodeToString((Utils.getUsername(context) + ":" + Utils
+						.getAuthToken(context)).getBytes(), Base64.DEFAULT);
+		AddHeader("Authorization", authString.replaceAll("\\s", ""));
 	}
 
 	public void AddParam(String name, String value) {
@@ -127,8 +133,8 @@ public class AuthenticatedRestClient {
 			Context context) throws KeyManagementException,
 			NoSuchAlgorithmException {
 
-		// HttpClient client = CustomSSLSocketFactory.getNewHttpClient();
-		HttpClient client = new DefaultHttpClient();
+		HttpClient client = CustomSSLSocketFactory.getNewHttpClient();
+		// HttpClient client = new DefaultHttpClient();
 		HashMap<String, String> proxyInfo = Utils.getProxyMap(context);
 		String proxyHost = proxyInfo.get("proxyHost");
 		String proxyPort = proxyInfo.get("proxyPort");

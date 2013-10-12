@@ -89,13 +89,13 @@ public class AvailableRewards extends SherlockFragment {
 	private class GetAvailableRewards extends AsyncTask<Void, Void, String[]> {
 		protected String[] doInBackground(Void... params) {
 
-			ArrayList<HashMap<String, String>> rewardData = new ArrayList<HashMap<String, String>>();
+			ArrayList<HashMap<String, String>> rewards = new ArrayList<HashMap<String, String>>();
 			RewardsRequest rest = new RewardsRequest(context);
 			try {
 
-				rewardData = rest.getAllRewards();
-				if (rewardData.size() > 1)
-					return bindListView(rewardData);
+				rewards = rest.getAllRewards().getRewards();
+				if (rewards.size() > 1)
+					return bindListView(rewards);
 
 				else {
 					Utils.makeToast(context, Constants.WEIRD_ERROR,

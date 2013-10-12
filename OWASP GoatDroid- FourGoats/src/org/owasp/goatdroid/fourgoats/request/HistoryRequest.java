@@ -40,7 +40,8 @@ public class HistoryRequest {
 	public ArrayList<HashMap<String, String>> getHistory() throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/priv/history/list");
+				+ destinationInfo + "/fourgoats/api/v1/priv/history/list",
+				context);
 		client.Execute(RequestMethod.GET, context);
 
 		return HistoryResponse.parseHistoryResponse(client.getResponse());
@@ -49,9 +50,10 @@ public class HistoryRequest {
 	public ArrayList<HashMap<String, String>> getUserHistory(String userName)
 			throws Exception {
 
-		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo
-				+ "/fourgoats/api/v1/priv/history/get-user-history/" + userName);
+		AuthenticatedRestClient client = new AuthenticatedRestClient(
+				"https://" + destinationInfo
+						+ "/fourgoats/api/v1/priv/history/get-user-history/"
+						+ userName, context);
 		client.Execute(RequestMethod.GET, context);
 
 		return HistoryResponse.parseHistoryResponse(client.getResponse());

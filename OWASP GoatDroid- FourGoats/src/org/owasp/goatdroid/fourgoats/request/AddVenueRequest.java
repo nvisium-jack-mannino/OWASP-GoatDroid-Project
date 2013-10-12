@@ -21,7 +21,6 @@ import org.owasp.goatdroid.fourgoats.http.RequestMethod;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.response.AddVenueResponse;
 import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
-import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 import android.content.Context;
 
@@ -41,7 +40,8 @@ public class AddVenueRequest {
 			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/priv/venues/add");
+				+ destinationInfo + "/fourgoats/api/v1/priv/venues/add",
+				context);
 
 		client.AddParam("venueName", venueName);
 		client.AddParam("venueWebsite", venueWebsite);

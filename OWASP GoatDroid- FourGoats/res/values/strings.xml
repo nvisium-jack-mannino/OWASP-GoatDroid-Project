@@ -53,7 +53,7 @@
     <string name="view_history">View Checkin History</string>
     <string name="destination_info">Destination Info</string>
     <string name="host">Host (Or IP)</string>
-    <string name="port">HTTPS Port (Default:9888)</string>
+    <string name="port">HTTPS Port (Default:10000)</string>
     <string name="save">Save</string>
     <string name="developer_name">App Developer: Jack Mannino</string>
     <string name="ui_developer">UI Developer: Walter Tighzert</string>

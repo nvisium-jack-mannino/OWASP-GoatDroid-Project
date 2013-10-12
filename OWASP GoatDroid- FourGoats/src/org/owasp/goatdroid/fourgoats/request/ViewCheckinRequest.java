@@ -41,7 +41,7 @@ public class ViewCheckinRequest {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/fourgoats/api/v1/priv/comments/get/"
-				+ checkinID);
+				+ checkinID, context);
 		// client.AddParam("checkinID", checkinID);
 		client.Execute(RequestMethod.GET, context);
 

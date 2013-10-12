@@ -39,8 +39,9 @@ public class LoginRequest {
 
 	public Login isAuthTokenValid() throws Exception {
 
-		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/pub/login/check-session");
+		AuthenticatedRestClient client = new AuthenticatedRestClient(
+				"https://" + destinationInfo
+						+ "/fourgoats/api/v1/pub/login/check-session", context);
 		client.Execute(RequestMethod.GET, context);
 		return (Login) LoginResponse.isAuthTokenValid(client.getResponse());
 	}
@@ -72,7 +73,8 @@ public class LoginRequest {
 	public ResponseObject logOut() throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/pub/login/sign-out");
+				+ destinationInfo + "/fourgoats/api/v1/pub/login/sign-out",
+				context);
 		client.Execute(RequestMethod.POST, context);
 
 		return LoginResponse.isAuthTokenValid(client.getResponse());

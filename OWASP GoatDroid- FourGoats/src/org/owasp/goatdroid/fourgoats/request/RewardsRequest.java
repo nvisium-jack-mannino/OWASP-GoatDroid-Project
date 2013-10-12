@@ -16,13 +16,11 @@
  */
 package org.owasp.goatdroid.fourgoats.request;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import org.owasp.goatdroid.fourgoats.http.AuthenticatedRestClient;
 import org.owasp.goatdroid.fourgoats.http.RequestMethod;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.response.RewardsResponse;
+import org.owasp.goatdroid.fourgoats.responseobjects.Rewards;
 
 import android.content.Context;
 
@@ -37,21 +35,22 @@ public class RewardsRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public ArrayList<HashMap<String, String>> getMyRewards() throws Exception {
+	public Rewards getMyRewards() throws Exception {
 
-		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
-				+ destinationInfo + "/fourgoats/api/v1/priv/rewards/my-rewards");
+		AuthenticatedRestClient client = new AuthenticatedRestClient(
+				"https://" + destinationInfo
+						+ "/fourgoats/api/v1/priv/rewards/my-rewards", context);
 
 		client.Execute(RequestMethod.GET, context);
 
 		return RewardsResponse.parseRewardsResponse(client.getResponse());
 	}
 
-	public ArrayList<HashMap<String, String>> getAllRewards() throws Exception {
+	public Rewards getAllRewards() throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
-				+ "/fourgoats/api/v1/priv/rewards/all-rewards");
+				+ "/fourgoats/api/v1/priv/rewards/all-rewards", context);
 
 		client.Execute(RequestMethod.GET, context);
 

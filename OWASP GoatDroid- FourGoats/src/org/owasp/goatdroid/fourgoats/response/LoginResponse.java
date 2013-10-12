@@ -16,7 +16,6 @@
  */
 package org.owasp.goatdroid.fourgoats.response;
 
-import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
 import org.owasp.goatdroid.fourgoats.responseobjects.Login;
 import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 

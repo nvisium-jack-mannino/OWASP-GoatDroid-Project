@@ -41,7 +41,7 @@ public class SearchForFriendsRequest {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
-				+ "/fourgoats/api/v1/priv/friends/search-users");
+				+ "/fourgoats/api/v1/priv/friends/search-users", context);
 		client.Execute(RequestMethod.GET, context);
 
 		return SearchForFriendsResponse.parseSearchForFriendsResponse(client
