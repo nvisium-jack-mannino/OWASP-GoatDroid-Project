@@ -70,13 +70,13 @@ public class AvailableRewards extends SherlockFragment {
 		for (HashMap<String, String> reward : rewardData) {
 			if ((reward.get("rewardName") != null)
 					&& (reward.get("rewardDescription") != null)
-					&& (reward.get("venueName") != null)
+					&& (reward.get("venueID") != null)
 					&& (reward.get("latitude") != null)
 					&& (reward.get("longitude") != null)
 					&& (reward.get("checkinsRequired") != null))
 				rewardArray.add(reward.get("rewardName") + "\n"
 						+ reward.get("rewardDescription") + "\nVenue: "
-						+ reward.get("venueName") + "\nLatitude: "
+						+ reward.get("venueID") + "\nLatitude: "
 						+ reward.get("latitude") + "\nLongitude: "
 						+ reward.get("longitude") + "\nCheckins Required: "
 						+ reward.get("checkinsRequired"));
@@ -94,7 +94,7 @@ public class AvailableRewards extends SherlockFragment {
 			try {
 
 				rewards = rest.getAllRewards().getRewards();
-				if (rewards.size() > 1)
+				if (rewards != null)
 					return bindListView(rewards);
 
 				else {

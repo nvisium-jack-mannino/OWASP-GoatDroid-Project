@@ -22,6 +22,7 @@ import java.util.HashMap;
 import org.owasp.goatdroid.fourgoats.R;
 import org.owasp.goatdroid.fourgoats.activities.LoginActivity;
 import org.owasp.goatdroid.fourgoats.request.RewardsRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.Rewards;
 
 import android.content.Context;
 import android.content.Intent;
@@ -84,9 +85,8 @@ public class MyRewards extends SherlockFragment {
 			ArrayList<HashMap<String, String>> rewards = new ArrayList<HashMap<String, String>>();
 			RewardsRequest rest = new RewardsRequest(context);
 			try {
-
 				rewards = rest.getMyRewards().getRewards();
-				if (rewards.size() > 1)
+				if (rewards != null)
 					return bindListView(rewards);
 				else {
 					return new String[0];
