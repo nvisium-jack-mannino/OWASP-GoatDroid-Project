@@ -103,7 +103,7 @@ public class MyFriends extends SherlockFragment {
 
 			try {
 
-				userData = rest.getFriends();
+				userData = rest.getFriends().getFriends();
 
 				if (userData.size() > 0) {
 					if (userData.get(0).get("success").equals("true"))

@@ -16,13 +16,11 @@
  */
 package org.owasp.goatdroid.fourgoats.request;
 
-import java.util.HashMap;
-
 import org.owasp.goatdroid.fourgoats.http.AuthenticatedRestClient;
 import org.owasp.goatdroid.fourgoats.http.RequestMethod;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.response.ViewCheckinResponse;
-
+import org.owasp.goatdroid.fourgoats.responseobjects.CheckinComments;
 import android.content.Context;
 
 public class ViewCheckinRequest {
@@ -36,8 +34,7 @@ public class ViewCheckinRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public HashMap<String, String> getCheckin(String checkinID)
-			throws Exception {
+	public CheckinComments getCheckin(String checkinID) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/fourgoats/api/v1/priv/comments/get/"

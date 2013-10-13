@@ -17,7 +17,6 @@
 package org.owasp.goatdroid.fourgoats.response;
 
 import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
-import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
 
 public class AddVenueResponse extends BaseResponse {
 

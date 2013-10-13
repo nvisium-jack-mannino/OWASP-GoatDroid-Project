@@ -16,6 +16,8 @@
  */
 package org.owasp.goatdroid.fourgoats.activities;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import org.owasp.goatdroid.fourgoats.R;
@@ -23,9 +25,9 @@ import org.owasp.goatdroid.fourgoats.base.BaseActivity;
 import org.owasp.goatdroid.fourgoats.javascriptinterfaces.SmsJSInterface;
 import org.owasp.goatdroid.fourgoats.javascriptinterfaces.ViewCheckinJSInterface;
 import org.owasp.goatdroid.fourgoats.javascriptinterfaces.WebViewJSInterface;
-import org.owasp.goatdroid.fourgoats.misc.Constants;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.request.ViewCheckinRequest;
+import org.owasp.goatdroid.fourgoats.responseobjects.CheckinComments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -60,14 +62,15 @@ public class ViewCheckinActivity extends BaseActivity {
 		getComments.execute(null, null);
 	}
 
-	public String generateViewCheckinHTML(HashMap<String, String> commentData) {
+	public String generateViewCheckinHTML(
+			ArrayList<HashMap<String, String>> commentData) {
 
 		String html = "";
 
 		html += "<p><b>" + bundle.getString("venueName") + "</b></p>";
-		String[] dateTimeArray = bundle.getString("dateTime").split(" ");
-		html += "<p><b>Date:</b> " + dateTimeArray[0] + " <b>Time:</b> "
-				+ dateTimeArray[1] + "</p>";
+		String[] dateTime = bundle.getString("dateTime").split(" ");
+		html += "<p><b>Date:</b> " + dateTime[0] + " <b>Time:</b> "
+				+ dateTime[1] + "</p>";
 		html += "<button style=\"color: white; background-color:#2E9AFE\" type=\"button\" "
 				+ "onclick=\"window.webViewJSInterface.launchWebView('"
 				+ bundle.getString("venueWebsite")
@@ -94,58 +97,38 @@ public class ViewCheckinActivity extends BaseActivity {
 				+ bundle.getString("checkinID")
 				+ "')\">"
 				+ "Leave a Comment</button><br><br>";
-		html += generateComments(commentData);
+		if (commentData != null)
+			html += generateComments(commentData);
 		return html;
 	}
 
-	public String generateComments(HashMap<String, String> commentData) {
+	public String generateComments(
+			ArrayList<HashMap<String, String>> commentList) {
 
-		String commentsTable = "";
-		String firstName;
-		String lastName;
-		String[] dateTime;
-		String date;
-		String time;
-		String comment;
-		if (commentData.size() > 3) {
+		String commentsTable = "<b><big>Comments:</big></b><p>";
 
-			// really ugly way to dodge the = 0 scenario
-			int totalSize = 0;
-			if (commentData.size() / 6 - 3 == -2)
-				totalSize = 1;
-			else
-				totalSize = commentData.size() / 6;
-
-			commentsTable += "<b><big>Comments:</big></b><p>";
-
-			// 6 fields to parse - 3 (venueName, venueWebsite, success
-			for (int count = 0; count < totalSize; count++) {
-				firstName = commentData.get("firstName" + count);
-				lastName = commentData.get("lastName" + count);
-				dateTime = commentData.get("dateTime" + count).split(" ");
-				date = dateTime[0];
-				time = dateTime[1];
-				comment = commentData.get("comment" + count);
-				commentsTable += "<p><b>" + firstName + " " + lastName
-						+ "</b><br>" + date + "<br>" + time + "<br>";
-				commentsTable += "<b>\"" + comment + "\"</b><br>";
-				commentsTable += "<button style=\"color: white; background-color:#2E9AFE\" type=\"button\" onclick=\"window.viewCheckinJSInterface.deleteComment('"
-						+ commentData.get("commentID" + count)
-						+ "','"
-						+ bundle.getString("venueName")
-						+ "','"
-						+ bundle.getString("venueWebsite")
-						+ "','"
-						+ bundle.getString("dateTime")
-						+ "','"
-						+ bundle.getString("latitude")
-						+ "','"
-						+ bundle.getString("longitude")
-						+ "','"
-						+ bundle.getString("checkinID")
-						+ "')\">"
-						+ "Delete Comment</button><br>";
-			}
+		for (HashMap<String, String> comment : commentList) {
+			String[] dateTime = comment.get("dateTime").split(" ");
+			commentsTable += "<p><b>" + comment.get("firstName") + " "
+					+ comment.get("lastName") + "</b><br>" + dateTime[0]
+					+ "<br>" + dateTime[1] + "<br>";
+			commentsTable += "<b>\"" + comment.get("comment") + "\"</b><br>";
+			commentsTable += "<button style=\"color: white; background-color:#2E9AFE\" type=\"button\" onclick=\"window.viewCheckinJSInterface.deleteComment('"
+					+ comment.get("commentID")
+					+ "','"
+					+ bundle.getString("venueName")
+					+ "','"
+					+ bundle.getString("venueWebsite")
+					+ "','"
+					+ bundle.getString("dateTime")
+					+ "','"
+					+ bundle.getString("latitude")
+					+ "','"
+					+ bundle.getString("longitude")
+					+ "','"
+					+ bundle.getString("checkinID")
+					+ "')\">"
+					+ "Delete Comment</button><br>";
 		}
 
 		return commentsTable;
@@ -156,34 +139,28 @@ public class ViewCheckinActivity extends BaseActivity {
 		startActivity(intent);
 	}
 
-	private class GetCommentData extends
-			AsyncTask<Void, Void, HashMap<String, String>> {
-		protected HashMap<String, String> doInBackground(Void... params) {
+	private class GetCommentData extends AsyncTask<Void, Void, CheckinComments> {
+		protected CheckinComments doInBackground(Void... params) {
 
-			HashMap<String, String> commentData = new HashMap<String, String>();
 			ViewCheckinRequest rest = new ViewCheckinRequest(context);
-
+			CheckinComments comments = new CheckinComments();
 			try {
-				commentData = rest.getCheckin(bundle.getString("checkinID"));
-				if (commentData.get("success").equals("true")) {
-					commentData.put("htmlResponse",
-							generateViewCheckinHTML(commentData));
-				}
+				comments = rest.getCheckin(bundle.getString("checkinID"));
 			} catch (Exception e) {
-				commentData.put("errors", e.getMessage());
-				commentData.put("success", "false");
+				comments.setErrors(new ArrayList<String>(Arrays.asList(e
+						.getMessage())));
 			}
-			return commentData;
+			return comments;
 		}
 
-		public void onPostExecute(HashMap<String, String> results) {
-			if (results.get("success").equals(("true"))) {
-				webview.loadData(results.get("htmlResponse"), "text/html",
-						"UTF-8");
-			} else if (results.get("errors").equals(Constants.INVALID_SESSION)) {
-				launchLogin();
+		public void onPostExecute(CheckinComments comments) {
+			if (comments.isSuccess()) {
+				webview.loadData(
+						generateViewCheckinHTML(comments.getComments()),
+						"text/html", "UTF-8");
 			} else {
-				Utils.makeToast(context, results.get("errors"),
+				Utils.makeToast(context,
+						Utils.mergeArrayList(comments.getErrors()),
 						Toast.LENGTH_LONG);
 			}
 		}

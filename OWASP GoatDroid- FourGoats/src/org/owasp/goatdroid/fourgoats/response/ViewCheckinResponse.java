@@ -16,60 +16,13 @@
  */
 package org.owasp.goatdroid.fourgoats.response;
 
-import java.util.HashMap;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.owasp.goatdroid.fourgoats.misc.Constants;
+import org.owasp.goatdroid.fourgoats.responseobjects.CheckinComments;
 
-public class ViewCheckinResponse {
+public class ViewCheckinResponse extends BaseResponse {
 
-	static public HashMap<String, String> parseCheckinResponse(String response) {
+	static public CheckinComments parseCheckinResponse(String response) {
 
-		JSONObject json;
-		HashMap<String, String> results = new HashMap<String, String>();
-		String errors = "";
-
-		try {
-			json = new JSONObject(response);
-			if (json.getString("success").equals("false")) {
-				results.put("success", "false");
-				try {
-					JSONArray errorArray = json.getJSONArray("errors");
-
-					for (int count = 0; count < errorArray.length(); count++)
-						errors += errorArray.getString(count).toString()
-								+ "\n\n";
-
-				} catch (JSONException e) {
-					errors += json.getString("errors");
-				}
-
-				results.put("errors", errors);
-				return results;
-
-			} else {
-				results.put("success", "true");
-				try {
-					JSONObject checkinObject = json.getJSONObject("comments");
-					JSONArray entry = checkinObject.getJSONArray("entry");
-					for (int count = 0; count < entry.length(); count++) {
-						results.put(
-								entry.getJSONObject(count).getString("key"),
-								entry.getJSONObject(count).getString("value"));
-					}
-				} catch (JSONException e) {
-					// we catch the exception, but don't really care
-					// just means we had no comments, and only return the
-					// success status
-				}
-				return results;
-			}
-
-		} catch (JSONException e) {
-			results.put("success", "false");
-			results.put("errors", Constants.WEIRD_ERROR);
-			return results;
-		}
+		return (CheckinComments) parseJsonResponse(response,
+				CheckinComments.class);
 	}
 }

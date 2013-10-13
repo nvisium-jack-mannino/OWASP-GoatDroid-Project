@@ -24,6 +24,7 @@ import org.owasp.goatdroid.fourgoats.http.RequestMethod;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.response.FriendResponse;
 import org.owasp.goatdroid.fourgoats.responseobjects.Friend;
+import org.owasp.goatdroid.fourgoats.responseobjects.FriendList;
 import org.owasp.goatdroid.fourgoats.responseobjects.GenericResponseObject;
 import org.owasp.goatdroid.fourgoats.responseobjects.PendingFriendRequest;
 import org.owasp.goatdroid.fourgoats.responseobjects.ResponseObject;
@@ -119,7 +120,7 @@ public class FriendRequest {
 
 	}
 
-	public ArrayList<HashMap<String, String>> getFriends() throws Exception {
+	public FriendList getFriends() throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
