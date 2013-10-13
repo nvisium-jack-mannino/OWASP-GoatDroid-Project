@@ -7,6 +7,7 @@ public class Checkin extends GenericResponseObject {
 
 	String checkinID;
 	String venueName;
+	String venueWebsite;
 	String dateTime;
 	String latitude;
 	String longitude;
@@ -26,6 +27,14 @@ public class Checkin extends GenericResponseObject {
 
 	public void setVenueName(String venueName) {
 		this.venueName = venueName;
+	}
+
+	public String getVenueWebsite() {
+		return venueWebsite;
+	}
+
+	public void setVenueWebsite(String venueWebsite) {
+		this.venueWebsite = venueWebsite;
 	}
 
 	public String getDateTime() {

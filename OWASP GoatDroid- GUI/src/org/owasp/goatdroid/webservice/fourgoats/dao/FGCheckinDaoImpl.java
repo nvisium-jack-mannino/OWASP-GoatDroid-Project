@@ -96,7 +96,7 @@ public class FGCheckinDaoImpl extends BaseDaoImpl implements CheckinDao {
 
 	public boolean doesVenueHaveReward(String venueID) throws Exception {
 
-		String sql = "SELECT app.fg_rewards.venueID FROM rewards INNER JOIN app.fg_venues ON "
+		String sql = "SELECT app.fg_rewards.venueID FROM app.fg_rewards INNER JOIN app.fg_venues ON "
 				+ "app.fg_rewards.venueID = app.fg_venues.venueID WHERE app.fg_rewards.venueID = ?";
 		SqlRowSet rs = getJdbcTemplate().queryForRowSet(sql, venueID);
 		if (rs.next())
