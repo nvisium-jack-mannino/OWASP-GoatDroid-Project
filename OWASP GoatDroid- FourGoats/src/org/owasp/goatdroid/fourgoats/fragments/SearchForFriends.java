@@ -99,7 +99,7 @@ public class SearchForFriends extends SherlockFragment {
 					getActivity());
 			try {
 
-				userData = rest.getUsers();
+				userData = rest.getUsers().getUsers();
 				if (userData.size() > 0) {
 					if (userData.get(0).get("success").equals("true")) {
 						return bindListView(userData);

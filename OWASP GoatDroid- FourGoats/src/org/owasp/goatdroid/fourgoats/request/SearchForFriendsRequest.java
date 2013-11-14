@@ -16,14 +16,11 @@
  */
 package org.owasp.goatdroid.fourgoats.request;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import org.owasp.goatdroid.fourgoats.http.AuthenticatedRestClient;
 import org.owasp.goatdroid.fourgoats.http.RequestMethod;
 import org.owasp.goatdroid.fourgoats.misc.Utils;
 import org.owasp.goatdroid.fourgoats.response.SearchForFriendsResponse;
-
+import org.owasp.goatdroid.fourgoats.responseobjects.Users;
 import android.content.Context;
 
 public class SearchForFriendsRequest {
@@ -37,7 +34,7 @@ public class SearchForFriendsRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public ArrayList<HashMap<String, String>> getUsers() throws Exception {
+	public Users getUsers() throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
