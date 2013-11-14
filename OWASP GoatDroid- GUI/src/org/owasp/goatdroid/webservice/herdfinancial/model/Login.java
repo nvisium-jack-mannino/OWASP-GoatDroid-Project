@@ -52,12 +52,4 @@ public class Login extends BaseModel {
 	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
 	}
-
-	public HashMap<String, String> getSecretQuestions() {
-		return secretQuestions;
-	}
-
-	public void setSecretQuestions(HashMap<String, String> secretQuestions) {
-		this.secretQuestions = secretQuestions;
-	}
 }

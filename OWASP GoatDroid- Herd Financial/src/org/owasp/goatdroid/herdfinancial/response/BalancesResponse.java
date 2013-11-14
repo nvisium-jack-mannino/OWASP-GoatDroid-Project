@@ -15,51 +15,11 @@
  */
 package org.owasp.goatdroid.herdfinancial.response;
 
-import java.util.HashMap;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.owasp.goatdroid.herdfinancial.responseobjects.Balances;
 
-public class BalancesResponse {
+public class BalancesResponse extends BaseResponse {
 
-	static public HashMap<String, String> parseStatusAndBalances(String response) {
-
-		JSONObject json;
-		HashMap<String, String> results = new HashMap<String, String>();
-		String errors = "";
-		try {
-			json = new JSONObject(response);
-			if (json.getString("success").equals("false")) {
-				results.put("success", "false");
-				try {
-					JSONArray errorArray = json.getJSONArray("errors");
-
-					for (int count = 0; count < errorArray.length(); count++)
-						errors += "-" + errorArray.getString(count).toString()
-								+ "\n\n";
-
-				} catch (JSONException e) {
-					errors += "-" + json.getString("errors");
-				}
-
-				results.put("errors", errors);
-				return results;
-
-			} else {
-				results.put("success", "true");
-				results.put("checkingBalance",
-						json.getString("checkingBalance"));
-				results.put("savingsBalance", json.getString("savingsBalance"));
-				return results;
-			}
-
-		} catch (JSONException e) {
-			results.put("success", "false");
-			results.put("errors", e.getMessage());
-			return results;
-		} catch (Exception e) {
-			results.put("errors", e.getMessage());
-			return results;
-		}
+	static public Balances parseStatusAndBalances(String response) {
+		return (Balances) parseJsonResponse(response, Balances.class);
 	}
 }

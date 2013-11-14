@@ -23,6 +23,7 @@ import org.owasp.goatdroid.herdfinancial.db.UserInfoDBHelper;
 import org.owasp.goatdroid.herdfinancial.misc.Constants;
 import org.owasp.goatdroid.herdfinancial.misc.Utils;
 import org.owasp.goatdroid.herdfinancial.request.BalancesRequest;
+import org.owasp.goatdroid.herdfinancial.responseobjects.Balances;
 
 import android.content.Context;
 import android.content.Intent;
@@ -58,7 +59,7 @@ public class GetBalanceActivity extends BaseActivity {
 			AsyncTask<Void, Void, HashMap<String, String>> {
 		protected HashMap<String, String> doInBackground(Void... params) {
 
-			HashMap<String, String> balanceData = new HashMap<String, String>();
+			Balances balances = new Balances();
 			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
 
 			BalancesRequest rest = new BalancesRequest(context);

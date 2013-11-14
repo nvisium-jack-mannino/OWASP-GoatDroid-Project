@@ -2,7 +2,7 @@ package org.owasp.goatdroid.herdfinancial.responseobjects;
 
 import java.util.ArrayList;
 
-public class BaseResponseObject implements ResponseObject {
+public class GenericResponseObject implements ResponseObject {
 
 	ArrayList<String> errors;
 	boolean success;

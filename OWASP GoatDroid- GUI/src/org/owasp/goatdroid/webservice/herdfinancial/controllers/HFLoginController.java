@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.owasp.goatdroid.webservice.herdfinancial.model.AuthorizationHeader;
 import org.owasp.goatdroid.webservice.herdfinancial.model.BaseModel;
-import org.owasp.goatdroid.webservice.herdfinancial.model.Login;
 import org.owasp.goatdroid.webservice.herdfinancial.services.HFLoginServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

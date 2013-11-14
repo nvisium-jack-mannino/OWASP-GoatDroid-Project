@@ -1,8 +1,7 @@
 package org.owasp.goatdroid.herdfinancial.response;
 
-import org.owasp.goatdroid.herdfinancial.responseobjects.BaseResponseObject;
+import org.owasp.goatdroid.herdfinancial.responseobjects.GenericResponseObject;
 import org.owasp.goatdroid.herdfinancial.responseobjects.ResponseObject;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -13,8 +12,8 @@ public class BaseResponse {
 		ResponseObject responseObject = gson.fromJson(json, clazz);
 		return responseObject;
 	}
-	
+
 	static public ResponseObject getSuccessAndErrors(String response) {
-		return parseJsonResponse(response, BaseResponseObject.class);
+		return parseJsonResponse(response, GenericResponseObject.class);
 	}
 }

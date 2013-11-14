@@ -15,61 +15,12 @@
  */
 package org.owasp.goatdroid.herdfinancial.response;
 
-import java.util.HashMap;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.owasp.goatdroid.herdfinancial.base.ResponseBase;
+import org.owasp.goatdroid.herdfinancial.responseobjects.Login;
 
-public class LoginResponse extends ResponseBase {
+public class LoginResponse extends BaseResponse {
 
-	static public HashMap<String, String> parseStatusAndToken(String response) {
-
-		JSONObject json;
-		HashMap<String, String> results = new HashMap<String, String>();
-		String errors = "";
-
-		try {
-			json = new JSONObject(response);
-			if (json.getString("success").equals("false")) {
-				results.put("success", "false");
-				try {
-					JSONArray errorArray = json.getJSONArray("errors");
-
-					for (int count = 0; count < errorArray.length(); count++)
-						errors += "-" + errorArray.getString(count).toString()
-								+ "\n\n";
-
-				} catch (JSONException e) {
-					errors += "-" + json.getString("errors");
-				}
-
-				results.put("errors", errors);
-				return results;
-
-			} else {
-				results.put("success", "true");
-				if (json.getString("sessionToken").equals("")
-						|| json.getString("sessionToken").equals("0")) {
-					results.put("sessionToken", "0");
-					return results;
-				} else {
-					results.put("sessionToken", json.getString("sessionToken"));
-					results.put("userName", json.getString("userName"));
-					results.put("accountNumber",
-							json.getString("accountNumber"));
-					return results;
-				}
-			}
-
-		} catch (JSONException e) {
-			results.put("success", "false");
-			results.put("errors", e.getMessage());
-			return results;
-		} catch (Exception e) {
-			results.put("success", "false");
-			results.put("errors", e.getMessage());
-			return results;
-		}
+	static public Login parseStatusandToken(String response) {
+		return (Login) parseJsonResponse(response, Login.class);
 	}
+
 }
