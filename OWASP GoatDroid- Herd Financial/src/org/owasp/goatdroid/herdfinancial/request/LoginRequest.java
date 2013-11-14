@@ -15,14 +15,13 @@
  */
 package org.owasp.goatdroid.herdfinancial.request;
 
-import java.util.HashMap;
-
 import org.owasp.goatdroid.herdfinancial.http.AuthenticatedRestClient;
 import org.owasp.goatdroid.herdfinancial.http.RequestMethod;
 import org.owasp.goatdroid.herdfinancial.http.RestClient;
 import org.owasp.goatdroid.herdfinancial.misc.Utils;
 import org.owasp.goatdroid.herdfinancial.response.LoginResponse;
-
+import org.owasp.goatdroid.herdfinancial.responseobjects.Login;
+import org.owasp.goatdroid.herdfinancial.responseobjects.ResponseObject;
 import android.content.Context;
 
 public class LoginRequest {
@@ -36,8 +35,8 @@ public class LoginRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public HashMap<String, String> isDeviceAuthorizedOrSessionValid(
-			String deviceID) throws Exception {
+	public Login isDeviceAuthorizedOrSessionValid(String deviceID)
+			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo
@@ -47,8 +46,8 @@ public class LoginRequest {
 		return LoginResponse.parseStatusAndToken(client.getResponse());
 	}
 
-	public HashMap<String, String> validateCredentials(String userName,
-			String password) throws Exception {
+	public Login validateCredentials(String userName, String password)
+			throws Exception {
 
 		RestClient client = new RestClient("https://" + destinationInfo
 				+ "/herdfinancial/api/v1/pub/login/authenticate");
@@ -59,11 +58,11 @@ public class LoginRequest {
 		return LoginResponse.parseStatusAndToken(client.getResponse());
 	}
 
-	public HashMap<String, String> logOut() throws Exception {
+	public ResponseObject logOut() throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/herdfinancial/api/v1/priv/user/sign-out");
 		client.Execute(RequestMethod.GET, context);
-		return LoginResponse.parseStatusAndErrors(client.getResponse());
+		return LoginResponse.getSuccessAndErrors(client.getResponse());
 	}
 }

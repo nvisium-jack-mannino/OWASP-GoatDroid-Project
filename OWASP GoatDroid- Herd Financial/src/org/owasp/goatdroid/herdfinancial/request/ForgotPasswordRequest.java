@@ -15,12 +15,11 @@
  */
 package org.owasp.goatdroid.herdfinancial.request;
 
-import java.util.HashMap;
-
 import org.owasp.goatdroid.herdfinancial.http.RequestMethod;
 import org.owasp.goatdroid.herdfinancial.http.RestClient;
 import org.owasp.goatdroid.herdfinancial.misc.Utils;
 import org.owasp.goatdroid.herdfinancial.response.ForgotPasswordResponse;
+import org.owasp.goatdroid.herdfinancial.responseobjects.ResponseObject;
 
 import android.content.Context;
 
@@ -35,7 +34,7 @@ public class ForgotPasswordRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public HashMap<String, String> requestCode(String userName,
+	public ResponseObject requestCode(String userName,
 			String secretQuestionIndex, String secretQuestionAnswer)
 			throws Exception {
 
@@ -45,23 +44,21 @@ public class ForgotPasswordRequest {
 		client.AddParam("secretQuestionIndex", secretQuestionIndex);
 		client.AddParam("secretQuestionAnswer", secretQuestionAnswer);
 		client.Execute(RequestMethod.POST, context);
-		return ForgotPasswordResponse
-				.parseStatusAndErrors(client.getResponse());
+		return ForgotPasswordResponse.getSuccessAndErrors(client.getResponse());
 	}
 
-	public HashMap<String, String> verifyCode(String userName,
-			String passwordResetCode) throws Exception {
+	public ResponseObject verifyCode(String userName, String passwordResetCode)
+			throws Exception {
 
 		RestClient client = new RestClient("https://" + destinationInfo
 				+ "/herdfinancial/api/v1/priv/forgot-password/verify-code");
 		client.AddParam("userName", userName);
 		client.AddParam("passwordResetCode", passwordResetCode);
 		client.Execute(RequestMethod.POST, context);
-		return ForgotPasswordResponse
-				.parseStatusAndErrors(client.getResponse());
+		return ForgotPasswordResponse.getSuccessAndErrors(client.getResponse());
 	}
 
-	public HashMap<String, String> updatePassword(String userName,
+	public ResponseObject updatePassword(String userName,
 			String passwordResetCode, String password) throws Exception {
 
 		RestClient client = new RestClient("https://" + destinationInfo
@@ -70,7 +67,6 @@ public class ForgotPasswordRequest {
 		client.AddParam("passwordResetCode", passwordResetCode);
 		client.AddParam("password", password);
 		client.Execute(RequestMethod.POST, context);
-		return ForgotPasswordResponse
-				.parseStatusAndErrors(client.getResponse());
+		return ForgotPasswordResponse.getSuccessAndErrors(client.getResponse());
 	}
 }

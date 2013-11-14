@@ -15,13 +15,11 @@
  */
 package org.owasp.goatdroid.herdfinancial.request;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import org.owasp.goatdroid.herdfinancial.http.AuthenticatedRestClient;
 import org.owasp.goatdroid.herdfinancial.http.RequestMethod;
 import org.owasp.goatdroid.herdfinancial.misc.Utils;
-import org.owasp.goatdroid.herdfinancial.response.StatementsResponse;
+import org.owasp.goatdroid.herdfinancial.response.StatementResponse;
+import org.owasp.goatdroid.herdfinancial.responseobjects.Statement;
 
 import android.content.Context;
 
@@ -36,7 +34,7 @@ public class StatementsRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public ArrayList<HashMap<String, String>> getStatement(String sessionToken,
+	public Statement getStatement(String sessionToken,
 			String accountNumber, String startDate, String endDate)
 			throws Exception {
 
@@ -44,10 +42,10 @@ public class StatementsRequest {
 				+ destinationInfo + "/herdfinancial/api/v1/priv/statements/"
 				+ accountNumber + "/" + startDate + "/" + endDate);
 		client.Execute(RequestMethod.GET, context);
-		return StatementsResponse.parseStatusAndStatement(client.getResponse());
+		return StatementResponse.parseStatusAndStatement(client.getResponse());
 	}
 
-	public ArrayList<HashMap<String, String>> getStatementUpdate(
+	public Statement getStatementUpdate(
 			String sessionToken, String accountNumber) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient(
@@ -56,6 +54,6 @@ public class StatementsRequest {
 						+ "/herdfinancial/api/v1/priv/statements/poll-statement-updates/"
 						+ accountNumber);
 		client.Execute(RequestMethod.GET, context);
-		return StatementsResponse.parseStatusAndStatement(client.getResponse());
+		return StatementResponse.parseStatusAndStatement(client.getResponse());
 	}
 }

@@ -15,12 +15,11 @@
  */
 package org.owasp.goatdroid.herdfinancial.request;
 
-import java.util.HashMap;
-
 import org.owasp.goatdroid.herdfinancial.http.AuthenticatedRestClient;
 import org.owasp.goatdroid.herdfinancial.http.RequestMethod;
 import org.owasp.goatdroid.herdfinancial.misc.Utils;
 import org.owasp.goatdroid.herdfinancial.response.AuthorizeResponse;
+import org.owasp.goatdroid.herdfinancial.responseobjects.ResponseObject;
 
 import android.content.Context;
 
@@ -35,14 +34,14 @@ public class AuthorizeRequest {
 		this.context = context;
 	}
 
-	public HashMap<String, String> authorizeDevice(String accountNumber)
+	public ResponseObject authorizeDevice(String accountNumber)
 			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
 				+ destinationInfo + "/herdfinancial/api/v1/priv/authorize");
 		client.AddParam("deviceID", Utils.getDeviceID(context));
 		client.Execute(RequestMethod.POST, context);
-		return AuthorizeResponse.parseStatusAndErrors(client.getResponse());
+		return AuthorizeResponse.getSuccessAndErrors(client.getResponse());
 	}
 
 }

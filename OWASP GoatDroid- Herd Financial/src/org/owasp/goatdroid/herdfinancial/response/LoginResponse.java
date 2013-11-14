@@ -19,7 +19,7 @@ import org.owasp.goatdroid.herdfinancial.responseobjects.Login;
 
 public class LoginResponse extends BaseResponse {
 
-	static public Login parseStatusandToken(String response) {
+	static public Login parseStatusAndToken(String response) {
 		return (Login) parseJsonResponse(response, Login.class);
 	}
 

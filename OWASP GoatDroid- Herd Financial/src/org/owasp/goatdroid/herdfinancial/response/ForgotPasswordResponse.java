@@ -15,8 +15,6 @@
  */
 package org.owasp.goatdroid.herdfinancial.response;
 
-import org.owasp.goatdroid.herdfinancial.base.ResponseBase;
-
-public class ForgotPasswordResponse extends ResponseBase {
+public class ForgotPasswordResponse extends BaseResponse{
 
 }

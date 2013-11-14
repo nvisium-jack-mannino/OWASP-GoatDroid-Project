@@ -15,12 +15,11 @@
  */
 package org.owasp.goatdroid.herdfinancial.request;
 
-import java.util.HashMap;
-
 import org.owasp.goatdroid.herdfinancial.http.RequestMethod;
 import org.owasp.goatdroid.herdfinancial.http.RestClient;
 import org.owasp.goatdroid.herdfinancial.misc.Utils;
 import org.owasp.goatdroid.herdfinancial.response.RegisterResponse;
+import org.owasp.goatdroid.herdfinancial.responseobjects.ResponseObject;
 
 import android.content.Context;
 
@@ -35,7 +34,7 @@ public class RegisterRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public HashMap<String, String> validateRegistration(String firstName,
+	public ResponseObject validateRegistration(String firstName,
 			String lastName, String userName, String password,
 			String accountNumber) throws Exception {
 
@@ -48,6 +47,6 @@ public class RegisterRequest {
 		client.AddParam("password", password);
 		client.Execute(RequestMethod.POST, context);
 
-		return RegisterResponse.parseStatusAndErrors(client.getResponse());
+		return RegisterResponse.getSuccessAndErrors(client.getResponse());
 	}
 }

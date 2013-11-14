@@ -15,6 +15,11 @@
  */
 package org.owasp.goatdroid.herdfinancial.response;
 
-public class AuthorizeResponse extends BaseResponse {
+import org.owasp.goatdroid.herdfinancial.responseobjects.Statement;
 
+public class StatementResponse extends BaseResponse {
+
+	static public Statement parseStatusAndStatement(String response) {
+		return (Statement) parseJsonResponse(response, Statement.class);
+	}
 }

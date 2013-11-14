@@ -15,12 +15,11 @@
  */
 package org.owasp.goatdroid.herdfinancial.request;
 
-import java.util.HashMap;
-
 import org.owasp.goatdroid.herdfinancial.http.AuthenticatedRestClient;
 import org.owasp.goatdroid.herdfinancial.http.RequestMethod;
 import org.owasp.goatdroid.herdfinancial.misc.Utils;
 import org.owasp.goatdroid.herdfinancial.response.SecretQuestionsResponse;
+import org.owasp.goatdroid.herdfinancial.responseobjects.ResponseObject;
 
 import android.content.Context;
 
@@ -35,7 +34,7 @@ public class SecretQuestionsRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public HashMap<String, String> setSecretQuestions(String sessionToken,
+	public ResponseObject setSecretQuestions(String sessionToken,
 			String answer1, String answer2, String answer3) throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"
@@ -45,7 +44,7 @@ public class SecretQuestionsRequest {
 		client.AddParam("answer2", answer2);
 		client.AddParam("answer3", answer3);
 		client.Execute(RequestMethod.POST, context);
-		return SecretQuestionsResponse.parseStatusAndErrors(client
-				.getResponse());
+		return SecretQuestionsResponse
+				.getSuccessAndErrors(client.getResponse());
 	}
 }
