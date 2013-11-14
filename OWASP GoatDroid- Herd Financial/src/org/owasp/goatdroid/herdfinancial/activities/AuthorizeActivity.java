@@ -23,6 +23,8 @@ import org.owasp.goatdroid.herdfinancial.db.UserInfoDBHelper;
 import org.owasp.goatdroid.herdfinancial.misc.Constants;
 import org.owasp.goatdroid.herdfinancial.misc.Utils;
 import org.owasp.goatdroid.herdfinancial.request.AuthorizeRequest;
+import org.owasp.goatdroid.herdfinancial.responseobjects.GenericResponseObject;
+import org.owasp.goatdroid.herdfinancial.responseobjects.ResponseObject;
 
 import android.content.Context;
 import android.content.Intent;
@@ -60,41 +62,30 @@ public class AuthorizeActivity extends BaseActivity {
 	}
 
 	private class AuthorizeAsyncTask extends
-			AsyncTask<Void, Void, HashMap<String, String>> {
+			AsyncTask<Void, Void, GenericResponseObject> {
 
 		@Override
-		protected HashMap<String, String> doInBackground(Void... params) {
+		protected GenericResponseObject doInBackground(Void... params) {
 
-			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
-
-			HashMap<String, String> authorizeData = new HashMap<String, String>();
 			AuthorizeRequest rest = new AuthorizeRequest(context);
-
+			GenericResponseObject response = new GenericResponseObject();
 			try {
-				String sessionToken = uidh.getSessionToken();
-				if (sessionToken.isEmpty()) {
-					authorizeData.put("errors", Constants.INVALID_SESSION);
-					authorizeData.put("success", "false");
-				} else {
-					authorizeData = rest.authorizeDevice(Utils
-							.getDeviceID(context));
-				}
+				response = rest.authorizeDevice(Utils.getDeviceID(context));
 			} catch (Exception e) {
-				authorizeData.put("success", "false");
-				authorizeData.put("errors", e.getMessage());
-			} finally {
-				uidh.close();
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			return authorizeData;
+			return response;
 		}
 
-		protected void onPostExecute(HashMap<String, String> results) {
-			if (results.get("success").equals("true")) {
+		protected void onPostExecute(GenericResponseObject response) {
+			if (response.isSuccess()) {
 				Utils.makeToast(context, Constants.AUTHORIZE_SUCCESS,
 						Toast.LENGTH_LONG);
 				launchHome();
 			} else
-				Utils.makeToast(context, results.get("errors"),
+				Utils.makeToast(context,
+						Utils.mergeArrayList(response.getErrors()),
 						Toast.LENGTH_LONG);
 		}
 	}

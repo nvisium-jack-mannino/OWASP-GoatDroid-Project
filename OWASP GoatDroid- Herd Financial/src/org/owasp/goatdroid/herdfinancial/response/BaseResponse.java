@@ -13,7 +13,8 @@ public class BaseResponse {
 		return responseObject;
 	}
 
-	static public ResponseObject getSuccessAndErrors(String response) {
-		return parseJsonResponse(response, GenericResponseObject.class);
+	static public GenericResponseObject getSuccessAndErrors(String response) {
+		return (GenericResponseObject) parseJsonResponse(response,
+				GenericResponseObject.class);
 	}
 }

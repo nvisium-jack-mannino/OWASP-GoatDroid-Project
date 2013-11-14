@@ -15,12 +15,11 @@
  */
 package org.owasp.goatdroid.herdfinancial.request;
 
-import java.util.HashMap;
-
 import org.owasp.goatdroid.herdfinancial.http.AuthenticatedRestClient;
 import org.owasp.goatdroid.herdfinancial.http.RequestMethod;
 import org.owasp.goatdroid.herdfinancial.misc.Utils;
 import org.owasp.goatdroid.herdfinancial.response.TransferResponse;
+import org.owasp.goatdroid.herdfinancial.responseobjects.GenericResponseObject;
 
 import android.content.Context;
 
@@ -35,7 +34,7 @@ public class TransferRequest {
 		destinationInfo = Utils.getDestinationInfo(context);
 	}
 
-	public HashMap<String, String> doTransfer(String sessionToken,
+	public GenericResponseObject doTransfer(String sessionToken,
 			String fromAccount, String toAccount, String amount)
 			throws Exception {
 
@@ -45,6 +44,6 @@ public class TransferRequest {
 		client.AddParam("to", toAccount);
 		client.AddParam("amount", amount);
 		client.Execute(RequestMethod.POST, context);
-		return TransferResponse.parseStatusAndErrors(client.getResponse());
+		return TransferResponse.getSuccessAndErrors(client.getResponse());
 	}
 }

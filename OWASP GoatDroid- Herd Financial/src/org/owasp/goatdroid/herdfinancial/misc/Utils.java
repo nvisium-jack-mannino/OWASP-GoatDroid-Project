@@ -16,9 +16,12 @@
 package org.owasp.goatdroid.herdfinancial.misc;
 
 import java.text.SimpleDateFormat;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -110,5 +113,13 @@ public class Utils {
 				"destination_info", Context.MODE_WORLD_READABLE);
 		return (prefs.getString("host", "").isEmpty() || prefs.getString(
 				"port", "").isEmpty());
+	}
+
+	public static String mergeArrayList(ArrayList<String> list) {
+		StringBuilder listString = new StringBuilder();
+
+		for (String s : list)
+			listString.append(s + " ");
+		return listString.toString();
 	}
 }

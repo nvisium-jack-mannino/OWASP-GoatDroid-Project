@@ -1,6 +1,6 @@
 package org.owasp.goatdroid.herdfinancial.responseobjects;
 
-public class Balances {
+public class Balances extends GenericResponseObject {
 
 	String checkingBalance;
 	String savingsBalance;

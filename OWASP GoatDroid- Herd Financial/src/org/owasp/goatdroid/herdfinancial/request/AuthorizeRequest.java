@@ -19,6 +19,7 @@ import org.owasp.goatdroid.herdfinancial.http.AuthenticatedRestClient;
 import org.owasp.goatdroid.herdfinancial.http.RequestMethod;
 import org.owasp.goatdroid.herdfinancial.misc.Utils;
 import org.owasp.goatdroid.herdfinancial.response.AuthorizeResponse;
+import org.owasp.goatdroid.herdfinancial.responseobjects.GenericResponseObject;
 import org.owasp.goatdroid.herdfinancial.responseobjects.ResponseObject;
 
 import android.content.Context;
@@ -34,7 +35,7 @@ public class AuthorizeRequest {
 		this.context = context;
 	}
 
-	public ResponseObject authorizeDevice(String accountNumber)
+	public GenericResponseObject authorizeDevice(String accountNumber)
 			throws Exception {
 
 		AuthenticatedRestClient client = new AuthenticatedRestClient("https://"

@@ -23,6 +23,7 @@ import org.owasp.goatdroid.herdfinancial.db.UserInfoDBHelper;
 import org.owasp.goatdroid.herdfinancial.misc.Constants;
 import org.owasp.goatdroid.herdfinancial.misc.Utils;
 import org.owasp.goatdroid.herdfinancial.request.ForgotPasswordRequest;
+import org.owasp.goatdroid.herdfinancial.responseobjects.GenericResponseObject;
 
 import android.content.Context;
 import android.content.Intent;
@@ -92,12 +93,12 @@ public class ForgotPasswordActivity extends BaseUnauthenticatedActivity {
 	}
 
 	private class SubmitAsyncTask extends
-			AsyncTask<Void, Void, HashMap<String, String>> {
+			AsyncTask<Void, Void, GenericResponseObject> {
 
 		@Override
-		protected HashMap<String, String> doInBackground(Void... params) {
+		protected GenericResponseObject doInBackground(Void... params) {
 
-			HashMap<String, String> forgotPasswordData = new HashMap<String, String>();
+			GenericResponseObject response = new GenericResponseObject();
 			ForgotPasswordRequest rest = new ForgotPasswordRequest(context);
 			UserInfoDBHelper uidh = new UserInfoDBHelper(context);
 
@@ -128,14 +129,16 @@ public class ForgotPasswordActivity extends BaseUnauthenticatedActivity {
 			return forgotPasswordData;
 		}
 
-		protected void onPostExecute(HashMap<String, String> results) {
-			if (results.get("success").equals("true")) {
+		protected void onPostExecute(GenericResponseObject response) {
+			if (response.isSuccess()) {
 				Utils.makeToast(context, Constants.SECRET_QUESTION_SUCCESS,
 						Toast.LENGTH_LONG);
-				Intent intent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
+				Intent intent = new Intent(ForgotPasswordActivity.this,
+						LoginActivity.class);
 				startActivity(intent);
 			} else
-				Utils.makeToast(context, results.get("errors"),
+				Utils.makeToast(context,
+						Utils.mergeArrayList(response.getErrors()),
 						Toast.LENGTH_LONG);
 		}
 	}
