@@ -22,6 +22,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="org.owasp.goatdroid.vulnnavigator.AccessControlActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="org.owasp.goatdroid.vulnnavigator.AuthenticationActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="org.owasp.goatdroid.vulnnavigator.BinaryHardeningActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="org.owasp.goatdroid.vulnnavigator.ComponentsActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="org.owasp.goatdroid.vulnnavigator.CryptoActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="org.owasp.goatdroid.vulnnavigator.InjectionActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="org.owasp.goatdroid.vulnnavigator.WebViewActivity"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="org.owasp.goatdroid.vulnnavigator.StorageActivity"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>
