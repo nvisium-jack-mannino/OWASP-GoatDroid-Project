@@ -27,7 +27,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 public class WebServiceLauncher {
 
 	private static String serviceName;
-	static Server server;
+
 	static String keyStorePath;
 
 	public WebServiceLauncher(String serviceName) {
@@ -36,19 +36,23 @@ public class WebServiceLauncher {
 		setKeyStore();
 	}
 
-	static public void startService(boolean isHTTPS) throws Exception {
-		/*
-		 * This loads the web service
-		 */
+	static public void startServices(boolean isHttps) throws Exception {
+		startWebService(isHttps);
+		startWebApp();
+	}
+
+	static void startWebService(boolean isHttps) {
 		DispatcherServlet dispatcher = new DispatcherServlet();
-		dispatcher.setContextConfigLocation("classpath:/spring-context.xml");
+		Server server;
+		dispatcher
+				.setContextConfigLocation("classpath:/spring-web-service-context.xml");
 		ServletHolder sh = new ServletHolder(dispatcher);
 		server = new Server(10000);
 		ServletContextHandler context = new ServletContextHandler(server, "/");
 		context.setAliases(true);
 		context.addServlet(sh, "/*");
 		server.setHandler(context);
-		if (isHTTPS) {
+		if (isHttps) {
 			SslSocketConnector sslConnector = new SslSocketConnector();
 			sslConnector.setPort(10000);
 			sslConnector.setPassword("goatdroid");
@@ -60,35 +64,33 @@ public class WebServiceLauncher {
 					selectChannelConnector });
 			try {
 				server.start();
-			} catch (InstantiationException e) {
-				e.getMessage();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} else {
-			server.start();
+
 		}
-		/*
-		 * This loads the front-end website
-		 */
-		Server webServer = new Server(12000);
-		WebAppContext webContext = new WebAppContext();
-		webContext.setDescriptor("webapps/goatdroid/WEB-INF/web.xml");
-		webContext.setResourceBase("webapps/goatdroid/");
-		webContext.setContextPath("/");
-		webContext.setParentLoaderPriority(true);
-		webServer.setHandler(webContext);
-		webServer.start();
 	}
 
-	static public void stopService() throws Exception {
-		server.stop();
-	}
+	static void startWebApp() {
+		DispatcherServlet dispatcher = new DispatcherServlet();
+		Server server;
+		dispatcher
+				.setContextConfigLocation("classpath:/spring-webapp-context.xml");
+		ServletHolder sh = new ServletHolder(dispatcher);
+		server = new Server(12000);
+		ServletContextHandler context = new ServletContextHandler(server, "/");
+		context.setAliases(true);
+		context.addServlet(sh, "/*");
+		context.setResourceBase("webapps/goatdroid/");
+		server.setHandler(context);
 
-	static public boolean isServiceRunning() {
-
-		if (server.getState().equals("STARTED"))
-			return true;
-		else
-			return false;
+		try {
+			server.start();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void setKeyStore() {

@@ -24,6 +24,6 @@ public class Main {
 	 */
 	public static void main(String[] args) throws Exception {
 
-		WebServiceLauncher.startService(true);
+		WebServiceLauncher.startServices(true);
 	}
 }

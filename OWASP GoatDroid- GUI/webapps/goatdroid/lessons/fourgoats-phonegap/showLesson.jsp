@@ -10,21 +10,24 @@
 	<jsp:include page="/common/header.html" />
 
 	<div class="container-fluid">
-	<jsp:include page="sidebar.html" />
+		<jsp:include page="sidebar.html" />
 		<div class="dashboard-wrapper">
 			<div id="main-container">
-				<% 
-				String lesson = request.getParameter("lesson");
-				String render = "";
-			     if (lesson.equals("example")) { %>
-			    	<jsp:include page="example.html" />;
-			    	
-			    <% } else if (lesson.equals("insufficientTLP")) { %>
-			   
-			    <% 	
-				}
-				%>	
-				
+				<%
+					String lesson = request.getParameter("lesson");
+					String render = "";
+					if (lesson.equals("example")) {
+				%>
+				<jsp:include page="example.html" />;
+
+				<%
+					} else if (lesson.equals("insufficientTLP")) {
+				%>
+
+				<%
+					}
+				%>
+
 			</div>
 		</div>
 	</div>
