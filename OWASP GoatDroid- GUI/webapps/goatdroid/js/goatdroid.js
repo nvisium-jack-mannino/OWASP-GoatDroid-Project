@@ -1,4 +1,4 @@
-var DEFAULT_APP = "fourgoats-native";
+var DEFAULT_APP = "owasp-mobile-top-10-2011";
 
 function initializeContext(app) {
 	if (getCookie() != null) {
