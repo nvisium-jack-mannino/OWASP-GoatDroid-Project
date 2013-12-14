@@ -21,6 +21,8 @@
 		in the /WEB-INF/views directory -->
 	<beans:bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="viewClass"
+			value="org.owasp.goatdroid.web.view.JstlView" />
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
@@ -30,5 +32,4 @@
 	<jdbc:embedded-database id="dataSource" type="DERBY">
 		<jdbc:script location="classpath:fg-auth.sql" />
 	</jdbc:embedded-database>
-
 </beans:beans>
