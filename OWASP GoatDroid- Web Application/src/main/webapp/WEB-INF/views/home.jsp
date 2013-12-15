@@ -39,7 +39,7 @@
 		<div class="page-header">
 			<h1>
 				Dashboard <small> <i class="icon-double-angle-right"></i>
-					overview &amp; stats
+					Overview &amp; Stats
 				</small>
 			</h1>
 		</div>
@@ -55,8 +55,8 @@
 					</button>
 
 					<i class="icon-ok green"></i> Welcome to <strong class="green">
-						Ace <small>(v1.2)</small>
-					</strong> , the lightweight, feature-rich and easy to use admin template.
+						OWASP GoatDroid</small>
+					</strong> , the platform for Android application security education.
 				</div>
 
 				<div class="row">
