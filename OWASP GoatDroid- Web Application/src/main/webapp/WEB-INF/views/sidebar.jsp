@@ -45,6 +45,24 @@
 							class="icon-double-angle-right"></i> Pentester Track
 					</a></li>
 				</ul></li>
+			<li><a href="#" class="dropdown-toggle"> <i
+					class="icon-leaf"></i> <span class="menu-text">Social</span> <b
+					class="arrow icon-angle-down"></b>
+			</a>
+
+				<ul class="submenu">
+					<li><a href="/social/github-commits"> <i
+							class="icon-double-angle-right"></i> GitHub
+					</a></li>
+
+					<li><a href="/social/stack-overflow"> <i class="icon-twitter"></i>
+							Stack Overflow
+					</a></li>
+					
+					<li><a href="/social/twitter"> <i class="icon-twitter"></i>
+							Twitter
+					</a></li>
+				</ul></li>
 
 			<li><a href="#" class="dropdown-toggle"> <i
 					class="icon-leaf"></i> <span class="menu-text"> Apps </span> <b

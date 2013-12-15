@@ -239,8 +239,7 @@
 					<li class="light-blue"><a data-toggle="dropdown" href="#"
 						class="dropdown-toggle"> <img class="nav-user-photo"
 							src="${pageContext.servletContext.contextPath}/resources/avatars/user.jpg"
-							alt="Jason's Photo" /> <span class="user-info"> <small>Welcome,</small>
-								Jason
+							alt="Jason's Photo" /> <span class="user-info"> <small>Welcome!
 						</span> <i class="icon-caret-down"></i>
 					</a>
 

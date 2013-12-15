@@ -191,7 +191,7 @@
 						<div class="widget-box">
 							<div class="widget-header widget-header-flat widget-header-small">
 								<h5>
-									<i class="icon-signal"></i> Traffic Sources
+									<i class="icon-signal"></i> My Progress
 								</h5>
 
 								<div class="widget-toolbar no-border">
@@ -233,9 +233,9 @@
 									<div class="clearfix">
 										<div class="grid3">
 											<span class="grey"> <i
-												class="icon-facebook-sign icon-2x blue"></i> &nbsp; likes
+												class="icon-laptop icon-2x blue"></i> &nbsp; Completed Modules
 											</span>
-											<h4 class="bigger pull-right">1,255</h4>
+											<h4 class="bigger pull-right">12</h4>
 										</div>
 
 										<div class="grid3">
