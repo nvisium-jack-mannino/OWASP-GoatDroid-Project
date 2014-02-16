@@ -4,6 +4,7 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/dbs"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/spring-config"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/webapps"/>
         <property name="context-root" value="goatdroid"/>
         <property name="java-output-path" value="/OWASP GoatDroid- GUI/target/classes"/>
     </wb-module>

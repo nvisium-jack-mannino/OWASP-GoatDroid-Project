@@ -14,8 +14,6 @@
 <body>
 	<jsp:include page="common/header.html" />
 
-
-
 	<div class="container-fluid">
 		<div id="sidebar"></div>
 		<div class="dashboard-wrapper">

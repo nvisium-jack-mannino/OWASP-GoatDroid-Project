@@ -3,6 +3,7 @@
 	<classpathentry excluding="main/webapp/" kind="src" path="src"/>
 	<classpathentry kind="src" path="dbs"/>
 	<classpathentry kind="src" path="spring-config"/>
+	<classpathentry kind="src" path="webapps"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
