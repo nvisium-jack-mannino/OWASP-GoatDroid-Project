@@ -7,8 +7,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/lessons")
 public class LessonController {
 
-	@RequestMapping(value = "/")
+	@RequestMapping(value = "")
 	public String index() {
-		return "/lessons/index";
+		return "/lessons/home";
+	}
+
+	@RequestMapping(value = "/developer-track")
+	public String developerTrack() {
+		return "/lessons/developer-track";
+	}
+
+	@RequestMapping(value = "/pentester-track")
+	public String pentesterTrack() {
+		return "/lessons/pentester-track";
 	}
 }

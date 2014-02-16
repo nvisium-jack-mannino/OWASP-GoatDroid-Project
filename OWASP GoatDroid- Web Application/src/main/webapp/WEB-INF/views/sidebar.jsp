@@ -46,19 +46,20 @@
 					</a></li>
 				</ul></li>
 			<li><a href="#" class="dropdown-toggle"> <i
-					class="icon-leaf"></i> <span class="menu-text">Social</span> <b
+					class="icon-leaf"></i> <span class="menu-text">Knowledge</span> <b
 					class="arrow icon-angle-down"></b>
 			</a>
 
 				<ul class="submenu">
-					<li><a href="/social/github-commits"> <i
-							class="icon-double-angle-right"></i> GitHub
+					<li><a
+						href="https://www.owasp.org/index.php/OWASP_Mobile_Security_Project">
+							<i class="icon-double-angle-right"></i> OWASP Mobile Wiki
 					</a></li>
 
-					<li><a href="/social/stack-overflow"> <i class="icon-twitter"></i>
-							Stack Overflow
+					<li><a href="/social/stack-overflow"> <i
+							class="icon-twitter"></i> Stack Overflow
 					</a></li>
-					
+
 					<li><a href="/social/twitter"> <i class="icon-twitter"></i>
 							Twitter
 					</a></li>
