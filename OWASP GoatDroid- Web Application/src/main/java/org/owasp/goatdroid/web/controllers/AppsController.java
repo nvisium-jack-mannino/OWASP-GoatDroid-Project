@@ -11,4 +11,14 @@ public class AppsController {
 	public String index() {
 		return "/apps/home";
 	}
+
+	@RequestMapping(value = "/fourgoats")
+	public String fourgoats() {
+		return "/apps/fourgoats";
+	}
+
+	@RequestMapping(value = "/herd-financial")
+	public String herdFinancial() {
+		return "/apps/herd-financial";
+	}
 }

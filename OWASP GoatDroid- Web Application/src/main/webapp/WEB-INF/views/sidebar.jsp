@@ -29,19 +29,22 @@
 			</a>
 
 				<ul class="submenu">
-					<li><a href="/lessons/all"> <i
+					<li><a
+						href="${pageContext.servletContext.contextPath}/lessons/all"> <i
 							class="icon-double-angle-right"></i> All
 					</a></li>
 
-					<li><a href="/lessons/top-10"> <i
-							class="icon-double-angle-right"></i> OWASP Mobile Top 10 Risks
+					<li><a
+						href="${pageContext.servletContext.contextPath}/lessons/top-10">
+							<i class="icon-double-angle-right"></i> OWASP Mobile Top 10 Risks
 					</a></li>
 
-					<li><a href="/lessons/developer"> <i
-							class="icon-double-angle-right"></i> Developer Track
+					<li><a
+						href="$/{pageContext.servletContext.contextPath}lessons/developer-track">
+							<i class="icon-double-angle-right"></i> Developer Track
 					</a></li>
 
-					<li><a href="/lessons/pentester"> <i
+					<li><a href="$/lessons/pentester-track"> <i
 							class="icon-double-angle-right"></i> Pentester Track
 					</a></li>
 				</ul></li>
@@ -71,12 +74,14 @@
 			</a>
 
 				<ul class="submenu">
-					<li><a href="/apps/fourgoats"> <i
-							class="icon-double-angle-right"></i> FourGoats
+					<li><a
+						href="${pageContext.servletContext.contextPath}/apps/fourgoats">
+							<i class="icon-double-angle-right"></i> FourGoats
 					</a></li>
 
-					<li><a href="/apps/herdfinancial"> <i
-							class="icon-double-angle-right"></i> Herd Financial
+					<li><a
+						href="${pageContext.servletContext.contextPath}/apps/herd-financial">
+							<i class="icon-double-angle-right"></i> Herd Financial
 					</a></li>
 				</ul></li>
 
