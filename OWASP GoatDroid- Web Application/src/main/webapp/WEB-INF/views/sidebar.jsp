@@ -30,21 +30,21 @@
 
 				<ul class="submenu">
 					<li><a
-						href="${pageContext.servletContext.contextPath}/lessons/all"> <i
+						href="/lessons/all"> <i
 							class="icon-double-angle-right"></i> All
 					</a></li>
 
 					<li><a
-						href="${pageContext.servletContext.contextPath}/lessons/top-10">
+						href="/lessons/top-10">
 							<i class="icon-double-angle-right"></i> OWASP Mobile Top 10 Risks
 					</a></li>
 
 					<li><a
-						href="$/{pageContext.servletContext.contextPath}lessons/developer-track">
+						href="/lessons/developer-track">
 							<i class="icon-double-angle-right"></i> Developer Track
 					</a></li>
 
-					<li><a href="$/lessons/pentester-track"> <i
+					<li><a href="/lessons/pentester-track"> <i
 							class="icon-double-angle-right"></i> Pentester Track
 					</a></li>
 				</ul></li>
