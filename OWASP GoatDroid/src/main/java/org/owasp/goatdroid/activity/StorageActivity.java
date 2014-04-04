@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class StorageActivity extends Activity {
+public class StorageActivity extends BaseModuleActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -2,14 +2,14 @@ package org.owasp.goatdroid.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
-public class CloudMessagingActivity extends BaseModuleActivity {
+import org.owasp.goatdroid.R;
+
+public class BinaryProtectionActivity extends BaseModuleActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cloud_messaging);
+        setContentView(R.layout.activity_binary_hardening);
     }
 }

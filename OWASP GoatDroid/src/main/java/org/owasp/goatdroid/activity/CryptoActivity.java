@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import org.owasp.goatdroid.R;
 
-public class CryptoActivity extends Activity {
+public class CryptoActivity extends BaseModuleActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

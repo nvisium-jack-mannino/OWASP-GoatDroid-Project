@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class NFCActivity extends Activity {
+public class NFCActivity extends BaseModuleActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

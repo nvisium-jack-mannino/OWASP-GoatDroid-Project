@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import org.owasp.goatdroid.R;
 
-public class ComponentIntentActivity extends Activity {
+public class ComponentIntentActivity extends BaseModuleActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

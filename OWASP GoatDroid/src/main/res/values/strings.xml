@@ -16,5 +16,6 @@
     <string name="title_activity_web_view">WebViewActivity</string>
     <string name="title_activity_network_comms">NetworkCommsActivity</string>
     <string name="title_activity_cloud_messaging">CloudMessaging</string>
+    <string name="title_activity_base_module">BaseModuleActivity</string>
 
 </resources>

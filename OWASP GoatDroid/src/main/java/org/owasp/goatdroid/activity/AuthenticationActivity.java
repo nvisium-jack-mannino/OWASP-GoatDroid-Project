@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import org.owasp.goatdroid.R;
 
-public class AuthenticationActivity extends Activity {
+public class AuthenticationActivity extends BaseModuleActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -25,7 +25,7 @@
             android:label="@string/title_activity_authentication" >
         </activity>
         <activity
-            android:name="org.owasp.goatdroid.activity.BinaryHardeningActivity"
+            android:name=".activity.BinaryProtectionActivity"
             android:label="@string/title_activity_binary_hardening" >
         </activity>
         <activity
@@ -57,8 +57,12 @@
             android:label="@string/title_activity_network_comms" >
         </activity>
         <activity
-            android:name=".activity.CloudMessagingActivity"
+            android:name="org.owasp.goatdroid.activity.CloudMessagingActivity"
             android:label="@string/title_activity_cloud_messaging" >
+        </activity>
+        <activity
+            android:name="org.owasp.goatdroid.activity.BaseModuleActivity"
+            android:label="@string/title_activity_base_module" >
         </activity>
     </application>
 
