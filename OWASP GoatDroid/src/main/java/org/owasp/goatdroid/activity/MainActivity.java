@@ -1,9 +1,11 @@
-package org.owasp.goatdroid;
+package org.owasp.goatdroid.activity;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.owasp.goatdroid.R;
 
 
 public class MainActivity extends ActionBarActivity {

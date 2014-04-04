@@ -8,13 +8,57 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="org.owasp.goatdroid.MainActivity"
+            android:name="org.owasp.goatdroid.activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="org.owasp.goatdroid.activity.AccessControlActivity"
+            android:label="@string/title_activity_access_control" >
+        </activity>
+        <activity
+            android:name="org.owasp.goatdroid.activity.AuthenticationActivity"
+            android:label="@string/title_activity_authentication" >
+        </activity>
+        <activity
+            android:name="org.owasp.goatdroid.activity.BinaryHardeningActivity"
+            android:label="@string/title_activity_binary_hardening" >
+        </activity>
+        <activity
+            android:name="org.owasp.goatdroid.activity.ComponentIntentActivity"
+            android:label="@string/title_activity_component_intent" >
+        </activity>
+        <activity
+            android:name="org.owasp.goatdroid.activity.XSSActivity"
+            android:label="@string/title_activity_xss" >
+        </activity>
+        <activity
+            android:name="org.owasp.goatdroid.activity.InjectionActivity"
+            android:label="@string/title_activity_injection" >
+        </activity>
+        <activity
+            android:name="org.owasp.goatdroid.activity.NFCActivity"
+            android:label="@string/title_activity_nfc" >
+        </activity>
+        <activity
+            android:name="org.owasp.goatdroid.activity.StorageActivity"
+            android:label="@string/title_activity_storage" >
+        </activity>
+        <activity
+            android:name="org.owasp.goatdroid.activity.WebViewActivity"
+            android:label="@string/title_activity_web_view" >
+        </activity>
+        <activity
+            android:name="org.owasp.goatdroid.activity.NetworkCommsActivity"
+            android:label="@string/title_activity_network_comms" >
+        </activity>
+        <activity
+            android:name=".activity.CloudMessagingActivity"
+            android:label="@string/title_activity_cloud_messaging" >
         </activity>
     </application>
 
