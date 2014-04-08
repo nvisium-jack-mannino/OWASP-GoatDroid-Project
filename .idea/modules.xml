@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/OWASP GoatDroid/OWASP GoatDroid.iml" filepath="$PROJECT_DIR$/OWASP GoatDroid/OWASP GoatDroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/OWASP-GoatDroid-Project.iml" filepath="$PROJECT_DIR$/OWASP-GoatDroid-Project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>

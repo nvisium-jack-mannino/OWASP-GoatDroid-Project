@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">OWASP GoatDroid</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_access_control">AccessControlActivity</string>
+    <string name="title_activity_authentication">AuthenticationActivity</string>
+    <string name="title_activity_binary_protection">BinaryProtectionActivity</string>
+    <string name="title_activity_cloud_messaging">CloudMessagingActivity</string>
+    <string name="title_activity_component_intent">ComponentIntentActivity</string>
+    <string name="title_activity_crypto">CryptoActivity</string>
+    <string name="title_activity_injection">InjectionActivity</string>
+    <string name="title_activity_network_comms">NetworkCommsActivity</string>
+    <string name="title_activity_nfc">NFCActivity</string>
+    <string name="title_activity_storage">StorageActivity</string>
+    <string name="title_activity_web_view">WebViewActivity</string>
+    <string name="title_activity_xss">XssActivity</string>
+    <string name="title_activity_action_bar_base">ActionBarBaseActivity</string>
+
+</resources>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.owasp.goatdroid.app" >
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".AccessControlActivity"
+            android:label="@string/title_activity_access_control" >
+        </activity>
+        <activity
+            android:name=".AuthenticationActivity"
+            android:label="@string/title_activity_authentication" >
+        </activity>
+        <activity
+            android:name=".BinaryProtectionActivity"
+            android:label="@string/title_activity_binary_protection" >
+        </activity>
+        <activity
+            android:name=".CloudMessagingActivity"
+            android:label="@string/title_activity_cloud_messaging" >
+        </activity>
+        <activity
+            android:name=".ComponentIntentActivity"
+            android:label="@string/title_activity_component_intent" >
+        </activity>
+        <activity
+            android:name=".CryptoActivity"
+            android:label="@string/title_activity_crypto" >
+        </activity>
+        <activity
+            android:name=".InjectionActivity"
+            android:label="@string/title_activity_injection" >
+        </activity>
+        <activity
+            android:name=".NetworkCommsActivity"
+            android:label="@string/title_activity_network_comms" >
+        </activity>
+        <activity
+            android:name=".NFCActivity"
+            android:label="@string/title_activity_nfc" >
+        </activity>
+        <activity
+            android:name=".StorageActivity"
+            android:label="@string/title_activity_storage" >
+        </activity>
+        <activity
+            android:name=".WebViewActivity"
+            android:label="@string/title_activity_web_view" >
+        </activity>
+        <activity
+            android:name=".XssActivity"
+            android:label="@string/title_activity_xss" >
+        </activity>
+        <activity
+            android:name=".ActionBarBaseActivity"
+            android:label="@string/title_activity_action_bar_base" >
+        </activity>
+    </application>
+
+</manifest>
