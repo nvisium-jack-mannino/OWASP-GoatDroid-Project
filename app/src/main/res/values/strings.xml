@@ -17,7 +17,6 @@
     <string name="title_activity_nfc">NFC</string>
     <string name="title_activity_storage">Storage</string>
     <string name="title_activity_web_view">WebViews and Web Issues</string>
-    <string name="title_activity_xss">XssActivity</string>
     <string name="title_activity_action_bar_base">ActionBarBaseActivity</string>
 
 </resources>

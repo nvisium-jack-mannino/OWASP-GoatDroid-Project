@@ -61,10 +61,6 @@
             android:label="@string/title_activity_web_view" >
         </activity>
         <activity
-            android:name=".XssActivity"
-            android:label="@string/title_activity_xss" >
-        </activity>
-        <activity
             android:name=".ActionBarBaseActivity"
             android:label="@string/title_activity_action_bar_base" >
         </activity>
