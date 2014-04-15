@@ -2,6 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="org.owasp.goatdroid.app.MainActivity" >
 
+    <item android:id="@+id/action_buildit"
+        android:title="Build It"
+    android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_secure" />
+    <item android:id="@+id/action_breakit"
+        android:title="Break It"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_bad" />
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:showAsAction="never" />

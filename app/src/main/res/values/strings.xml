@@ -6,17 +6,8 @@
     <string name="action_help">Help</string>
     <string name="action_about">About</string>
     <string name="action_lessons">Lessons</string>
-    <string name="title_activity_access_control">Access Control</string>
-    <string name="title_activity_authentication">Authentication</string>
-    <string name="title_activity_binary_protection">Binary Protection</string>
-    <string name="title_activity_cloud_messaging">Cloud Messaging</string>
-    <string name="title_activity_component_intent">Components and Intents</string>
-    <string name="title_activity_crypto">Crypto</string>
-    <string name="title_activity_injection">Injection</string>
-    <string name="title_activity_network_comms">Network Communications</string>
-    <string name="title_activity_nfc">NFC</string>
-    <string name="title_activity_storage">Storage</string>
-    <string name="title_activity_web_view">WebViews and Web Issues</string>
-    <string name="title_activity_action_bar_base">ActionBarBaseActivity</string>
+    <string name="title_activity_lesson">LessonActivity</string>
+    <string name="title_activity_action_bar_base">Base</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

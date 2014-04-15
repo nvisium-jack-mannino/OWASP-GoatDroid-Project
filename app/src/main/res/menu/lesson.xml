@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="org.owasp.goatdroid.app.CryptoActivity" >
+    tools:context="org.owasp.goatdroid.app.activity.LessonActivity" >
     
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"

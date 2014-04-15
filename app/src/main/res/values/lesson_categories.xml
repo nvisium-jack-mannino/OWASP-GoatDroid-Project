@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="category_access_control">Access Control</string>
+    <string name="category_authentication">Authentication</string>
+    <string name="category_binary_protection">Binary Protection</string>
+    <string name="category_cloud_messaging">Cloud Messaging</string>
+    <string name="category_components_intents">Components and Intents</string>
+    <string name="category_crypto">Crypto</string>
+    <string name="category_injection">Injection</string>
+    <string name="category_network_comms">Network Communications</string>
+    <string name="category_nfc">NFC</string>
+    <string name="category_storage">Storage</string>
+    <string name="category_web">Web Issues</string>
+</resources>
