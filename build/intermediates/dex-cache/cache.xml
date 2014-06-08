@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="/Users/jackmannino/git/OWASP-GoatDroid-Project/app/build/intermediates/pre-dexed/debug/support-v4-19.1.0-1676d4a8d02cb23891ff2cf3ab7785f670eec636.jar"
+        jar="/Users/jackmannino/android_sdks/latest/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+
+</pre-dex-items>
