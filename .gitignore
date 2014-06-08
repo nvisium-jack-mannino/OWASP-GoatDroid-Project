@@ -1,1 +1,3 @@
-/OWASP GoatDroid- Herd Financial
+.DS_Store
+local.properties
+/.gradle/*
