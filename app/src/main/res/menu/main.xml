@@ -2,21 +2,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="org.owasp.goatdroid.app.MainActivity" >
 
-    <item android:id="@+id/action_buildit"
-        android:title="Build It"
-    android:showAsAction="ifRoom"
-        android:icon="@drawable/ic_action_secure" />
-    <item android:id="@+id/action_breakit"
-        android:title="Break It"
-        android:showAsAction="ifRoom"
-        android:icon="@drawable/ic_action_bad" />
+    <item android:id="@+id/action_build"
+        android:title="Build"
+        android:showAsAction="always"
+         />
+    <item android:id="@+id/action_break"
+        android:title="Break"
+        android:showAsAction="always"
+         />
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
-        android:showAsAction="never" />
+        android:icon="@drawable/ic_action_settings"
+        android:showAsAction="ifRoom"/>
     <item android:id="@+id/action_about"
         android:title="About"
-        android:showAsAction="never" />
-    <item android:id="@+id/action_help"
-        android:title="Help"
-        android:showAsAction="never" />
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_about"/>
 </menu>

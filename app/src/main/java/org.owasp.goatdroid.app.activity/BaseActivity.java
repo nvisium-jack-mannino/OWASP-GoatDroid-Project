@@ -20,11 +20,14 @@ public class BaseActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+
+            case R.id.action_build:
+
+            case R.id.action_break:
+
             case R.id.action_settings:
 
             case R.id.action_about:
-
-            case R.id.action_help:
 
         }
         return false;
