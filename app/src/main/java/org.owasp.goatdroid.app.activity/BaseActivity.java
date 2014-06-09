@@ -25,6 +25,8 @@ public class BaseActivity extends Activity {
 
             case R.id.action_break:
 
+            case R.id.action_search:
+
             case R.id.action_settings:
 
             case R.id.action_about:

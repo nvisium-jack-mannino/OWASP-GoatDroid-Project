@@ -2,14 +2,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="org.owasp.goatdroid.app.MainActivity" >
 
+
     <item android:id="@+id/action_build"
-        android:title="Build"
+        android:title="@string/action_build"
         android:showAsAction="always"
          />
     <item android:id="@+id/action_break"
-        android:title="Break"
+        android:title="@string/action_break"
         android:showAsAction="always"
          />
+    <item android:id="@+id/action_search"
+        android:title="@string/action_search"
+        android:icon="@drawable/ic_action_search"
+        android:showAsAction="ifRoom"
+        />
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:icon="@drawable/ic_action_settings"
